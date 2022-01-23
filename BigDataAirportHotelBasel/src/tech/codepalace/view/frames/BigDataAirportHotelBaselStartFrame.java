@@ -54,5 +54,58 @@ public class BigDataAirportHotelBaselStartFrame extends JFrame {
 		
 		//Variable to set the Image to JLabel
 		private Image myImage;
+		
+		
+		
+		
+		/**
+		 * Create a BigDataAirportHotelBaselStartFrame object passing a reference to the BigDataAHBController for use by the BigDataAirportHotelBaselStartFrame object.
+		 * @param bigDataAHBController The reference to the BigDataAHBController object for MVC.
+		 */
+		public BigDataAirportHotelBaselStartFrame() {
+			
+			//Inicializamos los paneles
+			this.panelWithBackgroundOption = new PanelWithBackgroundOption();
+			
+			
+			this.toppanel = new JPanel();
+			this.centerPanel = new JPanel();
+			this.southPanel = new JPanel();
+			this.panelNameHotel = new JPanel();
+			this.buttonsPanelSouthContainer = new JPanel();
+			this.buttonsPanelSouth = new JPanel();
+			this.menuButtonPanel = new JPanel();
+			this.containerPicsHotel = new JPanel();
+			
+			
+			
+			//Intanciamos los botones
+			 this.logoutButton = new MyButton("/btn_logout.png");
+			 this.parkingButton = new MyButton("/btn_parking.png");
+			 this.fundsachenButton = new MyButton("/btn_fundsachen.png");    
+			 this.fitnessButton = new MyButton("/btn_fitness.png");
+			 this.phonebookButton = new MyButton("/btn_telefonbuch.png");
+			
+			 
+			//Creamos el panel contenedor del centro sur
+			this.buttonsPanelSouthContainer = new JPanel();
+			
+			//Creamos el contendor de los botones sur
+			this.buttonsPanelSouth = new JPanel();
+			
+			
+			
+			
+			
+			
+
+			
+			
+
+
+
+
+
+			}
 
 }
