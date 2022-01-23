@@ -1,11 +1,20 @@
 package tech.codepalace.view.frames;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Image;
 
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
 
 import tech.codepalace.view.buttons.MyButton;
 import tech.codepalace.view.panels.PanelWithBackgroundOption;
@@ -42,6 +51,9 @@ public class BigDataAirportHotelBaselStartFrame extends JFrame {
 		
 		//JLabel to display the user logged in
 		public JLabel loginUserText;
+		
+		//Panel for loginUser JLabel
+		private JPanel loginPanel;
 		
 		
 		//Some MyButton to access other application options kontoVerwalten(manage account) benutzerVerwalten(Manage User)
@@ -95,17 +107,267 @@ public class BigDataAirportHotelBaselStartFrame extends JFrame {
 			
 			
 			
+			//Call setupFrame
+			setupFrame();
 			
 			
-			
-
-			
-			
-
-
-
 
 
 			}
+		
+		/**
+		 * Sets the contentpane, size, and makes frame visible.
+		 */
+		public void setupFrame() {
+
+
+			this.setTitle("Big Data Airport Hotel Basel - powered by Antonio Estevez Gonzalez");
+
+
+			
+			this.setLocationRelativeTo(null);
+
+
+			
+			this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+			
+			this.setResizable(false);
+
+
+			//Set the JFrame Icon
+			setMyIcon();
+
+
+			 this.setSize(1110, 710);
+			 this.setResizable(false);
+			 this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			 
+			 
+			//Set the background color of the main panel
+				this.panelWithBackgroundOption.setImage("/backgroundframe.jpg");
+
+				//Set the main panel LayoutManager as BorderLayout
+				this.panelWithBackgroundOption.setLayout(new BorderLayout());
+
+			 //we set panelWithBackgroundOption as the ContentPane
+			 setContentPane(panelWithBackgroundOption);
+
+
+			 //Add the elements to the panel
+			 addElementsToPanel();
+
+
+
+		}
+		
+		
+		/**
+		 * @description method to set the JFrame icon
+		 */
+		private void setMyIcon() {
+
+			this.setIconImage (new ImageIcon(getClass().getResource("/iconoHotel.png")).getImage());
+//			com.apple.eawt.Application.getApplication().setDockIconImage(image);
+
+
+		}
+		
+		
+		
+		
+		
+		/**
+		 * @description method to add the different elements to the panel
+		 */
+		protected void addElementsToPanel() {
+			
+			
+			   this.toppanel.setLayout(new BorderLayout());
+			   this.toppanel.setOpaque(false);
+			   
+			   this.panelNameHotel.setLayout(new BorderLayout());
+			   this.panelNameHotel.setOpaque(false);
+			   
+			   //We call setImageJLabel to set the Image 
+			   this.nameHotelImage = new JLabel(setImageJLabel("/hotel_name_panel.png"));
+			   this.nameHotelImage.setPreferredSize(new Dimension(820,90));
+			   
+			
+			   this.nameHotelImage.setOpaque(false);
+			   
+			   
+			   this.iconHotel = new JLabel(setImageJLabel("/icon_inside.png"));
+				this.iconHotel.setPreferredSize(new Dimension(179, 161));
+			   
+
+			   this.containerPicsHotel.setLayout(new FlowLayout(FlowLayout.CENTER));
+				
+				this.picHoteLabel = new JLabel(setImageJLabel("/apt_h.jpg"));
+				this.picHoteLabel.setPreferredSize(new Dimension(670,150));
+
+				this.picHotelLabelRight = new JLabel();
+				
+				this.picHotelLabelRight = new JLabel(setImageJLabel("/hotel_pic_righ.png"));
+				this.picHotelLabelRight.setPreferredSize(new Dimension(410,170));
+				
+				
+				
+				this.containerPicsHotel.add(this.picHoteLabel);
+				this.containerPicsHotel.add(picHotelLabelRight);
+				this.containerPicsHotel.setOpaque(false);
+				
+
+				 
+				 
+				this.panelNameHotel.add(nameHotelImage, BorderLayout.NORTH);
+				this.toppanel.add(panelNameHotel, BorderLayout.WEST);
+				
+				this.toppanel.add(iconHotel, BorderLayout.EAST);
+				
+				
+				this.centerPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+				
+				this.centerPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), 
+						"Bitte wählen Sie das gewünschte Datenbankprogramm", TitledBorder.CENTER, 
+						TitledBorder.DEFAULT_POSITION, new Font("Verdana", Font.BOLD, 18), Color.decode("#FFFFFF")));  
+				
+				this.centerPanel.setOpaque(false);
+				
+
+				this.menuButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
+				 this.menuButtonPanel.setOpaque(false);
+				 
+				
+		    
+				    
+				    this.logoutButton.setPreferredSize(new Dimension(110,70));
+				    this.parkingButton.setPreferredSize(new Dimension(110,70));
+				    this.fundsachenButton.setPreferredSize(new Dimension(130,70));
+				    this.fitnessButton.setPreferredSize(new Dimension(140,70));     
+				    this.phonebookButton.setPreferredSize(new Dimension(130,70));
+
+				
+			    
+
+				this.menuButtonPanel.add(parkingButton);
+				this.menuButtonPanel.add(fundsachenButton);
+				this.menuButtonPanel.add(fitnessButton);
+				this.menuButtonPanel.add(phonebookButton);
+				this.menuButtonPanel.add(logoutButton);
+				
+				
+				this.centerPanel.add(menuButtonPanel, BorderLayout.NORTH);
+				this.centerPanel.add(containerPicsHotel, BorderLayout.CENTER);
+				
+				
+				
+				this.loginPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+				
+				this.loginUserText = new JLabel("Benutzer: ");
+				this.loginUserText.setFont(new Font("Verdana", Font.PLAIN, 14));
+				this.loginUserText.setForeground(Color.WHITE);
+				
+				this.loginPanel.add(loginUserText);
+				this.loginPanel.setBackground(Color.GRAY);
+				
+				
+				this.toppanel.add(loginPanel, BorderLayout.SOUTH);
+				
+				
+				
+				this.cadillac = new JLabel(setImageJLabel("/cadillac_oldtimer350x200.png"));
+				this.cadillac.setPreferredSize(new Dimension(350,200));
+
+				this.redLineNorth = new JLabel(setImageJLabel("/redline.png"));
+				this.redLineSouth = new JLabel(setImageJLabel("/redline.png"));
+
+				this.redLineSouth.setBorder(BorderFactory.createEmptyBorder(0, 0, 60, 0));
+				
+				
+				
+				this.southPanel.setLayout(new BorderLayout());
+				this.southPanel.setOpaque(false);
+				
+				
+				
+				
+
+
+
+				
+				
+				
+				this.buttonsPanelSouth.setOpaque(false);
+				this.buttonsPanelSouth.setLayout(new FlowLayout(FlowLayout.CENTER));
+				
+				
+				
+				//We create the buttons with their respective images, buttons that go south buttonPanelSouth
+
+					this.btn_createDB = new MyButton("/create_db.png");
+					this.btn_createDB.setToolTipText("Create personalized Data Base");
+					this.btn_createDB.setEnabled(false);
+					this.btn_createDB.setVisible(false);
+					this.btn_kontoVerwalten = new MyButton("/konto_verwalten.png");
+					this.btn_benutzerVerwalten  = new MyButton("/benutzer_verwalten.png");
+					this.btn_benutzerVerwalten.setEnabled(false);
+					this.btn_benutzerVerwalten.setVisible(false);
+					this.btn_exit = new MyButton("/exit_btn.png");
+					
+					
+					//add to the panel
+					buttonsPanelSouth.add(btn_createDB);
+					buttonsPanelSouth.add(btn_kontoVerwalten);
+					buttonsPanelSouth.add(btn_benutzerVerwalten);
+					buttonsPanelSouth.add(btn_exit);
+					
+					
+				
+				
+				this.buttonsPanelSouthContainer.setLayout(new BorderLayout());
+				this.buttonsPanelSouthContainer.setOpaque(false);
+				
+				this.buttonsPanelSouthContainer.add(this.redLineNorth, BorderLayout.NORTH);
+				this.buttonsPanelSouthContainer.add(buttonsPanelSouth, BorderLayout.CENTER);
+				this.buttonsPanelSouthContainer.add(this.redLineSouth, BorderLayout.SOUTH);
+
+				
+				
+				this.faceIcon = new JLabel(setImageJLabel("/facew.png"));
+				this.faceIcon.setPreferredSize(new Dimension(200,200));
+				
+				
+				this.southPanel.add(cadillac, BorderLayout.WEST);
+				this.southPanel.add(faceIcon, BorderLayout.EAST);
+				this.southPanel.add(buttonsPanelSouthContainer);
+				
+				
+				this.panelWithBackgroundOption.add(this.toppanel, BorderLayout.NORTH);
+				this.panelWithBackgroundOption.add(centerPanel, BorderLayout.CENTER);
+				this.panelWithBackgroundOption.add(this.southPanel, BorderLayout.SOUTH);
+				
+
+
+			}
+		
+		
+		
+		
+		
+		public ImageIcon setImageJLabel(String img) {
+
+			
+			this.myImage = new ImageIcon(getClass().getResource(img)).getImage();
+
+
+		     return new ImageIcon(this.myImage);
+
+		}
+
+		
+		
+
+		
 
 }
