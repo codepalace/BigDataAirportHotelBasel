@@ -89,15 +89,17 @@ public class BigDataAirportHotelBaselStartFrame extends JFrame {
 			this.menuButtonPanel = new JPanel();
 			this.containerPicsHotel = new JPanel();
 			
+			this.loginPanel = new JPanel();
+			
 			
 			
 			//Intanciamos los botones
-			 this.logoutButton = new MyButton("/btn_logout.png");
-			 this.parkingButton = new MyButton("/btn_parking.png");
-			 this.fundsachenButton = new MyButton("/btn_fundsachen.png");    
-			 this.fitnessButton = new MyButton("/btn_fitness.png");
-			 this.phonebookButton = new MyButton("/btn_telefonbuch.png");
-			 this.uebergabeButton = new MyButton("/btn_uebergabe.png");
+			 this.logoutButton = new MyButton("/img/btn_logout.png");
+			 this.parkingButton = new MyButton("/img/btn_parking.png");
+			 this.fundsachenButton = new MyButton("/img/btn_fundsachen.png");    
+			 this.fitnessButton = new MyButton("/img/btn_fitness_abo.png");
+			 this.phonebookButton = new MyButton("/img/btn_telefonbuch.png");
+			 this.uebergabeButton = new MyButton("/img/btn_uebergabe.png");
 			
 			 
 			//Creamos el panel contenedor del centro sur
@@ -146,7 +148,7 @@ public class BigDataAirportHotelBaselStartFrame extends JFrame {
 			 
 			 
 			//Set the background color of the main panel
-				this.panelWithBackgroundOption.setImage("/backgroundframe.jpg");
+				this.panelWithBackgroundOption.setImage("/img/backgroundframe.jpg");
 
 				//Set the main panel LayoutManager as BorderLayout
 				this.panelWithBackgroundOption.setLayout(new BorderLayout());
@@ -168,7 +170,7 @@ public class BigDataAirportHotelBaselStartFrame extends JFrame {
 		 */
 		private void setMyIcon() {
 
-			this.setIconImage (new ImageIcon(getClass().getResource("/iconoHotel.png")).getImage());
+			this.setIconImage (new ImageIcon(getClass().getResource("/img/iconoHotel.png")).getImage());
 //			com.apple.eawt.Application.getApplication().setDockIconImage(image);
 
 
@@ -191,25 +193,25 @@ public class BigDataAirportHotelBaselStartFrame extends JFrame {
 			   this.panelNameHotel.setOpaque(false);
 			   
 			   //We call setImageJLabel to set the Image 
-			   this.nameHotelImage = new JLabel(setImageJLabel("/hotel_name_panel.png"));
+			   this.nameHotelImage = new JLabel(setImageJLabel("/img/hotel_name_panel.png"));
 			   this.nameHotelImage.setPreferredSize(new Dimension(820,90));
 			   
 			
 			   this.nameHotelImage.setOpaque(false);
 			   
 			   
-			   this.iconHotel = new JLabel(setImageJLabel("/icon_inside.png"));
+			   this.iconHotel = new JLabel(setImageJLabel("/img/icon_inside.png"));
 				this.iconHotel.setPreferredSize(new Dimension(179, 161));
 			   
 
 			   this.containerPicsHotel.setLayout(new FlowLayout(FlowLayout.CENTER));
 				
-				this.picHoteLabel = new JLabel(setImageJLabel("/apt_h.jpg"));
+				this.picHoteLabel = new JLabel(setImageJLabel("/img/apt_h.jpg"));
 				this.picHoteLabel.setPreferredSize(new Dimension(670,150));
 
 				this.picHotelLabelRight = new JLabel();
 				
-				this.picHotelLabelRight = new JLabel(setImageJLabel("/hotel_pic_righ.png"));
+				this.picHotelLabelRight = new JLabel(setImageJLabel("/img/hotel_pic_righ.png"));
 				this.picHotelLabelRight.setPreferredSize(new Dimension(410,170));
 				
 				
@@ -279,11 +281,11 @@ public class BigDataAirportHotelBaselStartFrame extends JFrame {
 				
 				
 				
-				this.cadillac = new JLabel(setImageJLabel("/cadillac_oldtimer350x200.png"));
+				this.cadillac = new JLabel(setImageJLabel("/img/cadillac_oldtimer350x200.png"));
 				this.cadillac.setPreferredSize(new Dimension(350,200));
 
-				this.redLineNorth = new JLabel(setImageJLabel("/redline.png"));
-				this.redLineSouth = new JLabel(setImageJLabel("/redline.png"));
+				this.redLineNorth = new JLabel(setImageJLabel("/img/redline.png"));
+				this.redLineSouth = new JLabel(setImageJLabel("/img/redline.png"));
 
 				this.redLineSouth.setBorder(BorderFactory.createEmptyBorder(0, 0, 60, 0));
 				
@@ -308,15 +310,15 @@ public class BigDataAirportHotelBaselStartFrame extends JFrame {
 				
 				//We create the buttons with their respective images, buttons that go south buttonPanelSouth
 
-					this.btn_createDB = new MyButton("/create_db.png");
+					this.btn_createDB = new MyButton("/img/create_db.png");
 					this.btn_createDB.setToolTipText("Create personalized Data Base");
 					this.btn_createDB.setEnabled(false);
 					this.btn_createDB.setVisible(false);
-					this.btn_kontoVerwalten = new MyButton("/konto_verwalten.png");
-					this.btn_benutzerVerwalten  = new MyButton("/benutzer_verwalten.png");
+					this.btn_kontoVerwalten = new MyButton("/img/konto_verwalten.png");
+					this.btn_benutzerVerwalten  = new MyButton("/img/benutzer_verwalten.png");
 					this.btn_benutzerVerwalten.setEnabled(false);
 					this.btn_benutzerVerwalten.setVisible(false);
-					this.btn_exit = new MyButton("/exit_btn.png");
+					this.btn_exit = new MyButton("/img/exit_btn.png");
 					
 					
 					//add to the panel
@@ -337,7 +339,7 @@ public class BigDataAirportHotelBaselStartFrame extends JFrame {
 
 				
 				
-				this.faceIcon = new JLabel(setImageJLabel("/facew.png"));
+				this.faceIcon = new JLabel(setImageJLabel("/img/facew.png"));
 				this.faceIcon.setPreferredSize(new Dimension(200,200));
 				
 				
