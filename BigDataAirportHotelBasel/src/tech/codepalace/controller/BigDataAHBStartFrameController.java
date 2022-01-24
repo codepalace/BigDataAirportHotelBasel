@@ -7,6 +7,10 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
+import tech.codepalace.model.LogicModelStartFrame;
+import tech.codepalace.model.UserAHB;
+import tech.codepalace.view.frames.BigDataAirportHotelBaselStartFrame;
+
 /**
  * 
  * @author Antonio Estevez Gonzalez
@@ -16,6 +20,38 @@ import java.awt.event.WindowListener;
  */
 
 public class BigDataAHBStartFrameController implements ActionListener, KeyListener, WindowListener{
+	
+	// Create an instance of the main Frame class. The first GUI Class JFrame
+	private BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame;
+
+	// We create instance of the UserAHB that interacts with users
+	private UserAHB userAHB;
+
+	
+	//Instance of LogicModelStartFrame
+	private LogicModelStartFrame logicModelStartFrame;
+	
+	
+	/**
+	 * @description constructor method with parameters
+	 * @param bigDataAirportHotelBaselStartFrame
+	 * @param userAHB
+	 */
+	public BigDataAHBStartFrameController(BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame, UserAHB userAHB, LogicModelStartFrame logicModelStartFrame) {
+		
+		this.bigDataAirportHotelBaselStartFrame = bigDataAirportHotelBaselStartFrame;
+		this.userAHB = userAHB;
+		this.logicModelStartFrame = logicModelStartFrame;
+		
+		
+		
+		
+		
+	}
+	
+	
+	
+	
 
 	@Override
 	public void windowOpened(WindowEvent e) {
