@@ -46,7 +46,7 @@ public class BigDataAirportHotelBaselStartFrame extends JFrame {
 		private JLabel nameHotelImage, picHoteLabel,  picHotelLabelRight, iconHotel, redLineNorth, redLineSouth;
 		
 		//main buttons to access the different databases of the program
-		public JButton  logoutButton, parkingButton, fundsachenButton, phonebookButton, fitnessButton;
+		public JButton  logoutButton, parkingButton, fundsachenButton, phonebookButton, fitnessButton, uebergabeButton;
 		
 		
 		//JLabel to display the user logged in
@@ -97,6 +97,7 @@ public class BigDataAirportHotelBaselStartFrame extends JFrame {
 			 this.fundsachenButton = new MyButton("/btn_fundsachen.png");    
 			 this.fitnessButton = new MyButton("/btn_fitness.png");
 			 this.phonebookButton = new MyButton("/btn_telefonbuch.png");
+			 this.uebergabeButton = new MyButton("/btn_uebergabe.png");
 			
 			 
 			//Creamos el panel contenedor del centro sur
@@ -246,6 +247,7 @@ public class BigDataAirportHotelBaselStartFrame extends JFrame {
 				    this.fundsachenButton.setPreferredSize(new Dimension(130,70));
 				    this.fitnessButton.setPreferredSize(new Dimension(140,70));     
 				    this.phonebookButton.setPreferredSize(new Dimension(130,70));
+				    this.uebergabeButton.setPreferredSize(new Dimension(130, 70));
 
 				
 			    
@@ -253,6 +255,7 @@ public class BigDataAirportHotelBaselStartFrame extends JFrame {
 				this.menuButtonPanel.add(parkingButton);
 				this.menuButtonPanel.add(fundsachenButton);
 				this.menuButtonPanel.add(fitnessButton);
+				this.menuButtonPanel.add(uebergabeButton);
 				this.menuButtonPanel.add(phonebookButton);
 				this.menuButtonPanel.add(logoutButton);
 				
