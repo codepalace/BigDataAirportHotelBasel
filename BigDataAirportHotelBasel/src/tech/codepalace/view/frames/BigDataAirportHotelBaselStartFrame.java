@@ -238,18 +238,18 @@ public class BigDataAirportHotelBaselStartFrame extends JFrame {
 				this.centerPanel.setOpaque(false);
 				
 
-				this.menuButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
+				this.menuButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 20, 0));
 				 this.menuButtonPanel.setOpaque(false);
 				 
 				
 		    
 				    
-				    this.logoutButton.setPreferredSize(new Dimension(110,70));
-				    this.parkingButton.setPreferredSize(new Dimension(110,70));
-				    this.fundsachenButton.setPreferredSize(new Dimension(130,70));
-				    this.fitnessButton.setPreferredSize(new Dimension(140,70));     
-				    this.phonebookButton.setPreferredSize(new Dimension(130,70));
-				    this.uebergabeButton.setPreferredSize(new Dimension(130, 70));
+				    this.logoutButton.setPreferredSize(new Dimension(150,70));
+				    this.parkingButton.setPreferredSize(new Dimension(150,70));
+				    this.fundsachenButton.setPreferredSize(new Dimension(150,70));
+				    this.fitnessButton.setPreferredSize(new Dimension(150,70));     
+				    this.phonebookButton.setPreferredSize(new Dimension(150,70));
+				    this.uebergabeButton.setPreferredSize(new Dimension(150, 70));
 
 				
 			    
