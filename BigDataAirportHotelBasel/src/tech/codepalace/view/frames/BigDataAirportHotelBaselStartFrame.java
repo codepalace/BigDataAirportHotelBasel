@@ -207,12 +207,12 @@ public class BigDataAirportHotelBaselStartFrame extends JFrame {
 			   this.containerPicsHotel.setLayout(new FlowLayout(FlowLayout.CENTER));
 				
 				this.picHoteLabel = new JLabel(setImageJLabel("/img/apt_h.jpg"));
-				this.picHoteLabel.setPreferredSize(new Dimension(670,150));
+				this.picHoteLabel.setPreferredSize(new Dimension(575,170));
 
 				this.picHotelLabelRight = new JLabel();
 				
-				this.picHotelLabelRight = new JLabel(setImageJLabel("/img/hotel_pic_righ.png"));
-				this.picHotelLabelRight.setPreferredSize(new Dimension(410,170));
+				this.picHotelLabelRight = new JLabel(setImageJLabel("/img/hotel_pic_right.jpg"));
+				this.picHotelLabelRight.setPreferredSize(new Dimension(500,170));
 				
 				
 				
