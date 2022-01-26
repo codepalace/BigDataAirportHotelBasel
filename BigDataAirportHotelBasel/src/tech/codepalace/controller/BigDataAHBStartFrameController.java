@@ -43,7 +43,15 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 		this.userAHB = userAHB;
 		this.logicModelStartFrame = logicModelStartFrame;
 		
+		//ActionListener for the JButtons(Create Admin Dialog)
+		this.logicModelStartFrame.abbrechenJButton.addActionListener(this);
+		this.logicModelStartFrame.okButtonAdmin.addActionListener(this);
 		
+		
+		//KeyListner for the JButtons(Create Administrator User Dialog and also for kuerselMAJTextField
+		this.logicModelStartFrame.okButtonAdmin.addKeyListener(this);
+		this.logicModelStartFrame.abbrechenJButton.addKeyListener(this);
+		this.logicModelStartFrame.kuerselMAJTextField.addKeyListener(this);
 		
 		
 		
