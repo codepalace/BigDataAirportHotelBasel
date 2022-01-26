@@ -1,6 +1,10 @@
 package tech.codepalace.model;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -14,7 +18,12 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
+
+import tech.codepalace.utility.JTextFieldLimit;
 
 /**
  * 
@@ -43,6 +52,30 @@ public class LogicModelStartFrame {
 		private JLabel errorMessageJLabel; 
 		private JButton okButton = new JButton("OK");
 		private JDialog exitDialog;
+		
+		
+		
+		//Variables to create administrator user
+		private JDialog adminDialog;
+		
+		private JLabel adminJLabel, passwordJLabel, abkuerzungMAJLabel;
+		
+		public JTextField userAdminJTextField;
+		
+		public JTextField kuerselMAJTextField;
+		
+		public JPasswordField passwordField;
+
+		private ImageIcon imgUserRequest;
+		private JPanel panelAdmin;
+		
+		private GridBagLayout gbl;
+		private GridBagConstraints gbc;
+		
+		public JButton okButtonAdmin, abbrechenJButton;
+		
+		protected String userName = "", password="", abkuerzungMA="";
+		protected char[] userAppTextArray, passwordAppTextArray, abkuerzungMATextArray;
 		
 		
 		
@@ -233,8 +266,107 @@ public class LogicModelStartFrame {
 			 * Only one administrator user can delete other admin users.
 			 */
 			
-//			createAdminUser();
+			createAdminUser();
 			
+
+		}
+		
+		
+		
+		
+		/**
+		 * @description
+		 * Method to create administrator user
+		 */
+		protected void createAdminUser() {
+			
+			this.adminJLabel = new JLabel("Admin:");
+			this.adminJLabel.setPreferredSize(new Dimension(110, 20));
+			this.adminJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+			
+			
+			
+			this.passwordJLabel = new JLabel("Password:");
+			this.passwordJLabel.setPreferredSize(new Dimension(110, 20));
+			this.passwordJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+			
+			
+			this.abkuerzungMAJLabel = new JLabel("Abkürzung MA:");
+			this.abkuerzungMAJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+			this.abkuerzungMAJLabel.setPreferredSize(new Dimension(110, 20));
+			this.abkuerzungMAJLabel.setOpaque(true);
+			
+			
+			this.kuerselMAJTextField.setDocument(new JTextFieldLimit(4)); //We limit the number of characters that can be entered to 4
+			
+			
+			this.panelAdmin = new JPanel();
+
+			this.gbl = new GridBagLayout();
+			
+			this.panelAdmin.setLayout(gbl);
+			
+			this.gbc = new GridBagConstraints();
+			
+			
+			//add the elements to the panel GridBagLayout
+			this.gbc.gridx = 0; 
+			this.gbc.gridy = 0; 
+			this.gbl.setConstraints(adminJLabel, gbc);
+			this.panelAdmin.add(adminJLabel);
+			
+			this.gbc.gridx = 1;
+			this.gbc.gridy = 0;
+			this.gbc.insets = new Insets(0, 5, 0, 0);
+			this.gbl.setConstraints(userAdminJTextField, gbc);
+			this.panelAdmin.add(userAdminJTextField);
+			
+			
+			
+			this.gbc.gridx = 0; 
+			this.gbc.gridy = 1; 
+			this.gbc.insets = new Insets(5, 0, 0, 0);
+			this.gbl.setConstraints(passwordJLabel, gbc);
+			this.panelAdmin.add(passwordJLabel);
+			
+			this.gbc.gridx = 1;
+			this.gbc.gridy = 1; 
+			this.gbc.insets = new Insets(5, 5, 0, 0);
+			this.gbl.setConstraints(passwordField, gbc);
+			this.panelAdmin.add(passwordField);
+			
+			
+			this.gbc.gridx = 0;
+			this.gbc.gridy = 2; 
+			this.gbc.insets = new Insets(5, 0, 0, 0);
+			this.gbl.setConstraints(abkuerzungMAJLabel, gbc);
+			this.panelAdmin.add(abkuerzungMAJLabel);
+			   
+			   
+			this.gbc.gridx = 1;
+			this.gbc.gridy = 2; 
+			this.gbc.insets = new Insets(5, 5, 0, 0);
+			this.gbl.setConstraints(kuerselMAJTextField, gbc);
+			this.panelAdmin.add(kuerselMAJTextField);
+			
+			
+			
+			
+			this.optionButtons = new JButton[]{okButtonAdmin, this.abbrechenJButton};
+			
+			
+			
+			this.adminDialog = new JOptionPane(this.panelAdmin, JOptionPane.OK_CANCEL_OPTION, JOptionPane.NO_OPTION, imgUserRequest, optionButtons, 
+					null).createDialog("Please Enter Username and Password for the new Admin User");
+
+
+			this.adminDialog.setVisible(true);
+			this.adminDialog.dispose();
+
+			//No data was saved for the administrator we left the program.
+			if(!this.adminDialog.isVisible() && this.userName.equals("")) {
+				System.exit(0);
+			}
 
 		}
 		
