@@ -53,6 +53,9 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 		this.logicModelStartFrame.abbrechenJButton.addKeyListener(this);
 		this.logicModelStartFrame.kuerselMAJTextField.addKeyListener(this);
 		
+		//Add Windows Listener to BigDataAirportHotelBaselStartFrame
+		this.bigDataAirportHotelBaselStartFrame.addWindowListener(this);
+		
 		
 		
 	}

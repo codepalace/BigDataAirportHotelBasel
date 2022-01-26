@@ -83,6 +83,20 @@ public class LogicModelStartFrame {
 		
 		
 		
+		public LogicModelStartFrame() {
+			
+			this.imgUserRequest = new ImageIcon(getClass().getResource("/img/face90x90.png"));
+			this.okButtonAdmin = new JButton("Save Admin");
+			this.abbrechenJButton = new JButton("Abbrechen");
+			this.kuerselMAJTextField = new JTextField(20);
+			this.userAdminJTextField = new JTextField(20);
+			this.passwordField = new JPasswordField(20);
+			
+			this.gbl = new GridBagLayout();
+			this.gbc = new GridBagConstraints();
+			
+			
+		}
 		
 		
 		/**
@@ -131,9 +145,11 @@ public class LogicModelStartFrame {
 			  //The configuration file exists, we proceed to the login
 //				loginUser();
 
+//				System.out.println("Configuration file exist!");
 			} else {
 
 	
+//				System.out.println("Configuration file does not exist!");
 				//The configuration file does not exist. Set the local database path.
 				setDataBasePath();
 
