@@ -126,8 +126,21 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
 		
+
+		if (e.getSource()== this.logicModelStartFrame.okButtonAdmin && e.getKeyCode()== 10) {
+
+			this.logicModelStartFrame.checkEntryAdmin();
+		}else
+		
+		
+		if (e.getSource()== this.logicModelStartFrame.kuerselMAJTextField && e.getKeyCode()== 10) {
+
+			this.logicModelStartFrame.checkEntryAdmin();
+		}else if (e.getSource()==this.logicModelStartFrame.abbrechenJButton && e.getKeyCode() == 10) {
+			
+			System.exit(0);
+		}
 	}
 
 	@Override
