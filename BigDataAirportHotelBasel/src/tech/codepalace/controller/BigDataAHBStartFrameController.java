@@ -63,8 +63,23 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 
 	@Override
 	public void windowOpened(WindowEvent e) {
-		// TODO Auto-generated method stub
+
 		
+		/*
+		 * The JFrame BigDataAirportHotelBaselStartFrame is loaded, so we call the checkConfigurationFileProperties, located in LogicModelStartFrame. 
+		 * 
+		 * This method will check if the configuration file exists in the root of the program. 
+		 * 
+		 * If it does not exist, proceed to establish the path of the local database and create the administrator user. All this goes through the class LogicModelStartFrame.
+		 */
+		try {
+			this.logicModelStartFrame.checkConfigurationFileProperties();
+			
+			
+			
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 	}
 
 	@Override
@@ -121,9 +136,24 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 		
 	}
 
+	
+	
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		
+		if (e.getSource()==this.logicModelStartFrame.okButtonAdmin) {
+			
+			//We call the Method checkEntryAdmin to check if the data entered is correctly
+			this.logicModelStartFrame.checkEntryAdmin();
+			
+		//abort, we leave the program.
+		}else if (e.getSource()==this.logicModelStartFrame.abbrechenJButton) {
+		
+			System.exit(0);
+			
+		}
+
 		
 	}
 

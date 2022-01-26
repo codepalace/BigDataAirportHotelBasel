@@ -78,6 +78,10 @@ public class LogicModelStartFrame {
 		protected char[] userAppTextArray, passwordAppTextArray, abkuerzungMATextArray;
 		
 		
+		//Admin privile for the Propertie File
+		protected String privilegePropertieValue;
+		
+		
 		
 		
 		
@@ -182,7 +186,7 @@ public class LogicModelStartFrame {
 					
 					 */
 					this.urlDataBase = fileDataBaseFolder.getAbsolutePath();
-					
+					System.out.println("Path urlDataBase: " + this.urlDataBase);
 					
 	
 
@@ -369,6 +373,262 @@ public class LogicModelStartFrame {
 			}
 
 		}
+
+
+
+		
+		
+
+		/**
+		 * @description
+		 * Method that will check the input of the data for the administrator user in the dialog box that we have created for it.
+		 * 
+		 * <p>This method will be called from the corresponding controller class when interacting with the user
+		 * 
+		 * 
+		 * </p>
+		 */
+		public void checkEntryAdmin() {
+			
+			
+			//Set the values of the variables
+			
+			
+			this.userName = this.userAdminJTextField.getText();
+			this.userAppTextArray = this.userName.toCharArray();
+			
+			
+			String pwd = new String(this.passwordField.getPassword()); 
+			this.password = pwd;
+			this.passwordAppTextArray = this.password.toCharArray();
+			
+			
+			this.abkuerzungMA = this.kuerselMAJTextField.getText();
+			this.abkuerzungMATextArray = this.abkuerzungMA.toCharArray();
+			
+		
+			//Set value to privilege as ADMIN
+			this.privilegePropertieValue = "ADMIN";
+			
+
+			
+			//We call the Method to validate the Admin Entry
+			validateAdminEntry();
+			
+			//We call to check the other entries.
+			checkPasswordAdminEntry();
+			checkAbkuerzungMAAdminEntry();
+			
+		
+		
+			
+		}
+		
+		
+		
+		/**
+		 *@description 
+		 *
+		 *In this method after having set the data in the variables, collected from the different input boxes, we will check that the user has not entered blank spaces. 
+		 *Blanks spaces are not allowed for the user name.
+		 *
+		 *
+		 *We use an array to walk through the array for checking the data entered by the user and check if white spaces are found in the username or not.
+		 */
+		protected void validateAdminEntry() {
+			
+			
+			
+			
+			
+			   for(int i = 0; i < this.userAppTextArray.length; i++) {
+				   
+				   //We create a variable of type char so that it constantly receives the index that is traversed in the array
+				   char currentIndex = this.userAppTextArray[i];
+				   
+				  
+				   
+				   //We evaluate if an empty space is found
+				   if(currentIndex == ' ') {
+					   
+					   JOptionPane.showMessageDialog(null, "Leerzeichen sind für den Benutzernamen nicht zulässig\n\nVersuchen Sie es erneut mit einem gültigen Benutzernamen "
+							   , "Kritischer Fehler Benutzername", JOptionPane.ERROR_MESSAGE, this.errorImg);
+					   
+					   try {
+						   //Critical Error(Blan spaces) we call again createAdminUser method.
+						   createAdminUser();
+						   
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					   
+				   }
+			
+		}
+			   
+			   
+			   
+			   //We evaluate to recover the focus on the corresponding component
+			   if(this.userName.equals("")) {
+			 	  
+			 	  JOptionPane.showMessageDialog(null, "Bitte geben Sie einen Benutzernamen ein "
+			 			   , "Kritischer Fehler Benutzername", JOptionPane.ERROR_MESSAGE, this.errorImg);
+			 	  
+			 	  
+			 	  if(this.userName.equals("")) {
+			 		  this.userAdminJTextField.requestFocus();
+			 	  }else if (this.password.equals("")) {
+			 		this.passwordField.requestFocus();
+			 	}else {
+			 		this.kuerselMAJTextField.requestFocus();
+			 	}
+			   
+			   }
+			   
+		}
+		
+		
+		
+		/**
+		 * @description Method to check the data entered for the password
+		 * 
+		 * 
+		 */
+		protected void checkPasswordAdminEntry(){
+			
+			
+			//procedure almost identical to the method to check the user
+			
+			for(int i = 0; i < this.passwordAppTextArray.length; i++) {
+				   
+				
+				   
+				   char currentIndex = this.passwordAppTextArray[i];
+				   
+
+				   if(currentIndex == ' ') {
+					   
+					   JOptionPane.showMessageDialog(null, "Leerzeichen sind für das Passwort nicht zulässig. \n\nVersuchen Sie es erneut mit einem gültigen Passwort. "
+							   , "Kritischer Fehler Password", JOptionPane.ERROR_MESSAGE, this.errorImg);
+					   
+					   
+					   
+					   try {
+						   createAdminUser();
+					} catch (Exception e) {
+
+						e.printStackTrace();
+					}
+					   
+				   }
+			   }
+			
+			
+			
+			
+			if(this.password.equals("")){
+				  
+				  JOptionPane.showMessageDialog(null, "Bitte geben Sie ein Passwort ein "
+						   , "Kritischer Fehler Password", JOptionPane.ERROR_MESSAGE, this.errorImg);
+				  
+				  if(this.userName.equals("")) {
+					  this.userAdminJTextField.requestFocus();
+				  }else if (this.password.equals("")) {
+					this.passwordField.requestFocus();
+				}else {
+					this.kuerselMAJTextField.requestFocus();
+				}
+			  }
+			
+		}
+		
+		
+		
+		
+		
+		
+		/**
+		 * @description Method to check the data entered for the Abkürzung MA(Employee abbreviation)
+		 */
+		protected void checkAbkuerzungMAAdminEntry() {
+			
+			
+			
+			
+			for(int i = 0; i < this.abkuerzungMATextArray.length; i++) {
+				   
+				  
+				   char currentIndex = this.abkuerzungMATextArray[i];
+				   
+				  
+				   
+				   if(currentIndex == ' ') {
+					   
+					   JOptionPane.showMessageDialog(null, "Leerzeichen sind für das Abkürzung nicht zulässig. \n\nVersuchen Sie es erneut mit einem gültigen Abkürzung."
+							   , "Kritischer Fehler Abkürzung", JOptionPane.ERROR_MESSAGE, this.errorImg);
+					   
+					   try {
+						createAdminUser();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					   
+				   }
+			   }
+			
+			
+			
+			
+			
+			
+			if(this.abkuerzungMA.equals("")) {
+				  
+				  JOptionPane.showMessageDialog(null, "Bitte geben Sie eine Abkürzung MA ein. maximal 4 Buchstaben und Minimum 2 Buchstaben "
+						   , "Kritischer Fehler Abkürzung Mitarbeiter", JOptionPane.ERROR_MESSAGE, this.errorImg);
+
+				  
+				  
+				
+			}
+			
+			if(this.abkuerzungMA.length() < 2) {
+				JOptionPane.showMessageDialog(null, "Bitte geben Sie eine Abkürzung MA ein. maximal 4 Buchstaben und Minimum 2 Buchstaben"
+						   , "Kritischer Fehler Abkürzung Mitarbeiter", JOptionPane.ERROR_MESSAGE, this.errorImg);
+				
+				
+			}
+			
+			if(this.userName.equals("")) {
+				  this.userAdminJTextField.requestFocus();
+			  }else if (this.password.equals("")) {
+				this.passwordField.requestFocus();
+			}else {
+				this.kuerselMAJTextField.requestFocus();
+			}
+			
+			
+			
+		
+			if(!this.userName.equals("") && !this.password.equals("") && !this.abkuerzungMA.equals("")) {
+				this.adminDialog.dispose();
+				
+				/*
+				 *here we have to call a new method that encrypts the data entered before saving the information in the configuration file.
+				 *
+				 *
+				 *All the data is correct, there are correct entries we go to call the method that encrypts the data to save it in an encrypted way with the help 
+				 *of another method.
+				 */
+				
+				 System.out.println("time to encrypt the data to save it");
+				 //ToDo create a Method to encrypt the configuration file before saving all the information. 
+			}
+			
+			
+		}
+		
+		
+		
 		
 		
 		
