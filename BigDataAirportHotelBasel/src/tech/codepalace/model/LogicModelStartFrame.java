@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.HeadlessException;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,7 +24,10 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
+
+import tech.codepalace.utility.DataEncryption;
 import tech.codepalace.utility.JTextFieldLimit;
+
 
 /**
  * 
@@ -80,6 +84,16 @@ public class LogicModelStartFrame {
 		
 		//Admin privile for the Propertie File
 		protected String privilegePropertieValue;
+		
+		
+		//17 Creamos la instancia de DataEncrytation
+		//Creamos una instancia de la clase DataaEncryptation
+		protected DataEncryption dataEncryptation;
+		//17 Variablies para guardar los datos del usuario como nombre de propiedad y el valor que va a contener
+		//La propiedad como db.user. y el valor lor recibe de user name, db.url
+		protected String urlPropertieName, urlPropertieValue, userNamePropertieName, userNamePropertieValue, 
+		passwordPropertieName, passwordPropertieValue, privilegePropertieName, 
+		abkuerzungPropertieName, abkuerzungPropertieValue;
 		
 		
 		
@@ -636,12 +650,87 @@ public class LogicModelStartFrame {
 				 *of another method.
 				 */
 				
-				 System.out.println("time to encrypt the data to save it");
-				 //ToDo create a Method to encrypt the configuration file before saving all the information. 
+				
+				
+				/*
+				 * we call the method and pass the value of the privilege that the administrator user has.
+				 */
+				 encryptDataUser(privilegePropertieValue);
 			}
 			
 			
 		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		/**
+		 * @throws Exception 
+		 * @throws HeadlessException 
+		 * @description encryptDataUser, Method to encrypt the Data. This Method receive userPrivilege
+		 */
+		protected void encryptDataUser(String userPrivilege)  {
+			
+
+			
+			//We set the values to the variables before encrypt them.
+			this.urlPropertieName = "db.url";
+			this.urlPropertieValue = this.urlDataBase;
+			this.userNamePropertieName = "db.user." + this.userName;
+			this.userNamePropertieValue = this.userName;
+			this.passwordPropertieName = "db.password.user." + this.userName;
+			this.passwordPropertieValue = this.password;
+			this.privilegePropertieName = "db.privilege.user." + this.userName;
+			this.privilegePropertieValue = userPrivilege;
+			this.abkuerzungPropertieName = "db.abkuerzungma.user" + this.userName;
+			this.abkuerzungPropertieValue = this.abkuerzungMA;
+			
+			
+			
+			
+			
+			try {
+				
+			    //We encrypt the values and at the same time we set new values to the variables.
+				this.urlPropertieName = dataEncryptation.encryptData(this.urlPropertieName);
+				this.urlPropertieValue = dataEncryptation.encryptData(this.urlPropertieValue);
+				this.userNamePropertieName = dataEncryptation.encryptData(this.userNamePropertieName);
+				this.userNamePropertieValue = dataEncryptation.encryptData(this.userNamePropertieValue);
+				this.passwordPropertieName = dataEncryptation.encryptData(this.passwordPropertieName);
+				this.passwordPropertieValue = dataEncryptation.encryptData(this.passwordPropertieValue);
+				this.privilegePropertieName = dataEncryptation.encryptData(this.privilegePropertieName);
+				this.privilegePropertieValue = dataEncryptation.encryptData(this.privilegePropertieValue);
+				this.abkuerzungPropertieName = dataEncryptation.encryptData(this.abkuerzungPropertieName);
+				this.abkuerzungPropertieValue = dataEncryptation.encryptData(this.abkuerzungPropertieValue);
+				
+				System.out.println("urlPropertieName: " + this.urlPropertieName);
+				System.out.println("urlPropertieValue: " + this.urlPropertieValue);
+				System.out.println("userNamePropertieName: " + this.userNamePropertieName);
+				System.out.println("userNamePropertieValue: " + this.userNamePropertieValue);
+				System.out.println("passwordPropertieName: " + this.passwordPropertieName);
+				System.out.println("passwordPropertieValue: " + this.passwordPropertieValue);
+				System.out.println("privilegePropertieName: " + this.privilegePropertieName);
+				System.out.println("privilegePropertieValue: " + this.privilegePropertieValue);
+				System.out.println("abkuerzungPropertieName: " + this.abkuerzungPropertieName);
+				System.out.println("abkuerzungPropertieValue: " + this.abkuerzungPropertieValue);
+				
+			} catch (HeadlessException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			
+		}
+		
 		
 		
 		
