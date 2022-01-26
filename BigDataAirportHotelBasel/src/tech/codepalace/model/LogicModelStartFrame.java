@@ -109,6 +109,9 @@ public class LogicModelStartFrame {
 			this.gbl = new GridBagLayout();
 			this.gbc = new GridBagConstraints();
 			
+			//Initialize DataEncryption
+			this.dataEncryptation = new DataEncryption();
+			
 			
 		}
 		
