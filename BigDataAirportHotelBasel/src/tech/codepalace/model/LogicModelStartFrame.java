@@ -27,6 +27,7 @@ import javax.swing.UIManager;
 
 import tech.codepalace.utility.DataEncryption;
 import tech.codepalace.utility.JTextFieldLimit;
+import tech.codepalace.utility.PropertiesWriter;
 
 
 /**
@@ -86,14 +87,19 @@ public class LogicModelStartFrame {
 		protected String privilegePropertieValue;
 		
 		
-		//17 Creamos la instancia de DataEncrytation
-		//Creamos una instancia de la clase DataaEncryptation
+		
+		//Instance DataEncryption
 		protected DataEncryption dataEncryptation;
-		//17 Variablies para guardar los datos del usuario como nombre de propiedad y el valor que va a contener
-		//La propiedad como db.user. y el valor lor recibe de user name, db.url
+		
+		
+		//Variables to write the Propertie File
 		protected String urlPropertieName, urlPropertieValue, userNamePropertieName, userNamePropertieValue, 
 		passwordPropertieName, passwordPropertieValue, privilegePropertieName, 
 		abkuerzungPropertieName, abkuerzungPropertieValue;
+		
+		
+		//Instance PropertiesWriter
+		protected PropertiesWriter propertiesWriter;
 		
 		
 		
@@ -714,16 +720,31 @@ public class LogicModelStartFrame {
 				this.abkuerzungPropertieName = dataEncryptation.encryptData(this.abkuerzungPropertieName);
 				this.abkuerzungPropertieValue = dataEncryptation.encryptData(this.abkuerzungPropertieValue);
 				
-				System.out.println("urlPropertieName: " + this.urlPropertieName);
-				System.out.println("urlPropertieValue: " + this.urlPropertieValue);
-				System.out.println("userNamePropertieName: " + this.userNamePropertieName);
-				System.out.println("userNamePropertieValue: " + this.userNamePropertieValue);
-				System.out.println("passwordPropertieName: " + this.passwordPropertieName);
-				System.out.println("passwordPropertieValue: " + this.passwordPropertieValue);
-				System.out.println("privilegePropertieName: " + this.privilegePropertieName);
-				System.out.println("privilegePropertieValue: " + this.privilegePropertieValue);
-				System.out.println("abkuerzungPropertieName: " + this.abkuerzungPropertieName);
-				System.out.println("abkuerzungPropertieValue: " + this.abkuerzungPropertieValue);
+//				System.out.println("urlPropertieName: " + this.urlPropertieName);
+//				System.out.println("urlPropertieValue: " + this.urlPropertieValue);
+//				System.out.println("userNamePropertieName: " + this.userNamePropertieName);
+//				System.out.println("userNamePropertieValue: " + this.userNamePropertieValue);
+//				System.out.println("passwordPropertieName: " + this.passwordPropertieName);
+//				System.out.println("passwordPropertieValue: " + this.passwordPropertieValue);
+//				System.out.println("privilegePropertieName: " + this.privilegePropertieName);
+//				System.out.println("privilegePropertieValue: " + this.privilegePropertieValue);
+//				System.out.println("abkuerzungPropertieName: " + this.abkuerzungPropertieName);
+//				System.out.println("abkuerzungPropertieValue: " + this.abkuerzungPropertieValue);
+				
+				
+				//Initialize the PropertiesWriter instance
+				this.propertiesWriter = new PropertiesWriter();
+				
+				//We call to write the Properties to the file config.properties in the root folder of the application.
+				this.propertiesWriter.writeProperties(this.urlPropertieName, this.urlPropertieValue);
+				this.propertiesWriter.writeProperties(this.userNamePropertieName, this.userNamePropertieValue);
+				this.propertiesWriter.writeProperties(this.passwordPropertieName, this.passwordPropertieValue);
+				this.propertiesWriter.writeProperties(this.privilegePropertieName, this.privilegePropertieValue);
+				this.propertiesWriter.writeProperties(this.abkuerzungPropertieName, this.abkuerzungPropertieValue);
+				
+				
+				//After config.properties file is created we have to call loginUser for the first time with the new created user
+				
 				
 			} catch (HeadlessException e) {
 				e.printStackTrace();
