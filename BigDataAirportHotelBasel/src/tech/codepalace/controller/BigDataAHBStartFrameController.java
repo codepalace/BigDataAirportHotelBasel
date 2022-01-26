@@ -56,6 +56,13 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 		//Add Windows Listener to BigDataAirportHotelBaselStartFrame
 		this.bigDataAirportHotelBaselStartFrame.addWindowListener(this);
 		
+		//Add Action and KeyListener for some elements of the Login Dialgo Box
+		this.logicModelStartFrame.loginButton.addActionListener(this);
+		this.logicModelStartFrame.loginButton.addKeyListener(this);
+		this.logicModelStartFrame.cancelLoginButton.addActionListener(this);
+		this.logicModelStartFrame.cancelLoginButton.addKeyListener(this);
+		this.logicModelStartFrame.passwordLoginJPasswordField.addKeyListener(this);
+		
 		
 		
 	}
@@ -120,6 +127,13 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 		// TODO Auto-generated method stub
 		
 	}
+	
+	
+	
+	
+	
+	
+	
 
 	@Override
 	public void keyTyped(KeyEvent e) {
@@ -143,7 +157,49 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 		}else if (e.getSource()==this.logicModelStartFrame.abbrechenJButton && e.getKeyCode() == 10) {
 			
 			System.exit(0);
-		}
+		}else if (e.getSource()== this.logicModelStartFrame.loginButton && e.getKeyCode() == 10) {
+			
+			
+			System.out.println("Ready for login");
+			
+			/*
+			 *The user pressed login, we have to create a method to set the entered login values to the variables. 
+			 *
+			 *@ToDO
+			 *
+			 *The method to set the values will be called from here and we need also a class to read configuration file properties. 
+			 *
+			 *And now that I'm thinking about that, we need to first call the class that decrypts the data saved in the configuration file.
+			 *
+			 *In the class that reads the properties we will have to compare 
+			 *if the password entered by the user matches the password we have in the configuration file for that particular user.
+			 *
+			 *
+			 */
+	
+		
+		}else if (e.getSource()== this.logicModelStartFrame.cancelLoginButton && e.getKeyCode() == 10) {
+			System.exit(0);
+		
+		}else if (e.getSource()==this.logicModelStartFrame.passwordLoginJPasswordField && e.getKeyCode() == 10) {
+
+			System.out.println("Ready for login");
+			
+			/*
+			 *The user pressed login, we have to create a method to set the entered login values to the variables. 
+			 *
+			 *@ToDO
+			 *
+			 *The method to set the values will be called from here and we need also a class to read configuration file properties. 
+			 *
+			 *And now that I'm thinking about that, we need to first call the class that decrypts the data saved in the configuration file.
+			 *
+			 *In the class that reads the properties we will have to compare 
+			 *if the password entered by the user matches the password we have in the configuration file for that particular user.
+			 *
+			 *
+			 */
+		} 
 	}
 
 	@Override
@@ -152,6 +208,12 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 		
 	}
 
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -166,6 +228,29 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 		//abort, we leave the program.
 		}else if (e.getSource()==this.logicModelStartFrame.abbrechenJButton) {
 		
+			System.exit(0);
+			
+		}else if(e.getSource()==this.logicModelStartFrame.loginButton) {
+			System.out.println("You have pressed login");
+			
+			/*
+			 *The user pressed login, we have to create a method to set the entered login values to the variables. 
+			 *
+			 *@ToDO
+			 *
+			 *The method to set the values will be called from here and we need also a class to read configuration file properties. 
+			 *
+			 *And now that I'm thinking about that, we need to first call the class that decrypts the data saved in the configuration file.
+			 *
+			 *In the class that reads the properties we will have to compare 
+			 *if the password entered by the user matches the password we have in the configuration file for that particular user.
+			 *
+			 *
+			 */
+			
+		}else if(e.getSource()==this.logicModelStartFrame.cancelLoginButton) { //User Cancelled login
+			
+			//We close the application
 			System.exit(0);
 			
 		}

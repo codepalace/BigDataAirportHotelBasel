@@ -102,6 +102,16 @@ public class LogicModelStartFrame {
 		protected PropertiesWriter propertiesWriter;
 		
 		
+		//Variables for the login dialog box
+		protected JDialog dialogLogin;
+		protected JButton[] optionButtonsLogin;
+		public JButton loginButton, cancelLoginButton;
+		private JPanel panelContainerLogin;
+		private JLabel userNameJLabel, passwordLoginJLabel;
+		protected JTextField userLoginJTextField;
+		public JPasswordField passwordLoginJPasswordField; 
+		
+		
 		
 		public LogicModelStartFrame() {
 			
@@ -117,6 +127,12 @@ public class LogicModelStartFrame {
 			
 			//Initialize DataEncryption
 			this.dataEncryptation = new DataEncryption();
+			
+			
+			//Initialize the JButtons and the JPasswordField to call from Controller Class
+			this.passwordLoginJPasswordField = new JPasswordField(20);
+			this.loginButton = new JButton("Login");
+			this.cancelLoginButton = new JButton("Abbrechen");
 			
 			
 		}
@@ -166,7 +182,7 @@ public class LogicModelStartFrame {
 
 
 			  //The configuration file exists, we proceed to the login
-//				loginUser();
+				loginUser();
 
 //				System.out.println("Configuration file exist!");
 			} else {
@@ -744,7 +760,7 @@ public class LogicModelStartFrame {
 				
 				
 				//After config.properties file is created we have to call loginUser for the first time with the new created user
-				
+				loginUser();
 				
 			} catch (HeadlessException e) {
 				e.printStackTrace();
@@ -754,6 +770,90 @@ public class LogicModelStartFrame {
 
 			
 		}
+		
+		
+		
+		
+		
+		/**
+		 * @description Method for login. 
+		 * 
+		 * <p>this method will be called if the properties file exists.</p>
+		 */
+		public void loginUser() {
+		
+
+			//Create our array that will have the login buttons
+			this.optionButtonsLogin = new JButton[] {this.loginButton, this.cancelLoginButton};
+			
+			this.userNameJLabel = new JLabel("User:");
+			this.userNameJLabel.setPreferredSize(new Dimension(110, 20));
+			this.userNameJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+			
+			this.passwordLoginJLabel = new JLabel("Password:");
+			this.passwordLoginJLabel.setPreferredSize(new Dimension(110, 20));
+			this.passwordLoginJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+			
+			this.userLoginJTextField = new JTextField(20);
+			
+			//JTextFields = ""
+			this.userLoginJTextField.setText("");
+			this.passwordLoginJPasswordField.setText("");
+			
+			
+			this.panelContainerLogin = new JPanel();
+			this.gbl = new GridBagLayout();
+			
+			this.panelContainerLogin.setLayout(gbl);
+
+
+			this.gbc.gridx = 0;
+			this.gbc.gridy = 0;
+			this.panelContainerLogin.add(this.userNameJLabel, gbc);
+			
+
+			this.gbc.gridx = 1;
+			this.gbc.gridy = 0;
+			this.gbc.insets = new Insets(0, 5, 0, 0);
+			this.panelContainerLogin.add(userLoginJTextField, gbc);
+			
+
+			this.gbc.gridx = 0; 
+			this.gbc.gridy = 1; 
+			this.gbc.insets = new Insets(5, 0, 0, 0);
+			this.panelContainerLogin.add(passwordLoginJLabel, gbc);
+			
+
+			this.gbc.gridx = 1;
+			this.gbc.gridy = 1; 
+			this.gbc.insets = new Insets(5, 5, 0, 0);
+			this.panelContainerLogin.add(passwordLoginJPasswordField, gbc);
+			
+			
+			
+			
+			this.dialogLogin = new JOptionPane(this.panelContainerLogin, JOptionPane.OK_CANCEL_OPTION, JOptionPane.NO_OPTION, imgUserRequest, optionButtonsLogin, 
+					null).createDialog("Bitte geben Sie Ihren Benutzernamen und Ihr Passwort ein.");
+
+
+			this.dialogLogin.setVisible(true);
+			this.dialogLogin.dispose();
+			
+			
+			//If the dialog box is visible and the username is empty, we exit the program. The user does not want to continue.
+			if(!this.dialogLogin.isVisible() && this.userName.equals("")) {
+				System.exit(0);
+			}
+
+
+			
+			
+			
+			
+			
+			
+		}
+		
 		
 		
 		
