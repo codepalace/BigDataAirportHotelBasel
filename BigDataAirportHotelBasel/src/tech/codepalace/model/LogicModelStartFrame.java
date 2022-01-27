@@ -27,6 +27,7 @@ import javax.swing.UIManager;
 
 import tech.codepalace.utility.DataEncryption;
 import tech.codepalace.utility.JTextFieldLimit;
+import tech.codepalace.utility.LoginDataUser;
 import tech.codepalace.utility.PropertiesWriter;
 
 
@@ -111,6 +112,12 @@ public class LogicModelStartFrame {
 		protected JTextField userLoginJTextField;
 		public JPasswordField passwordLoginJPasswordField; 
 		
+		//New Instance UserAHB
+		private UserAHB userAHB;
+		
+		//New Instance LoginDataUser
+		protected LoginDataUser loginDataUser; 
+		
 		
 		
 		public LogicModelStartFrame() {
@@ -133,6 +140,10 @@ public class LogicModelStartFrame {
 			this.passwordLoginJPasswordField = new JPasswordField(20);
 			this.loginButton = new JButton("Login");
 			this.cancelLoginButton = new JButton("Abbrechen");
+			
+			//Initialize UserAHB
+			this.userAHB = new UserAHB();
+			
 			
 			
 		}
@@ -845,18 +856,105 @@ public class LogicModelStartFrame {
 				System.exit(0);
 			}
 
-
-			
-			
-			
-			
-			
-			
 		}
 		
 		
 		
 		
+		/**
+		 * @description setLoginValue, this method will set the values, username and password entered by the user in the login dialog box.
+		 * when this method is called, we must set the values for the properties that must be read from the configuration file.(property names and property values).
+		 * 
+		 * <br/><br/>
+		 * <ul><li>The values we collect from the user that will be used for reading the properties(user name and password).</li>
+		 * 
+		 * <li>We have to use a class to temporarily set this login data.</li>
+		 * 
+		 * <li>We call the class that reads the properties from the configuration file. The class checks that the user exists in the 
+		 * configuration file and that the passwords match, and if the passwords match then set the data in the users class.</li>
+		 * 
+		 * </ul>
+		 */
+		public void setLoginValue() {
+			
+			//We set the entered Username and Password
+			this.userName = this.userLoginJTextField.getText();
+			String pwd = new String(this.passwordLoginJPasswordField.getPassword()); 
+			this.password = pwd;
+			
+			//we check that the data is not empty
+			if(this.userName.equals("") || this.password.equals("")) {
+				
+				
+				this.dialogLogin.dispose();
+				JOptionPane.showMessageDialog(null, "Benutzername oder Passwort dürfen nicht leer sein"
+						   , "Geben Sie einen gültigen Benutzernamen und ein gültiges Passwort ein", JOptionPane.ERROR_MESSAGE, this.errorImg);
+				
+				//Data is empty then we call loginUser method.
+				loginUser();
+		
+		}else {
+			
+			//Set the values of the properties
+			this.urlPropertieName = "db.url";
+			this.privilegePropertieName = "db.privilege.user." + this.userName;
+			this.abkuerzungPropertieName = "db.abkuerzungma.user" + this.userName;
+			
+			this.userNamePropertieName = "db.user." + this.userName;
+			this.passwordPropertieName = "db.password.user." + this.userName;
+			
+			
+			
+			
+			//we encrypt the data
+			try {
+				
+
+				this.urlPropertieName = dataEncryptation.encryptData(this.urlPropertieName);
+				this.privilegePropertieName = dataEncryptation.encryptData(this.privilegePropertieName);
+				this.abkuerzungPropertieName = dataEncryptation.encryptData(this.abkuerzungPropertieName);
+				this.userNamePropertieName = this.dataEncryptation.encryptData(userNamePropertieName);
+				this.passwordPropertieName = this.dataEncryptation.encryptData(passwordPropertieName);
+				this.password = this.dataEncryptation.encryptData(this.password);
+				
+				
+				//Initialize the instance LoginDataUser
+				this.loginDataUser = new LoginDataUser();
+				
+				//Set the values
+				this.loginDataUser.setUrlPropertieName(this.urlPropertieName);
+				this.loginDataUser.setUserNamePropertieName(this.userNamePropertieName);
+				this.loginDataUser.setPasswordPropertieName(this.passwordPropertieName);
+				this.loginDataUser.setPasswordEnteredByTheUser(this.password);
+				this.loginDataUser.setPrivilegePropertieName(this.privilegePropertieName);
+				this.loginDataUser.setAbkuerzungPropertieName(this.abkuerzungPropertieName);
+				
+				
+				//We test
+				System.out.println("urlPropertieName: " + this.loginDataUser.getUrlPropertieName());
+				System.out.println("userNamePropertieName: " + this.loginDataUser.getUserNamePropertieName());
+				System.out.println("passwordPropertieName: " + this.loginDataUser.getPasswordPropertieName());
+				System.out.println("password: " + this.loginDataUser.getPasswordEnteredByTheUser());
+				System.out.println("privilegePropertieName: " + this.loginDataUser.getPrivilegePropertieName());
+				System.out.println("abkuerzungPropertieName: " + this.loginDataUser.getAbkuerzungPropertieName());
+
+				
+				
+				
+			} catch (Exception e) {
+				
+				e.printStackTrace();
+			}
+			
+			
+			
+		}
+			
+			
+			
+		}
+			
+			
 		
 		
 		

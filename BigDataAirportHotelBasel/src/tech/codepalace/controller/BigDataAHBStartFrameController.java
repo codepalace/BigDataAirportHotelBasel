@@ -176,6 +176,9 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 			 *
 			 *
 			 */
+			
+			//Call the setLoginValue method
+			this.logicModelStartFrame.setLoginValue();
 	
 		
 		}else if (e.getSource()== this.logicModelStartFrame.cancelLoginButton && e.getKeyCode() == 10) {
@@ -199,6 +202,10 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 			 *
 			 *
 			 */
+			
+			
+			//Call the setLoginValue method
+			this.logicModelStartFrame.setLoginValue();
 		} 
 	}
 
@@ -247,6 +254,9 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 			 *
 			 *
 			 */
+			
+			//Call the setLoginValue method
+			this.logicModelStartFrame.setLoginValue();
 			
 		}else if(e.getSource()==this.logicModelStartFrame.cancelLoginButton) { //User Cancelled login
 			
