@@ -28,6 +28,7 @@ import javax.swing.UIManager;
 import tech.codepalace.utility.DataEncryption;
 import tech.codepalace.utility.JTextFieldLimit;
 import tech.codepalace.utility.LoginDataUser;
+import tech.codepalace.utility.PropertiesReader;
 import tech.codepalace.utility.PropertiesWriter;
 
 
@@ -117,6 +118,38 @@ public class LogicModelStartFrame {
 		
 		//New Instance LoginDataUser
 		protected LoginDataUser loginDataUser; 
+		
+		
+		//New Instance PropertiesReader
+		private PropertiesReader propertiesReader;
+		
+		
+		//Variable for the user privilege
+		protected String privilegeUser;
+		
+
+		//We get the user privile
+		public String getPrivilegeUser() {
+			return privilegeUser;
+		}
+		
+		//Variable to indicate that the password is correct
+		protected boolean passwordIsCorrect = false;
+		
+		
+		//get password status
+		public boolean isPasswordIsCorrect() {
+			return passwordIsCorrect;
+		}
+
+
+
+
+		//set password status
+		public void setPasswordIsCorrect(boolean passwordIsCorrect) {
+			this.passwordIsCorrect = passwordIsCorrect;
+		}
+		
 		
 		
 		
@@ -917,6 +950,9 @@ public class LogicModelStartFrame {
 				this.passwordPropertieName = this.dataEncryptation.encryptData(passwordPropertieName);
 				this.password = this.dataEncryptation.encryptData(this.password);
 				
+				//Initialize the instance PropertiesReader
+				this.propertiesReader = new PropertiesReader();
+				
 				
 				//Initialize the instance LoginDataUser
 				this.loginDataUser = new LoginDataUser();
@@ -931,22 +967,60 @@ public class LogicModelStartFrame {
 				
 				
 				//We test
-				System.out.println("urlPropertieName: " + this.loginDataUser.getUrlPropertieName());
-				System.out.println("userNamePropertieName: " + this.loginDataUser.getUserNamePropertieName());
-				System.out.println("passwordPropertieName: " + this.loginDataUser.getPasswordPropertieName());
-				System.out.println("password: " + this.loginDataUser.getPasswordEnteredByTheUser());
-				System.out.println("privilegePropertieName: " + this.loginDataUser.getPrivilegePropertieName());
-				System.out.println("abkuerzungPropertieName: " + this.loginDataUser.getAbkuerzungPropertieName());
+//				System.out.println("urlPropertieName: " + this.loginDataUser.getUrlPropertieName());
+//				System.out.println("userNamePropertieName: " + this.loginDataUser.getUserNamePropertieName());
+//				System.out.println("passwordPropertieName: " + this.loginDataUser.getPasswordPropertieName());
+//				System.out.println("password: " + this.loginDataUser.getPasswordEnteredByTheUser());
+//				System.out.println("privilegePropertieName: " + this.loginDataUser.getPrivilegePropertieName());
+//				System.out.println("abkuerzungPropertieName: " + this.loginDataUser.getAbkuerzungPropertieName());		
+				
+				
+				//We call the readPropertiesData method by passing the loginDataUser and userAHB instances as argument
+				this.propertiesReader.readPropertiesData(this.loginDataUser, this.userAHB);
+				
+				
+				//We check if the Password entered by the User is correct
+				if (this.propertiesReader.isPasswordIsCorrect()) {
+					
 
+					//set the value of the privilege variable, first decrypt that value. We can after use it to grant more or less privilege to the user.
+					this.privilegeUser = this.dataEncryptation.decryptData(this.userAHB.getPrivilege());
+					
+					
+					//We set passwordIsCorrect as true
+					this.passwordIsCorrect = true;
+					
+					
+					//Close the Dialog Box
+					dialogLogin.dispose();
+					
+					
+					//Test
+					System.out.println("Users and passwords are correct");
+				}else {
+					
+					//Password is not correct
+					this.passwordIsCorrect = false;
+					
+					//reset values
+					this.userName = "";
+					this.userLoginJTextField.setText("");
+					this.passwordLoginJPasswordField.setText("");
+					
+					//request focus
+					this.userLoginJTextField.requestFocus();
+					
+					//Test
+					System.out.println("Users and passwords are not correct");
+					
+					
+				}
 				
-				
-				
+
 			} catch (Exception e) {
-				
 				e.printStackTrace();
 			}
-			
-			
+
 			
 		}
 			

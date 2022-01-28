@@ -43,8 +43,7 @@ public class PropertiesReader extends Properties {
 	//Instance Properties
 	private Properties prop = new Properties();
 	
-	
-	private ImageIcon errorImg = new ImageIcon("src" + File.separator + "img"  + File.separator  + "error.png");
+	private ImageIcon errorImg = new ImageIcon(getClass().getResource("/img/error.png"));
 	
 	
 	public PropertiesReader() {}
