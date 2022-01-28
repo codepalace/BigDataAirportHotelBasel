@@ -215,7 +215,7 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 				
 				
 				//we get the user privile
-				//checkPrivilegeUser();
+				checkPrivilegeUser();
 			}
 			
 		
@@ -266,7 +266,7 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 				
 				
 				//we get the user privile
-				//checkPrivilegeUser();
+				checkPrivilegeUser();
 			}
 			
 		}else if (e.getSource()==this.logicModelStartFrame.cancelLoginButton) {
@@ -347,7 +347,7 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 				
 				
 				//we get the user privile
-				//checkPrivilegeUser();
+				checkPrivilegeUser();
 			}
 			
 		}else if (e.getSource()==this.logicModelStartFrame.cancelLoginButton) {
@@ -359,5 +359,31 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 
 		
 	}
+	
+	
+	
+	
+/**
+ * @description this method evaluates the privileges of the user and depending on the privileges of the user we offer different functionalities of the program.
+ */
+protected void checkPrivilegeUser() {
+		
+		switch (this.privilegeUser) {
+		case "ADMIN":
+			
+
+			//As an administrator we make visible the buttons only for administrators
+			this.bigDataAirportHotelBaselStartFrame.btn_benutzerVerwalten.setVisible(true);
+			this.bigDataAirportHotelBaselStartFrame.btn_benutzerVerwalten.setEnabled(true);
+			this.bigDataAirportHotelBaselStartFrame.btn_createDB.setVisible(true);
+			this.bigDataAirportHotelBaselStartFrame.btn_createDB.setEnabled(true);
+			break;
+
+		default:
+			break;
+		}
+	}
+	
+	
 
 }
