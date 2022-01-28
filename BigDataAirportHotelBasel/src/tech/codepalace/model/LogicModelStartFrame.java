@@ -1027,6 +1027,15 @@ public class LogicModelStartFrame {
 			
 			
 		}
+		
+		
+		/**
+		 * 
+		 * @return
+		 */
+		public UserAHB getUserAHB() {
+			return userAHB;
+		}
 			
 			
 		
