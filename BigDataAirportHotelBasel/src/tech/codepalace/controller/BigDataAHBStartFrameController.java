@@ -2,6 +2,8 @@ package tech.codepalace.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
@@ -23,14 +25,14 @@ import tech.codepalace.view.frames.BigDataAirportHotelBaselStartFrame;
 public class BigDataAHBStartFrameController implements ActionListener, KeyListener, WindowListener{
 	
 	// Create an instance of the main Frame class. The first GUI Class JFrame
-	private BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame;
+	private BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame = new BigDataAirportHotelBaselStartFrame();
 
 	// We create instance of the UserAHB that interacts with users
 	private UserAHB userAHB;
 
 	
 	//Instance of LogicModelStartFrame
-	private LogicModelStartFrame logicModelStartFrame;
+	private LogicModelStartFrame logicModelStartFrame = new LogicModelStartFrame();
 	
 	
 	/*
@@ -41,6 +43,9 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 	
 	//Create an instance DataEncryption to decrypt the data
 	protected DataEncryption dataEncryption;
+	
+	//Variable for the parkingButton Focus initialize false.
+	private boolean iHaveTheFocus = false;
 	
 	
 	/**
@@ -77,6 +82,53 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 		
 		//Initialize DataEncription for using with the login data
 		this.dataEncryption = new DataEncryption();
+		
+		
+		//addActionListener to the buttons in JFrame
+		this.bigDataAirportHotelBaselStartFrame.parkingButton.addActionListener(this);
+		this.bigDataAirportHotelBaselStartFrame.fundsachenButton.addActionListener(this);
+		this.bigDataAirportHotelBaselStartFrame.fitnessButton.addActionListener(this);
+		this.bigDataAirportHotelBaselStartFrame.uebergabeButton.addActionListener(this);
+		this.bigDataAirportHotelBaselStartFrame.phonebookButton.addActionListener(this);
+		this.bigDataAirportHotelBaselStartFrame.logoutButton.addActionListener(this);
+		
+		this.bigDataAirportHotelBaselStartFrame.btn_createDB.addActionListener(this);
+		this.bigDataAirportHotelBaselStartFrame.btn_benutzerVerwalten.addActionListener(this);
+		this.bigDataAirportHotelBaselStartFrame.btn_kontoVerwalten.addActionListener(this);
+		this.bigDataAirportHotelBaselStartFrame.btn_exit.addActionListener(this);
+		
+		
+		/* addFocusListener to parkingButton we are going to use this to set the focus always to the parkinbButton
+		 *  i found this useful to be able to use the special keys for each menu F2, F3, F4 etc.
+		 *  
+		 *  for that functionality, I figured I should know that a particular element should always have the focus.
+		 *  
+		 *  I know there are several roads that lead to Rome, but this was the one I found that I liked.
+		 */
+		this.bigDataAirportHotelBaselStartFrame.parkingButton.addFocusListener(new FocusListener() {
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				
+				//We need a new variable boolean to set the value true or false if the Jbutton has the focus or not
+				//We get the value from logicModelStartFrame calling a Method for checking if i have the Focus or not
+				iHaveTheFocus = logicModelStartFrame.getisiHaveTheFocus();
+				
+				//Value is true we requestFocus for the parkingButton
+				if (iHaveTheFocus) {
+					System.out.println("parkingButton has the Focus");
+					bigDataAirportHotelBaselStartFrame.parkingButton.requestFocus();
+					
+				}else {
+					System.out.println("parkingButton has not the Focus");
+				}
+			}
+			
+			@Override
+			public void focusGained(FocusEvent e) {}
+		});
+		
+		
 		
 		
 	}
@@ -271,7 +323,11 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 			
 		}else if (e.getSource()==this.logicModelStartFrame.cancelLoginButton) {
 			System.exit(0);
-		} 
+		} else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.parkingButton &&  e.getKeyCode()== 113) {
+			
+			System.out.println("F2");
+			
+		}
 		
 		
 	}
@@ -385,5 +441,14 @@ protected void checkPrivilegeUser() {
 	}
 	
 	
+
+public boolean isiHaveTheFocus() {
+	return iHaveTheFocus;
+}
+
+
+public void setiHaveTheCocus(boolean iHaveTheCocus) {
+	this.iHaveTheFocus = iHaveTheCocus;
+}
 
 }
