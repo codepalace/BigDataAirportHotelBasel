@@ -112,6 +112,13 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 		//Add KeyListener to the parkingButton. only to this button because is going to have always the focus
 		this.bigDataAirportHotelBaselStartFrame.parkingButton.addKeyListener(this);
 		
+		
+		this.bigDataAirportHotelBaselStartFrame.btn_createDB.setToolTipText("Benutzerdefinierte Datenbank Erstellen");
+		this.bigDataAirportHotelBaselStartFrame.btn_benutzerVerwalten.setToolTipText("Benutzer Verwalten");
+		this.bigDataAirportHotelBaselStartFrame.btn_kontoVerwalten.setToolTipText("Eigene Konto Verwalten");
+		this.bigDataAirportHotelBaselStartFrame.btn_exit.setToolTipText("Programm beenden");
+		
+		
 
 		
 		
@@ -293,7 +300,7 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 		}else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.parkingButton &&  e.getKeyCode()==118) {
 			System.out.println("Opening the database Telefonbuch!");
 		}else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.parkingButton &&  e.getKeyCode()==119) {
-			System.out.println("Calling for LogOut!");
+			logoutApplication();
 		}
 		
 		
@@ -379,7 +386,8 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 			System.out.println("you pressed the phonebook button");
 		} 
 		else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.logoutButton) {
-			System.out.println("you pressed the logout button");
+//			System.out.println("you pressed the logout button");
+			logoutApplication();
 		} 
 		else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.btn_kontoVerwalten) {
 			System.out.println("you pressed the kontoverwalten button");
@@ -469,6 +477,15 @@ public void focusLost(FocusEvent e) {
 
 		this.bigDataAirportHotelBaselStartFrame.parkingButton.requestFocus();
 	}
+}
+
+
+protected void logoutApplication() {
+	
+		this.bigDataAirportHotelBaselStartFrame.loginUserText.setText("Benutzer: ");
+		
+		this.logicModelStartFrame.loginUser();
+	
 }
 	
 	
