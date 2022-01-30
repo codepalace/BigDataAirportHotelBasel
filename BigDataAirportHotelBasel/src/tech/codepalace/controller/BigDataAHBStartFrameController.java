@@ -25,14 +25,14 @@ import tech.codepalace.view.frames.BigDataAirportHotelBaselStartFrame;
 public class BigDataAHBStartFrameController implements ActionListener, KeyListener, WindowListener, FocusListener{
 	
 	// Create an instance of the main Frame class. The first GUI Class JFrame
-	private BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame = new BigDataAirportHotelBaselStartFrame();
+	private BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame;
 
 	// We create instance of the UserAHB that interacts with users
 	private UserAHB userAHB;
 
 	
 	//Instance of LogicModelStartFrame
-	private LogicModelStartFrame logicModelStartFrame  = new LogicModelStartFrame();
+	private LogicModelStartFrame logicModelStartFrame;
 	
 	
 	/*
@@ -362,7 +362,40 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 			
 		}else if (e.getSource()==this.logicModelStartFrame.cancelLoginButton) {
 			System.exit(0);
+			
+			
+		} else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.parkingButton) {
+			System.out.println("you pressed the parking button");
+		} else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.fundsachenButton) {
+			System.out.println("you pressed the fundsachen button");
 		} 
+		else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.fitnessButton) {
+			System.out.println("you pressed the fitness button");
+		} 
+		else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.uebergabeButton) {
+			System.out.println("you pressed the uebergabe button");
+		} 
+		else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.phonebookButton) {
+			System.out.println("you pressed the phonebook button");
+		} 
+		else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.logoutButton) {
+			System.out.println("you pressed the logout button");
+		} 
+		else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.btn_kontoVerwalten) {
+			System.out.println("you pressed the kontoverwalten button");
+		} 
+		else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.btn_exit) {
+			System.out.println("you pressed the exit button");
+			System.exit(0);
+		} 
+		else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.btn_benutzerVerwalten) {
+			System.out.println("you pressed the benutzerVerwalten button");
+		} 
+		else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.btn_createDB) {
+			System.out.println("you pressed the create DB button");
+		} 
+		
+		
 			
 			
 		
