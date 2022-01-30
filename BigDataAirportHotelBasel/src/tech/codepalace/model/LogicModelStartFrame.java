@@ -105,7 +105,7 @@ public class LogicModelStartFrame {
 		
 		
 		//Variables for the login dialog box
-		protected JDialog dialogLogin;
+		public JDialog dialogLogin;
 		protected JButton[] optionButtonsLogin;
 		public JButton loginButton, cancelLoginButton;
 		private JPanel panelContainerLogin;

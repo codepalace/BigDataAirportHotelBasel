@@ -25,14 +25,14 @@ import tech.codepalace.view.frames.BigDataAirportHotelBaselStartFrame;
 public class BigDataAHBStartFrameController implements ActionListener, KeyListener, WindowListener, FocusListener{
 	
 	// Create an instance of the main Frame class. The first GUI Class JFrame
-	private BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame;
+	private BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame = new BigDataAirportHotelBaselStartFrame();
 
 	// We create instance of the UserAHB that interacts with users
 	private UserAHB userAHB;
 
 	
 	//Instance of LogicModelStartFrame
-	private LogicModelStartFrame logicModelStartFrame;
+	private LogicModelStartFrame logicModelStartFrame  = new LogicModelStartFrame();
 	
 	
 	/*
@@ -43,7 +43,6 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 	
 	//Create an instance DataEncryption to decrypt the data
 	protected DataEncryption dataEncryption;
-	
 	
 	
 	/**
@@ -108,6 +107,11 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 		this.bigDataAirportHotelBaselStartFrame.btn_benutzerVerwalten.addFocusListener(this);
 		this.bigDataAirportHotelBaselStartFrame.btn_kontoVerwalten.addFocusListener(this);	
 		this.bigDataAirportHotelBaselStartFrame.btn_exit.addFocusListener(this);
+		
+		
+		//Add KeyListener to the parkingButton. only to this button because is going to have always the focus
+		this.bigDataAirportHotelBaselStartFrame.parkingButton.addKeyListener(this);
+		
 
 		
 		
@@ -193,6 +197,7 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 
 		if (e.getSource()== this.logicModelStartFrame.okButtonAdmin && e.getKeyCode()== 10) {
 
+			
 			this.logicModelStartFrame.checkEntryAdmin();
 		}else
 		
@@ -204,7 +209,6 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 			
 			System.exit(0);
 		}else if (e.getSource()== this.logicModelStartFrame.loginButton && e.getKeyCode() == 10) {
-			
 			
 //		System.out.println("Ready for login");
 	
@@ -238,6 +242,7 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 			
 		
 		}else if (e.getSource()== this.logicModelStartFrame.cancelLoginButton && e.getKeyCode() == 10) {
+			
 			System.exit(0);
 		
 		}else if (e.getSource()==this.logicModelStartFrame.passwordLoginJPasswordField && e.getKeyCode() == 10) {
@@ -274,12 +279,21 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 				checkPrivilegeUser();
 			}
 			
-		}else if (e.getSource()==this.logicModelStartFrame.cancelLoginButton) {
-			System.exit(0);
-		} else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.parkingButton &&  e.getKeyCode()== 113) {
+		//}else if (e.getSource()==this.logicModelStartFrame.passwordLoginJPasswordField && e.getKeyCode() == 10) {
+		} else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.parkingButton &&  e.getKeyCode() == 113) {
 			
-			System.out.println("F2");
+			System.out.println("Opening the database Parking!");
 			
+		}else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.parkingButton &&  e.getKeyCode()==114) {
+			System.out.println("Opening the database Fundsachen!");
+		}else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.parkingButton &&  e.getKeyCode()==115) {
+			System.out.println("Opening the database Fitness!");
+		}else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.parkingButton &&  e.getKeyCode()==117) {
+			System.out.println("Opening the database Uebergabe!");
+		}else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.parkingButton &&  e.getKeyCode()==118) {
+			System.out.println("Opening the database Telefonbuch!");
+		}else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.parkingButton &&  e.getKeyCode()==119) {
+			System.out.println("Calling for LogOut!");
 		}
 		
 		
@@ -386,7 +400,28 @@ protected void checkPrivilegeUser() {
 
 @Override
 public void focusGained(FocusEvent e) {
-	// TODO Auto-generated method stub
+
+//	System.out.println("component "+ e.getComponent().getClass().getName() + " has the focus." );
+	
+	//if the parking button does not have the focus 
+	if(e.getSource()!=this.bigDataAirportHotelBaselStartFrame.parkingButton) {
+		
+		/* we will return or request the focus for parkingButton.
+		 * 
+		 * this means that the parking button will always have the focus. 
+		 * this will help us to be able to configure the keyboard keys that will be programmed for the different accesses.
+		 * 
+		 * of course we could try to use setMnemonic(KeyEvent.F2) to give an example. 
+		 * 
+		 * but the most practical and safe option I've found has been this. Sending the Focus always to parkingButton and exit keyPressed method.
+		 */
+		
+		
+		this.bigDataAirportHotelBaselStartFrame.parkingButton.requestFocus();
+	}
+
+	
+	
 	
 }
 
@@ -396,8 +431,11 @@ public void focusGained(FocusEvent e) {
 
 @Override
 public void focusLost(FocusEvent e) {
-	// TODO Auto-generated method stub
-	
+
+	if (!this.logicModelStartFrame.dialogLogin.isVisible() && e.getSource()!=this.bigDataAirportHotelBaselStartFrame.parkingButton) {
+
+		this.bigDataAirportHotelBaselStartFrame.parkingButton.requestFocus();
+	}
 }
 	
 	
