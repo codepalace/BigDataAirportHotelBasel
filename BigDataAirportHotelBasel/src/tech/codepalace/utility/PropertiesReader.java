@@ -32,11 +32,6 @@ public class PropertiesReader extends Properties {
 	public boolean passwordIsCorrect = false;
 	
 	
-	/* Variables that will be used to store the values obtained from the property file that is read with the help of the property names 
-	 that we already receive in the readPropertiesData method and through the loginDataUser object
-	 */
-	private String userName, password, abbkuerzungMA, privilege, urlDataBase; 
-	
 	
 	private String correctPassword;
 	

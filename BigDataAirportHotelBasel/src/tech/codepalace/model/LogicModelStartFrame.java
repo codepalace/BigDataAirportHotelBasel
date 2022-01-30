@@ -127,10 +127,6 @@ public class LogicModelStartFrame {
 		//Variable for the user privilege
 		protected String privilegeUser;
 		
-		
-		//To get the focus one particular element. I use for the parkingButton.
-		public boolean iHaveTheFocus = false;
-		
 
 		//We get the user privile
 		public String getPrivilegeUser() {
@@ -289,9 +285,9 @@ public class LogicModelStartFrame {
 					
 					 */
 					this.urlDataBase = fileDataBaseFolder.getAbsolutePath();
-					System.out.println("Path urlDataBase: " + this.urlDataBase);
+//					System.out.println("Path urlDataBase: " + this.urlDataBase);
 					
-	
+
 
 				}else {
 					
@@ -351,9 +347,7 @@ public class LogicModelStartFrame {
 					
 					exitDialog.setVisible(true);
 					exitDialog.dispose();
-					
 
-					
 					
 				}
 			}while(this.urlDataBase.equals(""));
@@ -1042,25 +1036,7 @@ public class LogicModelStartFrame {
 		}
 			
 			
-		
-		/**
-		 * Method to know if one particular element has the focus or not.
-		 * @return
-		 */
-		public boolean getisiHaveTheFocus() {
-			return iHaveTheFocus;
-		}
-		
-		
-		/**
-		 * Method to set the Focus true o false. I use only for the parkingButton
-		 * @param iHaveTheCocus
-		 */
-		protected void setiHaveTheFocus(boolean iHaveTheCocus) {
-			this.iHaveTheFocus = iHaveTheCocus;
-		}
-		
-		
+	
 		
 		
 }

@@ -2,8 +2,6 @@ package tech.codepalace.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
@@ -25,14 +23,14 @@ import tech.codepalace.view.frames.BigDataAirportHotelBaselStartFrame;
 public class BigDataAHBStartFrameController implements ActionListener, KeyListener, WindowListener{
 	
 	// Create an instance of the main Frame class. The first GUI Class JFrame
-	private BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame = new BigDataAirportHotelBaselStartFrame();
+	private BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame;
 
 	// We create instance of the UserAHB that interacts with users
 	private UserAHB userAHB;
 
 	
 	//Instance of LogicModelStartFrame
-	private LogicModelStartFrame logicModelStartFrame = new LogicModelStartFrame();
+	private LogicModelStartFrame logicModelStartFrame;
 	
 	
 	/*
@@ -44,8 +42,6 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 	//Create an instance DataEncryption to decrypt the data
 	protected DataEncryption dataEncryption;
 	
-	//Variable for the parkingButton Focus initialize false.
-	private boolean iHaveTheFocus = false;
 	
 	
 	/**
@@ -96,39 +92,7 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 		this.bigDataAirportHotelBaselStartFrame.btn_benutzerVerwalten.addActionListener(this);
 		this.bigDataAirportHotelBaselStartFrame.btn_kontoVerwalten.addActionListener(this);
 		this.bigDataAirportHotelBaselStartFrame.btn_exit.addActionListener(this);
-		
-		
-		/* addFocusListener to parkingButton we are going to use this to set the focus always to the parkinbButton
-		 *  i found this useful to be able to use the special keys for each menu F2, F3, F4 etc.
-		 *  
-		 *  for that functionality, I figured I should know that a particular element should always have the focus.
-		 *  
-		 *  I know there are several roads that lead to Rome, but this was the one I found that I liked.
-		 */
-		this.bigDataAirportHotelBaselStartFrame.parkingButton.addFocusListener(new FocusListener() {
-			
-			@Override
-			public void focusLost(FocusEvent e) {
-				
-				//We need a new variable boolean to set the value true or false if the Jbutton has the focus or not
-				//We get the value from logicModelStartFrame calling a Method for checking if i have the Focus or not
-				iHaveTheFocus = logicModelStartFrame.getisiHaveTheFocus();
-				
-				//Value is true we requestFocus for the parkingButton
-				if (iHaveTheFocus) {
-					System.out.println("parkingButton has the Focus");
-					bigDataAirportHotelBaselStartFrame.parkingButton.requestFocus();
-					
-				}else {
-					System.out.println("parkingButton has not the Focus");
-				}
-			}
-			
-			@Override
-			public void focusGained(FocusEvent e) {}
-		});
-		
-		
+
 		
 		
 	}
@@ -442,13 +406,5 @@ protected void checkPrivilegeUser() {
 	
 	
 
-public boolean isiHaveTheFocus() {
-	return iHaveTheFocus;
-}
-
-
-public void setiHaveTheCocus(boolean iHaveTheCocus) {
-	this.iHaveTheFocus = iHaveTheCocus;
-}
 
 }
