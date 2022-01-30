@@ -994,7 +994,7 @@ public class LogicModelStartFrame {
 					
 					
 					//Test
-					System.out.println("Users and passwords are correct");
+//					System.out.println("Users and passwords are correct");
 				}else {
 					
 					//Password is not correct
@@ -1009,7 +1009,7 @@ public class LogicModelStartFrame {
 					this.userLoginJTextField.requestFocus();
 					
 					//Test
-					System.out.println("Users and passwords are not correct");
+//					System.out.println("Users and passwords are not correct");
 					
 					
 				}

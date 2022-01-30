@@ -206,22 +206,8 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 		}else if (e.getSource()== this.logicModelStartFrame.loginButton && e.getKeyCode() == 10) {
 			
 			
-			System.out.println("Ready for login");
-			
-			/*
-			 *The user pressed login, we have to create a method to set the entered login values to the variables. 
-			 *
-			 *@ToDO
-			 *
-			 *The method to set the values will be called from here and we need also a class to read configuration file properties. 
-			 *
-			 *And now that I'm thinking about that, we need to first call the class that decrypts the data saved in the configuration file.
-			 *
-			 *In the class that reads the properties we will have to compare 
-			 *if the password entered by the user matches the password we have in the configuration file for that particular user.
-			 *
-			 *
-			 */
+//		System.out.println("Ready for login");
+	
 			
 			//Call the setLoginValue method
 			this.logicModelStartFrame.setLoginValue();
@@ -256,22 +242,9 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 		
 		}else if (e.getSource()==this.logicModelStartFrame.passwordLoginJPasswordField && e.getKeyCode() == 10) {
 
-			System.out.println("Ready for login");
+//			System.out.println("Ready for login");
 			
-			/*
-			 *The user pressed login, we have to create a method to set the entered login values to the variables. 
-			 *
-			 *@ToDO
-			 *
-			 *The method to set the values will be called from here and we need also a class to read configuration file properties. 
-			 *
-			 *And now that I'm thinking about that, we need to first call the class that decrypts the data saved in the configuration file.
-			 *
-			 *In the class that reads the properties we will have to compare 
-			 *if the password entered by the user matches the password we have in the configuration file for that particular user.
-			 *
-			 *
-			 */
+		
 			
 			
 			//Call the setLoginValue method
@@ -341,22 +314,9 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 			System.exit(0);
 			
 		}else if(e.getSource()==this.logicModelStartFrame.loginButton) {
-			System.out.println("You have pressed login");
+//			System.out.println("You have pressed login");
 			
-			/*
-			 *The user pressed login, we have to create a method to set the entered login values to the variables. 
-			 *
-			 *@ToDO
-			 *
-			 *The method to set the values will be called from here and we need also a class to read configuration file properties. 
-			 *
-			 *And now that I'm thinking about that, we need to first call the class that decrypts the data saved in the configuration file.
-			 *
-			 *In the class that reads the properties we will have to compare 
-			 *if the password entered by the user matches the password we have in the configuration file for that particular user.
-			 *
-			 *
-			 */
+			
 			
 			//Call the setLoginValue method
 			this.logicModelStartFrame.setLoginValue();

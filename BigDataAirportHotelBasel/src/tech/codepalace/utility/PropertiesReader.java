@@ -119,13 +119,13 @@ public class PropertiesReader extends Properties {
 			
 
 			if(key== null) {
-				System.out.println("key: " + key + " is not a registered User Name");
+//				System.out.println("key: " + key + " is not a registered User Name");
 				/*
 				 * In case the user value entered by the user in the login box does not exist as the property value we call the loginAppError method
 				 */
 				loginAppError();
 			}else {
-				System.out.println("User name is valid " + key);
+//				System.out.println("User name is valid " + key);
 				
 				/*
 				 *The user is correct, we have to read the value of the password that has the file stored with this user as correct password  
@@ -170,7 +170,7 @@ public class PropertiesReader extends Properties {
 
 		
 			if(this.passwordUserEntered.equals(correctPassword)) {
-				System.out.println("La contrasena es correcta. Puedes entrar en el programa\n\n");
+//				System.out.println("La contrasena es correcta. Puedes entrar en el programa\n\n");
 				
 		
 				//The passwords match, then we set the values of userAHB Object
@@ -183,10 +183,10 @@ public class PropertiesReader extends Properties {
 				//We set PasswordIsCorrect
 				setPasswordIsCorrect(true);
 				
-				System.out.println("Password Match you are almost ready to enter the Application");
+//				System.out.println("Password Match you are almost ready to enter the Application");
 				
 			}else {
-				System.out.println("Password Not Match you are not allowed to enter the program.");
+//				System.out.println("Password Not Match you are not allowed to enter the program.");
 				
 				
 				loginAppError();
