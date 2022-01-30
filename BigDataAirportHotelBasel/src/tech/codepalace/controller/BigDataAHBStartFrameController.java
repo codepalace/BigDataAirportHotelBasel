@@ -2,6 +2,8 @@ package tech.codepalace.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
@@ -20,7 +22,7 @@ import tech.codepalace.view.frames.BigDataAirportHotelBaselStartFrame;
  *
  */
 
-public class BigDataAHBStartFrameController implements ActionListener, KeyListener, WindowListener{
+public class BigDataAHBStartFrameController implements ActionListener, KeyListener, WindowListener, FocusListener{
 	
 	// Create an instance of the main Frame class. The first GUI Class JFrame
 	private BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame;
@@ -92,6 +94,20 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 		this.bigDataAirportHotelBaselStartFrame.btn_benutzerVerwalten.addActionListener(this);
 		this.bigDataAirportHotelBaselStartFrame.btn_kontoVerwalten.addActionListener(this);
 		this.bigDataAirportHotelBaselStartFrame.btn_exit.addActionListener(this);
+		
+		
+		//Add FocusListener to the Buttons
+		this.bigDataAirportHotelBaselStartFrame.parkingButton.addFocusListener(this);
+		this.bigDataAirportHotelBaselStartFrame.fundsachenButton.addFocusListener(this);
+		this.bigDataAirportHotelBaselStartFrame.fitnessButton.addFocusListener(this);
+		this.bigDataAirportHotelBaselStartFrame.uebergabeButton.addFocusListener(this);
+		this.bigDataAirportHotelBaselStartFrame.phonebookButton.addFocusListener(this);
+		this.bigDataAirportHotelBaselStartFrame.logoutButton.addFocusListener(this);
+		
+		this.bigDataAirportHotelBaselStartFrame.btn_createDB.addFocusListener(this);
+		this.bigDataAirportHotelBaselStartFrame.btn_benutzerVerwalten.addFocusListener(this);
+		this.bigDataAirportHotelBaselStartFrame.btn_kontoVerwalten.addFocusListener(this);	
+		this.bigDataAirportHotelBaselStartFrame.btn_exit.addFocusListener(this);
 
 		
 		
@@ -403,6 +419,26 @@ protected void checkPrivilegeUser() {
 			break;
 		}
 	}
+
+
+
+
+
+@Override
+public void focusGained(FocusEvent e) {
+	// TODO Auto-generated method stub
+	
+}
+
+
+
+
+
+@Override
+public void focusLost(FocusEvent e) {
+	// TODO Auto-generated method stub
+	
+}
 	
 	
 
