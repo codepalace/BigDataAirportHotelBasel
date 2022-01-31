@@ -1,22 +1,27 @@
 package tech.codepalace.view.frames;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Frame;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import com.apple.eawt.Application;
 
 import tech.codepalace.view.panels.PanelWithBackgroundOption;
 
@@ -29,7 +34,7 @@ import tech.codepalace.view.panels.PanelWithBackgroundOption;
  * @description Class for the application of parking databases
  *
  */
-public class AHBParking extends JFrame implements ActionListener, KeyListener, WindowListener, FocusListener{
+public class AHBParking extends JFrame {
 
 	/**
 	 * 
@@ -49,7 +54,7 @@ public class AHBParking extends JFrame implements ActionListener, KeyListener, W
 	
 	private Image myImage;
 	
-	private ImageIcon exitParkingImageIcon;
+	public ImageIcon exitParkingImageIcon;
 	
 	//Dialog Box To use when the user presses on the cross close the application.
 	public JDialog exitParkingDialog, noExitParkingDialog;
@@ -71,8 +76,6 @@ public class AHBParking extends JFrame implements ActionListener, KeyListener, W
 	
 	
 	
-	
-	
 	public AHBParking() {
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
@@ -80,101 +83,103 @@ public class AHBParking extends JFrame implements ActionListener, KeyListener, W
 		
 		this.exitParking = new JButton("Ja");
 		this.noExitParking = new JButton("Nein");
+		//new ImageIcon(getClass().getResource("/img/iconoHotel.png")
+		//File configurationFile = new File(projectDirectoryString + File.separator + "config.properties");
 		
 		
+		setupFrame();
 		
 		
 	}
-
-
-	@Override
-	public void focusGained(FocusEvent e) {
-		// TODO Auto-generated method stub
+	
+	
+	/**
+	 * @description method to configure our JFrame
+	 */
+	private void setupFrame() {
+		
+		this.setTitle("Langzeit Parking Airport Hotel Basel");
+		
+		//We get the Display Size
+		this.screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		
+		//Set our JFrame 0,0, display-With, display-Heigh
+		this.setBounds(0,0,screenSize.width, screenSize.height);
+		
+		//Frame fully mazimize
+		this.setExtendedState(Frame.MAXIMIZED_BOTH);
+		
+		//Resizable none
+		this.setResizable(false);
+		
+		//Background JPanel
+		 this.panelWithBackgroundOption.setImage("/img/texture_blue.jpg");
+		 
+		 //setContentPane
+		 setContentPane(this.panelWithBackgroundOption);
+		 
+		 //set Layout Manager
+		 this.panelWithBackgroundOption.setLayout(new BorderLayout());
+		 
+		
+		 closeParking();
 		
 	}
 
-
-	@Override
-	public void focusLost(FocusEvent e) {
-		// TODO Auto-generated method stub
+	
+	
+	
+	/**
+	 * @description method that will be called when the user presses on the cross close window
+	 */
+	private void closeParking() {
+		
+		try {
+			this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+			addWindowListener(new WindowAdapter() {
+				public void windowClosing(WindowEvent e) {
+					confirmClose();
+				}
+			});
+//			this.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+	public void confirmClose() {
+		
+		 this.exitParkingImageIcon = new ImageIcon(
+					"src" + File.separator + "img" + File.separator + "exit_parking.png");
+		 
+		 this.options = new Object[] {this.exitParking, this.noExitParking};
+			
+			this.panelButtons = new JPanel(new FlowLayout(FlowLayout.CENTER));
+			
+			this.panelButtons.add(this.exitParking);
+			this.panelButtons.add(this.noExitParking);
+			
+			this.panelTextCenter = new JPanel(new FlowLayout(FlowLayout.CENTER));
+			this.message = new JLabel("Sind Sie sicher, dass Sie die Langzeitparken schließen möchten?");
+			
+			this.panelTextCenter.add(message);
+			
+			this.panelContainerMessage = new JPanel(new BorderLayout());
+			
+			this.panelContainerMessage.add(this.panelButtons, BorderLayout.NORTH);
+			this.panelContainerMessage.add(this.panelTextCenter, BorderLayout.CENTER);
+			
+			
+			this.exitParkingDialog = new JOptionPane(this.panelContainerMessage, JOptionPane.OK_CANCEL_OPTION, JOptionPane.NO_OPTION,
+					this.exitParkingImageIcon, this.options, null).createDialog("Langzeit Parken Verlassen!");
+			
+			
+			this.exitParkingDialog.setVisible(true);
+			this.exitParkingDialog.dispose();
 		
 	}
 
-
-	@Override
-	public void windowOpened(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void windowClosing(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void windowClosed(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void windowIconified(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void windowDeiconified(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void windowActivated(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void windowDeactivated(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

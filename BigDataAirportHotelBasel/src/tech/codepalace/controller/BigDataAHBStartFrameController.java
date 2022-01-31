@@ -8,10 +8,20 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+
+import com.apple.eawt.Application;
+
+import tech.codepalace.model.LogicModelParking;
 import tech.codepalace.model.LogicModelStartFrame;
 import tech.codepalace.model.UserAHB;
 import tech.codepalace.utility.DataEncryption;
+import tech.codepalace.view.frames.AHBParking;
 import tech.codepalace.view.frames.BigDataAirportHotelBaselStartFrame;
 
 /**
@@ -45,12 +55,23 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 	protected DataEncryption dataEncryption;
 	
 	
+	//Variables for parking
+//	private AHBParking ahbParking = new AHBParking();
+//	private LogicModelParking logicModelParking = new LogicModelParking();
+//	
+//	@SuppressWarnings("unused")
+//	private AHBParkingController ahbParkingController;
+	
+	
+	
+	
 	/**
 	 * @description constructor method with parameters
 	 * @param bigDataAirportHotelBaselStartFrame
 	 * @param userAHB
 	 */
 	public BigDataAHBStartFrameController(BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame, UserAHB userAHB, LogicModelStartFrame logicModelStartFrame) {
+		
 		
 		this.bigDataAirportHotelBaselStartFrame = bigDataAirportHotelBaselStartFrame;
 		this.userAHB = userAHB;
@@ -118,6 +139,7 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 		this.bigDataAirportHotelBaselStartFrame.btn_kontoVerwalten.setToolTipText("Eigene Konto Verwalten");
 		this.bigDataAirportHotelBaselStartFrame.btn_exit.setToolTipText("Programm beenden");
 		
+
 		
 
 		
@@ -289,7 +311,25 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 		//}else if (e.getSource()==this.logicModelStartFrame.passwordLoginJPasswordField && e.getKeyCode() == 10) {
 		} else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.parkingButton &&  e.getKeyCode() == 113) {
 			
-			System.out.println("Opening the database Parking!");
+			SwingUtilities.invokeLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					
+					AHBParking ahbParking = new AHBParking();
+					LogicModelParking logicModelParking = new LogicModelParking();
+					
+					
+					@SuppressWarnings("unused")
+					AHBParkingController ahbParkingController;
+
+					ahbParkingController = new AHBParkingController(ahbParking, userAHB, logicModelParking, bigDataAirportHotelBaselStartFrame);
+					setMyIcon("/img/iconoHotel.png", ahbParking);
+					ahbParking.setLocationRelativeTo(null);
+					ahbParking.setVisible(true);
+					bigDataAirportHotelBaselStartFrame.dispose();
+				}
+			});
 			
 		}else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.parkingButton &&  e.getKeyCode()==114) {
 			System.out.println("Opening the database Fundsachen!");
@@ -372,7 +412,28 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 			
 			
 		} else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.parkingButton) {
-			System.out.println("you pressed the parking button");
+			
+			SwingUtilities.invokeLater(new Runnable() {
+				
+				@Override
+				public void run() {
+
+					AHBParking ahbParking = new AHBParking();
+					LogicModelParking logicModelParking = new LogicModelParking();
+					
+					
+					@SuppressWarnings("unused")
+					AHBParkingController ahbParkingController;
+
+					ahbParkingController = new AHBParkingController(ahbParking, userAHB, logicModelParking, bigDataAirportHotelBaselStartFrame);
+					setMyIcon("/img/iconoHotel.png", ahbParking);
+					ahbParking.setLocationRelativeTo(null);
+					ahbParking.setVisible(true);
+					bigDataAirportHotelBaselStartFrame.dispose();
+				}
+			});
+			
+			
 		} else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.fundsachenButton) {
 			System.out.println("you pressed the fundsachen button");
 		} 
@@ -386,14 +447,13 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 			System.out.println("you pressed the phonebook button");
 		} 
 		else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.logoutButton) {
-//			System.out.println("you pressed the logout button");
+			//We call logoutApplication Method
 			logoutApplication();
 		} 
 		else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.btn_kontoVerwalten) {
 			System.out.println("you pressed the kontoverwalten button");
 		} 
 		else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.btn_exit) {
-			System.out.println("you pressed the exit button");
 			System.exit(0);
 		} 
 		else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.btn_benutzerVerwalten) {
@@ -491,6 +551,50 @@ protected void logoutApplication() {
 		this.bigDataAirportHotelBaselStartFrame.btn_createDB.setEnabled(false);
 		this.logicModelStartFrame.loginUser();
 	
+}
+
+
+
+/**
+ * @description method to set the app icon if it is macos or windows
+ * @param iconImage
+ * @param jFrame
+ */
+public void setMyIcon(String iconImage, JFrame jFrame) {
+	if ( existsApple( "com.apple.eawt.Application" ) ){
+
+    Application application = Application.getApplication();            
+    try {
+    	System.setProperty("apple.awt.application.name", "Your App Name");
+		application.setDockIconImage(ImageIO.read(getClass().getResource(iconImage)));
+	
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+    }else {
+    	//set JFrame icon
+		jFrame.setIconImage (new ImageIcon(getClass().getResource("/img/iconoHotel.png")).getImage());
+    }
+	
+}
+
+
+
+/**
+ * @description Method to know if we are working on a macOs.
+ * @param className
+ * @return
+ */
+public boolean existsApple(String className)
+{
+    try {
+        Class.forName( className, false, null );
+        return true;
+    }
+    catch (ClassNotFoundException exception) {
+        return false;
+    }
 }
 	
 	

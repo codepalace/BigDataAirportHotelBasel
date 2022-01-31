@@ -44,9 +44,11 @@ public class BigDataAHBRunner {
 				@SuppressWarnings("unused")
 				BigDataAHBStartFrameController bigDataAHBStartFrameController = new BigDataAHBStartFrameController(bigDataAirportHotelBaselStartFrame, userAHB, logicModelStartFrame);
 				
-				
+				//Set the icon four our JFrame
+				bigDataAHBStartFrameController.setMyIcon("/img/iconoHotel.png", bigDataAirportHotelBaselStartFrame);
 				
 				bigDataAirportHotelBaselStartFrame.setLocationRelativeTo(null);
+				
 				bigDataAirportHotelBaselStartFrame.setVisible(true);
 			}
 		});
