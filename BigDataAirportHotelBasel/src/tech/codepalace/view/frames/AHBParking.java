@@ -8,11 +8,8 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -20,8 +17,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
-import com.apple.eawt.Application;
 
 import tech.codepalace.view.panels.PanelWithBackgroundOption;
 
@@ -175,6 +170,8 @@ public class AHBParking extends JFrame {
 			this.exitParkingDialog = new JOptionPane(this.panelContainerMessage, JOptionPane.OK_CANCEL_OPTION, JOptionPane.NO_OPTION,
 					this.exitParkingImageIcon, this.options, null).createDialog("Langzeit Parken Verlassen!");
 			
+			//Make noExitParking having the Focus.
+			this.noExitParking.requestFocus();
 			
 			this.exitParkingDialog.setVisible(true);
 			this.exitParkingDialog.dispose();

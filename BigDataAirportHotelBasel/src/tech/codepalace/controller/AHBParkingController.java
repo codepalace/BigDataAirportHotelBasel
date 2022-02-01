@@ -9,9 +9,6 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-
 import tech.codepalace.model.LogicModelParking;
 import tech.codepalace.model.UserAHB;
 import tech.codepalace.view.frames.AHBParking;
@@ -180,7 +177,17 @@ public class AHBParkingController  implements ActionListener, KeyListener, Windo
 		
 		if(e.getSource()== this.ahbParking.noExitParking && e.getKeyCode()== 10) {
 			this.ahbParking.exitParkingDialog.dispose();
+		}else 
+		
+			if (e.getSource()== this.ahbParking.noExitParking && e.getKeyCode()== 39) {
+			this.ahbParking.exitParking.requestFocus();
+		}else 
+		
+			if (e.getSource()== this.ahbParking.exitParking && e.getKeyCode()== 37) {
+			this.ahbParking.noExitParking.requestFocus();
 		}
+		
+		
 	}
 
 
