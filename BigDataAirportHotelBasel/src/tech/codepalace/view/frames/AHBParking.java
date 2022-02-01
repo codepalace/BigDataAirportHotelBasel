@@ -1,8 +1,10 @@
 package tech.codepalace.view.frames;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -10,6 +12,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -17,7 +20,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 
+import tech.codepalace.view.buttons.MyButton;
 import tech.codepalace.view.panels.PanelWithBackgroundOption;
 
 
@@ -69,6 +74,22 @@ public class AHBParking extends JFrame {
 	//JLabel for the alert message.
 	private JLabel message; 
 	
+	//JPanels for the Menu Buttons
+	 private JPanel centerPanelButtons, containerPanelButton;
+	
+	 //Menu JButtons
+	 public JButton btnHome, btnFundsachen, btnFitness, btnPhonebook, btnLogout;
+	 
+	//Border for the centerPanelButtons
+	private Border etchedBorder;
+	
+	//Jpanel for the user logged
+	private JPanel loginPanel;
+	
+	//JLable for the user logged
+	public JLabel loginUserLabel;
+	
+	
 	
 	
 	public AHBParking() {
@@ -78,8 +99,25 @@ public class AHBParking extends JFrame {
 		
 		this.exitParking = new JButton("Ja");
 		this.noExitParking = new JButton("Nein");
-		//new ImageIcon(getClass().getResource("/img/iconoHotel.png")
-		//File configurationFile = new File(projectDirectoryString + File.separator + "config.properties");
+	
+		// Initialize the JButtons as MyButton
+		this.btnHome = new MyButton("/img/btn_home.png");
+		this.btnFundsachen = new MyButton("/img/btn_fundsachen.png");
+		this.btnFitness = new MyButton("/img/btn_fitness_abo.png");
+		this.btnPhonebook = new MyButton("/img/btn_telefonbuch.png");
+		this.btnLogout = new MyButton("/img/btn_logout.png");
+		
+		//We initialize the panel of the buttons
+		this.centerPanelButtons = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		
+		//Initialize the Border
+		this.etchedBorder = BorderFactory.createEtchedBorder();
+		
+		this.centerPanelButtons.setBorder(etchedBorder);
+		
+		this.centerPanelButtons.setOpaque(false);
+		
+		this.containerPanelButton = new JPanel(new BorderLayout());
 		
 		
 		setupFrame();
@@ -108,7 +146,7 @@ public class AHBParking extends JFrame {
 		this.setResizable(false);
 		
 		//Background JPanel
-		 this.panelWithBackgroundOption.setImage("/img/texture_blue.jpg");
+		 this.panelWithBackgroundOption.setImage("/img/backgroundframe.jpg");
 		 
 		 //setContentPane
 		 setContentPane(this.panelWithBackgroundOption);
@@ -118,6 +156,9 @@ public class AHBParking extends JFrame {
 		 
 		
 		 closeParking();
+		 
+		 //add the elements
+		 this.addElementsToPanel();
 		
 	}
 
@@ -177,6 +218,85 @@ public class AHBParking extends JFrame {
 			this.exitParkingDialog.dispose();
 		
 	}
+	
+	
+	
+	
+	
+public void addElementsToPanel() {
+		
+		this.topPanel = new JPanel();
+		this.topPanel.setOpaque(false);
+		this.topPanel.setLayout(new BorderLayout());
+		
+		this.cadillac = new JLabel(setImageJLabel("/img/cadillac_oldtimer350x200.png"));
+		this.cadillac.setPreferredSize(new Dimension(350,200));
+		
+		this.topPanel.add(this.cadillac, BorderLayout.WEST);
+		
+		
+		
+		this.panelWithBackgroundOption.add(this.topPanel, BorderLayout.NORTH);
+		
+		this.centerPanel = new JPanel(new BorderLayout());
+		
+		this.panelWithBackgroundOption.add(this.centerPanel);
+		
+		
+		this.btnHome.setPreferredSize(new Dimension(150,70));
+		this.btnFundsachen.setPreferredSize(new Dimension(150,70));
+		this.btnFitness.setPreferredSize(new Dimension(150,70));
+		this.btnPhonebook.setPreferredSize(new Dimension(150,70));
+		this.btnLogout.setPreferredSize(new Dimension(150,70));
+		
+
+		
+		this.containerPanelButton.setOpaque(false);
+		this.containerPanelButton.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		this.containerPanelButton.add(centerPanelButtons, BorderLayout.SOUTH);
+		
+		
+
+		this.centerPanelButtons.add(btnHome);
+		this.centerPanelButtons.add(btnFundsachen);
+		this.centerPanelButtons.add(btnFitness);
+		this.centerPanelButtons.add(btnPhonebook);
+		this.centerPanelButtons.add(btnLogout);
+		
+		
+		this.topPanel.add(containerPanelButton, BorderLayout.CENTER);
+		
+		
+		this.loginPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		this.loginPanel.setBackground(Color.GRAY);
+		
+		
+		this.loginUserLabel = new JLabel("Benutzer: ");
+		this.loginUserLabel.setFont(new Font("Verdana", Font.BOLD, 18));
+		this.loginUserLabel.setForeground(Color.WHITE);
+		
+		this.loginPanel.add(this.loginUserLabel);
+		
+		this.topPanel.add(this.loginPanel, BorderLayout.SOUTH);
+		
+
+		
+	}
+
+
+
+
+
+public ImageIcon setImageJLabel(String img) {
+
+
+	this.myImage = new ImageIcon(getClass().getResource(img)).getImage();
+
+
+     return new ImageIcon(this.myImage);
+
+}
+
 
 
 }
