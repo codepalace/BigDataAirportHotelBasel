@@ -22,14 +22,17 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
-
+import tech.codepalace.controller.LoginController;
 import tech.codepalace.utility.DataEncryption;
 import tech.codepalace.utility.JTextFieldLimit;
 import tech.codepalace.utility.LoginDataUser;
 import tech.codepalace.utility.PropertiesReader;
 import tech.codepalace.utility.PropertiesWriter;
+import tech.codepalace.view.frames.BigDataAirportHotelBaselStartFrame;
+import tech.codepalace.view.frames.LoginUser;
 
 
 /**
@@ -47,6 +50,7 @@ public class LogicModelStartFrame {
 		//File variable that stores the path with the name of the application properties file.
 		protected File configurationFile = new File(projectDirectoryString + File.separator + "config.properties");
 		
+		private BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame;
 		
 
 		//Variables to set the database path.
@@ -104,12 +108,14 @@ public class LogicModelStartFrame {
 		protected PropertiesWriter propertiesWriter;
 		
 		
+		protected  LoginController loginController;
+		private LoginUser loginUser;
+		protected LogicModelLogin logicModelLogin;
+		
 		//Variables for the login dialog box
 		public JDialog dialogLogin;
 		protected JButton[] optionButtonsLogin;
 		public JButton loginButton, cancelLoginButton;
-		private JPanel panelContainerLogin;
-		private JLabel userNameJLabel, passwordLoginJLabel;
 		protected JTextField userLoginJTextField;
 		public JPasswordField passwordLoginJPasswordField; 
 		
@@ -135,7 +141,7 @@ public class LogicModelStartFrame {
 		
 		//Variable to indicate that the password is correct
 		protected boolean passwordIsCorrect = false;
-		
+		 
 		
 		//get password status
 		public boolean isPasswordIsCorrect() {
@@ -153,7 +159,12 @@ public class LogicModelStartFrame {
 		
 		
 		
-		public LogicModelStartFrame() {
+		public LogicModelStartFrame(BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame, UserAHB userAHB) {
+			
+			this.bigDataAirportHotelBaselStartFrame = bigDataAirportHotelBaselStartFrame;
+			this.userAHB = userAHB;
+			
+			this.loginUser = new LoginUser(bigDataAirportHotelBaselStartFrame, true);
 			
 			this.imgUserRequest = new ImageIcon(getClass().getResource("/img/face90x90.png"));
 			this.okButtonAdmin = new JButton("Save Admin");
@@ -817,80 +828,50 @@ public class LogicModelStartFrame {
 		
 		
 		
+		
+		
+		
+		
+		
+	
+
+
 		/**
 		 * @description Method for login. 
 		 * 
 		 * <p>this method will be called if the properties file exists.</p>
 		 */
 		public void loginUser() {
+
+
+			SwingUtilities.invokeLater(new Runnable() {
+
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					logicModelLogin = new LogicModelLogin(loginUser, userAHB);
+					 loginController = new LoginController(loginUser, userAHB, bigDataAirportHotelBaselStartFrame);
+					 loginUser.setLocationRelativeTo(null);
+					  
+					
+					 loginUser.setVisible(true);
+				}
+				
+			});
+					
+					
+			
 		
-
-			//Create our array that will have the login buttons
-			this.optionButtonsLogin = new JButton[] {this.loginButton, this.cancelLoginButton};
+					
 			
-			this.userNameJLabel = new JLabel("User:");
-			this.userNameJLabel.setPreferredSize(new Dimension(110, 20));
-			this.userNameJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-			
-			this.passwordLoginJLabel = new JLabel("Password:");
-			this.passwordLoginJLabel.setPreferredSize(new Dimension(110, 20));
-			this.passwordLoginJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-			
-			this.userLoginJTextField = new JTextField(20);
-			
-			//JTextFields = ""
-			this.userLoginJTextField.setText("");
-			this.passwordLoginJPasswordField.setText("");
-			
-			
-			this.panelContainerLogin = new JPanel();
-			this.gbl = new GridBagLayout();
-			
-			this.panelContainerLogin.setLayout(gbl);
-
-
-			this.gbc.gridx = 0;
-			this.gbc.gridy = 0;
-			this.panelContainerLogin.add(this.userNameJLabel, gbc);
-			
-
-			this.gbc.gridx = 1;
-			this.gbc.gridy = 0;
-			this.gbc.insets = new Insets(0, 5, 0, 0);
-			this.panelContainerLogin.add(userLoginJTextField, gbc);
-			
-
-			this.gbc.gridx = 0; 
-			this.gbc.gridy = 1; 
-			this.gbc.insets = new Insets(5, 0, 0, 0);
-			this.panelContainerLogin.add(passwordLoginJLabel, gbc);
-			
-
-			this.gbc.gridx = 1;
-			this.gbc.gridy = 1; 
-			this.gbc.insets = new Insets(5, 5, 0, 0);
-			this.panelContainerLogin.add(passwordLoginJPasswordField, gbc);
+			   
 			
 			
 			
-			
-			this.dialogLogin = new JOptionPane(this.panelContainerLogin, JOptionPane.OK_CANCEL_OPTION, JOptionPane.NO_OPTION, imgUserRequest, optionButtonsLogin, 
-					null).createDialog("Bitte geben Sie Ihren Benutzernamen und Ihr Passwort ein.");
-
-
-			this.dialogLogin.setVisible(true);
-			this.dialogLogin.dispose();
-			
-			
-			//If the dialog box is visible and the username is empty, we exit the program. The user does not want to continue.
-			if(!this.dialogLogin.isVisible() && this.userName.equals("")) {
-				System.exit(0);
-			}
-
 		}
-		
-		
-		
+
+
+
 		
 		/**
 		 * @description setLoginValue, this method will set the values, username and password entered by the user in the login dialog box.
@@ -907,133 +888,145 @@ public class LogicModelStartFrame {
 		 * </ul>
 		 */
 		public void setLoginValue() {
-			
-			//We set the entered Username and Password
-			this.userName = this.userLoginJTextField.getText();
-			String pwd = new String(this.passwordLoginJPasswordField.getPassword()); 
-			this.password = pwd;
-			
-			//we check that the data is not empty
-			if(this.userName.equals("") || this.password.equals("")) {
-				
-				
-				this.dialogLogin.dispose();
-				JOptionPane.showMessageDialog(null, "Benutzername oder Passwort dürfen nicht leer sein"
-						   , "Geben Sie einen gültigen Benutzernamen und ein gültiges Passwort ein", JOptionPane.ERROR_MESSAGE, this.errorImg);
-				
-				//Data is empty then we call loginUser method.
-				loginUser();
+
 		
-		}else {
 			
-			//Set the values of the properties
-			this.urlPropertieName = "db.url";
-			this.privilegePropertieName = "db.privilege.user." + this.userName;
-			this.abkuerzungPropertieName = "db.abkuerzungma.user" + this.userName;
+				
+				//We set the entered Username and Password
+				this.userName = this.userLoginJTextField.getText();
+				String pwd = new String(this.passwordLoginJPasswordField.getPassword()); 
+				this.password = pwd;
+				
+				//we check that the data is not empty
+				if(this.userName.equals("") || this.password.equals("")) {
+					
+					
+					this.dialogLogin.dispose();
+					JOptionPane.showMessageDialog(null, "Benutzername oder Passwort dürfen nicht leer sein"
+							   , "Geben Sie einen gültigen Benutzernamen und ein gültiges Passwort ein", JOptionPane.ERROR_MESSAGE, this.errorImg);
+					
+					//Data is empty then we call loginUser method.
+					loginUser();
 			
-			this.userNamePropertieName = "db.user." + this.userName;
-			this.passwordPropertieName = "db.password.user." + this.userName;
-			
-			
-			
-			
-			//we encrypt the data
-			try {
+			}else {
 				
-
-				this.urlPropertieName = dataEncryptation.encryptData(this.urlPropertieName);
-				this.privilegePropertieName = dataEncryptation.encryptData(this.privilegePropertieName);
-				this.abkuerzungPropertieName = dataEncryptation.encryptData(this.abkuerzungPropertieName);
-				this.userNamePropertieName = this.dataEncryptation.encryptData(userNamePropertieName);
-				this.passwordPropertieName = this.dataEncryptation.encryptData(passwordPropertieName);
-				this.password = this.dataEncryptation.encryptData(this.password);
+				//Set the values of the properties
+				this.urlPropertieName = "db.url";
+				this.privilegePropertieName = "db.privilege.user." + this.userName;
+				this.abkuerzungPropertieName = "db.abkuerzungma.user" + this.userName;
 				
-				//Initialize the instance PropertiesReader
-				this.propertiesReader = new PropertiesReader();
+				this.userNamePropertieName = "db.user." + this.userName;
+				this.passwordPropertieName = "db.password.user." + this.userName;
 				
 				
-				//Initialize the instance LoginDataUser
-				this.loginDataUser = new LoginDataUser();
-				
-				//Set the values
-				this.loginDataUser.setUrlPropertieName(this.urlPropertieName);
-				this.loginDataUser.setUserNamePropertieName(this.userNamePropertieName);
-				this.loginDataUser.setPasswordPropertieName(this.passwordPropertieName);
-				this.loginDataUser.setPasswordEnteredByTheUser(this.password);
-				this.loginDataUser.setPrivilegePropertieName(this.privilegePropertieName);
-				this.loginDataUser.setAbkuerzungPropertieName(this.abkuerzungPropertieName);
 				
 				
-				//We test
-//				System.out.println("urlPropertieName: " + this.loginDataUser.getUrlPropertieName());
-//				System.out.println("userNamePropertieName: " + this.loginDataUser.getUserNamePropertieName());
-//				System.out.println("passwordPropertieName: " + this.loginDataUser.getPasswordPropertieName());
-//				System.out.println("password: " + this.loginDataUser.getPasswordEnteredByTheUser());
-//				System.out.println("privilegePropertieName: " + this.loginDataUser.getPrivilegePropertieName());
-//				System.out.println("abkuerzungPropertieName: " + this.loginDataUser.getAbkuerzungPropertieName());		
-				
-				
-				//We call the readPropertiesData method by passing the loginDataUser and userAHB instances as argument
-				this.propertiesReader.readPropertiesData(this.loginDataUser, this.userAHB);
-				
-				
-				//We check if the Password entered by the User is correct
-				if (this.propertiesReader.isPasswordIsCorrect()) {
+				//we encrypt the data
+				try {
 					
 
-					//set the value of the privilege variable, first decrypt that value. We can after use it to grant more or less privilege to the user.
-					this.privilegeUser = this.dataEncryptation.decryptData(this.userAHB.getPrivilege());
+					this.urlPropertieName = dataEncryptation.encryptData(this.urlPropertieName);
+					this.privilegePropertieName = dataEncryptation.encryptData(this.privilegePropertieName);
+					this.abkuerzungPropertieName = dataEncryptation.encryptData(this.abkuerzungPropertieName);
+					this.userNamePropertieName = this.dataEncryptation.encryptData(userNamePropertieName);
+					this.passwordPropertieName = this.dataEncryptation.encryptData(passwordPropertieName);
+					this.password = this.dataEncryptation.encryptData(this.password);
+					
+					//Initialize the instance PropertiesReader
+					this.propertiesReader = new PropertiesReader();
 					
 					
-					//We set passwordIsCorrect as true
-					this.passwordIsCorrect = true;
+					//Initialize the instance LoginDataUser
+					this.loginDataUser = new LoginDataUser();
+					
+					//Set the values
+					this.loginDataUser.setUrlPropertieName(this.urlPropertieName);
+					this.loginDataUser.setUserNamePropertieName(this.userNamePropertieName);
+					this.loginDataUser.setPasswordPropertieName(this.passwordPropertieName);
+					this.loginDataUser.setPasswordEnteredByTheUser(this.password);
+					this.loginDataUser.setPrivilegePropertieName(this.privilegePropertieName);
+					this.loginDataUser.setAbkuerzungPropertieName(this.abkuerzungPropertieName);
 					
 					
-					//Close the Dialog Box
-					dialogLogin.dispose();
+					//We test
+//					System.out.println("urlPropertieName: " + this.loginDataUser.getUrlPropertieName());
+//					System.out.println("userNamePropertieName: " + this.loginDataUser.getUserNamePropertieName());
+//					System.out.println("passwordPropertieName: " + this.loginDataUser.getPasswordPropertieName());
+//					System.out.println("password: " + this.loginDataUser.getPasswordEnteredByTheUser());
+//					System.out.println("privilegePropertieName: " + this.loginDataUser.getPrivilegePropertieName());
+//					System.out.println("abkuerzungPropertieName: " + this.loginDataUser.getAbkuerzungPropertieName());		
 					
 					
-					//Test
-//					System.out.println("Users and passwords are correct");
-				}else {
-					
-					//Password is not correct
-					this.passwordIsCorrect = false;
-					
-					//reset values
-					this.userName = "";
-					this.userLoginJTextField.setText("");
-					this.passwordLoginJPasswordField.setText("");
-					
-					//request focus
-					this.userLoginJTextField.requestFocus();
-					
-					//Test
-//					System.out.println("Users and passwords are not correct");
+					//We call the readPropertiesData method by passing the loginDataUser and userAHB instances as argument
+					this.propertiesReader.readPropertiesData(this.loginDataUser, this.userAHB);
 					
 					
+					//We check if the Password entered by the User is correct
+					if (this.propertiesReader.isPasswordIsCorrect()) {
+						
+
+						//set the value of the privilege variable, first decrypt that value. We can after use it to grant more or less privilege to the user.
+						this.privilegeUser = this.dataEncryptation.decryptData(this.userAHB.getPrivilege());
+						
+						
+						//We set passwordIsCorrect as true
+						this.passwordIsCorrect = true;
+						
+						
+						//Close the Dialog Box
+						dialogLogin.dispose();
+						
+						
+						//Test
+//						System.out.println("Users and passwords are correct");
+					}else {
+						
+						//Password is not correct
+						this.passwordIsCorrect = false;
+						
+						//reset values
+						this.userName = "";
+						this.userLoginJTextField.setText("");
+						this.passwordLoginJPasswordField.setText("");
+						
+						//request focus
+						this.userLoginJTextField.requestFocus();
+						
+						//Test
+//						System.out.println("Users and passwords are not correct");
+						
+						
+					}
+					
+
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
+
 				
-
-			} catch (Exception e) {
-				e.printStackTrace();
 			}
+				
+				
+				
+			
+			
+		}
 
-			
-		}
-			
-			
-			
-		}
-		
-		
+
+
 		/**
-		 * 
-		 * @return
+		 * return UserAHB
 		 */
 		public UserAHB getUserAHB() {
+			
 			return userAHB;
 		}
+
+
+
+		
+	
+		
 			
 			
 	

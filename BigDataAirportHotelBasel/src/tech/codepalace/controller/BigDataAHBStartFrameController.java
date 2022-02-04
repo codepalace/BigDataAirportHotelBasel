@@ -317,7 +317,7 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 				public void run() {
 					
 					AHBParking ahbParking = new AHBParking();
-					LogicModelParking logicModelParking = new LogicModelParking();
+					LogicModelParking logicModelParking = new LogicModelParking(bigDataAirportHotelBaselStartFrame, userAHB);
 					
 					
 					@SuppressWarnings("unused")
@@ -377,8 +377,6 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 		}else if(e.getSource()==this.logicModelStartFrame.loginButton) {
 //			System.out.println("You have pressed login");
 			
-			
-			
 			//Call the setLoginValue method
 			this.logicModelStartFrame.setLoginValue();
 			
@@ -419,7 +417,7 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 				public void run() {
 
 					AHBParking ahbParking = new AHBParking();
-					LogicModelParking logicModelParking = new LogicModelParking();
+					LogicModelParking logicModelParking = new LogicModelParking(bigDataAirportHotelBaselStartFrame, userAHB);
 					
 					
 					@SuppressWarnings("unused")
@@ -532,11 +530,13 @@ public void focusGained(FocusEvent e) {
 
 @Override
 public void focusLost(FocusEvent e) {
-
-	if (!this.logicModelStartFrame.dialogLogin.isVisible() && e.getSource()!=this.bigDataAirportHotelBaselStartFrame.parkingButton) {
+	
+	
+	if (e.getSource()!=this.bigDataAirportHotelBaselStartFrame.parkingButton) {
 
 		this.bigDataAirportHotelBaselStartFrame.parkingButton.requestFocus();
 	}
+	
 }
 
 

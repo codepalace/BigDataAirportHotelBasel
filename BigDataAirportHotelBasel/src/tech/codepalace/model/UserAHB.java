@@ -10,9 +10,17 @@ package tech.codepalace.model;
 
 public class UserAHB {
 	
-protected String userName, abbkuerzungMA, privilege, urlDataBase;
+protected String userName, password, abbkuerzungMA, privilege, urlDataBase;
 	
 	
+	public String getPassword() {
+	return password;
+}
+
+public void setPassword(String password) {
+	this.password = password;
+}
+
 	public String getUrlDataBase() {
 		return urlDataBase;
 	}

@@ -6,9 +6,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -17,8 +15,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
-
-import com.apple.eawt.Application;
 
 import tech.codepalace.view.buttons.MyButton;
 import tech.codepalace.view.panels.PanelWithBackgroundOption;
@@ -140,12 +136,6 @@ public class BigDataAirportHotelBaselStartFrame extends JFrame {
 
 			
 			this.setResizable(false);
-
-
-			//Set the JFrame Icon
-//			setMyIcon();
-//			setIcon("/img/iconoHotel.png");
-
 
 			 this.setSize(1110, 710);
 			 this.setResizable(false);

@@ -1,5 +1,6 @@
 package tech.codepalace.model;
 
+import tech.codepalace.view.frames.BigDataAirportHotelBaselStartFrame;
 
 /**
  * 
@@ -10,7 +11,16 @@ package tech.codepalace.model;
  */
 public class LogicModelParking {
 	
+	private BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame;
 	
-	public LogicModelParking() {}
+	private UserAHB userAHB;
+	
+	
+	public LogicModelParking(BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame, UserAHB userAHB) {
+		this.bigDataAirportHotelBaselStartFrame = bigDataAirportHotelBaselStartFrame;
+		this.userAHB = userAHB;
+	}
+
+	
 
 }

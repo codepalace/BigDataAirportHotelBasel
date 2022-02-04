@@ -35,7 +35,7 @@ public class BigDataAHBRunner {
 				
 				
 				//Instantiate LogicModelStartFrame
-			    LogicModelStartFrame logicModelStartFrame = new LogicModelStartFrame();
+			    LogicModelStartFrame logicModelStartFrame = new LogicModelStartFrame(bigDataAirportHotelBaselStartFrame, userAHB);
 			    
 
 

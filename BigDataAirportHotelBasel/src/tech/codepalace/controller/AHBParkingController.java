@@ -49,7 +49,20 @@ public class AHBParkingController  implements ActionListener, KeyListener, Windo
 		this.ahbParking.noExitParking.addActionListener(this);
 		this.ahbParking.noExitParking.addKeyListener(this);
 		
-//		closeParking();
+        
+		//Menu JButtons Action And KeyListener
+		this.ahbParking.btnHome.addActionListener(this);
+		this.ahbParking.btnHome.addKeyListener(this);
+		this.ahbParking.btnFundsachen.addActionListener(this);
+		this.ahbParking.btnFundsachen.addKeyListener(this);
+		this.ahbParking.btnFitness.addActionListener(this);
+		this.ahbParking.btnFitness.addKeyListener(this);
+		this.ahbParking.btnPhonebook.addActionListener(this);
+		this.ahbParking.btnPhonebook.addKeyListener(this);
+		this.ahbParking.btnLogout.addActionListener(this);
+		this.ahbParking.btnLogout.addKeyListener(this);
+		
+		
 		
 	}
 
@@ -91,18 +104,6 @@ public class AHBParkingController  implements ActionListener, KeyListener, Windo
 	@Override
 	public void windowClosing(WindowEvent e) {
 	
-//		this.ahbParking.confirmClose();
-		
-//		SwingUtilities.invokeLater(new Runnable() {
-//			
-//			@Override
-//			public void run() {
-//
-//
-//				ahbParking.dispose();
-//				
-//			}
-//		});
 		
 	}
 
@@ -219,6 +220,42 @@ public class AHBParkingController  implements ActionListener, KeyListener, Windo
 			
 			this.ahbParking.exitParkingDialog.dispose();
 			
+		}else
+			
+			
+			if(e.getSource()== this.ahbParking.btnHome ) {
+				this.bigDataAirportHotelBaselStartFrame.setVisible(true);
+				this.ahbParking.dispose();
+				
+		}else
+			
+			
+			if(e.getSource()== this.ahbParking.btnFitness ) {
+				
+				//Call the Fitness DataBase Application
+				
+		}else
+			
+			
+			if(e.getSource()== this.ahbParking.btnFundsachen ) {
+				
+				//Call the Fitness Fundsachen Application
+				
+		}else
+			
+			
+			if(e.getSource()== this.ahbParking.btnPhonebook ) {
+				
+				//Call the PhoneBook DataBase Application
+				
+		}else
+			
+			
+			if(e.getSource()== this.ahbParking.btnLogout ) {
+				
+				
+//				logoutApplication();
+				
 		}
 		
 	}
