@@ -52,7 +52,7 @@ public class LoginUser extends JDialog  {
 	
 	public JButton loginButton, cancelLoginButton;
 	
-	protected JTextField userLolingJTextField;
+	public JTextField userLolingJTextField;
 	public JPasswordField passwordField;
 	
 	//Border for the centerPanelButtons
@@ -333,6 +333,28 @@ public class LoginUser extends JDialog  {
 			
 			
 	}
+	
+	
+	/**
+	 * @description we get the UserName entered by the User
+	 * @return
+	 */
+	public String getUserNameEntered() {
+		return this.userLolingJTextField.getText();
+	}
+	
+	
+	
+	/**
+	 * @descripion we get the password entered by the User.
+	 * @return
+	 */
+	public String getPasswordEntered() {
+		
+		String pwd = new String(this.passwordField.getPassword());
+		return pwd;
+	}
+
 	
 
 

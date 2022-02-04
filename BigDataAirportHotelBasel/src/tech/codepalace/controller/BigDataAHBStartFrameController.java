@@ -90,13 +90,6 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 		//Add Windows Listener to BigDataAirportHotelBaselStartFrame
 		this.bigDataAirportHotelBaselStartFrame.addWindowListener(this);
 		
-		//Add Action and KeyListener for some elements of the Login Dialgo Box
-		this.logicModelStartFrame.loginButton.addActionListener(this);
-		this.logicModelStartFrame.loginButton.addKeyListener(this);
-		this.logicModelStartFrame.cancelLoginButton.addActionListener(this);
-		this.logicModelStartFrame.cancelLoginButton.addKeyListener(this);
-		this.logicModelStartFrame.passwordLoginJPasswordField.addKeyListener(this);
-		
 		
 		//Initialize DataEncription for using with the login data
 		this.dataEncryption = new DataEncryption();
@@ -237,79 +230,10 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 		}else if (e.getSource()==this.logicModelStartFrame.abbrechenJButton && e.getKeyCode() == 10) {
 			
 			System.exit(0);
-		}else if (e.getSource()== this.logicModelStartFrame.loginButton && e.getKeyCode() == 10) {
-			
-//		System.out.println("Ready for login");
-	
-			
-			//Call the setLoginValue method
-			this.logicModelStartFrame.setLoginValue();
-			
-			//We check is the password entered by the user is correct
-			if(this.logicModelStartFrame.isPasswordIsCorrect()) {
-				
-				//We give a new value to userAHB getting from logicModelStartFrame.getUserAHB so we have all the information from the user. from logicModelStartFrame received from PropertiesReader
-				this.userAHB = this.logicModelStartFrame.getUserAHB();
-				
-				//We get the user privilege.
-				this.privilegeUser = this.logicModelStartFrame.getPrivilegeUser();
-				
-				
-				try {
-		
-					//We set the user Value to the JLabel for displaying the user inside the JLabel GUI JFrame
-					this.bigDataAirportHotelBaselStartFrame.loginUserText.setText(this.bigDataAirportHotelBaselStartFrame.loginUserText.getText() + 
-							" " + this.dataEncryption.decryptData(this.userAHB.getUserName()));
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-				
-				
-				//we get the user privile
-				checkPrivilegeUser();
-			}
+		}
 			
 		
-		}else if (e.getSource()== this.logicModelStartFrame.cancelLoginButton && e.getKeyCode() == 10) {
-			
-			System.exit(0);
-		
-		}else if (e.getSource()==this.logicModelStartFrame.passwordLoginJPasswordField && e.getKeyCode() == 10) {
-
-//			System.out.println("Ready for login");
-			
-		
-			
-			
-			//Call the setLoginValue method
-			this.logicModelStartFrame.setLoginValue();
-			
-			//We check is the password entered by the user is correct
-			if(this.logicModelStartFrame.isPasswordIsCorrect()) {
-				
-				//We give a new value to userAHB getting from logicModelStartFrame.getUserAHB so we have all the information from the user. from logicModelStartFrame received from PropertiesReader
-				this.userAHB = this.logicModelStartFrame.getUserAHB();
-				
-				//We get the user privilege.
-				this.privilegeUser = this.logicModelStartFrame.getPrivilegeUser();
-				
-				
-				try {
-		
-					//We set the user Value to the JLabel for displaying the user inside the JLabel GUI JFrame
-					this.bigDataAirportHotelBaselStartFrame.loginUserText.setText(this.bigDataAirportHotelBaselStartFrame.loginUserText.getText() + 
-							" " + this.dataEncryption.decryptData(this.userAHB.getUserName()));
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-				
-				
-				//we get the user privile
-				checkPrivilegeUser();
-			}
-			
-		//}else if (e.getSource()==this.logicModelStartFrame.passwordLoginJPasswordField && e.getKeyCode() == 10) {
-		} else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.parkingButton &&  e.getKeyCode() == 113) {
+		 else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.parkingButton &&  e.getKeyCode() == 113) {
 			
 			SwingUtilities.invokeLater(new Runnable() {
 				
@@ -373,41 +297,6 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 		}else if (e.getSource()==this.logicModelStartFrame.abbrechenJButton) {
 		
 			System.exit(0);
-			
-		}else if(e.getSource()==this.logicModelStartFrame.loginButton) {
-//			System.out.println("You have pressed login");
-			
-			//Call the setLoginValue method
-			this.logicModelStartFrame.setLoginValue();
-			
-			
-			//We check is the password entered by the user is correct
-			if(this.logicModelStartFrame.isPasswordIsCorrect()) {
-				
-				//We give a new value to userAHB getting from logicModelStartFrame.getUserAHB so we have all the information from the user. from logicModelStartFrame received from PropertiesReader
-				this.userAHB = this.logicModelStartFrame.getUserAHB();
-				
-				//We get the user privilege.
-				this.privilegeUser = this.logicModelStartFrame.getPrivilegeUser();
-				
-				
-				try {
-		
-					//We set the user Value to the JLabel for displaying the user inside the JLabel GUI JFrame
-					this.bigDataAirportHotelBaselStartFrame.loginUserText.setText(this.bigDataAirportHotelBaselStartFrame.loginUserText.getText() + 
-							" " + this.dataEncryption.decryptData(this.userAHB.getUserName()));
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-				
-				
-				//we get the user privile
-				checkPrivilegeUser();
-			}
-			
-		}else if (e.getSource()==this.logicModelStartFrame.cancelLoginButton) {
-			System.exit(0);
-			
 			
 		} else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.parkingButton) {
 			

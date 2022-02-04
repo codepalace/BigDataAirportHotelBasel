@@ -7,7 +7,9 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
+import tech.codepalace.model.LogicModelLogin;
 import tech.codepalace.model.UserAHB;
+import tech.codepalace.utility.DataEncryption;
 import tech.codepalace.view.frames.BigDataAirportHotelBaselStartFrame;
 import tech.codepalace.view.frames.LoginUser;
 
@@ -16,24 +18,37 @@ public class LoginController implements ActionListener, KeyListener, WindowListe
 	private LoginUser loginUser;
 	private UserAHB userAHB;
 	private BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame;
+	private LogicModelLogin logicModelLogin;
+	
+	
+	/*
+	 * we need this variable because depending on the privileges of the user, 
+	 * we can activate some features of the program or not
+	 */
+	protected String privilegeUser;
+	
+	//Create an instance DataEncryption to decrypt the data
+	protected DataEncryption dataEncryption;
 	
 	
 	
-	public LoginController(LoginUser loginUser, UserAHB userAHB, BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame) {
+	public LoginController(LoginUser loginUser, UserAHB userAHB, BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame, LogicModelLogin logicModelLogin) {
 		
 		this.loginUser = loginUser;
 		this.userAHB = userAHB;
 		this.bigDataAirportHotelBaselStartFrame = bigDataAirportHotelBaselStartFrame;
+		this.logicModelLogin = logicModelLogin;
 		
 		this.loginUser.addWindowListener(this);
 	
 		this.loginUser.loginButton.addActionListener(this);
 		this.loginUser.loginButton.addKeyListener(this);
+		this.loginUser.passwordField.addKeyListener(this);
 		
 		this.loginUser.cancelLoginButton.addActionListener(this);
 		this.loginUser.cancelLoginButton.addKeyListener(this);
 		
-		
+		this.dataEncryption = new DataEncryption();
 		
 		
 		
@@ -109,13 +124,78 @@ public class LoginController implements ActionListener, KeyListener, WindowListe
 		if(e.getSource()== this.loginUser.loginButton && e.getKeyCode()== 10) {
 		
 
-			System.out.println("Time to call setLoginValue Method");
+			this.logicModelLogin.setLoginValue();
 			
+			//We check is the password entered by the user is correct
+			if(this.logicModelLogin.isPasswordIsCorrect()) {
+				
+				//We give a new value to userAHB getting from logicModelStartFrame.getUserAHB so we have all the information from the user. from logicModelStartFrame received from PropertiesReader
+				this.userAHB = this.logicModelLogin.getUserAHB();
+				
+				//We get the user privilege.
+				this.privilegeUser = this.logicModelLogin.getPrivilegeUser();
+				
+				
+				try {
+		
+					//We set the user Value to the JLabel for displaying the user inside the JLabel GUI JFrame
+					this.bigDataAirportHotelBaselStartFrame.loginUserText.setText(this.bigDataAirportHotelBaselStartFrame.loginUserText.getText() + 
+							" " + this.dataEncryption.decryptData(this.userAHB.getUserName()));
+					
+					this.bigDataAirportHotelBaselStartFrame.parkingButton.requestFocus();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				
+				
+				//we get the user privile
+				checkPrivilegeUser();
 			
+		}
+			
+		}else if (e.getSource()==this.loginUser.passwordField && e.getKeyCode() == 10) {
+
+//			System.out.println("Ready for login");
+			
+		
+			
+this.logicModelLogin.setLoginValue();
+			
+			//We check is the password entered by the user is correct
+			if(this.logicModelLogin.isPasswordIsCorrect()) {
+				
+				//We give a new value to userAHB getting from logicModelStartFrame.getUserAHB so we have all the information from the user. from logicModelStartFrame received from PropertiesReader
+				this.userAHB = this.logicModelLogin.getUserAHB();
+				
+				//We get the user privilege.
+				this.privilegeUser = this.logicModelLogin.getPrivilegeUser();
+				
+				
+				try {
+		
+					//We set the user Value to the JLabel for displaying the user inside the JLabel GUI JFrame
+					this.bigDataAirportHotelBaselStartFrame.loginUserText.setText(this.bigDataAirportHotelBaselStartFrame.loginUserText.getText() + 
+							" " + this.dataEncryption.decryptData(this.userAHB.getUserName()));
+					
+					this.bigDataAirportHotelBaselStartFrame.parkingButton.requestFocus();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				
+				
+				//we get the user privile
+				checkPrivilegeUser();
+			}
+			
+		//}else if (e.getSource()==this.logicModelStartFrame.passwordLoginJPasswordField && e.getKeyCode() == 10) {
 		}
 		
 		
 	}
+	
+	
+	
+	
 
 	@Override
 	public void keyReleased(KeyEvent e) {
@@ -130,6 +210,8 @@ public class LoginController implements ActionListener, KeyListener, WindowListe
 
 
 			this.loginUser.confirmClose();
+			
+			
 
 			
 		}else
@@ -138,12 +220,67 @@ public class LoginController implements ActionListener, KeyListener, WindowListe
 		if(e.getSource()== this.loginUser.loginButton) {
 		
 
-			System.out.println("Time to call setLoginValue Method");
+//			System.out.println("Time to call setLoginValue Method");
+			this.logicModelLogin.setLoginValue();
+			
+			//We check is the password entered by the user is correct
+			if(this.logicModelLogin.isPasswordIsCorrect()) {
+				
+				//We give a new value to userAHB getting from logicModelStartFrame.getUserAHB so we have all the information from the user. from logicModelStartFrame received from PropertiesReader
+				this.userAHB = this.logicModelLogin.getUserAHB();
+				
+				//We get the user privilege.
+				this.privilegeUser = this.logicModelLogin.getPrivilegeUser();
+				
+				
+				try {
+		
+					//We set the user Value to the JLabel for displaying the user inside the JLabel GUI JFrame
+					this.bigDataAirportHotelBaselStartFrame.loginUserText.setText(this.bigDataAirportHotelBaselStartFrame.loginUserText.getText() + 
+							" " + this.dataEncryption.decryptData(this.userAHB.getUserName()));
+					this.bigDataAirportHotelBaselStartFrame.parkingButton.requestFocus();
+					
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				
+				
+				//we get the user privile
+				checkPrivilegeUser();
+			
+		}
 			
 			
 		}
-		
-		
+			
 	}
+		
+		
+	
+	
+	
+
+
+		
+		/**
+		 * @description this method evaluates the privileges of the user and depending on the privileges of the user we offer different functionalities of the program.
+		 */
+		protected void checkPrivilegeUser() {
+				
+				switch (this.privilegeUser) {
+				case "ADMIN":
+					
+
+					//As an administrator we make visible the buttons only for administrators
+					this.bigDataAirportHotelBaselStartFrame.btn_benutzerVerwalten.setVisible(true);
+					this.bigDataAirportHotelBaselStartFrame.btn_benutzerVerwalten.setEnabled(true);
+					this.bigDataAirportHotelBaselStartFrame.btn_createDB.setVisible(true);
+					this.bigDataAirportHotelBaselStartFrame.btn_createDB.setEnabled(true);
+					break;
+
+				default:
+					break;
+				}
+			}
 
 }
