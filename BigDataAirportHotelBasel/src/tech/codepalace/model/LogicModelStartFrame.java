@@ -16,6 +16,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -41,7 +42,7 @@ import tech.codepalace.view.frames.LoginUser;
  * @description This class will contain most of the main frame logic
  *
  */
-public class LogicModelStartFrame {
+public class LogicModelStartFrame extends LogicModel {
 	
 		//Path of the project where the configuration file will be located
 		protected String projectDirectoryString = System.getProperty("user.dir");
@@ -847,6 +848,71 @@ public class LogicModelStartFrame {
 		public UserAHB getUserAHB() {
 			
 			return userAHB;
+		}
+
+
+		@Override
+		public void logoutApplication(JFrame jframeToDispose, BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame) {
+			this.bigDataAirportHotelBaselStartFrame = bigDataAirportHotelBaselStartFrame;
+			
+			
+			this.bigDataAirportHotelBaselStartFrame.loginUserText.setText("Benutzer: ");
+			this.userAHB.setUserName("");
+			this.userAHB.setPrivilege("");
+			
+			//Disable the admin Buttons and makes them not visible.
+			this.bigDataAirportHotelBaselStartFrame.btn_benutzerVerwalten.setVisible(false);
+			this.bigDataAirportHotelBaselStartFrame.btn_benutzerVerwalten.setEnabled(false);
+			this.bigDataAirportHotelBaselStartFrame.btn_createDB.setVisible(false);
+			this.bigDataAirportHotelBaselStartFrame.btn_createDB.setEnabled(false);
+			
+			/*
+			 * In this case as we are calling from the main window we do not need to hide this JFrame(BigaDataAirportHotelBaselStartFrame) 
+			 * we just need to make the login window visible and reset the values.
+			 */
+			
+			
+			this.loginUser.userLolingJTextField.setText("");
+			this.loginUser.passwordField.setText("");
+			
+			JOptionPane.showMessageDialog(null, this.userAHB.getUserName());
+			loginUser();
+			
+		}
+
+
+		@Override
+		public void displayParking(JFrame parkingFrameToVisible, JFrame jframeToClose) {
+			// TODO Auto-generated method stub
+			
+		}
+
+
+		@Override
+		public void displayFundSachen(JFrame fundSachenToVisible, JFrame JframeToClose) {
+			// TODO Auto-generated method stub
+			
+		}
+
+
+		@Override
+		public void displayFitnessAbo(JFrame fitnessAboToVisible, JFrame JframeToClose) {
+			// TODO Auto-generated method stub
+			
+		}
+
+
+		@Override
+		public void displayUebergabe(JFrame uebergabeToVisible, JFrame JframeToClose) {
+			// TODO Auto-generated method stub
+			
+		}
+
+
+		@Override
+		public void displayPhoneBook(JFrame phoneBookToVisible, JFrame JframeToClose) {
+			// TODO Auto-generated method stub
+			
 		}
 
 

@@ -427,15 +427,17 @@ public void focusLost(FocusEvent e) {
 
 protected void logoutApplication() {
 	
-		this.bigDataAirportHotelBaselStartFrame.loginUserText.setText("Benutzer: ");
-		this.userAHB.setUserName("");
-		this.userAHB.setPrivilege("");
-		this.bigDataAirportHotelBaselStartFrame.btn_benutzerVerwalten.setVisible(false);
-		this.bigDataAirportHotelBaselStartFrame.btn_benutzerVerwalten.setEnabled(false);
-		this.bigDataAirportHotelBaselStartFrame.btn_createDB.setVisible(false);
-		this.bigDataAirportHotelBaselStartFrame.btn_createDB.setEnabled(false);
-		this.logicModelStartFrame.loginUser();
+//		this.bigDataAirportHotelBaselStartFrame.loginUserText.setText("Benutzer: ");
+//		this.userAHB.setUserName("");
+//		this.userAHB.setPrivilege("");
+//		this.bigDataAirportHotelBaselStartFrame.btn_benutzerVerwalten.setVisible(false);
+//		this.bigDataAirportHotelBaselStartFrame.btn_benutzerVerwalten.setEnabled(false);
+//		this.bigDataAirportHotelBaselStartFrame.btn_createDB.setVisible(false);
+//		this.bigDataAirportHotelBaselStartFrame.btn_createDB.setEnabled(false);
+//		this.logicModelStartFrame.loginUser();
 	
+	
+	this.logicModelStartFrame.logoutApplication(this.bigDataAirportHotelBaselStartFrame, this.bigDataAirportHotelBaselStartFrame);
 }
 
 
