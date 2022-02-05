@@ -8,14 +8,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
-
-import com.apple.eawt.Application;
 
 import tech.codepalace.model.LogicModelParking;
 import tech.codepalace.model.LogicModelStartFrame;
@@ -450,41 +446,45 @@ protected void logoutApplication() {
  * @param jFrame
  */
 public void setMyIcon(String iconImage, JFrame jFrame) {
-	if ( existsApple( "com.apple.eawt.Application" ) ){
-
-    Application application = Application.getApplication();            
-    try {
-    	System.setProperty("apple.awt.application.name", "Your App Name");
-		application.setDockIconImage(ImageIO.read(getClass().getResource(iconImage)));
+	jFrame.setIconImage (new ImageIcon(getClass().getResource("/img/iconoHotel.png")).getImage());
 	
-	} catch (IOException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-    }else {
-    	//set JFrame icon
-		jFrame.setIconImage (new ImageIcon(getClass().getResource("/img/iconoHotel.png")).getImage());
-    }
+
+//	if ( existsApple( "com.apple.eawt.Application" ) ){
+//
+//    Application application = Application.getApplication();            
+//    try {
+//    	System.setProperty("apple.awt.application.name", "Your App Name");
+//		application.setDockIconImage(ImageIO.read(getClass().getResource(iconImage)));
+//		
+//	
+//	} catch (IOException e) {
+//		// TODO Auto-generated catch block
+//		e.printStackTrace();
+//	}
+//    }else {
+//    	//set JFrame icon
+//		jFrame.setIconImage (new ImageIcon(getClass().getResource("/img/iconoHotel.png")).getImage());
+//    }
 	
 }
 
 
 
-/**
- * @description Method to know if we are working on a macOs.
- * @param className
- * @return
- */
-public boolean existsApple(String className)
-{
-    try {
-        Class.forName( className, false, null );
-        return true;
-    }
-    catch (ClassNotFoundException exception) {
-        return false;
-    }
-}
+///**
+// * @description Method to know if we are working on a macOs.
+// * @param className
+// * @return
+// */
+//public boolean existsApple(String className)
+//{
+//    try {
+//        Class.forName( className, false, null );
+//        return true;
+//    }
+//    catch (ClassNotFoundException exception) {
+//        return false;
+//    }
+//}
 	
 	
 
