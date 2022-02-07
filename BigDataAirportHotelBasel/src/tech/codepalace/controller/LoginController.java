@@ -32,6 +32,7 @@ public class LoginController implements ActionListener, KeyListener, WindowListe
 	
 	
 	
+	
 	public LoginController(LoginUser loginUser, UserAHB userAHB, BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame, LogicModelLogin logicModelLogin) {
 		
 		this.loginUser = loginUser;
@@ -129,15 +130,11 @@ public class LoginController implements ActionListener, KeyListener, WindowListe
 			//We check is the password entered by the user is correct
 			if(this.logicModelLogin.isPasswordIsCorrect()) {
 				
-				//We give a new value to userAHB getting from logicModelStartFrame.getUserAHB so we have all the information from the user. from logicModelStartFrame received from PropertiesReader
-				this.userAHB = this.logicModelLogin.getUserAHB();
-				
-				//We get the user privilege.
-				this.privilegeUser = this.logicModelLogin.getPrivilegeUser();
-				
 				
 				try {
 		
+					this.privilegeUser = this.dataEncryption.decryptData(this.userAHB.getPrivilege());
+					
 					//We set the user Value to the JLabel for displaying the user inside the JLabel GUI JFrame
 					this.bigDataAirportHotelBaselStartFrame.loginUserText.setText(this.bigDataAirportHotelBaselStartFrame.loginUserText.getText() + 
 							" " + this.dataEncryption.decryptData(this.userAHB.getUserName()));
@@ -164,15 +161,11 @@ this.logicModelLogin.setLoginValue();
 			//We check is the password entered by the user is correct
 			if(this.logicModelLogin.isPasswordIsCorrect()) {
 				
-				//We give a new value to userAHB getting from logicModelStartFrame.getUserAHB so we have all the information from the user. from logicModelStartFrame received from PropertiesReader
-				this.userAHB = this.logicModelLogin.getUserAHB();
-				
-				//We get the user privilege.
-				this.privilegeUser = this.logicModelLogin.getPrivilegeUser();
-				
 				
 				try {
 		
+					this.privilegeUser = this.dataEncryption.decryptData(this.userAHB.getPrivilege());
+					
 					//We set the user Value to the JLabel for displaying the user inside the JLabel GUI JFrame
 					this.bigDataAirportHotelBaselStartFrame.loginUserText.setText(this.bigDataAirportHotelBaselStartFrame.loginUserText.getText() + 
 							" " + this.dataEncryption.decryptData(this.userAHB.getUserName()));
@@ -186,8 +179,7 @@ this.logicModelLogin.setLoginValue();
 				//we get the user privile
 				checkPrivilegeUser();
 			}
-			
-		//}else if (e.getSource()==this.logicModelStartFrame.passwordLoginJPasswordField && e.getKeyCode() == 10) {
+
 		}
 		
 		
@@ -220,39 +212,35 @@ this.logicModelLogin.setLoginValue();
 		if(e.getSource()== this.loginUser.loginButton) {
 		
 
-//			System.out.println("Time to call setLoginValue Method");
 			this.logicModelLogin.setLoginValue();
 			
 			//We check is the password entered by the user is correct
 			if(this.logicModelLogin.isPasswordIsCorrect()) {
-				
-				//We give a new value to userAHB getting from logicModelStartFrame.getUserAHB so we have all the information from the user. from logicModelStartFrame received from PropertiesReader
-				this.userAHB = this.logicModelLogin.getUserAHB();
-				
-				//We get the user privilege.
-				this.privilegeUser = this.logicModelLogin.getPrivilegeUser();
+
 				
 				
 				try {
-		
+					//We get the user privilege.
+					this.privilegeUser = this.dataEncryption.decryptData(this.userAHB.getPrivilege());
+			
 					//We set the user Value to the JLabel for displaying the user inside the JLabel GUI JFrame
 					this.bigDataAirportHotelBaselStartFrame.loginUserText.setText(this.bigDataAirportHotelBaselStartFrame.loginUserText.getText() + 
 							" " + this.dataEncryption.decryptData(this.userAHB.getUserName()));
+
 					this.bigDataAirportHotelBaselStartFrame.parkingButton.requestFocus();
+				
 					
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
+
 				
-				
-				//we get the user privile
 				checkPrivilegeUser();
 			
 		}
 			
 			
 		}
-			
 	}
 		
 		

@@ -33,9 +33,7 @@ public class LogicModelLogin {
 	//New Instance LoginDataUser
 	protected LoginDataUser loginDataUser; 
 	
-	//Variable for the user privilege
-	protected String privilegeUser;
-	
+
 	//Variable to indicate that the password is correct
 	protected boolean passwordIsCorrect = false;
 	
@@ -145,9 +143,6 @@ public class LogicModelLogin {
 				if (this.propertiesReader.isPasswordIsCorrect()) {
 					
 
-					//set the value of the privilege variable, first decrypt that value. We can after use it to grant more or less privilege to the user.
-					this.privilegeUser = this.dataEncryptation.decryptData(this.userAHB.getPrivilege());
-					
 					
 					//We set passwordIsCorrect as true
 					this.passwordIsCorrect = true;
@@ -193,12 +188,6 @@ public class LogicModelLogin {
 		
 	}
 	
-	
-	
-	// We get the user privile
-	public String getPrivilegeUser() {
-		return privilegeUser;
-	}
 	
 	// get password status
 	public boolean isPasswordIsCorrect() {

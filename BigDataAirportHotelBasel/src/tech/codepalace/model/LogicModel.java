@@ -26,7 +26,7 @@ public abstract class LogicModel {
 	 * @param jframeToDispose
 	 * @param jframeToVisible
 	 */
-	public abstract void logoutApplication(JFrame jframeToDispose, BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame);
+	public abstract void logoutApplication();
 	
 	
 	/**

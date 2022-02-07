@@ -119,4 +119,4 @@ If some smart person gives you the idea of **deleting the configuration file int
 
 <h3>Screenshop Application</h3>
 
-<img alt="Big Data Airport Hotel Basel" src="https://raw.githubusercontent.com/codepalace/BigDataAirportHotelBasel/main/res/bdahb_gui.png?token=GHSAT0AAAAAABRI6GPRXKAJ3EHH25YSPM54YP63GUA"/>
+<img alt="Big Data Airport Hotel Basel" src="./res/bdahb_gui.png"/>

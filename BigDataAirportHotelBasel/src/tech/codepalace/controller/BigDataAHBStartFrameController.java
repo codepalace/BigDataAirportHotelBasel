@@ -260,7 +260,8 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 		}else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.parkingButton &&  e.getKeyCode()==118) {
 			System.out.println("Opening the database Telefonbuch!");
 		}else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.parkingButton &&  e.getKeyCode()==119) {
-			logoutApplication();
+			//We call logoutApplication Method by logicModelStartFrame
+			this.logicModelStartFrame.logoutApplication();
 		}
 		
 		
@@ -330,8 +331,8 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 			System.out.println("you pressed the phonebook button");
 		} 
 		else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.logoutButton) {
-			//We call logoutApplication Method
-			logoutApplication();
+			//We call logoutApplication Method by logicModelStartFrame
+			this.logicModelStartFrame.logoutApplication();
 		} 
 		else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.btn_kontoVerwalten) {
 			System.out.println("you pressed the kontoverwalten button");
@@ -423,23 +424,6 @@ public void focusLost(FocusEvent e) {
 	}
 	
 }
-
-
-protected void logoutApplication() {
-	
-//		this.bigDataAirportHotelBaselStartFrame.loginUserText.setText("Benutzer: ");
-//		this.userAHB.setUserName("");
-//		this.userAHB.setPrivilege("");
-//		this.bigDataAirportHotelBaselStartFrame.btn_benutzerVerwalten.setVisible(false);
-//		this.bigDataAirportHotelBaselStartFrame.btn_benutzerVerwalten.setEnabled(false);
-//		this.bigDataAirportHotelBaselStartFrame.btn_createDB.setVisible(false);
-//		this.bigDataAirportHotelBaselStartFrame.btn_createDB.setEnabled(false);
-//		this.logicModelStartFrame.loginUser();
-	
-	
-	this.logicModelStartFrame.logoutApplication(this.bigDataAirportHotelBaselStartFrame, this.bigDataAirportHotelBaselStartFrame);
-}
-
 
 
 /**

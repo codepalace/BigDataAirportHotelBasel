@@ -152,8 +152,7 @@ public class LogicModelStartFrame extends LogicModel {
 			this.loginButton = new JButton("Login");
 			this.cancelLoginButton = new JButton("Abbrechen");
 			
-			//Initialize UserAHB
-			this.userAHB = new UserAHB();
+			
 			
 			
 			
@@ -811,20 +810,37 @@ public class LogicModelStartFrame extends LogicModel {
 		public void loginUser() {
 
 
-			SwingUtilities.invokeLater(new Runnable() {
+			if(this.logicModelLogin==null) {
+				System.out.println("logicModelLogin does not exist invokeLater. run Method call all instructions.");
+				SwingUtilities.invokeLater(new Runnable() {
 
-				@Override
-				public void run() {
-					// TODO Auto-generated method stub
-					logicModelLogin = new LogicModelLogin(loginUser, userAHB);
-					 loginController = new LoginController(loginUser, userAHB, bigDataAirportHotelBaselStartFrame, logicModelLogin);
-					 loginUser.setLocationRelativeTo(null);
-					  
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						logicModelLogin = new LogicModelLogin(loginUser, userAHB);
+						 loginController = new LoginController(loginUser, userAHB, bigDataAirportHotelBaselStartFrame, logicModelLogin);
+						 loginUser.setLocationRelativeTo(null);
+						  
+						 
+						 loginUser.setVisible(true);
+					}
 					
-					 loginUser.setVisible(true);
-				}
+				});
+			}else {
+				System.out.println("logicModelLogin exists. We only make the loginUser GUI Visible again");
+			
 				
-			});
+				
+				
+			          userAHB.setUserName("");
+			          userAHB.setPrivilege("");
+			          loginUser.setVisible(true);
+			      
+			   
+			
+				
+			}
+			
 					
 					
 			
@@ -839,44 +855,45 @@ public class LogicModelStartFrame extends LogicModel {
 
 
 
-		
-
-
-		/**
-		 * return UserAHB
-		 */
-		public UserAHB getUserAHB() {
-			
-			return userAHB;
-		}
 
 
 		@Override
-		public void logoutApplication(JFrame jframeToDispose, BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame) {
-			this.bigDataAirportHotelBaselStartFrame = bigDataAirportHotelBaselStartFrame;
+		public void logoutApplication() {
+			
+			SwingUtilities.invokeLater(new Runnable() {
+
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					bigDataAirportHotelBaselStartFrame.loginUserText.setText("Benutzer: ");
+//					userAHB.setUserName("");
+//					userAHB.setPrivilege("");
+					
+					
+					//Disable the admin Buttons and makes them not visible.
+					bigDataAirportHotelBaselStartFrame.btn_benutzerVerwalten.setVisible(false);
+					bigDataAirportHotelBaselStartFrame.btn_benutzerVerwalten.setEnabled(false);
+					bigDataAirportHotelBaselStartFrame.btn_createDB.setVisible(false);
+					bigDataAirportHotelBaselStartFrame.btn_createDB.setEnabled(false);
+					
+					/*
+					 * In this case as we are calling from the main window we do not need to hide this JFrame(BigaDataAirportHotelBaselStartFrame) 
+					 * we just need to make the login window visible and reset the values.
+					 */
+					
+					
+					loginUser.userLolingJTextField.setText("");
+					loginUser.passwordField.setText("");
+					
+					
+					loginUser();
+				}
+				
+			});
+			
+
 			
 			
-			this.bigDataAirportHotelBaselStartFrame.loginUserText.setText("Benutzer: ");
-			this.userAHB.setUserName("");
-			this.userAHB.setPrivilege("");
-			
-			//Disable the admin Buttons and makes them not visible.
-			this.bigDataAirportHotelBaselStartFrame.btn_benutzerVerwalten.setVisible(false);
-			this.bigDataAirportHotelBaselStartFrame.btn_benutzerVerwalten.setEnabled(false);
-			this.bigDataAirportHotelBaselStartFrame.btn_createDB.setVisible(false);
-			this.bigDataAirportHotelBaselStartFrame.btn_createDB.setEnabled(false);
-			
-			/*
-			 * In this case as we are calling from the main window we do not need to hide this JFrame(BigaDataAirportHotelBaselStartFrame) 
-			 * we just need to make the login window visible and reset the values.
-			 */
-			
-			
-			this.loginUser.userLolingJTextField.setText("");
-			this.loginUser.passwordField.setText("");
-			
-			JOptionPane.showMessageDialog(null, this.userAHB.getUserName());
-			loginUser();
 			
 		}
 
