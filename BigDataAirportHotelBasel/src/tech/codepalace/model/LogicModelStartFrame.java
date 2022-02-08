@@ -834,6 +834,7 @@ public class LogicModelStartFrame extends LogicModel {
 				
 			          userAHB.setUserName("");
 			          userAHB.setPrivilege("");
+			          userAHB.setPassword("");
 			          loginUser.setVisible(true);
 			      
 			   
@@ -881,7 +882,9 @@ public class LogicModelStartFrame extends LogicModel {
 					 * we just need to make the login window visible and reset the values.
 					 */
 					
-					
+					userAHB.setUserName("");
+			        userAHB.setPrivilege("");
+			        userAHB.setPassword("");
 					loginUser.userLolingJTextField.setText("");
 					loginUser.passwordField.setText("");
 					
