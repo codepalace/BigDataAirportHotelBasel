@@ -10,7 +10,6 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -20,10 +19,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.border.Border;
 
 import tech.codepalace.view.buttons.MyButton;
 import tech.codepalace.view.panels.PanelWithBackgroundOption;
+import tech.codepalace.view.tables.ParkingTable;
 
 
 /**
@@ -89,6 +91,11 @@ public class AHBParking extends JFrame {
 	//JLable for the user logged
 	public JLabel loginUserLabel;
 	
+	//Instance JTable for the parkingTable
+	private JTable parkingTable;
+	
+	private JScrollPane scrollPane;
+	
 	
 	
 	
@@ -118,6 +125,7 @@ public class AHBParking extends JFrame {
 		this.centerPanelButtons.setOpaque(false);
 		
 		this.containerPanelButton = new JPanel(new BorderLayout());
+		
 		
 		
 		setupFrame();
@@ -187,8 +195,7 @@ public class AHBParking extends JFrame {
 	
 	public void confirmClose() {
 		
-		 this.exitParkingImageIcon = new ImageIcon(
-					"src" + File.separator + "img" + File.separator + "exit_parking.png");
+		 this.exitParkingImageIcon = new ImageIcon(getClass().getResource("/img/exit_parking.png"));
 		 
 		 this.options = new Object[] {this.exitParking, this.noExitParking};
 			
@@ -279,7 +286,19 @@ public void addElementsToPanel() {
 		
 		this.topPanel.add(this.loginPanel, BorderLayout.SOUTH);
 		
-
+		
+		//the instance JTable parkingTable = new ParkingTable and we get for that the JTable with the getJTable() method.
+		this.parkingTable = new ParkingTable().getJTable();
+		
+		//JScrollPane for our parkingTable
+		this.scrollPane = new JScrollPane(this.parkingTable);
+		
+		//We add the scrollpane to the centerPanel and not the parkingTable(is already by the added by the scrollpane).
+		this.centerPanel.add(scrollPane);
+		
+		
+		this.panelWithBackgroundOption.add(this.centerPanel, BorderLayout.CENTER);
+		
 		
 	}
 

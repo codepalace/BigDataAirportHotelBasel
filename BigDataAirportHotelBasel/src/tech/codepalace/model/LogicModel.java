@@ -2,8 +2,6 @@ package tech.codepalace.model;
 
 import javax.swing.JFrame;
 
-import tech.codepalace.view.frames.BigDataAirportHotelBaselStartFrame;
-
 /**
  * 
  * @author Antonio Estevez Gonzalez
