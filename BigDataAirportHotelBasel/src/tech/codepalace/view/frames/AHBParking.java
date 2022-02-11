@@ -31,7 +31,7 @@ import tech.codepalace.view.tables.ParkingTable;
 /**
  * 
  * @author Antonio Estevez Gonzalez
- * @version 1.0.0 Jan 30.2022 10:40PM
+ * @version v0.1.0 Jan 30.2022 10:40PM
  * 
  * @description Class for the application of parking databases
  *
