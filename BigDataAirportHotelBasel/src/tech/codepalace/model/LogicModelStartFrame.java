@@ -811,7 +811,7 @@ public class LogicModelStartFrame extends LogicModel {
 
 
 			if(this.logicModelLogin==null) {
-				System.out.println("logicModelLogin does not exist invokeLater. run Method call all instructions.");
+//				System.out.println("logicModelLogin does not exist invokeLater. run Method call all instructions.");
 				SwingUtilities.invokeLater(new Runnable() {
 
 					@Override
@@ -827,7 +827,7 @@ public class LogicModelStartFrame extends LogicModel {
 					
 				});
 			}else {
-				System.out.println("logicModelLogin exists. We only make the loginUser GUI Visible again");
+//				System.out.println("logicModelLogin exists. We only make the loginUser GUI Visible again");
 			
 				
 				
