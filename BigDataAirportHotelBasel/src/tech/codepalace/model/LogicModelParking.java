@@ -6,6 +6,11 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 
+import javax.swing.SwingUtilities;
+
+import tech.codepalace.dao.DAOParking;
+import tech.codepalace.dao.DaoException;
+import tech.codepalace.dao.DaoParkingImpl;
 import tech.codepalace.utility.DataEncryption;
 import tech.codepalace.view.frames.BigDataAirportHotelBaselStartFrame;
 
@@ -89,6 +94,34 @@ public class LogicModelParking {
 			System.out.println("The Database: " + urlDataBaseFile.getAbsolutePath() + "exists");
 		}else {
 			System.out.println("The Database: " + urlDataBaseFile.getAbsolutePath() + " do not exists");
+			
+			
+			SwingUtilities.invokeLater(new Runnable() {
+
+				@Override
+				public void run() {
+
+					/*
+					 * create a new object DAOParking interface = new Class DaoParkingImpl. 
+					 * 
+					 * DaoParkingImpl extends ConnectionClass for the dataBase connection and implements the DAOParking interface
+					 */
+					DAOParking daoParking = new DaoParkingImpl(urlDataBase, dbName);
+					
+					System.out.println("The " + dbName  + " database was successfully created in the path: " + urlDataBase);
+					
+					
+					try {
+						//Now we check if the Parking table exists
+						daoParking.checkTableParking();
+					} catch (DaoException e) {
+						
+						e.printStackTrace();
+					}
+					
+				}
+				
+			});
 		}
 	}
 
