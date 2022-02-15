@@ -9,8 +9,6 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
-import javax.swing.JOptionPane;
-
 import tech.codepalace.model.LogicModelParking;
 import tech.codepalace.model.UserAHB;
 import tech.codepalace.view.frames.AHBParking;
@@ -34,7 +32,8 @@ public class AHBParkingController  implements ActionListener, KeyListener, Windo
 
 	
 	
-	public AHBParkingController(AHBParking ahbParking, UserAHB userAHB, LogicModelParking logicModelParking, BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame) {
+	public AHBParkingController(AHBParking ahbParking, UserAHB userAHB, LogicModelParking logicModelParking, 
+			BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame) {
 		
 		this.ahbParking = ahbParking;
 		this.userAHB = userAHB;

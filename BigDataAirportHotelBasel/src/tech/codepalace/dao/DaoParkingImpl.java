@@ -1,12 +1,32 @@
 package tech.codepalace.dao;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.DatabaseMetaData;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+
+import tech.codepalace.controller.NewParkingController;
+import tech.codepalace.model.LogicModelNewParking;
 import tech.codepalace.model.ParkingReservation;
+import tech.codepalace.model.UserAHB;
+import tech.codepalace.utility.DataEncryption;
+import tech.codepalace.view.frames.AHBParking;
+import tech.codepalace.view.frames.NewParking;
 
 
 
@@ -25,11 +45,45 @@ public class DaoParkingImpl extends ConnectionClass implements DAOParking {
  	protected DatabaseMetaData metadata = null;
  	protected Statement statement = null;
  	protected String table_name = "Parking";
+ 	
+ 	
+ 	public JDialog newParkingDialog;
+ 	public JButton newParkingReservationJButton;
+ 	public JButton cancelNewParkingReservationJButton;
+ 	
+ 	private Object [] options;
+ 	
+ 	private JPanel panelContainerMessage, panelButtons;
+	
+ 	private JLabel messageParking;
+ 	
+ 	private ImageIcon imgUserRequestNewParking;
+ 	
+ 	private UserAHB userAHB;
+ 	private AHBParking ahbParking;
+ 	private NewParking newParking;
+ 	
+ 	private ParkingReservation parkingReservation;
+ 	
+ 	
+ 	private DataEncryption dataEncryption;
+ 	
+ 	private int count = 0;
+ 	
+ 	
+
 	
 	
-	
-	public DaoParkingImpl(String urlDB, String dbName) {
+	public DaoParkingImpl(String urlDB, String dbName, UserAHB userAHB, AHBParking ahbParking, ParkingReservation parkingReservation) {
 		super(urlDB, dbName);
+		
+		this.userAHB = userAHB;
+		this.ahbParking = ahbParking;
+		this.newParking = new  NewParking(this.ahbParking, true, this.userAHB);
+		this.parkingReservation = parkingReservation;
+		
+		
+		
 		
 		
 	}
@@ -92,8 +146,11 @@ public class DaoParkingImpl extends ConnectionClass implements DAOParking {
 	            //Very important close conneciton
 	             this.closeConnection();
 	             
-	             
+	             /*
+	              * now we call the displayListParking method that shows the data of the parking table even if there are no data yet.
+	              */
 	           
+	             displayListParking();
 	            }
 			 
 			 
@@ -116,15 +173,150 @@ public class DaoParkingImpl extends ConnectionClass implements DAOParking {
 
 	@Override
 	public void addNewParkingReservation(int lenghtParkingTableDataBase) throws DaoException {
-		// TODO Auto-generated method stub
+		
+		this.dataEncryption = new DataEncryption();
+		
+		
+		SwingUtilities.invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+
+				LogicModelNewParking logicModelNewParking = new LogicModelNewParking(userAHB, ahbParking, parkingReservation);
+				NewParkingController newParkingController = new NewParkingController(newParking);
+				
+				newParking.setLocationRelativeTo(null);
+				newParking.setVisible(true);
+				
+				
+			}
+			
+		});
+		
+		
 		
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@Override
 	public List<ParkingReservation> displayListParking() throws DaoException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<ParkingReservation>parkingreservations = new ArrayList<ParkingReservation>();
+
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		
+		
+		//Ahora utilizamos el hilo largo para esta tarea de recorrer el contenido de la tabla. 
+		try {
+			this.conect();
+			String sqlString = "SELECT * From PARKING";
+			preparedStatement = conn.prepareStatement(sqlString);
+			rs = preparedStatement.executeQuery();
+			
+			
+			while(rs.next()) {
+				count++;
+			}
+			
+			if(count == 0) { // if equal to 0 then the table is null
+				
+				SwingUtilities.invokeLater(new Runnable() {
+
+					@Override
+					public void run() {
+						
+						imgUserRequestNewParking = new ImageIcon(getClass().getResource("/img/carparking.png"));
+						
+						newParkingReservationJButton = new JButton("Ja");
+						cancelNewParkingReservationJButton = new JButton("Nein");
+						
+						options = new Object[] {cancelNewParkingReservationJButton, newParkingReservationJButton};
+						
+						panelButtons = new JPanel(new FlowLayout(FlowLayout.CENTER));
+						
+						
+						
+						panelButtons.add(cancelNewParkingReservationJButton);
+						panelButtons.add(newParkingReservationJButton);
+						
+						messageParking = new JLabel("Noch keine Daten in Parking DataBase. Wollen Sie einen neuen Parkplatz reservieren? ");
+						
+						panelContainerMessage =  new JPanel(new BorderLayout());
+						
+						panelContainerMessage.add(panelButtons, BorderLayout.NORTH);
+						panelContainerMessage.add(messageParking, BorderLayout.CENTER);
+						
+						newParkingDialog = new JOptionPane(panelContainerMessage, JOptionPane.OK_CANCEL_OPTION, JOptionPane.NO_OPTION,
+								imgUserRequestNewParking, options, null).createDialog("Neue Parkplatzreservierung!");
+						
+						newParkingReservationJButton.requestFocus();
+						
+						newParkingReservationJButton.addActionListener(new ActionListener() {
+							
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								
+								
+								try {
+									addNewParkingReservation(count);
+									newParkingDialog.dispose();
+								} catch (DaoException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+								
+							}
+						});
+						
+						
+						cancelNewParkingReservationJButton.addActionListener(new ActionListener() {
+							
+							@Override
+							public void actionPerformed(ActionEvent e) {
+
+								newParkingDialog.dispose();
+							}
+						});
+						
+						newParkingDialog.setVisible(true);
+						newParkingDialog.dispose();
+						
+					}
+					
+				});
+				
+
+			}
+			
+			this.closeConnection();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return parkingreservations;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	@Override
 	public List<ParkingReservation> displayParkingFoundLikeName(String name) {

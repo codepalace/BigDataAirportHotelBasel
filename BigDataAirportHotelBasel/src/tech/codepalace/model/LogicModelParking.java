@@ -12,6 +12,7 @@ import tech.codepalace.dao.DAOParking;
 import tech.codepalace.dao.DaoException;
 import tech.codepalace.dao.DaoParkingImpl;
 import tech.codepalace.utility.DataEncryption;
+import tech.codepalace.view.frames.AHBParking;
 import tech.codepalace.view.frames.BigDataAirportHotelBaselStartFrame;
 
 /**
@@ -27,6 +28,8 @@ public class LogicModelParking {
 	
 	protected UserAHB userAHB;
 	
+	protected AHBParking ahbParking;
+	
 	protected DataEncryption dataEncryption;
 	
 	protected String urlDataBase;
@@ -37,10 +40,14 @@ public class LogicModelParking {
 	
 	protected File urlDataBaseFile;
 	
+	protected ParkingReservation parkingReservation;
 	
-	public LogicModelParking(BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame, UserAHB userAHB) {
+	
+	public LogicModelParking(BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame, UserAHB userAHB, AHBParking ahbParking, ParkingReservation parkingReservation) {
 		this.bigDataAirportHotelBaselStartFrame = bigDataAirportHotelBaselStartFrame;
 		this.userAHB = userAHB;
+		this.ahbParking = ahbParking;
+		this.parkingReservation = parkingReservation;
 		
 		this.dataEncryption = new DataEncryption();
 	}
@@ -92,6 +99,31 @@ public class LogicModelParking {
 		if(urlDataBaseFile.exists()) {
 			
 			System.out.println("The Database: " + urlDataBaseFile.getAbsolutePath() + "exists");
+			SwingUtilities.invokeLater(new Runnable() {
+
+				@Override
+				public void run() {
+
+					/*
+					 * create a new object DAOParking interface = new Class DaoParkingImpl. 
+					 * 
+					 * DaoParkingImpl extends ConnectionClass for the dataBase connection and implements the DAOParking interface
+					 */
+					DAOParking daoParking = new DaoParkingImpl(urlDataBase, dbName, userAHB, ahbParking, parkingReservation);
+				
+					
+					try {
+						//Now we check if the Parking table exists
+						daoParking.displayListParking();
+					} catch (DaoException e) {
+						
+						e.printStackTrace();
+					}
+					
+				}
+				
+			});
+			
 		}else {
 			System.out.println("The Database: " + urlDataBaseFile.getAbsolutePath() + " do not exists");
 			
@@ -106,7 +138,7 @@ public class LogicModelParking {
 					 * 
 					 * DaoParkingImpl extends ConnectionClass for the dataBase connection and implements the DAOParking interface
 					 */
-					DAOParking daoParking = new DaoParkingImpl(urlDataBase, dbName);
+					DAOParking daoParking = new DaoParkingImpl(urlDataBase, dbName, userAHB, ahbParking, parkingReservation);
 					
 					System.out.println("The " + dbName  + " database was successfully created in the path: " + urlDataBase);
 					

@@ -16,6 +16,7 @@ import javax.swing.SwingUtilities;
 import tech.codepalace.model.LogicModelFundSachen;
 import tech.codepalace.model.LogicModelParking;
 import tech.codepalace.model.LogicModelStartFrame;
+import tech.codepalace.model.ParkingReservation;
 import tech.codepalace.model.UserAHB;
 import tech.codepalace.utility.DataEncryption;
 import tech.codepalace.view.frames.AHBParking;
@@ -239,12 +240,16 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 				public void run() {
 					
 					AHBParking ahbParking = new AHBParking();
-					LogicModelParking logicModelParking = new LogicModelParking(bigDataAirportHotelBaselStartFrame, userAHB);
+					
 					
 					
 					@SuppressWarnings("unused")
 					AHBParkingController ahbParkingController;
-
+					
+				
+				
+					ParkingReservation parkingReservation = new ParkingReservation();
+					LogicModelParking logicModelParking = new LogicModelParking(bigDataAirportHotelBaselStartFrame, userAHB, ahbParking, parkingReservation);
 					ahbParkingController = new AHBParkingController(ahbParking, userAHB, logicModelParking, bigDataAirportHotelBaselStartFrame);
 					setMyIcon("/img/iconoHotel.png", ahbParking);
 					ahbParking.setLocationRelativeTo(null);
@@ -320,11 +325,15 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 				public void run() {
 
 					AHBParking ahbParking = new AHBParking();
-					LogicModelParking logicModelParking = new LogicModelParking(bigDataAirportHotelBaselStartFrame, userAHB);
+					ParkingReservation parkingReservation = new ParkingReservation();
+					LogicModelParking logicModelParking = new LogicModelParking(bigDataAirportHotelBaselStartFrame, userAHB, ahbParking, parkingReservation);
 					
 					
 					@SuppressWarnings("unused")
 					AHBParkingController ahbParkingController;
+					
+					
+					
 
 					ahbParkingController = new AHBParkingController(ahbParking, userAHB, logicModelParking, bigDataAirportHotelBaselStartFrame);
 					setMyIcon("/img/iconoHotel.png", ahbParking);

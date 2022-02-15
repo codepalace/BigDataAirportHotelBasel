@@ -218,6 +218,9 @@ public class AHBParking extends JFrame {
 			this.exitParkingDialog = new JOptionPane(this.panelContainerMessage, JOptionPane.OK_CANCEL_OPTION, JOptionPane.NO_OPTION,
 					this.exitParkingImageIcon, this.options, null).createDialog("Langzeit Parken Verlassen!");
 			
+			
+			
+			
 			//Make noExitParking having the Focus.
 			this.noExitParking.requestFocus();
 			
