@@ -313,7 +313,6 @@ this.okButtonEntriesError.addActionListener(new ActionListener() {
 			this.newParking.betragGeneratedJLabel.setText("0.00 EUR");
 			
 		} else {
-//			
 			String replaceCharacter = this.newParking.abreiseDatumPlaceholderTextField.getText().replace('.', '/');
 			this.abreiseLocalDate = LocalDate.parse(replaceCharacter, dateTimeFormatter);
 
@@ -489,6 +488,15 @@ public void checkAllEntries() {
 		}
 	}
 		
+}
+
+
+
+/**
+ * @description Method to add the new Parking Reservation to DataBase Table parking
+ */
+protected void addNewParkingReservationToDataBase() {
+	
 }
 
 
