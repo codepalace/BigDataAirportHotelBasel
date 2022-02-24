@@ -26,7 +26,7 @@ public interface DAOParking {
 	/** Method to add a new entry in the database
 	 *  @author Antonio Estevez Gonzalez
 	 **/
-	void addNewParkingReservation(int lenghtParkingTableDataBase) throws DaoException;
+	void addNewParkingReservation(long lenghtParkingTableDataBase) throws DaoException;
 	
 	
 	

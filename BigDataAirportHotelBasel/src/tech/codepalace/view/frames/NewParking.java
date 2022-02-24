@@ -1,7 +1,10 @@
 package tech.codepalace.view.frames;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -9,6 +12,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -23,6 +29,7 @@ import javax.swing.SwingConstants;
 
 import tech.codepalace.model.UserAHB;
 import tech.codepalace.utility.DataEncryption;
+import tech.codepalace.utility.PlaceHolderTextField;
 import tech.codepalace.view.panels.PanelWithBackgroundOption;
 
 public class NewParking extends JDialog {
@@ -33,39 +40,42 @@ public class NewParking extends JDialog {
 	private static final long serialVersionUID = 1L;
 	
 	protected UserAHB userAHB;
+	protected long tableCounter;
 	
 	private PanelWithBackgroundOption panelWithBackgroundOption;
 	
-	private JPanel entriesPanel, centerPanel, southPanel;
+	private JPanel entriesPanel, jcomboPanel;
 	
 	private JLabel chevy57;
 	
 	private GridBagLayout gbl;
  	private GridBagConstraints gbc;
  	
-private JLabel idParkingJLabel, idParkingGenerated;
+ 	protected LocalDateTime now = LocalDateTime.now(ZoneId.ofOffset("UTC", ZoneOffset.ofHours(+2)));
+ 	protected JLabel idParkingJLabel, idParkingGenerated;
  	
  	private JLabel buchungsNameJLabel;
- 	private JTextField buchungsNameJTextField;
+ 	public JTextField buchungsNameJTextField;
  	
  	private JLabel autoKFZJLabel;
- 	private JTextField autoKFZJTextField;
+ 	public JTextField autoKFZJTextField;
  	
  	private JLabel anreiseDatumJLabel; 
- 	private JTextField anreiseDatumJTextField;
+ 	public PlaceHolderTextField anreiseDatumPlaceHolderTextField;
  	
  	private JLabel abreiseDatumJLabel;
- 	private JTextField abreiseDatumJTextField;
+ 	public PlaceHolderTextField abreiseDatumPlaceholderTextField;
+ 
  	
- 	private JLabel tagenJLabel, tagenGeneratedJLabel;
+ 	public JLabel tagenJLabel, tagenGeneratedJLabel;
  	
- 	private JLabel betragJLabel, betragGeneratedJLabel;
+ 	public JLabel betragJLabel, betragGeneratedJLabel;
  	
  	private JLabel buchungsKanalJLabel;
- 	private JTextField buchunsKanalJTextField;
+ 	public JTextField buchunsKanalJTextField;
  	
  	private JLabel bemerkungenJLabel;
- 	private JTextField bemerkungenJTextField;
+ 	public JTextField bemerkungenJTextField;
  	
  	private JLabel schluesselJLabel;
  	private JComboBox<String> schluesselBox;
@@ -79,17 +89,19 @@ private JLabel idParkingJLabel, idParkingGenerated;
  	
  	private DataEncryption dataEncryption;
  	
+ 	
 	
 	
 	
 	
 	
-	public NewParking(AHBParking ahbParking, boolean modal, UserAHB userAHB) {
+	public NewParking(AHBParking ahbParking, boolean modal, UserAHB userAHB, long tableCounter) {
 		
 		super(ahbParking, modal);
 		this.userAHB = userAHB;
+		this.tableCounter = tableCounter;
 		
-		setSize(650, 470);
+		setSize(720, 570);
 		setTitle("Neue Parkplatzreservierung Erstellen");
 		
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -118,6 +130,8 @@ private JLabel idParkingJLabel, idParkingGenerated;
 		setContentPane(this.panelWithBackgroundOption);
 		
 		setIconImage(new ImageIcon(getClass().getResource("/img/iconoHotel.png")).getImage());
+		
+		this.anreiseDatumPlaceHolderTextField = new PlaceHolderTextField();
 		
 		addElementsToPanel();
 	}
@@ -189,6 +203,7 @@ private JLabel idParkingJLabel, idParkingGenerated;
 				
 				if(e.getKeyCode()==10) {
 					dialog.dispose();
+					
 				}
 				
 			}
@@ -209,11 +224,35 @@ private JLabel idParkingJLabel, idParkingGenerated;
 			public void keyPressed(KeyEvent e) {
 
 				if(e.getKeyCode()==10) {
-					
-					//Call for the confirmation
-					confirmClose();
+					dialog.dispose();
+					dispose();
 				}
 				
+			}
+		});
+		 
+		 
+		 
+		 
+		 
+		 nein.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+
+				dialog.dispose();
 			}
 		});
 		  
@@ -241,9 +280,6 @@ private JLabel idParkingJLabel, idParkingGenerated;
 		
 		this.chevy57 = new JLabel(new ImageIcon(getClass().getResource("/img/chevy57up.png")));
 		
-		this.centerPanel = new JPanel(new BorderLayout());
-		
-//		this.centerPanel.add(chevy57, BorderLayout.EAST);
 		
 		this.panelWithBackgroundOption.add(chevy57, BorderLayout.WEST);
 		
@@ -257,108 +293,158 @@ private JLabel idParkingJLabel, idParkingGenerated;
 		
 		this.idParkingJLabel  = new JLabel("ID-Parking:");
 		this.idParkingJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		this.idParkingJLabel.setPreferredSize(new Dimension(150, 20));
+		this.idParkingJLabel.setPreferredSize(new Dimension(180, 20));
 		this.idParkingJLabel.setOpaque(false);
+		this.idParkingJLabel.setFont(new Font("Verdana", Font.BOLD, 16));
+		this.idParkingJLabel.setForeground(Color.WHITE);
 		
-		this.idParkingGenerated = new JLabel("J20211"); //Wird automatisch generiert
-		this.idParkingGenerated.setPreferredSize(new Dimension(242, 20));
+//		this.idParkingGenerated = new JLabel("J20211"); //Wird automatisch generiert
+		this.idParkingGenerated = new JLabel(); //Wird automatisch generiert
+		this.idParkingGenerated.setText("J" + now.getYear() + this.tableCounter);
+		this.idParkingGenerated.setPreferredSize(new Dimension(300, 20));
 		this.idParkingGenerated.setOpaque(false);
+		this.idParkingGenerated.setFont(new Font("Verdana", Font.BOLD, 16));
+		this.idParkingGenerated.setForeground(Color.BLACK);
 		
 		this.buchungsNameJLabel = new JLabel("Buchunsname:");
 		this.buchungsNameJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		this.buchungsNameJLabel.setPreferredSize(new Dimension(150, 20));
+		this.buchungsNameJLabel.setPreferredSize(new Dimension(180, 20));
 		this.buchungsNameJLabel.setOpaque(false);
+		this.buchungsNameJLabel.setFont(new Font("Verdana", Font.BOLD, 16));
+		this.buchungsNameJLabel.setForeground(Color.WHITE);
 
 		this.buchungsNameJTextField = new JTextField(20);
+		this.buchungsNameJTextField.setFont(new Font("Verdana", Font.BOLD, 14));
 		
 		
 		this.autoKFZJLabel = new JLabel("Auto-KFZ:");
 		this.autoKFZJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		this.autoKFZJLabel.setPreferredSize(new Dimension(150, 20));
+		this.autoKFZJLabel.setPreferredSize(new Dimension(180, 20));
 		this.autoKFZJLabel.setOpaque(false);
+		this.autoKFZJLabel.setFont(new Font("Verdana", Font.BOLD, 16));
+		this.autoKFZJLabel.setForeground(Color.WHITE);
 		
 		this.autoKFZJTextField = new JTextField(20);
+		this.autoKFZJTextField.setFont(new Font("Verdana", Font.BOLD, 14));
 		
 		
 		this.anreiseDatumJLabel = new JLabel("Anreisedatum:");
 		this.anreiseDatumJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		this.anreiseDatumJLabel.setPreferredSize(new Dimension(150, 20));
+		this.anreiseDatumJLabel.setPreferredSize(new Dimension(180, 20));
 		this.anreiseDatumJLabel.setOpaque(false);
+		this.anreiseDatumJLabel.setFont(new Font("Verdana", Font.BOLD, 16));
+		this.anreiseDatumJLabel.setForeground(Color.WHITE);
+	
 		
-		this.anreiseDatumJTextField = new JTextField(20);
+		
+		anreiseDatumPlaceHolderTextField.setPreferredSize(new Dimension(310, 30));
+		anreiseDatumPlaceHolderTextField.setPlaceholder("dd.MM.JJJJ");
+		Font f = anreiseDatumPlaceHolderTextField.getFont();
+		anreiseDatumPlaceHolderTextField.setFont(new Font(f.getName(), f.getStyle(), 14));
 		
 		this.abreiseDatumJLabel = new JLabel("Abreisedatum:");
 		this.abreiseDatumJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		this.abreiseDatumJLabel.setPreferredSize(new Dimension(150, 20));
+		this.abreiseDatumJLabel.setPreferredSize(new Dimension(180, 20));
 		this.abreiseDatumJLabel.setOpaque(false);
+		this.abreiseDatumJLabel.setFont(new Font("Verdana", Font.BOLD, 16));
+		this.abreiseDatumJLabel.setForeground(Color.WHITE);
 		
-		this.abreiseDatumJTextField = new JTextField(20);
 		
+		
+		this.abreiseDatumPlaceholderTextField = new PlaceHolderTextField();
+		this.abreiseDatumPlaceholderTextField.setPreferredSize(new Dimension(310, 30));
+		this.abreiseDatumPlaceholderTextField.setPlaceholder("dd.MM.JJJJ");
+		this.abreiseDatumPlaceholderTextField.setFont(new Font(f.getName(), f.getStyle(), 14));
 		
 		this.tagenJLabel = new JLabel("Tagen:"); //Wird automatisch generiert
 		this.tagenJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		this.tagenJLabel.setPreferredSize(new Dimension(150, 20));
+		this.tagenJLabel.setPreferredSize(new Dimension(180, 20));
 		this.tagenJLabel.setOpaque(false);
+		this.tagenJLabel.setFont(new Font("Verdana", Font.BOLD, 16));
+		this.tagenJLabel.setForeground(Color.WHITE);
 		
 		
-		this.tagenGeneratedJLabel = new JLabel("200");
-		this.tagenGeneratedJLabel.setPreferredSize(new Dimension(242, 20));
+		this.tagenGeneratedJLabel = new JLabel("0");
+		this.tagenGeneratedJLabel.setPreferredSize(new Dimension(300, 20));
 		this.tagenGeneratedJLabel.setOpaque(false);
+		this.tagenGeneratedJLabel.setFont(new Font("Verdana", Font.BOLD, 16));
 		
 		
 		this.betragJLabel = new JLabel("Betrag:"); // Wird automatisch generiert
 		this.betragJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		this.betragJLabel.setPreferredSize(new Dimension(150, 20));
+		this.betragJLabel.setPreferredSize(new Dimension(180, 20));
 		this.betragJLabel.setOpaque(false);
+		this.betragJLabel.setFont(new Font("Verdana", Font.BOLD, 16));
+		this.betragJLabel.setForeground(Color.WHITE);
 
-		this.betragGeneratedJLabel = new JLabel("150.00 EUR");
-		this.betragGeneratedJLabel.setPreferredSize(new Dimension(242, 20));
+		this.betragGeneratedJLabel = new JLabel("0.00 EUR");
+		this.betragGeneratedJLabel.setPreferredSize(new Dimension(300, 20));
 		this.betragGeneratedJLabel.setOpaque(false);
+		this.betragGeneratedJLabel.setFont(new Font("Verdana", Font.BOLD, 16));
+		
 		
 		
 		this.buchungsKanalJLabel = new JLabel("Buchungskanal:"); 
 		this.buchungsKanalJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		this.buchungsKanalJLabel.setPreferredSize(new Dimension(150, 20));
+		this.buchungsKanalJLabel.setPreferredSize(new Dimension(180, 20));
 		this.buchungsKanalJLabel.setOpaque(false);
+		this.buchungsKanalJLabel.setFont(new Font("Verdana", Font.BOLD, 16));
+		this.buchungsKanalJLabel.setForeground(Color.WHITE);
 		
 		this.buchunsKanalJTextField = new JTextField(20);
+		this.buchunsKanalJTextField.setFont(new Font("Verdana", Font.BOLD, 14));
 		
 		
 		this.bemerkungenJLabel = new JLabel("Bemerkungen:"); 
 		this.bemerkungenJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		this.bemerkungenJLabel.setPreferredSize(new Dimension(150, 20));
+		this.bemerkungenJLabel.setPreferredSize(new Dimension(180, 20));
 		this.bemerkungenJLabel.setOpaque(false);
+		this.bemerkungenJLabel.setFont(new Font("Verdana", Font.BOLD, 16));
+		this.bemerkungenJLabel.setForeground(Color.WHITE);
 		 
 		
-		bemerkungenJTextField = new JTextField(20);
+		this.bemerkungenJTextField = new JTextField(20);
+		this.bemerkungenJTextField.setFont(new Font("Verdana", Font.BOLD, 14));
 		
 		
 		this.schluesselJLabel = new JLabel("Schlüssel?");
 		this.schluesselJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		this.schluesselJLabel.setPreferredSize(new Dimension(150, 20));
+		this.schluesselJLabel.setPreferredSize(new Dimension(180, 20));
 		this.schluesselJLabel.setOpaque(false);
+		this.schluesselJLabel.setFont(new Font("Verdana", Font.BOLD, 16));
+		this.schluesselJLabel.setForeground(Color.WHITE);
 		
+		this.jcomboPanel = new JPanel(new FlowLayout(FlowLayout.LEFT,0,0));
+		this.jcomboPanel.setPreferredSize(new Dimension(300, 30));
 		
-		this.choices = new String[] {"Ja","Nein"};
+		this.choices = new String[] {"Nein","Ja"};
 		
 		this.schluesselBox = new JComboBox<String>(choices);
+		this.schluesselBox.setFont(new Font("Verdana", Font.BOLD, 14));
+		
+		this.jcomboPanel.add(schluesselBox);
+		this.jcomboPanel.setOpaque(false);
 		
 		
 		this.abkuerzungMAJLabel = new JLabel("Kürzel MA:"); //Wird automatisch generiert
 		this.abkuerzungMAJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		this.abkuerzungMAJLabel.setPreferredSize(new Dimension(150, 20));
+		this.abkuerzungMAJLabel.setPreferredSize(new Dimension(180, 20));
 		this.abkuerzungMAJLabel.setOpaque(false);
+		this.abkuerzungMAJLabel.setFont(new Font("Verdana", Font.BOLD, 16));
+		this.abkuerzungMAJLabel.setForeground(Color.WHITE);
 		
 	
 		
 		try {
 			this.abkuerzungMAGeneratedJLabel = new JLabel(this.dataEncryption.decryptData(this.userAHB.getAbbkuerzungMA()));
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		this.abkuerzungMAGeneratedJLabel.setPreferredSize(new Dimension(242, 20));
+		this.abkuerzungMAGeneratedJLabel.setPreferredSize(new Dimension(300, 20));
 		this.abkuerzungMAGeneratedJLabel.setOpaque(false);
+		this.abkuerzungMAGeneratedJLabel.setFont(new Font("Verdana", Font.BOLD, 16));
 		
 		
 		
@@ -382,72 +468,72 @@ private JLabel idParkingJLabel, idParkingGenerated;
 
 		gbc.gridx = 0;
 		gbc.gridy = 1;
-		gbc.insets = new Insets(5, 0, 0, 0);
+		gbc.insets = new Insets(10, 0, 0, 0);
 		gbl.setConstraints(buchungsNameJLabel, gbc);
 		this.entriesPanel.add(buchungsNameJLabel);
 
 		gbc.gridx = 1;
 		gbc.gridy = 1;
-		gbc.insets = new Insets(5, 5, 0, 0);
+		gbc.insets = new Insets(10, 5, 0, 0);
 		gbl.setConstraints(buchungsNameJTextField, gbc);
 		this.entriesPanel.add(buchungsNameJTextField);
 		
 		
 		gbc.gridx = 0;
 		gbc.gridy = 2;
-		gbc.insets = new Insets(5, 0, 0, 0);
+		gbc.insets = new Insets(10, 0, 0, 0);
 		gbl.setConstraints(this.autoKFZJLabel, gbc);
 		this.entriesPanel.add(this.autoKFZJLabel);
 
 		gbc.gridx = 1;
 		gbc.gridy = 2;
-		gbc.insets = new Insets(5, 5, 0, 0);
+		gbc.insets = new Insets(10, 5, 0, 0);
 		gbl.setConstraints(this.autoKFZJTextField, gbc);
 		this.entriesPanel.add(this.autoKFZJTextField);
 
 		gbc.gridx = 0;
 		gbc.gridy = 3;
-		gbc.insets = new Insets(5, 0, 0, 0);
+		gbc.insets = new Insets(10, 0, 0, 0);
 		gbl.setConstraints(anreiseDatumJLabel, gbc);
 		this.entriesPanel.add(anreiseDatumJLabel);
 
 		gbc.gridx = 1;
 		gbc.gridy = 3;
-		gbc.insets = new Insets(5, 5, 0, 0);
-		gbl.setConstraints(anreiseDatumJTextField, gbc);
-		this.entriesPanel.add(anreiseDatumJTextField);
+		gbc.insets = new Insets(10, 5, 0, 0);
+		gbl.setConstraints(anreiseDatumPlaceHolderTextField, gbc);
+		this.entriesPanel.add(anreiseDatumPlaceHolderTextField);
 
 		gbc.gridx = 0;
 		gbc.gridy = 4;
-		gbc.insets = new Insets(5, 0, 0, 0);
+		gbc.insets = new Insets(10, 0, 0, 0);
 		gbl.setConstraints(abreiseDatumJLabel, gbc);
 		this.entriesPanel.add(abreiseDatumJLabel);
 
 		gbc.gridx = 1;
 		gbc.gridy = 4;
-		gbc.insets = new Insets(5, 5, 0, 0);
-		gbl.setConstraints(abreiseDatumJTextField, gbc);
-		this.entriesPanel.add(abreiseDatumJTextField);
+		gbc.insets = new Insets(10, 5, 0, 0);
+		gbl.setConstraints(abreiseDatumPlaceholderTextField, gbc);
+		this.entriesPanel.add(abreiseDatumPlaceholderTextField);
 		
 		
 		   
 		   
 		gbc.gridx = 0;
 		gbc.gridy = 5;
-		gbc.insets = new Insets(5, 0, 0, 0);
+		gbc.insets = new Insets(10, 0, 0, 0);
 		gbl.setConstraints(tagenJLabel, gbc);
 		this.entriesPanel.add(tagenJLabel);
 
 
 		gbc.gridx = 1;
 		gbc.gridy = 5;
-		gbc.insets = new Insets(5, 5, 0, 0);
+		gbc.insets = new Insets(10, 5, 0, 0);
 		gbl.setConstraints(this.tagenGeneratedJLabel, gbc);
 		this.entriesPanel.add(this.tagenGeneratedJLabel);
 
 		gbc.gridx = 0;
 		gbc.gridy = 6;
-		gbc.insets = new Insets(5, 0, 0, 0);
+		gbc.insets = new Insets(10, 0, 0, 0);
 		gbl.setConstraints(betragJLabel, gbc);
 		this.entriesPanel.add(betragJLabel);
 		
@@ -455,55 +541,55 @@ private JLabel idParkingJLabel, idParkingGenerated;
 		   
 		gbc.gridx = 1;
 		gbc.gridy = 6;
-		gbc.insets = new Insets(5, 5, 0, 0);
+		gbc.insets = new Insets(10, 5, 0, 0);
 		gbl.setConstraints(this.betragGeneratedJLabel, gbc);
 		this.entriesPanel.add(betragGeneratedJLabel);
 
 		gbc.gridx = 0;
 		gbc.gridy = 7;
-		gbc.insets = new Insets(5, 0, 0, 0);
+		gbc.insets = new Insets(10, 0, 0, 0);
 		gbl.setConstraints(this.buchungsKanalJLabel, gbc);
 		this.entriesPanel.add(this.buchungsKanalJLabel);
 
 		gbc.gridx = 1;
 		gbc.gridy = 7;
-		gbc.insets = new Insets(5, 5, 0, 0);
+		gbc.insets = new Insets(10, 5, 0, 0);
 		gbl.setConstraints(this.buchunsKanalJTextField, gbc);
 		this.entriesPanel.add(this.buchunsKanalJTextField);
 
 		gbc.gridx = 0;
 		gbc.gridy = 8;
-		gbc.insets = new Insets(5, 0, 0, 0);
+		gbc.insets = new Insets(10, 0, 0, 0);
 		gbl.setConstraints(bemerkungenJLabel, gbc);
 		this.entriesPanel.add(bemerkungenJLabel);
 
 		gbc.gridx = 1;
 		gbc.gridy = 8;
-		gbc.insets = new Insets(5, 5, 0, 0);
+		gbc.insets = new Insets(10, 5, 0, 0);
 		gbl.setConstraints(bemerkungenJTextField, gbc);
 		this.entriesPanel.add(bemerkungenJTextField);
 
 		gbc.gridx = 0;
 		gbc.gridy = 9;
-		gbc.insets = new Insets(5, 0, 0, 0);
+		gbc.insets = new Insets(10, 0, 0, 0);
 		gbl.setConstraints(this.schluesselJLabel, gbc);
 		this.entriesPanel.add(this.schluesselJLabel);
 
 		gbc.gridx = 1;
 		gbc.gridy = 9;
-		gbc.insets = new Insets(5, 5, 0, 0);
-		gbl.setConstraints(this.schluesselBox, gbc);
-		this.entriesPanel.add(schluesselBox);
+		gbc.insets = new Insets(15, 0, 0, 0);
+		gbl.setConstraints(this.jcomboPanel, gbc);
+		this.entriesPanel.add(jcomboPanel);
 
 		gbc.gridx = 0;
 		gbc.gridy = 10;
-		gbc.insets = new Insets(5, 0, 0, 0);
+		gbc.insets = new Insets(10, 0, 0, 0);
 		gbl.setConstraints(this.abkuerzungMAJLabel, gbc);
 		this.entriesPanel.add(this.abkuerzungMAJLabel);
 
 		gbc.gridx = 1;
 		gbc.gridy = 10;
-		gbc.insets = new Insets(5, 5, 0, 0);
+		gbc.insets = new Insets(10, 5, 0, 0);
 		gbl.setConstraints(this.abkuerzungMAGeneratedJLabel, gbc);
 		this.entriesPanel.add(this.abkuerzungMAGeneratedJLabel);
 		   

@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -68,7 +70,7 @@ public class DaoParkingImpl extends ConnectionClass implements DAOParking {
  	
  	private DataEncryption dataEncryption;
  	
- 	private int count = 0;
+ 	private long count = 0L;
  	
  	
 
@@ -79,7 +81,6 @@ public class DaoParkingImpl extends ConnectionClass implements DAOParking {
 		
 		this.userAHB = userAHB;
 		this.ahbParking = ahbParking;
-		this.newParking = new  NewParking(this.ahbParking, true, this.userAHB);
 		this.parkingReservation = parkingReservation;
 		
 		
@@ -172,7 +173,7 @@ public class DaoParkingImpl extends ConnectionClass implements DAOParking {
 	}
 
 	@Override
-	public void addNewParkingReservation(int lenghtParkingTableDataBase) throws DaoException {
+	public void addNewParkingReservation(long lenghtParkingTableDataBase) throws DaoException {
 		
 		this.dataEncryption = new DataEncryption();
 		
@@ -181,9 +182,16 @@ public class DaoParkingImpl extends ConnectionClass implements DAOParking {
 
 			@Override
 			public void run() {
+				
+				newParking = new  NewParking(ahbParking, true, userAHB, count);
 
-				LogicModelNewParking logicModelNewParking = new LogicModelNewParking(userAHB, ahbParking, parkingReservation);
-				NewParkingController newParkingController = new NewParkingController(newParking);
+				@SuppressWarnings("unused")
+				LogicModelNewParking logicModelNewParking = new LogicModelNewParking(userAHB, ahbParking, newParking);
+				
+				
+				
+				@SuppressWarnings("unused")
+				NewParkingController newParkingController = new NewParkingController(newParking, logicModelNewParking);
 				
 				newParking.setLocationRelativeTo(null);
 				newParking.setVisible(true);
@@ -278,6 +286,40 @@ public class DaoParkingImpl extends ConnectionClass implements DAOParking {
 						});
 						
 						
+						newParkingReservationJButton.addKeyListener(new KeyListener() {
+							
+							@Override
+							public void keyTyped(KeyEvent e) {
+								// TODO Auto-generated method stub
+								
+							}
+							
+							@Override
+							public void keyReleased(KeyEvent e) {
+								// TODO Auto-generated method stub
+								
+							}
+							
+							@Override
+							public void keyPressed(KeyEvent e) {
+
+								if(e.getKeyCode()==10) {
+									try {
+										addNewParkingReservation(count);
+									} catch (DaoException e1) {
+										// TODO Auto-generated catch block
+										e1.printStackTrace();
+									}
+									newParkingDialog.dispose();
+								}
+							}
+						});
+						
+						
+						
+						
+						
+						
 						cancelNewParkingReservationJButton.addActionListener(new ActionListener() {
 							
 							@Override
@@ -287,12 +329,39 @@ public class DaoParkingImpl extends ConnectionClass implements DAOParking {
 							}
 						});
 						
+						
+						
+						cancelNewParkingReservationJButton.addKeyListener(new KeyListener() {
+							
+							@Override
+							public void keyTyped(KeyEvent e) {
+								// TODO Auto-generated method stub
+								
+							}
+							
+							@Override
+							public void keyReleased(KeyEvent e) {
+								// TODO Auto-generated method stub
+								
+							}
+							
+							@Override
+							public void keyPressed(KeyEvent e) {
+
+								if(e.getKeyCode()==10) {
+									newParkingDialog.dispose();
+								}
+							}
+						});
+						
 						newParkingDialog.setVisible(true);
 						newParkingDialog.dispose();
 						
 					}
 					
 				});
+				
+				
 				
 
 			}
