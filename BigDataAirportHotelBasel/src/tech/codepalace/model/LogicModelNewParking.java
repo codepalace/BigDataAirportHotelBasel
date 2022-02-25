@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -66,6 +67,14 @@ public class LogicModelNewParking {
 	
 	
 	protected double betragTotal;
+	
+	
+	//Variables to save data in the database
+	protected String idParking,buchungsname, autokfz;
+	protected Date anreisedatum, abreisedatum;
+	protected int anzahltagen;
+	protected double betragparking;
+	protected String buchungskanal, bemerkungen, schluesselinhaus, verkaufer;
 	
 	
 	
@@ -484,7 +493,7 @@ public void checkAllEntries() {
 		
 		//If everything is correctly filled in we precede saving the data.
 		if(this.anreiseOK && this.abreiseOK && this.entryCompleted) {
-			System.out.println("Now we can save the data!");
+			addNewParkingReservationToDataBase();
 		}
 	}
 		
@@ -497,6 +506,13 @@ public void checkAllEntries() {
  */
 protected void addNewParkingReservationToDataBase() {
 	
+
+	
+	this.idParking = this.newParking.idParkingGenerated.getText();
+	this.buchungsname = this.newParking.buchungsNameJTextField.getText();
+	this.autokfz = this.newParking.autoKFZJTextField.getText();
+
+
 }
 
 
