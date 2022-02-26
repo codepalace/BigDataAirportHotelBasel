@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -45,7 +46,7 @@ public class LogicModelNewParking {
 	private Object[] optionButtonsAnreise = { this.okButtonAnreiseError }, optionButtonsAbreise = { this.okButtonAbreiseError }, optionButtonEntries = { this.okButtonEntriesError };
 	
 	
-	
+	private long totalDaysToPay;
 	
 	private LocalDate anreiseLocalDate, abreiseLocalDate;
 	
@@ -384,19 +385,19 @@ this.okButtonEntriesError.addActionListener(new ActionListener() {
 
 
 						//totalDaysToPay receives the value of totalDays + 1 because it is also charged the day of delivery of the carl.(The parking Date).
-						long totalDaysToPay = totalDays + 1; 
+						this.totalDaysToPay = totalDays + 1; 
 
 						this.newParking.tagenGeneratedJLabel.setText(String.valueOf(totalDaysToPay));
 
 						/*
 						 * If the total days are from 1 to 3 it costs 30CHF, if more than 3 days at 10CHF per day.
 						 */
-						if (totalDaysToPay <= 3) {
+						if (this.totalDaysToPay <= 3) {
 							this.betragTotal = 30d;
 							this.newParking.betragGeneratedJLabel.setText(String.valueOf(betragTotal + " CHF"));
 						} else {
 							//Rate per day 10CHF
-							this.betragTotal = totalDaysToPay * 10;
+							this.betragTotal = this.totalDaysToPay * 10;
 							this.newParking.betragGeneratedJLabel.setText(String.valueOf(betragTotal + " CHF"));
 						}
 				}
@@ -511,6 +512,39 @@ protected void addNewParkingReservationToDataBase() {
 	this.idParking = this.newParking.idParkingGenerated.getText();
 	this.buchungsname = this.newParking.buchungsNameJTextField.getText();
 	this.autokfz = this.newParking.autoKFZJTextField.getText();
+	
+	SimpleDateFormat simpeDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+	
+	
+	this.anreisedatum = Date.valueOf(this.anreiseLocalDate);
+	this.abreisedatum = Date.valueOf(this.abreiseLocalDate);
+	
+	this.anzahltagen = (int) this.totalDaysToPay;
+	
+	this.betragparking = this.betragTotal;
+	
+	this.buchungskanal = this.newParking.buchunsKanalJTextField.getText();
+	this.bemerkungen = this.newParking.bemerkungenJTextField.getText();
+	this.schluesselinhaus = this.newParking.schluesselBox.getSelectedItem().toString();
+	
+	this.verkaufer = this.newParking.abkuerzungMAGeneratedJLabel.getText();
+	
+	
+	
+	String dateToFormat = simpeDateFormat.format(this.anreisedatum);
+
+	JOptionPane.showMessageDialog(null, "fecha localdate en sql.Date: " +this.anreisedatum);
+	JOptionPane.showMessageDialog(null, "fecha convertida en String: " + dateToFormat);
+	
+	JOptionPane.showMessageDialog(null, "Schluesel in haus: " + this.schluesselinhaus);
+	
+	JOptionPane.showMessageDialog(null, "Total days to pay: " + this.anzahltagen);
+	
+	JOptionPane.showMessageDialog(null, "Betragparking: " + this.betragparking);
+	
+	
+	
+	
 
 
 }
