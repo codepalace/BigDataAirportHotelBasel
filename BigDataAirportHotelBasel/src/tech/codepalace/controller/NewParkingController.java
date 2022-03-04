@@ -6,20 +6,27 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 import tech.codepalace.model.LogicModelNewParking;
 import tech.codepalace.view.frames.NewParking;
 
-public class NewParkingController implements ActionListener, KeyListener, WindowListener, FocusListener{
+public class NewParkingController implements ActionListener, KeyListener, WindowListener, FocusListener, MouseListener{
 	
 	private NewParking newParking;
 	private LogicModelNewParking logicModelNewParking;
 	
 	protected boolean closingNewParkingReservation = false;
+	
+	//Regex Format to evaluate the date Format.
+	private  String formatDateRegex = "(0[1-9]|[12][0-9]|3[01])\\.(0[1-9]|1[012])\\.((?:19|20)[0-9][0-9])$";
+	
 	
 	
 	
@@ -38,6 +45,17 @@ public class NewParkingController implements ActionListener, KeyListener, Window
 		this.newParking.buchungsNameJTextField.addFocusListener(this);
 		this.newParking.autoKFZJTextField.addFocusListener(this);
 		this.newParking.buchunsKanalJTextField.addFocusListener(this);
+		
+		this.newParking.cancelParkingReservation.addMouseListener(this);
+		
+		
+		this.newParking.ja.addActionListener(this);
+		this.newParking.ja.addKeyListener(this);
+		this.newParking.nein.addActionListener(this);
+		this.newParking.nein.addKeyListener(this);
+		
+		
+		this.newParking.anreiseDatumPlaceHolderTextField.addMouseListener(this);
 		
 		
 		
@@ -100,8 +118,25 @@ public class NewParkingController implements ActionListener, KeyListener, Window
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
+
+		if(e.getSource()==this.newParking.ja) {
+			this.newParking.dialog.dispose();
+			this.newParking.dispose();
+			
+		}else if (e.getSource()==this.newParking.nein) {
+			this.newParking.dialog.dispose();
+			this.logicModelNewParking.setClosingNewParkingReservation(false);
+		} 
 		
+		
+		/*
+		 * else if(e.getSource()==this.newParking.nein) {
+			this.newParking.dialog.dispose();
+		}else if (e.getSource()==this.newParking.ja) {
+			this.newParking.dialog.dispose();
+			this.newParking.dispose();
+		}
+		 */
 	}
 
 	@Override
@@ -119,6 +154,8 @@ public class NewParkingController implements ActionListener, KeyListener, Window
 		if(e.getSource()== this.newParking.saveParkingReservation) {
 			this.logicModelNewParking.setReadyToSaveArrival(true);
 			this.logicModelNewParking.setReadyToSaveDeparture(true);
+			this.logicModelNewParking.setErrorDateDepartureMessageDelivered(false);
+			this.logicModelNewParking.setErrorDateArrivalMessageDelivered(false);
 			this.logicModelNewParking.checkAnreiseDateFormat();
 			this.logicModelNewParking.checkAbreiseDateFormat();
 			this.logicModelNewParking.checkAllEntries();
@@ -130,7 +167,14 @@ public class NewParkingController implements ActionListener, KeyListener, Window
 			this.closingNewParkingReservation = true;
 			System.out.println("closingNewParkingReservation" + closingNewParkingReservation);
 			this.newParking.confirmClose();
-		} 
+		
+		}else if(e.getSource()==this.newParking.nein) {
+			this.newParking.dialog.dispose();
+			this.logicModelNewParking.setClosingNewParkingReservation(false);
+		}else if (e.getSource()==this.newParking.ja) {
+			this.newParking.dialog.dispose();
+			this.newParking.dispose();
+		}
 	}
 
 	
@@ -141,6 +185,8 @@ public class NewParkingController implements ActionListener, KeyListener, Window
 		
 		if(e.getSource()==this.newParking.anreiseDatumPlaceHolderTextField) {
 			this.newParking.anreiseDatumPlaceHolderTextField.setBorder(UIManager.getLookAndFeel().getDefaults().getBorder("TextField.border"));
+			this.logicModelNewParking.setErrorDateDepartureMessageDelivered(false);
+			
 		
 		}else if (e.getSource()==this.newParking.abreiseDatumPlaceholderTextField) {
 			this.newParking.abreiseDatumPlaceholderTextField.setBorder(UIManager.getLookAndFeel().getDefaults().getBorder("TextField.border"));
@@ -164,16 +210,59 @@ public class NewParkingController implements ActionListener, KeyListener, Window
 		
 		if(e.getSource()==this.newParking.anreiseDatumPlaceHolderTextField) {
 			
-
+	
+			
+					
+			
 					logicModelNewParking.checkAnreiseDateFormat();
+					logicModelNewParking.setAnreiseFocus(false);
+					
+					
 
 			
 		}else if (e.getSource()==this.newParking.abreiseDatumPlaceholderTextField) {
 			
-
+				
 					logicModelNewParking.checkAbreiseDateFormat();
-		
+
 		}
+		
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getSource()==this.newParking.cancelParkingReservation) {
+			this.logicModelNewParking.setClosingNewParkingReservation(true);
+		}else if(e.getSource()==this.newParking.anreiseDatumPlaceHolderTextField){
+			this.logicModelNewParking.setAnreiseFocus(true);
+		}
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+		
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
 		
 	}
 	

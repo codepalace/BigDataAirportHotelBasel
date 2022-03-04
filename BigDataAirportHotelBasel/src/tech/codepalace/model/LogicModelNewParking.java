@@ -23,7 +23,10 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
+import tech.codepalace.dao.DAOParking;
+import tech.codepalace.dao.DaoParkingImpl;
 import tech.codepalace.view.frames.AHBParking;
 import tech.codepalace.view.frames.NewParking;
 
@@ -32,18 +35,20 @@ public class LogicModelNewParking {
 	protected UserAHB userAHB;
 	protected AHBParking ahbParking;
 	protected NewParking newParking;
+	protected ParkingReservation parkingReservation;
+	protected String urlDB, dbName;
 	
 	
 	
-	private JDialog errorDateFormatAnreise, errorDateFormatAbreise, errorEntries;
+	public JDialog errorDateFormatAnreise, errorDateFormatAbreise, errorDateFormat, errorEntries;
 	
-	private JButton okButtonAnreiseError = new JButton("OK"), okButtonAbreiseError  = new JButton("OK"), okButtonEntriesError  = new JButton("OK");
+	private JButton okButtonAnreiseError = new JButton("OK"), okButtonAbreiseError  = new JButton("OK"), okButtonErrorDateFormat  = new JButton("OK"),  okButtonEntriesError  = new JButton("OK");
 	
-	private JLabel messageAnreiseError, messageAbreiseError, messageEntriesError;
+	private JLabel messageAnreiseError, messageAbreiseError, messageErrorDateFormat, messageEntriesError;
 	
-	private JPanel myPanelDialogAnreise = new JPanel(new BorderLayout()),  myPanelDialogAbreise = new JPanel(new BorderLayout()), myPanelDialogEntries = new JPanel(new BorderLayout());
+	private JPanel myPanelErrorDateFormat, myPanelDialogAnreise = new JPanel(new BorderLayout()),  myPanelDialogAbreise = new JPanel(new BorderLayout()), myPanelDialogEntries = new JPanel(new BorderLayout());
 	
-	private Object[] optionButtonsAnreise = { this.okButtonAnreiseError }, optionButtonsAbreise = { this.okButtonAbreiseError }, optionButtonEntries = { this.okButtonEntriesError };
+	private Object[] optionButtonsAnreise = { this.okButtonAnreiseError }, optionButtonsAbreise = { this.okButtonAbreiseError }, optionButtonsErrorDateFormat = { this.okButtonErrorDateFormat }, optionButtonEntries = { this.okButtonEntriesError };
 	
 	
 	private long totalDaysToPay;
@@ -64,6 +69,12 @@ public class LogicModelNewParking {
 	
 	private boolean anreiseOK = false, abreiseOK = false;
 	
+	private boolean closingNewParkingReservation = false;
+	
+	public boolean errorDateDepartureMessageDelivered = false, errorDateArrivalMessageDelivered = false;
+	
+	private boolean anreiseFocus = false;
+	
 	
 	
 	
@@ -79,14 +90,66 @@ public class LogicModelNewParking {
 	
 	
 	
-	public LogicModelNewParking(UserAHB userAHB, AHBParking ahbParking, NewParking newParking) {
+	public LogicModelNewParking(UserAHB userAHB, AHBParking ahbParking, NewParking newParking, ParkingReservation parkingReservation, String urlDB, String dbName) {
 		
 		this.userAHB = userAHB;
 		this.ahbParking = ahbParking;
 		this.newParking = newParking;
+		this.parkingReservation = parkingReservation;
+		this.urlDB = urlDB;
+		this.dbName = dbName;
+//		JOptionPane.showMessageDialog(null, "LogicaModelNewParking recibe urldatabase: " + this.urlDB);
+//		JOptionPane.showMessageDialog(null, "LogicaModelNewParking recibe dbName: " + this.dbName);
 		
 		//nowLoacalDate for the current date in LocalDate variable
 		this.nowLocalDate = now.toLocalDate();
+		
+		
+
+		
+//		this.messageAbreiseError = new JLabel(
+//				"Sie haben ein falsches Datumsformat eingegeben. bitte geben Sie ein korrektes Datumsformat ein(dd.mm.yyyy)");
+//		
+
+		
+//		this.myPanelDialogAbreise.add(this.messageAbreiseError, BorderLayout.CENTER);
+		
+		this.errorDateFormatAbreise = new JOptionPane(this.myPanelDialogAbreise, JOptionPane.OK_OPTION, JOptionPane.NO_OPTION, this.errorImg,
+				this.optionButtonsAbreise, null).createDialog("kritischer Fehler (Abreisedatum)");
+		
+		this.errorDateFormatAnreise = new JOptionPane(this.myPanelDialogAnreise, JOptionPane.OK_OPTION, JOptionPane.NO_OPTION, this.errorImg,
+				this.optionButtonsAnreise, null).createDialog("kritischer Fehler (Anreisedatum)");
+		
+		
+	
+		
+		this.okButtonErrorDateFormat.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				errorDateFormat.dispose();
+				messageErrorDateFormat.setText("");
+			}
+		});
+		
+		this.okButtonErrorDateFormat.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+
+				errorDateFormat.dispose();
+				messageErrorDateFormat.setText("");
+			}
+		});
+		
+		
 		
 		
 		
@@ -97,6 +160,9 @@ public class LogicModelNewParking {
 
 				errorDateFormatAnreise.dispose();
 				messageAnreiseError.setText("");
+				setErrorDateArrivalMessageDelivered(false);
+				setErrorDateDepartureMessageDelivered(true);
+				setAnreiseFocus(false);
 			}
 		});
 		
@@ -113,6 +179,10 @@ public class LogicModelNewParking {
 
 				errorDateFormatAnreise.dispose();
 				messageAnreiseError.setText("");
+				setErrorDateArrivalMessageDelivered(false);
+				setErrorDateDepartureMessageDelivered(true);
+				setAnreiseFocus(false);
+				
 			}
 		});
 		
@@ -128,6 +198,7 @@ public class LogicModelNewParking {
 
 				errorDateFormatAbreise.dispose();
 				messageAbreiseError.setText("");
+				setErrorDateDepartureMessageDelivered(false);
 			}
 		});
 		
@@ -145,6 +216,7 @@ public class LogicModelNewParking {
 
 				errorDateFormatAbreise.dispose();
 				messageAbreiseError.setText("");
+				setErrorDateDepartureMessageDelivered(false);
 			}
 		});
 		
@@ -206,45 +278,44 @@ this.okButtonEntriesError.addActionListener(new ActionListener() {
 		//in case it does not correspond to the date format
 		if (!Pattern.matches(formatDateRegex, this.newParking.anreiseDatumPlaceHolderTextField.getText())) {
 			
+			if(!closingNewParkingReservation) {
+				if(!this.errorDateFormatAbreise.isVisible()) {
+					
+					
+					SwingUtilities.invokeLater(new Runnable() {
+						
+						@Override
+						public void run() {
+							
+							errorDateFormatAnreise = new JOptionPane(myPanelDialogAnreise, JOptionPane.OK_OPTION, JOptionPane.NO_OPTION, errorImg,
+									optionButtonsAnreise, null).createDialog("Falsches Datumsformat Anreisedatum!");
+							
+							
+							
+							errorDateFormatAnreise.setAlwaysOnTop(true);
+							errorDateFormatAnreise.setVisible(true);
+							errorDateFormatAnreise.dispose();
+							anreiseOK=false;
+							messageAnreiseError.setText("");
+							newParking.tagenGeneratedJLabel.setText("0");
+							newParking.betragGeneratedJLabel.setText("0.00 EUR");
+							newParking.anreiseDatumPlaceHolderTextField.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+							errorDateArrivalMessageDelivered = true;
+							newParking.anreiseDatumPlaceHolderTextField.requestFocus();
+							
+						}
+					});
+					
+						
+					
 			
-
-			this.errorDateFormatAnreise = new JOptionPane(this.myPanelDialogAnreise, JOptionPane.OK_OPTION, JOptionPane.NO_OPTION, this.errorImg,
-					this.optionButtonsAnreise, null).createDialog("Falsches Datumsformat Anreisedatum!");
-			
-			
-			
-			
-			//if we are ready to save or process the information
-			if(this.readyToSaveArrival) {
 				
-				//we throw the error message since the date format does not correspond to the desired one.
-				this.errorDateFormatAnreise.setAlwaysOnTop(true);
-				this.errorDateFormatAnreise.setVisible(true);
-				this.errorDateFormatAnreise.dispose();
-				setReadyToSaveArrival(false);
-				this.anreiseOK=false;
-				
-				//Reset all the time messgeAnreiseError text to ""
-				this.messageAnreiseError.setText("");
-				this.newParking.tagenGeneratedJLabel.setText("0");
-				this.newParking.betragGeneratedJLabel.setText("0.00 EUR");
-			}else {
-				
-				this.newParking.anreiseDatumPlaceHolderTextField.setSize(310, 30);
-				
-				/*
-				 * otherwise we only paint a red border to indicate that there is an error in the date. 
-				 * We do this to avoid repeating the error message and collapsing with the error message of the arrival date and departure date.
-				 */
-				this.newParking.anreiseDatumPlaceHolderTextField.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-				this.anreiseOK=false;
-				
-				//Reset values
-				this.newParking.tagenGeneratedJLabel.setText("0");
-				this.newParking.betragGeneratedJLabel.setText("0.00 EUR");
 			}
+			}
+			
+			
 
-			this.messageAnreiseError.setText("");
+			
 		} else {
 
 			
@@ -258,6 +329,7 @@ this.okButtonEntriesError.addActionListener(new ActionListener() {
 			
 			//we indicate that everything concerning the arrival date is correct
 			this.anreiseOK = true;
+			
 
 			
 		}
@@ -277,6 +349,8 @@ this.okButtonEntriesError.addActionListener(new ActionListener() {
 	 */
 	public void checkAbreiseDateFormat() {
 		
+		
+		
 		//Some of the instructions are the same as in the above method. We save time commenting double
 		
 		
@@ -292,137 +366,307 @@ this.okButtonEntriesError.addActionListener(new ActionListener() {
 		this.myPanelDialogAbreise.add(this.messageAbreiseError, BorderLayout.CENTER);
 		
 		//in case it does not correspond to the date format
-		if (!Pattern.matches(formatDateRegex, this.newParking.abreiseDatumPlaceholderTextField.getText())) {
+		if (Pattern.matches(formatDateRegex, this.newParking.abreiseDatumPlaceholderTextField.getText())) {
 			
 			
 
-	
-			this.errorDateFormatAbreise = new JOptionPane(this.myPanelDialogAbreise, JOptionPane.OK_OPTION, JOptionPane.NO_OPTION, this.errorImg,
-					this.optionButtonsAbreise, null).createDialog("Falsches Datumsformat! Abreisedatum");
-			
-
-
-			if(this.readyToSaveDepature) {
-				this.errorDateFormatAbreise.setAlwaysOnTop(true);
-				this.errorDateFormatAbreise.setVisible(true);
-				this.errorDateFormatAbreise.dispose();
-				setReadyToSaveDeparture(false);
-				this.abreiseOK=false;
-				this.messageAbreiseError.setText("");
-				
-					
-			}else {
-				this.newParking.abreiseDatumPlaceholderTextField.setSize(310,30);
-				this.newParking.abreiseDatumPlaceholderTextField.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-				this.abreiseOK=false;
-				
-			}
-			//Reset values
-			this.messageAbreiseError.setText("");
-			this.newParking.tagenGeneratedJLabel.setText("0");
-			this.newParking.betragGeneratedJLabel.setText("0.00 EUR");
-			
-		} else {
 			String replaceCharacter = this.newParking.abreiseDatumPlaceholderTextField.getText().replace('.', '/');
 			this.abreiseLocalDate = LocalDate.parse(replaceCharacter, dateTimeFormatter);
 
 			this.messageAbreiseError.setText("Abreisedatum kann nicht früher als Anreisedatum sein!");
 			
-		
-			//If the departure date is earlier than the arrival date, it is not correct
-			if (this.abreiseLocalDate.isBefore(anreiseLocalDate)) {
-
-				
-				this.errorDateFormatAbreise = new JOptionPane(this.myPanelDialogAbreise, JOptionPane.OK_OPTION, JOptionPane.NO_OPTION, this.errorImg,
-						this.optionButtonsAbreise, null).createDialog("kritischer Fehler (Abreisedatum)");
-
-
-				this.errorDateFormatAbreise.setAlwaysOnTop(true);
-				this.errorDateFormatAbreise.setVisible(true);
-				this.errorDateFormatAbreise.dispose();
-				this.abreiseOK=false;
-				this.messageAbreiseError.setText("");
-				this.newParking.tagenGeneratedJLabel.setText("0");
-				this.newParking.betragGeneratedJLabel.setText("0.00 EUR");
-				
-	
-				
-				//If the departure date is earlier than the current date, it is not correct
-			} else if(abreiseLocalDate.isBefore(nowLocalDate)) {
-				this.messageAbreiseError.setText("Abreisedatum kann nicht früher als heutiges Datum sein!");
-				
-				this.errorDateFormatAbreise = new JOptionPane(this.myPanelDialogAbreise, JOptionPane.OK_OPTION, JOptionPane.NO_OPTION, this.errorImg,
-						this.optionButtonsAbreise, null).createDialog("kritischer Fehler (Abreisedatum)");
-				
-
-				
-				
-				this.errorDateFormatAbreise.setAlwaysOnTop(true);
-				this.errorDateFormatAbreise.setVisible(true);
-				this.errorDateFormatAbreise.dispose();
-				this.abreiseOK=false;
-				this.messageAbreiseError.setText("");
-				this.newParking.tagenGeneratedJLabel.setText("0");
-				this.newParking.betragGeneratedJLabel.setText("0.00 EUR");
-			}
 			
-			else {
+			
+			//Comprobamos si anreise es ok para poder comprobrar sin errores la fecha de departure si es antior que arrival.
+			//Por eso necesitamos hacer primero esta comprobacion para estar seguros antes de procedera  comprobar entre las dos fechas que la fecha anterior halla sido procesada correctamente y 
+			//en el formato correcto.
+			
+			
+			if(this.anreiseOK) {
+				
+//				JOptionPane.showMessageDialog(null, "si es ok anreise");
 				
 				
-				if(!this.anreiseOK) {
-					this.newParking.tagenGeneratedJLabel.setText("0");
-					this.newParking.betragGeneratedJLabel.setText("0.00 EUR");
-				}else {
 				
 				
+				if (this.abreiseLocalDate.isBefore(anreiseLocalDate)) {
+
+					
+					
+					if(!closingNewParkingReservation && !this.anreiseFocus) {
 						
-						/*
-						 * The dates have a correct format and the date of departure is not earlier than the date of arrival, we give value to the variable totalDays.
-						 * 
-						 * for this we use the chronology between both dates.
-						 */
-						long totalDays = ChronoUnit.DAYS.between(anreiseLocalDate, abreiseLocalDate);
+						
+						if(!this.errorDateDepartureMessageDelivered) {
+							
+							SwingUtilities.invokeLater(new Runnable() {
+								
+								@Override
+								public void run() {
 
+									errorDateFormatAbreise = new JOptionPane(myPanelDialogAbreise, JOptionPane.OK_OPTION, JOptionPane.NO_OPTION, errorImg,
+											optionButtonsAbreise, null).createDialog("kritischer Fehler (Abreisedatum)");
 
-						//totalDaysToPay receives the value of totalDays + 1 because it is also charged the day of delivery of the carl.(The parking Date).
-						this.totalDaysToPay = totalDays + 1; 
-
-						this.newParking.tagenGeneratedJLabel.setText(String.valueOf(totalDaysToPay));
-
-						/*
-						 * If the total days are from 1 to 3 it costs 30CHF, if more than 3 days at 10CHF per day.
-						 */
-						if (this.totalDaysToPay <= 3) {
-							this.betragTotal = 30d;
-							this.newParking.betragGeneratedJLabel.setText(String.valueOf(betragTotal + " CHF"));
-						} else {
-							//Rate per day 10CHF
-							this.betragTotal = this.totalDaysToPay * 10;
-							this.newParking.betragGeneratedJLabel.setText(String.valueOf(betragTotal + " CHF"));
+									
+									errorDateFormatAbreise.setAlwaysOnTop(true);
+									errorDateFormatAbreise.setVisible(true);
+									errorDateFormatAbreise.dispose();
+									abreiseOK=false;
+									messageAbreiseError.setText("");
+									newParking.tagenGeneratedJLabel.setText("0");
+									newParking.betragGeneratedJLabel.setText("0.00 EUR");
+									newParking.abreiseDatumPlaceholderTextField.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+									newParking.abreiseDatumPlaceholderTextField.requestFocus();
+									errorDateDepartureMessageDelivered = false;
+									
+								}
+							});
+							
+							
+							
+							
+							
 						}
+						
+					}
+
+					
+					
+					
+		
+					
+					//If the departure date is earlier than the current date, it is not correct
+				} else if(abreiseLocalDate.isBefore(nowLocalDate)) {
+					
+					
+
+					
+					if(!closingNewParkingReservation && !this.anreiseFocus) {
+						
+					   if(!this.errorDateDepartureMessageDelivered) {
+						   
+						   SwingUtilities.invokeLater(new Runnable() {
+							
+							@Override
+							public void run() {
+								messageAbreiseError.setText("Abreisedatum kann nicht früher als heutiges Datum sein!");
+								
+								errorDateFormatAbreise = new JOptionPane(myPanelDialogAbreise, JOptionPane.OK_OPTION, JOptionPane.NO_OPTION, errorImg,
+										optionButtonsAbreise, null).createDialog("kritischer Fehler (Abreisedatum)");
+
+								errorDateFormatAbreise.setAlwaysOnTop(true);
+								errorDateFormatAbreise.setVisible(true);
+								errorDateFormatAbreise.dispose();
+								abreiseOK=false;
+								messageAbreiseError.setText("");
+								newParking.tagenGeneratedJLabel.setText("0");
+								newParking.betragGeneratedJLabel.setText("0.00 EUR");
+								newParking.abreiseDatumPlaceholderTextField.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+								newParking.abreiseDatumPlaceholderTextField.requestFocus();
+								errorDateDepartureMessageDelivered = false;
+							}
+						});
+					   }
+
+						
+					}
+					
+					
+					
+					
+				}else {
+					
+					
+					
+					
+					/*
+					 * The dates have a correct format and the date of departure is not earlier than the date of arrival, we give value to the variable totalDays.
+					 * 
+					 * for this we use the chronology between both dates.
+					 */
+					long totalDays = ChronoUnit.DAYS.between(anreiseLocalDate, abreiseLocalDate);
+
+
+					//totalDaysToPay receives the value of totalDays + 1 because it is also charged the day of delivery of the carl.(The parking Date).
+					this.totalDaysToPay = totalDays + 1; 
+
+					this.newParking.tagenGeneratedJLabel.setText(String.valueOf(totalDaysToPay));
+
+					/*
+					 * If the total days are from 1 to 3 it costs 30CHF, if more than 3 days at 10CHF per day.
+					 */
+					if (this.totalDaysToPay <= 3) {
+						this.betragTotal = 30d;
+						this.newParking.betragGeneratedJLabel.setText(String.valueOf(betragTotal + " CHF"));
+					} else {
+						//Rate per day 10CHF
+						this.betragTotal = this.totalDaysToPay * 10;
+						this.newParking.betragGeneratedJLabel.setText(String.valueOf(betragTotal + " CHF"));
+					}
+					
+					this.abreiseOK = true;
+					
+					
+
 				}
 				
 				
+				
+			}else {
+				
 			
 				
+//				JOptionPane.showMessageDialog(null, "no es ok anreise");
+				
+				//Anreise no es ok procedemos a lanzar un mensaje de error
+				
+				this.messageAbreiseError.setText("Anreisdatum darf nicht leer sein. bitte geben Sie ein korrektes Datumsformat ein(dd.mm.yyyy)");
 				
 				
-				
-				
+				if(!this.errorDateFormatAnreise.isVisible()) {
+					
+					if(!closingNewParkingReservation && !this.anreiseFocus) {
+						
+						if(!this.errorDateDepartureMessageDelivered) {
+							
+							SwingUtilities.invokeLater(new Runnable() {
+								
+								@Override
+								public void run() {
+									
 
+									errorDateFormatAbreise = new JOptionPane(myPanelDialogAbreise, JOptionPane.OK_OPTION, JOptionPane.NO_OPTION, errorImg,
+											optionButtonsAbreise, null).createDialog("kritischer Fehler (Anreisedatum)");
+									
+
+									errorDateFormatAbreise.setAlwaysOnTop(true);
+									errorDateFormatAbreise.setVisible(true);
+									errorDateFormatAbreise.dispose();
+									abreiseOK=false;
+									messageAbreiseError.setText("");
+									newParking.tagenGeneratedJLabel.setText("0");
+									newParking.betragGeneratedJLabel.setText("0.00 EUR");
+									newParking.anreiseDatumPlaceHolderTextField.requestFocus();
+									
+								}
+							});
+						}
+						
+					}
+						
+							
+						
 				
-				this.abreiseOK = true;
+					
+				}
+				
+				
+				
+				
 			}
+			
 
-		}
+			
+	
+		} else { 
+			
 
+			if(!this.errorDateFormatAnreise.isVisible()) {
+				
+				
+						
+						
+						if(!closingNewParkingReservation) {
+							
+							if(!errorDateDepartureMessageDelivered && !this.anreiseFocus) {
+								
+								SwingUtilities.invokeLater(new Runnable() {
+									
+									@Override
+									public void run() {
+										
+										errorDateFormatAbreise = new JOptionPane(myPanelDialogAbreise, JOptionPane.OK_OPTION, JOptionPane.NO_OPTION, errorImg,
+												optionButtonsAbreise, null).createDialog("kritischer Fehler (Abreisedatum)");
+										
+
+										errorDateFormatAbreise.setAlwaysOnTop(true);
+										errorDateFormatAbreise.setVisible(true);
+										errorDateFormatAbreise.dispose();
+										abreiseOK=false;
+										messageAbreiseError.setText("");
+										newParking.tagenGeneratedJLabel.setText("0");
+										newParking.betragGeneratedJLabel.setText("0.00 EUR");
+										newParking.abreiseDatumPlaceholderTextField.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+										newParking.abreiseDatumPlaceholderTextField.requestFocus();
+										errorDateDepartureMessageDelivered = false;
+									}
+								});
+								
+							}
+				
+						}
+
+						
+				
+				
+				
+			}
+			
+			
+			
+			
 		
+		}
+				
+
 	}
+
 	
 	
 	
+public void setAnreiseOk(boolean anreiseOk) {
+	this.anreiseOK = anreiseOk;
+}
+
+
+public void setClosingNewParkingReservation(boolean closingNewParkingReservation) {
+	
+	this.closingNewParkingReservation = closingNewParkingReservation;
 	
 	
+}
+
+/*
+ * 
+ * errorDateDepartureMessageDelivered = false, errorDateArrivalMessageDelivered = false;
+ */
+public void setErrorDateDepartureMessageDelivered(boolean messageDelivered) {
+	this.errorDateDepartureMessageDelivered = messageDelivered;
+}
+
+public void setErrorDateArrivalMessageDelivered(boolean messageDelivered) {
+	this.errorDateArrivalMessageDelivered = messageDelivered;
+}
+
+//public void setAnreiseDate() {
+//	/*
+//	 * The date format entered is correct, we replace the (.) by (/), that way we can pass an appropriate value to the variable of type LocalDate.
+//	 */
+//	String replaceCharacter = this.newParking.anreiseDatumPlaceHolderTextField.getText().replace('.', '/');
+//
+//	//We pass an appropriate value to anreiseLocalDate using dateTimeFormatter.
+//	this.anreiseLocalDate = LocalDate.parse(replaceCharacter, dateTimeFormatter);
+//	
+//	//we indicate that everything concerning the arrival date is correct
+//	this.anreiseOK = true;
+//}
+
+	
+public void setAnreiseFocus(boolean anreiseFocus) {
+	this.anreiseFocus = anreiseFocus;
+}
+
+
+
 public void setReadyToSaveArrival(boolean readyToSaveArrival) {
 	this.readyToSaveArrival = readyToSaveArrival;
 }
@@ -495,6 +739,14 @@ public void checkAllEntries() {
 		//If everything is correctly filled in we precede saving the data.
 		if(this.anreiseOK && this.abreiseOK && this.entryCompleted) {
 			addNewParkingReservationToDataBase();
+		}else {
+			
+			
+			
+			if(!this.anreiseOK) {
+//				this.messageErrorDateFormat = new JLabel("") a seguir trabajando desde aqui
+			}
+			
 		}
 	}
 		
@@ -543,12 +795,13 @@ protected void addNewParkingReservationToDataBase() {
 	JOptionPane.showMessageDialog(null, "Betragparking: " + this.betragparking);
 	
 	
+	/*
+	 * DAOParking daoParking = new DaoParkingImpl(urlDataBase, dbName, userAHB, ahbParking, parkingReservation);
+	 */
 	
-	
-
+	DAOParking daoParking = new DaoParkingImpl(this.urlDB, this.dbName, this.userAHB, this.ahbParking, this.parkingReservation);
 
 }
-
 
 
 

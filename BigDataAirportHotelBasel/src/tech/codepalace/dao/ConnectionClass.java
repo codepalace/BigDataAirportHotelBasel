@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.swing.JOptionPane;
+
 
 /**
  * 
@@ -49,7 +51,6 @@ public class ConnectionClass {
 			this.urlDB = urlDB;
 			this.dbName = dbName;
 			
-			
 		
 		/*
 		 We check if the database does not exist calling the getUrlDataBase method for checking inside the getUrlDataBase method.
@@ -64,14 +65,15 @@ public class ConnectionClass {
 		/**
 		 * @description method to get the database url
 		 */
-		protected void getUrlDataBase() {
+		protected String getUrlDataBase() {
 			
 			File urlDataBaseFile = new File(this.urlDB + File.separator + this.dbName);
 			
 			if(urlDataBaseFile.exists()) {
 		
 				//The database exists now what we do is load it
-				
+//				JOptionPane.showMessageDialog(null, "URL DB STring: "+ urlDBCString);
+				return urlDataBaseFile.getAbsolutePath();
 			
 			}else {
 //				
@@ -79,6 +81,12 @@ public class ConnectionClass {
 				 //The database does not exist, we call the createDataBase method to create the database 
 				createDataBase();
 			}
+			return urlDataBaseFile.getAbsolutePath();
+		}
+		
+		
+		protected String getDbName() {
+			return this.dbName;
 		}
 		
 		

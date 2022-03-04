@@ -21,12 +21,24 @@ public interface DAOParking {
 	
 	void createTableParkingDataBase(ParkingReservation parkingReservation) throws DaoException;
 	
+	/**
+	 * @author Antonio Estevez Gonzalez
+	 * @description Method to create a new Parking Reservation. This method receives a parameter with the length of content that we have in the parking table
+	 * @param lenghtParkingTableDataBase
+	 * @throws DaoException
+	 */
+	
+	void createNewParkingReservation(long lenghtParkingTableDataBase) throws DaoException;
+	
+	
 	
 	
 	/** Method to add a new entry in the database
 	 *  @author Antonio Estevez Gonzalez
 	 **/
 	void addNewParkingReservation(long lenghtParkingTableDataBase) throws DaoException;
+	
+	
 	
 	
 	

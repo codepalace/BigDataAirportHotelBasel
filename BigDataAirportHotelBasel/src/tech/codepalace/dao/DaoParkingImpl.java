@@ -72,6 +72,8 @@ public class DaoParkingImpl extends ConnectionClass implements DAOParking {
  	
  	private long count = 0L;
  	
+ 	private String urlDB, dbName;
+ 	
  	
 
 	
@@ -82,6 +84,10 @@ public class DaoParkingImpl extends ConnectionClass implements DAOParking {
 		this.userAHB = userAHB;
 		this.ahbParking = ahbParking;
 		this.parkingReservation = parkingReservation;
+		this.urlDB = urlDB;
+		this.dbName = dbName;
+		JOptionPane.showMessageDialog(null, "url DaoParkingImp: " + this.urlDB);
+		JOptionPane.showMessageDialog(null, "dbName DaoParkingImp: " + this.dbName);
 		
 		
 		
@@ -172,10 +178,15 @@ public class DaoParkingImpl extends ConnectionClass implements DAOParking {
 		
 	}
 
+	
+
+	
+	
+	
 	@Override
-	public void addNewParkingReservation(long lenghtParkingTableDataBase) throws DaoException {
+	public void createNewParkingReservation(long lenghtParkingTableDataBase) throws DaoException {
 		
-		this.dataEncryption = new DataEncryption();
+this.dataEncryption = new DataEncryption();
 		
 		
 		SwingUtilities.invokeLater(new Runnable() {
@@ -186,7 +197,7 @@ public class DaoParkingImpl extends ConnectionClass implements DAOParking {
 				newParking = new  NewParking(ahbParking, true, userAHB, count);
 
 				@SuppressWarnings("unused")
-				LogicModelNewParking logicModelNewParking = new LogicModelNewParking(userAHB, ahbParking, newParking);
+				LogicModelNewParking logicModelNewParking = new LogicModelNewParking(userAHB, ahbParking, newParking, parkingReservation, urlDB, dbName);
 				
 				
 				
@@ -201,12 +212,22 @@ public class DaoParkingImpl extends ConnectionClass implements DAOParking {
 			
 		});
 		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	@Override
+	public void addNewParkingReservation(long lenghtParkingTableDataBase) throws DaoException {
+		
+			
 		
 		
 	}
-
-	
-	
 	
 	
 	
@@ -275,7 +296,7 @@ public class DaoParkingImpl extends ConnectionClass implements DAOParking {
 								
 								
 								try {
-									addNewParkingReservation(count);
+									createNewParkingReservation(count);
 									newParkingDialog.dispose();
 								} catch (DaoException e1) {
 									// TODO Auto-generated catch block
@@ -305,7 +326,7 @@ public class DaoParkingImpl extends ConnectionClass implements DAOParking {
 
 								if(e.getKeyCode()==10) {
 									try {
-										addNewParkingReservation(count);
+										createNewParkingReservation(count);
 									} catch (DaoException e1) {
 										// TODO Auto-generated catch block
 										e1.printStackTrace();
@@ -334,16 +355,10 @@ public class DaoParkingImpl extends ConnectionClass implements DAOParking {
 						cancelNewParkingReservationJButton.addKeyListener(new KeyListener() {
 							
 							@Override
-							public void keyTyped(KeyEvent e) {
-								// TODO Auto-generated method stub
-								
-							}
+							public void keyTyped(KeyEvent e) {}
 							
 							@Override
-							public void keyReleased(KeyEvent e) {
-								// TODO Auto-generated method stub
-								
-							}
+							public void keyReleased(KeyEvent e) {}
 							
 							@Override
 							public void keyPressed(KeyEvent e) {
@@ -375,6 +390,9 @@ public class DaoParkingImpl extends ConnectionClass implements DAOParking {
 		
 		return parkingreservations;
 	}
+	
+	
+	
 	
 	
 	
@@ -428,5 +446,9 @@ public class DaoParkingImpl extends ConnectionClass implements DAOParking {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+
+	
 
 }
