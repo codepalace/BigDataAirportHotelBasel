@@ -1,5 +1,6 @@
 package tech.codepalace.dao;
 
+import java.sql.Date;
 import java.util.List;
 
 import tech.codepalace.model.ParkingReservation;
@@ -36,7 +37,8 @@ public interface DAOParking {
 	/** Method to add a new entry in the database
 	 *  @author Antonio Estevez Gonzalez
 	 **/
-	void addNewParkingReservation(long lenghtParkingTableDataBase) throws DaoException;
+	void addNewParkingReservation(String idParking, String buchungsname, String autokfz, Date anreisedatum, Date abreisedatum, 
+			int anzahltagen, double betragparking, String buchungskanal, String bemerkungen, String schluesselinhaus, String vekaufer) throws DaoException;
 	
 	
 	

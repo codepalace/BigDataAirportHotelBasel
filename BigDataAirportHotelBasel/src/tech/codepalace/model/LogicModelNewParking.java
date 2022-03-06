@@ -26,6 +26,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import tech.codepalace.dao.DAOParking;
+import tech.codepalace.dao.DaoException;
 import tech.codepalace.dao.DaoParkingImpl;
 import tech.codepalace.view.frames.AHBParking;
 import tech.codepalace.view.frames.NewParking;
@@ -722,14 +723,6 @@ public void checkAllEntries() {
 		//If everything is correctly filled in we precede saving the data.
 		if(this.anreiseOK && this.abreiseOK && this.entryCompleted) {
 			addNewParkingReservationToDataBase();
-		}else {
-			
-			
-			
-			if(!this.anreiseOK) {
-//				this.messageErrorDateFormat = new JLabel("") a seguir trabajando desde aqui
-			}
-			
 		}
 	}
 		
@@ -783,6 +776,14 @@ protected void addNewParkingReservationToDataBase() {
 	 */
 	
 	DAOParking daoParking = new DaoParkingImpl(this.urlDB, this.dbName, this.userAHB, this.ahbParking, this.parkingReservation);
+	
+	try {
+		daoParking.addNewParkingReservation(this.idParking, this.buchungsname, this.autokfz, this.anreisedatum, this.abreisedatum, this.anzahltagen, this.betragparking,
+				this.buchungskanal, this.bemerkungen, this.schluesselinhaus, this.verkaufer);
+	} catch (DaoException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
 
 }
 

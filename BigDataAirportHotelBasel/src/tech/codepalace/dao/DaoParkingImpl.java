@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.DatabaseMetaData;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -222,7 +223,8 @@ this.dataEncryption = new DataEncryption();
 	
 	
 	@Override
-	public void addNewParkingReservation(long lenghtParkingTableDataBase) throws DaoException {
+	public void addNewParkingReservation(String idParking, String buchungsname, String autokfz, Date anreisedatum, Date abreisedatum, 
+			int anzahltagen, double betragparking, String buchungskanal, String bemerkungen, String schluesselinhaus, String vekaufer) throws DaoException {
 		
 			
 		
