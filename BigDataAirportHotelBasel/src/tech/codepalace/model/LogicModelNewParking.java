@@ -17,7 +17,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.regex.Pattern;
 
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
+import javax.swing.ImageIcon; 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -46,9 +46,9 @@ public class LogicModelNewParking {
 	
 	private JLabel messageAnreiseError, messageAbreiseError, messageErrorDateFormat, messageEntriesError;
 	
-	private JPanel myPanelErrorDateFormat, myPanelDialogAnreise = new JPanel(new BorderLayout()),  myPanelDialogAbreise = new JPanel(new BorderLayout()), myPanelDialogEntries = new JPanel(new BorderLayout());
+	private JPanel  myPanelDialogAnreise = new JPanel(new BorderLayout()),  myPanelDialogAbreise = new JPanel(new BorderLayout()), myPanelDialogEntries = new JPanel(new BorderLayout());
 	
-	private Object[] optionButtonsAnreise = { this.okButtonAnreiseError }, optionButtonsAbreise = { this.okButtonAbreiseError }, optionButtonsErrorDateFormat = { this.okButtonErrorDateFormat }, optionButtonEntries = { this.okButtonEntriesError };
+	private Object[] optionButtonsAnreise = { this.okButtonAnreiseError }, optionButtonsAbreise = { this.okButtonAbreiseError }, optionButtonEntries = { this.okButtonEntriesError };
 	
 	
 	private long totalDaysToPay;
@@ -62,8 +62,6 @@ public class LogicModelNewParking {
 	private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	
 	private ImageIcon errorImg = new ImageIcon(getClass().getResource("/img/error.png"));
-	
-	private boolean readyToSaveArrival=false, readyToSaveDepature = false;
 	
 	private boolean entryCompleted = false;
 	
@@ -104,15 +102,6 @@ public class LogicModelNewParking {
 		//nowLoacalDate for the current date in LocalDate variable
 		this.nowLocalDate = now.toLocalDate();
 		
-		
-
-		
-//		this.messageAbreiseError = new JLabel(
-//				"Sie haben ein falsches Datumsformat eingegeben. bitte geben Sie ein korrektes Datumsformat ein(dd.mm.yyyy)");
-//		
-
-		
-//		this.myPanelDialogAbreise.add(this.messageAbreiseError, BorderLayout.CENTER);
 		
 		this.errorDateFormatAbreise = new JOptionPane(this.myPanelDialogAbreise, JOptionPane.OK_OPTION, JOptionPane.NO_OPTION, this.errorImg,
 				this.optionButtonsAbreise, null).createDialog("kritischer Fehler (Abreisedatum)");
@@ -299,7 +288,6 @@ this.okButtonEntriesError.addActionListener(new ActionListener() {
 							messageAnreiseError.setText("");
 							newParking.tagenGeneratedJLabel.setText("0");
 							newParking.betragGeneratedJLabel.setText("0.00 EUR");
-							newParking.anreiseDatumPlaceHolderTextField.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
 							errorDateArrivalMessageDelivered = true;
 							newParking.anreiseDatumPlaceHolderTextField.requestFocus();
 							
@@ -375,29 +363,30 @@ this.okButtonEntriesError.addActionListener(new ActionListener() {
 
 			this.messageAbreiseError.setText("Abreisedatum kann nicht früher als Anreisedatum sein!");
 			
+			/*
+			 * We check if the arrival date is ok to check without errors the departure date if it is earlier than the arrival date.
+				That's why we need to do this check first to be sure before proceeding to  
+			check between the two dates that the previous date has been processed correctly and 
+			in the right format.
+			 */
 			
 			
-			//Comprobamos si anreise es ok para poder comprobrar sin errores la fecha de departure si es antior que arrival.
-			//Por eso necesitamos hacer primero esta comprobacion para estar seguros antes de procedera  comprobar entre las dos fechas que la fecha anterior halla sido procesada correctamente y 
-			//en el formato correcto.
 			
 			
 			if(this.anreiseOK) {
 				
-//				JOptionPane.showMessageDialog(null, "si es ok anreise");
-				
-				
-				
-				
+				//if the departure date is earlier than the arrival date
 				if (this.abreiseLocalDate.isBefore(anreiseLocalDate)) {
 
 					
-					
+					//if the user does not intend to close the entry Jdialog box and the arrival date doesn't have the focus
 					if(!closingNewParkingReservation && !this.anreiseFocus) {
 						
-						
+						//If have not thrown an error message Departure Date Message Error
 						if(!this.errorDateDepartureMessageDelivered) {
 							
+							
+							//Then we call all the instructions below
 							SwingUtilities.invokeLater(new Runnable() {
 								
 								@Override
@@ -515,7 +504,6 @@ this.okButtonEntriesError.addActionListener(new ActionListener() {
 				
 			
 				
-//				JOptionPane.showMessageDialog(null, "no es ok anreise");
 				
 				//Anreise no es ok procedemos a lanzar un mensaje de error
 				
@@ -622,12 +610,19 @@ this.okButtonEntriesError.addActionListener(new ActionListener() {
 
 	
 	
-	
+/**
+ * @description method to establish whether the arrival date, entry is correct or not
+ * @param anreiseOk
+ */
 public void setAnreiseOk(boolean anreiseOk) {
 	this.anreiseOK = anreiseOk;
 }
 
 
+/**
+ * @description method to set whether the user intends to close or not the NewParkingReservation
+ * @param closingNewParkingReservation
+ */
 public void setClosingNewParkingReservation(boolean closingNewParkingReservation) {
 	
 	this.closingNewParkingReservation = closingNewParkingReservation;
@@ -635,45 +630,33 @@ public void setClosingNewParkingReservation(boolean closingNewParkingReservation
 	
 }
 
-/*
- * 
- * errorDateDepartureMessageDelivered = false, errorDateArrivalMessageDelivered = false;
+/**
+ * @description method to indicate whether the error message was delivered or not(Departure)
+ * @param messageDelivered
  */
 public void setErrorDateDepartureMessageDelivered(boolean messageDelivered) {
 	this.errorDateDepartureMessageDelivered = messageDelivered;
 }
 
+
+/**
+ * @description method to indicate whether the error message was delivered or not(Arrival)
+ * @param messageDelivered
+ */
 public void setErrorDateArrivalMessageDelivered(boolean messageDelivered) {
 	this.errorDateArrivalMessageDelivered = messageDelivered;
 }
 
-//public void setAnreiseDate() {
-//	/*
-//	 * The date format entered is correct, we replace the (.) by (/), that way we can pass an appropriate value to the variable of type LocalDate.
-//	 */
-//	String replaceCharacter = this.newParking.anreiseDatumPlaceHolderTextField.getText().replace('.', '/');
-//
-//	//We pass an appropriate value to anreiseLocalDate using dateTimeFormatter.
-//	this.anreiseLocalDate = LocalDate.parse(replaceCharacter, dateTimeFormatter);
-//	
-//	//we indicate that everything concerning the arrival date is correct
-//	this.anreiseOK = true;
-//}
 
-	
+
+/**
+ * @description Method to indicate if Arrival has the focus
+ * @param anreiseFocus
+ */
 public void setAnreiseFocus(boolean anreiseFocus) {
 	this.anreiseFocus = anreiseFocus;
 }
 
-
-
-public void setReadyToSaveArrival(boolean readyToSaveArrival) {
-	this.readyToSaveArrival = readyToSaveArrival;
-}
-
-public void setReadyToSaveDeparture(boolean readyToSaveDepature) {
-	this.readyToSaveDepature = readyToSaveDepature;
-}
 
 
 

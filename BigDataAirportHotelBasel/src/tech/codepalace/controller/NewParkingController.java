@@ -11,7 +11,6 @@ import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
-import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 import tech.codepalace.model.LogicModelNewParking;
@@ -21,13 +20,6 @@ public class NewParkingController implements ActionListener, KeyListener, Window
 	
 	private NewParking newParking;
 	private LogicModelNewParking logicModelNewParking;
-	
-	protected boolean closingNewParkingReservation = false;
-	
-	//Regex Format to evaluate the date Format.
-	private  String formatDateRegex = "(0[1-9]|[12][0-9]|3[01])\\.(0[1-9]|1[012])\\.((?:19|20)[0-9][0-9])$";
-	
-	
 	
 	
 	public NewParkingController(NewParking newParking, LogicModelNewParking logicModelNewParking) {
@@ -57,16 +49,13 @@ public class NewParkingController implements ActionListener, KeyListener, Window
 		
 		this.newParking.anreiseDatumPlaceHolderTextField.addMouseListener(this);
 		
-		
-		
-		
-		
-		
-		
-		
-		
+
 	}
 
+	
+	
+	
+	
 	@Override
 	public void windowOpened(WindowEvent e) {
 		
@@ -76,74 +65,53 @@ public class NewParkingController implements ActionListener, KeyListener, Window
 	@Override
 	public void windowClosing(WindowEvent e) {
 
+		/*
+		 * by JFrame closing we call newParking.confirmClose Method to ask the user if he is really ready to close.
+		 */
 		this.newParking.confirmClose();
 		
 	}
 
 	@Override
-	public void windowClosed(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void windowClosed(WindowEvent e) {}
 
 	@Override
-	public void windowIconified(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void windowIconified(WindowEvent e) {}
 
 	@Override
-	public void windowDeiconified(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void windowDeiconified(WindowEvent e) {}
 
 	@Override
-	public void windowActivated(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void windowActivated(WindowEvent e) {}
 
 	@Override
-	public void windowDeactivated(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void windowDeactivated(WindowEvent e) {}
 
 	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void keyTyped(KeyEvent e) {}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
 
 		if(e.getSource()==this.newParking.ja) {
+			//We close the JDialog dialog message and the newParking class extended from JDialog.
 			this.newParking.dialog.dispose();
 			this.newParking.dispose();
 			
 		}else if (e.getSource()==this.newParking.nein) {
+			
+			//the user keeps editing, we keep the dialog open
 			this.newParking.dialog.dispose();
+			
+			//Set the closingNewParkingReservation to false
 			this.logicModelNewParking.setClosingNewParkingReservation(false);
 		} 
 		
-		
-		/*
-		 * else if(e.getSource()==this.newParking.nein) {
-			this.newParking.dialog.dispose();
-		}else if (e.getSource()==this.newParking.ja) {
-			this.newParking.dialog.dispose();
-			this.newParking.dispose();
-		}
-		 */
+	
 	}
 
 	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void keyReleased(KeyEvent e) {}
 	
 	
 	
@@ -152,26 +120,43 @@ public class NewParkingController implements ActionListener, KeyListener, Window
 	public void actionPerformed(ActionEvent e) {
 
 		if(e.getSource()== this.newParking.saveParkingReservation) {
-			this.logicModelNewParking.setReadyToSaveArrival(true);
-			this.logicModelNewParking.setReadyToSaveDeparture(true);
+
+			/*
+			 * the user presses the saveParkingReservation button, we establish that the error messages have not been delivered yet. 
+			 * 
+			 * This helps us to check the dates of arrival and departure and avoid warning messages when the loss of focus occurs by arrival and departure entry boxes.
+			 */
 			this.logicModelNewParking.setErrorDateDepartureMessageDelivered(false);
 			this.logicModelNewParking.setErrorDateArrivalMessageDelivered(false);
+			
+			//We call to check Arrival Date and Departure Date.
 			this.logicModelNewParking.checkAnreiseDateFormat();
 			this.logicModelNewParking.checkAbreiseDateFormat();
+			
+			//We call to check if all the entries are filled correctly.
 			this.logicModelNewParking.checkAllEntries();
 			
 			
 			
 			
 		}else if (e.getSource()==this.newParking.cancelParkingReservation) {
-			this.closingNewParkingReservation = true;
-			System.out.println("closingNewParkingReservation" + closingNewParkingReservation);
+			/*
+			 * The user pressed canceParkingReservation. We call the confirClose Method
+			 */
 			this.newParking.confirmClose();
 		
 		}else if(e.getSource()==this.newParking.nein) {
+			/*
+			 * the user does not want to close the edit dialog box. We close only the dialog JDialog alert. We also set closingNewParkingReservation to false.
+			 */
 			this.newParking.dialog.dispose();
 			this.logicModelNewParking.setClosingNewParkingReservation(false);
+			
 		}else if (e.getSource()==this.newParking.ja) {
+			
+			/*
+			 * The user wants to close, then we close everything concerning the new reservation entry
+			 */
 			this.newParking.dialog.dispose();
 			this.newParking.dispose();
 		}
@@ -180,15 +165,20 @@ public class NewParkingController implements ActionListener, KeyListener, Window
 	
 	
 	
+	
+	
 	@Override
 	public void focusGained(FocusEvent e) {
 		
-		if(e.getSource()==this.newParking.anreiseDatumPlaceHolderTextField) {
-			this.newParking.anreiseDatumPlaceHolderTextField.setBorder(UIManager.getLookAndFeel().getDefaults().getBorder("TextField.border"));
-			this.logicModelNewParking.setErrorDateDepartureMessageDelivered(false);
-			
 		
-		}else if (e.getSource()==this.newParking.abreiseDatumPlaceholderTextField) {
+		//In case the focus is on newParking.anreiseDatumPlaceHolderTextField for the Arrival Date
+		if(e.getSource()==this.newParking.anreiseDatumPlaceHolderTextField) {
+			
+			//We set errorDateDepartureMessageDelivered to false
+			this.logicModelNewParking.setErrorDateDepartureMessageDelivered(false);	
+		}
+		
+		else if (e.getSource()==this.newParking.abreiseDatumPlaceholderTextField) {
 			this.newParking.abreiseDatumPlaceholderTextField.setBorder(UIManager.getLookAndFeel().getDefaults().getBorder("TextField.border"));
 			
 		}else if (e.getSource()==this.newParking.buchungsNameJTextField) {
@@ -210,61 +200,52 @@ public class NewParkingController implements ActionListener, KeyListener, Window
 		
 		if(e.getSource()==this.newParking.anreiseDatumPlaceHolderTextField) {
 			
-	
-			
-					
-			
+					//lost focus by Arrival then we call checkAnreiseDateFormat
 					logicModelNewParking.checkAnreiseDateFormat();
+					
+					//We set the focus for Arrival to false if we do not, when the arrival date is later than the departure date, it throws an error message only once.
+					//To avoid this and that we always get an error message in the event that the arrival date is later than the departure date, we set the anreiseFocus value to false.
 					logicModelNewParking.setAnreiseFocus(false);
-					
-					
 
 			
 		}else if (e.getSource()==this.newParking.abreiseDatumPlaceholderTextField) {
 			
-				
+					//We call to check the Departure Date
 					logicModelNewParking.checkAbreiseDateFormat();
 
 		}
 		
 	}
+	
+	
+	
+	
 
 	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseClicked(MouseEvent e) {}
 
+	
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
+		
+		//In case we pressed the cancelParkingReservation button we set the closingNewParkingReservation (true)
 		if(e.getSource()==this.newParking.cancelParkingReservation) {
 			this.logicModelNewParking.setClosingNewParkingReservation(true);
 		}else if(e.getSource()==this.newParking.anreiseDatumPlaceHolderTextField){
+			//in this case we set the arrival date focus true.
 			this.logicModelNewParking.setAnreiseFocus(true);
 		}
 		
 	}
 
 	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseReleased(MouseEvent e) {}
 
 	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-		
-		
-	}
+	public void mouseEntered(MouseEvent e) {}
 
 	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseExited(MouseEvent e) {}
 	
 
 
