@@ -93,19 +93,20 @@ public class NewParkingController implements ActionListener, KeyListener, Window
 	@Override
 	public void keyPressed(KeyEvent e) {
 
-		if(e.getSource()==this.newParking.ja) {
+		if(e.getSource()==this.newParking.ja  && e.getKeyCode()== 10) {
 			//We close the JDialog dialog message and the newParking class extended from JDialog.
 			this.newParking.dialog.dispose();
 			this.newParking.dispose();
 			
-		}else if (e.getSource()==this.newParking.nein) {
+		}else if (e.getSource()==this.newParking.nein && e.getKeyCode()== 10) {
 			
 			//the user keeps editing, we keep the dialog open
 			this.newParking.dialog.dispose();
 			
 			//Set the closingNewParkingReservation to false
 			this.logicModelNewParking.setClosingNewParkingReservation(false);
-		} 
+		
+		}
 		
 	
 	}
