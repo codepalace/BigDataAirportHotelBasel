@@ -7,8 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import javax.swing.JOptionPane;
-
 
 /**
  * 
@@ -398,6 +396,30 @@ public class ConnectionClass {
 	    }
 	
 	
+	  
+	  
+	  
+	  
+//	  public Connection getConnection() throws SQLException {
+//		  
+//		  
+//	
+//		
+//		  //Load Driver
+//		  DriverManager.registerDriver(new org.apache.derby.jdbc.EmbeddedDriver());
+//		  
+//		  this.connectionURL = "jdbc:derby:" + this.urlDB + File.separator + this.dbName  
+//                  + ";user=" + dbOwner + ";password=" + dbPass  + ";encryptionAlgorithm=DES/CBC/NoPadding;" + "encryptionKey=" + encryptionKey;
+//		  
+//		  this.conn = DriverManager.getConnection(this.connectionURL);
+//		  
+//		  this.conn.setAutoCommit(false);
+//		  
+//		  JOptionPane.showMessageDialog(null, "Estamos conectados para agregar datos a: " + this.connectionURL);
+//		  
+//		return conn;
+//		  
+//	  }
 	
 	
 	

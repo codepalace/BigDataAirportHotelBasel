@@ -20,16 +20,14 @@ public interface DAOParking {
 	void checkTableParking() throws DaoException;
 	
 	
-	void createTableParkingDataBase(ParkingReservation parkingReservation) throws DaoException;
-	
 	/**
 	 * @author Antonio Estevez Gonzalez
 	 * @description Method to create a new Parking Reservation. This method receives a parameter with the length of content that we have in the parking table
-	 * @param lenghtParkingTableDataBase
+	 * 
 	 * @throws DaoException
 	 */
 	
-	void createNewParkingReservation(long lenghtParkingTableDataBase) throws DaoException;
+	void createNewParkingReservation() throws DaoException;
 	
 	
 	
@@ -37,15 +35,21 @@ public interface DAOParking {
 	/** Method to add a new entry in the database
 	 *  @author Antonio Estevez Gonzalez
 	 **/
-	void addNewParkingReservation(String idParking, String buchungsname, String autokfz, Date anreisedatum, Date abreisedatum, 
-			int anzahltagen, double betragparking, String buchungskanal, String bemerkungen, String schluesselinhaus, String vekaufer) throws DaoException;
+	void addNewParkingReservation(ParkingReservation parkingReservation) throws DaoException;
 	
 	
 	
 	
 	
+	/**
+	 * 
+	 * @throws DaoException
+	 * @author Antonio Estevez Gonzalez
+	 * @description Method to display a list of Parking Reservations saved in Database inside Table PARKING
+	 */
+	void displayListParking() throws DaoException;
 	
-	List<ParkingReservation>displayListParking() throws DaoException;
+	
 	List<ParkingReservation>displayParkingFoundLikeName(String name);
 	List<ParkingReservation>displayParkingFoundLikeCarNumber(String carNumer);
 	List<ParkingReservation>displayParkingFoundLikeDate(String date);  //Buscar como fecha a trabajarlo segun los argumentos

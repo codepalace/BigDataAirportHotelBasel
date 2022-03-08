@@ -109,7 +109,7 @@ public class LogicModelParking {
 					 * 
 					 * DaoParkingImpl extends ConnectionClass for the dataBase connection and implements the DAOParking interface
 					 */
-					DAOParking daoParking = new DaoParkingImpl(urlDataBase, dbName, userAHB, ahbParking, parkingReservation);
+					DAOParking daoParking = new DaoParkingImpl(urlDataBase, dbName, userAHB, ahbParking);
 				
 					
 					try {
@@ -138,7 +138,7 @@ public class LogicModelParking {
 					 * 
 					 * DaoParkingImpl extends ConnectionClass for the dataBase connection and implements the DAOParking interface
 					 */
-					DAOParking daoParking = new DaoParkingImpl(urlDataBase, dbName, userAHB, ahbParking, parkingReservation);
+					DAOParking daoParking = new DaoParkingImpl(urlDataBase, dbName, userAHB, ahbParking);
 					
 					System.out.println("The " + dbName  + " database was successfully created in the path: " + urlDataBase);
 					

@@ -741,7 +741,7 @@ protected void addNewParkingReservationToDataBase() {
 	this.buchungsname = this.newParking.buchungsNameJTextField.getText();
 	this.autokfz = this.newParking.autoKFZJTextField.getText();
 	
-	SimpleDateFormat simpeDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+//	SimpleDateFormat simpeDateFormat = new SimpleDateFormat("dd.MM.yyyy");
 	
 	
 	this.anreisedatum = Date.valueOf(this.anreiseLocalDate);
@@ -759,29 +759,46 @@ protected void addNewParkingReservationToDataBase() {
 	
 	
 	
-	String dateToFormat = simpeDateFormat.format(this.anreisedatum);
+//	String dateToFormat = simpeDateFormat.format(this.anreisedatum);
 
-	JOptionPane.showMessageDialog(null, "fecha localdate en sql.Date: " +this.anreisedatum);
-	JOptionPane.showMessageDialog(null, "fecha convertida en String: " + dateToFormat);
+//	JOptionPane.showMessageDialog(null, "fecha localdate en sql.Date: " +this.anreisedatum);
+//	JOptionPane.showMessageDialog(null, "fecha convertida en String: " + dateToFormat);
+//	
+//	JOptionPane.showMessageDialog(null, "Schluesel in haus: " + this.schluesselinhaus);
+//	
+//	JOptionPane.showMessageDialog(null, "Total days to pay: " + this.anzahltagen);
+//	
+//	JOptionPane.showMessageDialog(null, "Betragparking: " + this.betragparking);
 	
-	JOptionPane.showMessageDialog(null, "Schluesel in haus: " + this.schluesselinhaus);
-	
-	JOptionPane.showMessageDialog(null, "Total days to pay: " + this.anzahltagen);
-	
-	JOptionPane.showMessageDialog(null, "Betragparking: " + this.betragparking);
 	
 	
-	/*
-	 * DAOParking daoParking = new DaoParkingImpl(urlDataBase, dbName, userAHB, ahbParking, parkingReservation);
-	 */
+	//We create a instance of DAOParking parkingReservation parameter 
+	DAOParking daoParking = new DaoParkingImpl(this.urlDB, this.dbName, this.userAHB, this.ahbParking);
 	
-	DAOParking daoParking = new DaoParkingImpl(this.urlDB, this.dbName, this.userAHB, this.ahbParking, this.parkingReservation);
+	this.parkingReservation = new ParkingReservation();
+	
+	this.parkingReservation.setIdParking(this.idParking);
+	this.parkingReservation.setBuchungsname(this.buchungsname);
+	this.parkingReservation.setAutoKFZ(this.autokfz);
+	this.parkingReservation.setAnreiseDatum(this.anreisedatum);
+	this.parkingReservation.setAbreiseDatum(this.abreisedatum);
+	this.parkingReservation.setAnzahlTagen(this.anzahltagen);
+	this.parkingReservation.setBetragParking(this.betragparking);
+	this.parkingReservation.setBuchungsKanal(this.buchungskanal);
+	this.parkingReservation.setBemerkungen(this.bemerkungen);
+	this.parkingReservation.setSchluesselInHaus(this.schluesselinhaus);
+	this.parkingReservation.setAbkuerzungMA(this.verkaufer);
+	
+	System.out.println("Data to save: " + this.parkingReservation.getIdParking() + " " + this.parkingReservation.getBuchungsname() + " " + this.parkingReservation.getAutoKFZ() +
+			" " + this.parkingReservation.getAnreiseDatum() + " " + this.parkingReservation.getAbreiseDatum() + " " + this.parkingReservation.getAnzahlTagen() + " " 
+			+ this.parkingReservation.getBetragParking() + " " + this.parkingReservation.getBuchungsKanal() + " " + this.parkingReservation.getBemerkungen() + " " +
+			this.parkingReservation.getSchluesselInHaus() + " " + this.parkingReservation.getAbkuerzungMA());
+	
+	JOptionPane.showMessageDialog(null, "kfz: " + this.parkingReservation.getAutoKFZ());
 	
 	try {
-		daoParking.addNewParkingReservation(this.idParking, this.buchungsname, this.autokfz, this.anreisedatum, this.abreisedatum, this.anzahltagen, this.betragparking,
-				this.buchungskanal, this.bemerkungen, this.schluesselinhaus, this.verkaufer);
+		daoParking.addNewParkingReservation(this.parkingReservation);
 	} catch (DaoException e) {
-		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
 
