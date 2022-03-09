@@ -92,7 +92,7 @@ public class AHBParking extends JFrame {
 	public JLabel loginUserLabel;
 	
 	//Instance JTable for the parkingTable
-	private JTable parkingTable;
+	public JTable parkingTable;
 	
 	private JScrollPane scrollPane;
 	

@@ -23,12 +23,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
+import javax.swing.table.DefaultTableModel;
 
 import tech.codepalace.controller.NewParkingController;
 import tech.codepalace.model.LogicModelNewParking;
 import tech.codepalace.model.ParkingReservation;
 import tech.codepalace.model.UserAHB;
+import tech.codepalace.utility.CellTableManager;
 import tech.codepalace.utility.DataEncryption;
+import tech.codepalace.utility.TableParkingUtilities;
 import tech.codepalace.view.frames.AHBParking;
 import tech.codepalace.view.frames.NewParking;
 
@@ -78,6 +81,7 @@ public class DaoParkingImpl extends ConnectionClass implements DAOParking {
  	
  	private	PreparedStatement preparedStatement = null;
  	private	ResultSet rs = null;
+
  	
  	
 
@@ -580,18 +584,52 @@ this.dataEncryption = new DataEncryption();
 								 * Object type ParkingReservation = chunks value. size of chunks -1 for the Last value, to avoid out of index value from the ArrayList.
 								 */
 								ParkingReservation parkingReservation = chunks.get(chunks.size() -1);
+				
+								
+								/*
+								 * we create an Object array and pass the data contained in our parking table in de Database.
+								 * 
+								 * by getBetragParking we add the Euro symbol.
+								 */
+								Object[] row = {parkingReservation.getIdParking(), parkingReservation.getBuchungsname(), parkingReservation.getAutoKFZ(),
+										parkingReservation.getAnreiseDatum(), parkingReservation.getAbreiseDatum(), parkingReservation.getAnzahlTagen(), 
+										parkingReservation.getBetragParking() + " €", parkingReservation.getBuchungsKanal(), parkingReservation.getBemerkungen(), 
+										parkingReservation.getSchluesselInHaus(), parkingReservation.getAbkuerzungMA()};
+								
 								
 								
 								/*
-								 * at the moment we only print the values. Later we will present it directly in a JTable
+								 * We create one instance DefaultTableModel and we give the value Casting (DefaultTableModel) and we get the defined TableModel for the parkingTable 
+								 * by the AHBParking class.
 								 */
-								System.out.println("Id: " + parkingReservation.getId() + " IdParking: " + parkingReservation.getIdParking() + " Buchungsname: " 
-								+ parkingReservation.getBuchungsname() + " Autokfz: " + parkingReservation.getAutoKFZ() + " Anreisedatum: " + parkingReservation.getAnreiseDatum() +
-								" Abreisedatum: " +  parkingReservation.getAbreiseDatum() + " Anzahltagen: " + parkingReservation.getAnzahlTagen() + " Tagen" + " Betrag: " +
-								parkingReservation.getBetragParking() + "CHF" + " Buchungskanal: " + parkingReservation.getBuchungsKanal() + " Bemerkungen: " + 
-								parkingReservation.getBemerkungen() + " Schluesselinhause: " + parkingReservation.getSchluesselInHaus() + " Abkürzung Mitarbeiter: " + 
-								parkingReservation.getAbkuerzungMA());
+								DefaultTableModel model = (DefaultTableModel)ahbParking.parkingTable.getModel();
+							
 								
+								/*
+								 * for the parkingTable we retrieve the column where we want to write the data, using getColumnModel and getColumn for the Column and we also call the TableParkingUtilities
+								 * to get the correct Column using the corresponding constant where is defined the column number where it belongs.
+								 * 
+								 * for each column we also call setCellRenderer Method and as argument we pass a new CellTableManager and we specify the type of value that the cell is going to have.
+								 * 
+								 * If the cell is type number then it will have a different font color. 
+								 */
+								
+								ahbParking.parkingTable.getColumnModel().getColumn(TableParkingUtilities.IDPARKING).setCellRenderer(new CellTableManager("text"));
+								ahbParking.parkingTable.getColumnModel().getColumn(TableParkingUtilities.BUCHUNGSNAME).setCellRenderer(new CellTableManager("text"));
+								ahbParking.parkingTable.getColumnModel().getColumn(TableParkingUtilities.AUTOKFZ).setCellRenderer(new CellTableManager("text"));
+								ahbParking.parkingTable.getColumnModel().getColumn(TableParkingUtilities.ANREISEDATUM).setCellRenderer(new CellTableManager("number"));
+								ahbParking.parkingTable.getColumnModel().getColumn(TableParkingUtilities.BETRAG).setCellRenderer(new CellTableManager("number"));
+								ahbParking.parkingTable.getColumnModel().getColumn(TableParkingUtilities.BUCHUNGSKANAL).setCellRenderer(new CellTableManager("text"));
+								ahbParking.parkingTable.getColumnModel().getColumn(TableParkingUtilities.BEMERKUNGENG).setCellRenderer(new CellTableManager("text"));
+								ahbParking.parkingTable.getColumnModel().getColumn(TableParkingUtilities.SCHLUESSEL).setCellRenderer(new CellTableManager("text"));
+								ahbParking.parkingTable.getColumnModel().getColumn(TableParkingUtilities.KUERSELMA).setCellRenderer(new CellTableManager("text"));
+								
+								
+								
+								//We call the model to add the new row
+								model.addRow(row);
+								
+
 								
 							}
 

@@ -3,6 +3,8 @@ package tech.codepalace.utility;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -73,6 +75,26 @@ public class CellTableManager extends DefaultTableCellRenderer {
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean selected, boolean focused, int row, int column) {
 		
 		
+		/*
+		 * We use SimpleDateFormat to give format to the sql.Date.
+		 */
+		SimpleDateFormat f = new SimpleDateFormat("dd.MM.yyyy");
+		
+		
+		//if value is Date value then we give the format to the Date. So we can display it at the JTable Column.
+		if( value instanceof Date) {
+            value = f.format(value);
+        }
+		
+		//if the value is Integer(int) we get the String of the value using toString method.
+		if(value instanceof Integer) {
+			value = value.toString();
+		}
+		
+		//if the value is Double we get the String to display
+		if(value instanceof Double) {
+			value = value.toString();
+		}
 		
 		/*we define default colors that I'm going to work with.
 		 
@@ -82,7 +104,7 @@ public class CellTableManager extends DefaultTableCellRenderer {
        Color backgroundColor = null;
        Color defaultBackgroundColor=new Color( 192, 192, 192);
        Color backgroundColorSelection=new Color( 140, 140 , 140);
-   	
+       
        /*
         * If the event cell is selected, the default background color for the selection is assigned
         * but if it is not selected then put a white color
@@ -94,6 +116,7 @@ public class CellTableManager extends DefaultTableCellRenderer {
        {
        	//For those that are not selected, the background of the cells is painted white
            this.setBackground(Color.white);
+          
        }
                
        //if the data type the cell will have is text
@@ -112,22 +135,30 @@ public class CellTableManager extends DefaultTableCellRenderer {
            this.setBackground( (selected)? backgroundColor :Color.WHITE);	
            this.setFont(normal);   
            this.setBorder(new EmptyBorder(0,5,0,0)); //dejamos un espacio de 5 a la izquierda Toni
-           //this.setFont(bold);
+           
+//           this.setForeground(Color.red);
+           
+//           this.setFont(bold);
            return this;
        }
 
        
        //if the data type the cell will have is number
        if( type.equals("number"))
-       {           
+       {        
+    	   
        	if (focused) {
        		backgroundColor=backgroundColorSelection;
     		}else{
     			backgroundColor=defaultBackgroundColor;
     		}
-       	// System.out.println(value);
+  
            this.setHorizontalAlignment( JLabel.CENTER );
-           this.setText( (String) value );            
+    
+           this.setText( (String) value );     
+           
+           
+           
            this.setForeground( (selected)? new Color(255,255,255) :new Color(32,117,32) );    
            this.setBackground( (selected)? backgroundColor :Color.WHITE);
           // this.setBackground( (selected)? colorFondo :Color.MAGENTA);
