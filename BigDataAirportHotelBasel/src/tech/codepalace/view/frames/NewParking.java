@@ -8,10 +8,6 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
@@ -52,7 +48,7 @@ public class NewParking extends JDialog {
  	private GridBagConstraints gbc;
  	
  	protected LocalDateTime now = LocalDateTime.now(ZoneId.ofOffset("UTC", ZoneOffset.ofHours(+2)));
- 	protected JLabel idParkingJLabel, idParkingGenerated;
+ 	public JLabel idParkingJLabel, idParkingGenerated;
  	
  	private JLabel buchungsNameJLabel;
  	public JTextField buchungsNameJTextField;
@@ -78,10 +74,10 @@ public class NewParking extends JDialog {
  	public JTextField bemerkungenJTextField;
  	
  	private JLabel schluesselJLabel;
- 	private JComboBox<String> schluesselBox;
+ 	public JComboBox<String> schluesselBox;
  	private String[] choices;
  	
- 	private JLabel abkuerzungMAJLabel, abkuerzungMAGeneratedJLabel;
+ 	public JLabel abkuerzungMAJLabel, abkuerzungMAGeneratedJLabel;
  	
  	public JButton saveParkingReservation, cancelParkingReservation;
  	
@@ -90,6 +86,15 @@ public class NewParking extends JDialog {
  	private DataEncryption dataEncryption;
  	
  	
+ 	public JButton ja = new JButton("Ja");
+ 	public JButton nein = new JButton("Nein");
+ 	
+ 	public JFrame frame = new JFrame();
+	private JOptionPane optionPane = new JOptionPane();
+	
+	private ImageIcon icon = new ImageIcon(getClass().getResource("/img/dialogo.png"));
+	
+	public JDialog dialog;
 	
 	
 	
@@ -133,6 +138,9 @@ public class NewParking extends JDialog {
 		
 		this.anreiseDatumPlaceHolderTextField = new PlaceHolderTextField();
 		
+		
+		
+		
 		addElementsToPanel();
 	}
 	
@@ -155,109 +163,16 @@ public class NewParking extends JDialog {
 	 */
 	public void confirmClose() {
 
-		
-		ImageIcon icon = new ImageIcon(getClass().getResource("/img/dialogo.png"));
-		
-	
-		JFrame frame = new JFrame();
-		JOptionPane optionPane = new JOptionPane();
-		 optionPane.setMessage("Wollen Sie die neue Parkplatzreservierung abbrechen?");
+
+		  
+		  
+		 
+		optionPane.setMessage("Wollen Sie die neue Parkplatzreservierung abbrechen?");
 		 optionPane.setMessageType(JOptionPane.OK_CANCEL_OPTION);
 		 optionPane.setIcon(icon);
-		 JButton nein = new JButton("Nein");
-		 JButton ja = new JButton("Ja");
-		 JDialog dialog = optionPane.createDialog(frame, "Parkplatzreservierung Abbrechen?");
-		 
-		 
-		 nein.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				//Close JDialog and continue loging GUI
-				dialog.dispose();
-				
-			}
-		});
-		 
-		 ja.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					dialog.dispose();
-					dispose();
-					
-				}
-			});
-		 
-		 
-		 nein.addKeyListener(new KeyListener() {
-			
-			@Override
-			public void keyTyped(KeyEvent e) {}
-			
-			@Override
-			public void keyReleased(KeyEvent e) {}
-			
-			@Override
-			public void keyPressed(KeyEvent e) {
-				
-				if(e.getKeyCode()==10) {
-					dialog.dispose();
-					
-				}
-				
-			}
-		});
-		  
-		  
-		  
-		 ja.addKeyListener(new KeyListener() {
-			
-			@Override
-			public void keyTyped(KeyEvent e) {}
-			
-			@Override
-			public void keyReleased(KeyEvent e) {}
-			
-			
-			@Override
-			public void keyPressed(KeyEvent e) {
-
-				if(e.getKeyCode()==10) {
-					dialog.dispose();
-					dispose();
-				}
-				
-			}
-		});
-		 
-		 
-		 
-		 
-		 
-		 nein.addKeyListener(new KeyListener() {
-			
-			@Override
-			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void keyPressed(KeyEvent e) {
-
-				dialog.dispose();
-			}
-		});
-		  
-		  
-		 
+		
+		
+		 dialog = optionPane.createDialog(frame, "Parkplatzreservierung Abbrechen?");
 		 
 		 optionPane.setOptions(new Object[] {nein, ja});
 		 
@@ -298,7 +213,7 @@ public class NewParking extends JDialog {
 		this.idParkingJLabel.setFont(new Font("Verdana", Font.BOLD, 16));
 		this.idParkingJLabel.setForeground(Color.WHITE);
 		
-//		this.idParkingGenerated = new JLabel("J20211"); //Wird automatisch generiert
+
 		this.idParkingGenerated = new JLabel(); //Wird automatisch generiert
 		this.idParkingGenerated.setText("J" + now.getYear() + this.tableCounter);
 		this.idParkingGenerated.setPreferredSize(new Dimension(300, 20));
@@ -337,10 +252,9 @@ public class NewParking extends JDialog {
 	
 		
 		
-		anreiseDatumPlaceHolderTextField.setPreferredSize(new Dimension(310, 30));
-		anreiseDatumPlaceHolderTextField.setPlaceholder("dd.MM.JJJJ");
-		Font f = anreiseDatumPlaceHolderTextField.getFont();
-		anreiseDatumPlaceHolderTextField.setFont(new Font(f.getName(), f.getStyle(), 14));
+		this.anreiseDatumPlaceHolderTextField.setPreferredSize(new Dimension(310, 30));
+		this.anreiseDatumPlaceHolderTextField.setPlaceholder("dd.MM.JJJJ");
+		this.anreiseDatumPlaceHolderTextField.setFont(new Font("Verdana", Font.BOLD, 14));
 		
 		this.abreiseDatumJLabel = new JLabel("Abreisedatum:");
 		this.abreiseDatumJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -354,7 +268,7 @@ public class NewParking extends JDialog {
 		this.abreiseDatumPlaceholderTextField = new PlaceHolderTextField();
 		this.abreiseDatumPlaceholderTextField.setPreferredSize(new Dimension(310, 30));
 		this.abreiseDatumPlaceholderTextField.setPlaceholder("dd.MM.JJJJ");
-		this.abreiseDatumPlaceholderTextField.setFont(new Font(f.getName(), f.getStyle(), 14));
+		this.abreiseDatumPlaceholderTextField.setFont(new Font("Verdana", Font.BOLD, 14));
 		
 		this.tagenJLabel = new JLabel("Tagen:"); //Wird automatisch generiert
 		this.tagenJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -597,6 +511,7 @@ public class NewParking extends JDialog {
 		
 		
 		this.saveParkingReservation = new JButton("Speichern");
+		this.saveParkingReservation.setFocusable(true);
 		this.cancelParkingReservation = new JButton("Abbrechen");
 		
 		this.buttonPanel = new JPanel(new BorderLayout());
@@ -616,6 +531,9 @@ public class NewParking extends JDialog {
 		
 		
 	}
+	
+	
+	
 	
 	
 
