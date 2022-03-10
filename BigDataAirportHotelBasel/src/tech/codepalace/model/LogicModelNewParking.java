@@ -424,45 +424,7 @@ this.okButtonEntriesError.addActionListener(new ActionListener() {
 		
 					
 					//If the departure date is earlier than the current date, it is not correct
-				} else if(abreiseLocalDate.isBefore(nowLocalDate)) {
-					
-					
-
-					
-					if(!closingNewParkingReservation && !this.anreiseFocus) {
-						
-					   if(!this.errorDateDepartureMessageDelivered) {
-						   
-						   SwingUtilities.invokeLater(new Runnable() {
-							
-							@Override
-							public void run() {
-								messageAbreiseError.setText("Abreisedatum kann nicht früher als heutiges Datum sein!");
-								
-								errorDateFormatAbreise = new JOptionPane(myPanelDialogAbreise, JOptionPane.OK_OPTION, JOptionPane.NO_OPTION, errorImg,
-										optionButtonsAbreise, null).createDialog("kritischer Fehler (Abreisedatum)");
-
-								errorDateFormatAbreise.setAlwaysOnTop(true);
-								errorDateFormatAbreise.setVisible(true);
-								errorDateFormatAbreise.dispose();
-								abreiseOK=false;
-								messageAbreiseError.setText("");
-								newParking.tagenGeneratedJLabel.setText("0");
-								newParking.betragGeneratedJLabel.setText("0.00 EUR");
-								newParking.abreiseDatumPlaceholderTextField.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-								newParking.abreiseDatumPlaceholderTextField.requestFocus();
-								errorDateDepartureMessageDelivered = false;
-							}
-						});
-					   }
-
-						
-					}
-					
-					
-					
-					
-				}else {
+				} else {
 					
 					
 					
