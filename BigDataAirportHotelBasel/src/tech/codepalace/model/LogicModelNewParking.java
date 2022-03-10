@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -17,7 +16,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.regex.Pattern;
 
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon; 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -789,15 +788,10 @@ protected void addNewParkingReservationToDataBase() {
 	this.parkingReservation.setSchluesselInHaus(this.schluesselinhaus);
 	this.parkingReservation.setAbkuerzungMA(this.verkaufer);
 	
-	System.out.println("Data to save: " + this.parkingReservation.getIdParking() + " " + this.parkingReservation.getBuchungsname() + " " + this.parkingReservation.getAutoKFZ() +
-			" " + this.parkingReservation.getAnreiseDatum() + " " + this.parkingReservation.getAbreiseDatum() + " " + this.parkingReservation.getAnzahlTagen() + " " 
-			+ this.parkingReservation.getBetragParking() + " " + this.parkingReservation.getBuchungsKanal() + " " + this.parkingReservation.getBemerkungen() + " " +
-			this.parkingReservation.getSchluesselInHaus() + " " + this.parkingReservation.getAbkuerzungMA());
-	
-	JOptionPane.showMessageDialog(null, "kfz: " + this.parkingReservation.getAutoKFZ());
-	
+
 	try {
 		daoParking.addNewParkingReservation(this.parkingReservation);
+		
 	} catch (DaoException e) {
 		e.printStackTrace();
 	}

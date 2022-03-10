@@ -11,6 +11,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 import tech.codepalace.model.LogicModelNewParking;
@@ -29,8 +30,10 @@ public class NewParkingController implements ActionListener, KeyListener, Window
 		this.newParking.addWindowListener(this);
 		
 		this.newParking.saveParkingReservation.addActionListener(this);
+		this.newParking.saveParkingReservation.addKeyListener(this);
 		this.newParking.cancelParkingReservation.addActionListener(this);
 		this.newParking.cancelParkingReservation.addFocusListener(this);
+		this.newParking.cancelParkingReservation.addKeyListener(this);
 		this.newParking.anreiseDatumPlaceHolderTextField.addFocusListener(this);
 		this.newParking.abreiseDatumPlaceholderTextField.addFocusListener(this);
 		
@@ -106,6 +109,32 @@ public class NewParkingController implements ActionListener, KeyListener, Window
 			//Set the closingNewParkingReservation to false
 			this.logicModelNewParking.setClosingNewParkingReservation(false);
 		
+		}else if (e.getSource()==this.newParking.saveParkingReservation && e.getKeyCode()==10) {
+			/*
+			 * the user presses the saveParkingReservation button, we establish that the error messages have not been delivered yet. 
+			 * 
+			 * This helps us to check the dates of arrival and departure and avoid warning messages when the loss of focus occurs by arrival and departure entry boxes.
+			 */
+			this.logicModelNewParking.setErrorDateDepartureMessageDelivered(false);
+			this.logicModelNewParking.setErrorDateArrivalMessageDelivered(false);
+			
+			//We call to check Arrival Date and Departure Date.
+			this.logicModelNewParking.checkAnreiseDateFormat();
+			this.logicModelNewParking.checkAbreiseDateFormat();
+			
+			//We call to check if all the entries are filled correctly.
+			this.logicModelNewParking.checkAllEntries();
+			
+			//We close the Entries JDialog
+			this.newParking.dispose();
+		
+		}else if(e.getSource()==this.newParking.cancelParkingReservation && e.getKeyCode()==10) {
+			
+			/*
+			 * The user pressed canceParkingReservation. We call the confirClose Method
+			 */
+			this.newParking.confirmClose();
+			
 		}
 		
 	
@@ -136,6 +165,9 @@ public class NewParkingController implements ActionListener, KeyListener, Window
 			
 			//We call to check if all the entries are filled correctly.
 			this.logicModelNewParking.checkAllEntries();
+			
+			//We close the Entries JDialog
+			this.newParking.dispose();
 			
 			
 			
