@@ -20,7 +20,7 @@ public class LogicModelLogin {
 	protected ImageIcon errorImg; 
 	
 	// Variables to write the Propertie File
-	protected String urlPropertieName, urlPropertieValue, userNamePropertieName, userNamePropertieValue,
+	protected String urlPropertieName, urlPropertieValue, urlDataBaseBackupPropertieName, urlDataBaseBackupValue, userNamePropertieName, userNamePropertieValue,
 			passwordPropertieName, passwordPropertieValue, privilegePropertieName, abkuerzungPropertieName,
 			abkuerzungPropertieValue;
 	
@@ -84,6 +84,7 @@ public class LogicModelLogin {
 			this.userName = this.loginUser.getUserNameEntered();
 			this.password = this.loginUser.getPasswordEntered();
 			
+			
 			//we check that the data is not empty
 			if(this.userName.equals("") || this.password.equals("")) {
 				
@@ -99,6 +100,7 @@ public class LogicModelLogin {
 			
 			//Set the values of the properties
 			this.urlPropertieName = "db.url";
+			this.urlDataBaseBackupPropertieName = "db.url.backup";
 			this.privilegePropertieName = "db.privilege.user." + this.userName;
 			this.abkuerzungPropertieName = "db.abkuerzungma.user" + this.userName;
 			
@@ -113,6 +115,7 @@ public class LogicModelLogin {
 				
 
 				this.urlPropertieName = dataEncryptation.encryptData(this.urlPropertieName);
+				this.urlDataBaseBackupPropertieName = dataEncryptation.encryptData(this.urlDataBaseBackupPropertieName);
 				this.privilegePropertieName = dataEncryptation.encryptData(this.privilegePropertieName);
 				this.abkuerzungPropertieName = dataEncryptation.encryptData(this.abkuerzungPropertieName);
 				this.userNamePropertieName = this.dataEncryptation.encryptData(userNamePropertieName);
@@ -128,6 +131,7 @@ public class LogicModelLogin {
 				
 				//Set the values
 				this.loginDataUser.setUrlPropertieName(this.urlPropertieName);
+				this.loginDataUser.setUrlDataBaseBackupPropertieName(this.urlDataBaseBackupPropertieName);
 				this.loginDataUser.setUserNamePropertieName(this.userNamePropertieName);
 				this.loginDataUser.setPasswordPropertieName(this.passwordPropertieName);
 				this.loginDataUser.setPasswordEnteredByTheUser(this.password);

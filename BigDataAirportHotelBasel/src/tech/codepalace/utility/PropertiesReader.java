@@ -26,7 +26,7 @@ public class PropertiesReader extends Properties {
 	private UserAHB userAHB;
 	
 	// Varialbles of the properties with which we have in the configuration file encrypted their name and also encrypted their values.
-	private String urlPropertieName,  userNamePropertieName,  passwordPropertieName, privilegePropertieName, abkuerzungPropertieName, passwordUserEntered;
+	private String urlPropertieName, urlDataBaseBackupPropertieName,  userNamePropertieName,  passwordPropertieName, privilegePropertieName, abkuerzungPropertieName, passwordUserEntered;
 	
 	//Variable to check if the entered password is correct
 	public boolean passwordIsCorrect = false;
@@ -68,6 +68,7 @@ public class PropertiesReader extends Properties {
 		
 		//We set the different values
 		this.urlPropertieName = this.loginDataUser.getUrlPropertieName(); 
+		this.urlDataBaseBackupPropertieName = this.loginDataUser.getUrlDataBaseBackupPropertieName();
 		this.userNamePropertieName = this.loginDataUser.getUserNamePropertieName();
 		this.passwordPropertieName = this.loginDataUser.getPasswordPropertieName();
 		this.passwordUserEntered = this.loginDataUser.getPasswordEnteredByTheUser();
@@ -175,6 +176,7 @@ public class PropertiesReader extends Properties {
 		
 				//The passwords match, then we set the values of userAHB Object
 				this.userAHB.setUrlDataBase(this.prop.getProperty(this.urlPropertieName));
+				this.userAHB.seturlDataBaseBackup(this.prop.getProperty(this.urlDataBaseBackupPropertieName));
 				this.userAHB.setUserName(this.prop.getProperty(this.userNamePropertieName));
 				this.userAHB.setPrivilege(this.prop.getProperty(this.privilegePropertieName));
 				this.userAHB.setAbbkuerzungMA(this.prop.getProperty(this.abkuerzungPropertieName));

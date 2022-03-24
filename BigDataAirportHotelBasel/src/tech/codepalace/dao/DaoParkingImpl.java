@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 import java.sql.DatabaseMetaData;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -270,11 +271,6 @@ this.dataEncryption = new DataEncryption();
 	
 	@Override
 	public void displayListParking() throws DaoException {
-		
-		
-
-		
-		
 		
 		
 		try {
@@ -686,11 +682,116 @@ this.dataEncryption = new DataEncryption();
 
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  *
+			 * 																																						*
+			 * Someone on the team has accidentally or intentionally deleted the files within the database path. 													*
+			 * 																																						*
+			 * Important files for the proper functioning of the local database.																					*
+			 * 																																						*
+			 * The program is going stop this part with one exception. 																								*
+			 * 																																						*
+			 * What we are going to do to be able to continue working is request the user to restore the database from a backup created in an external directory.	*	
+			 * 																																						*
+			 * To make a test of what I say, delete all the contents inside the current database folder for this year												*
+			 * 																																						*
+			 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */ 																																						 										
+			 
+			
+			
+			
+			/*
+			 * 	//We get the Path ulrDataBase + the dbName and put the value inside a File variable for after checking the existence of the DataBase
+			this.urlDataBaseFile = new File(this.urlDataBase + File.separator + dbName);
+			
+			
+			//We call for checkExistsDataBasel as parameters urlDataBaseFile.
+			checkExistsDataBase(this.urlDataBaseFile);
+			 */
+			
+//			FileUtils.deleteDirectory(new File(destination));
+			
+//			DAOParking daoParking = new DaoParkingImpl(this.getUrlDataBase(), dbName, userAHB, ahbParking);
+//			
+//			//Now we check if the Parking table exists
+//			daoParking.checkTableParking();
+			
+			
+			/*
+			 * 
+			 */
+			File directoryToDelet = new File(this.getUrlDataBase());
+			
+			JOptionPane.showMessageDialog(null, "base de datos vacia ");
+//			deleteDirectory(directoryToDelet);
+//			JOptionPane.showMessageDialog(null, "directory to delete: " + directoryToDelet.getAbsolutePath());
+//		throw new DaoException("El registro de la base de datos ha sido borrado. No existe tabla Parking");
+			
+//			e.printStackTrace();
+			
+			
+			//Tenemos que mandar un mensaje al usuario si quiere cargar una copia de una base de datos que el posea respaldo.
+			
+			
 		}
 	
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	//Método para borrar el conteido de una carpeta o ruta específicada
+	/**
+	 * @author Antonio Estevez Gonzalez
+	 * @param directory
+	 * @description Method to delete directory and all its contents.
+	 * <p>We are going to use this method in case we manually deleted by accident or intentionally the contents of the entire database and we need 
+	 * to recreate the database path, the database and the database tables.</p>
+	 * 
+	 * <p>The Derby record may be incomplete because someone deleted some sequential file and we need the program not to crash 
+	 * and instead re-create the database structure.</p>
+	 * 
+	 * <p>So what we are going to do is that within the displayListParking method where it should warn us an error, one Exception and that the program ends up crashing, 
+	 * what we will do is call this method to delete all traces of database path, and then call again the method that checks the existence of it and that 
+	 * creates the whole structure to begin to be able to enter data without problems.</p>
+	 * 
+	 * <p><strong>The directory parameter specifies the path we want to delete</strong></p>
+	 */
+	protected static void deleteDirectory(File directory) {
+		
+		
+		//Array File to list all the files that the directory can contain inside
+		File [] files = directory.listFiles();
+		
+		//If the folder is not empty
+		if(files != null) {
+			
+			//loop all files
+			for(File index: files) {
+				
+				//if it is a directory
+				if(index.isDirectory()) {
+					
+					//We delete the files that are inside subfolders by calling the deleteDirectory method again.
+					deleteDirectory(index);
+				}
+				
+				if(index.isFile()) {
+					
+					//If it is a file we delete it
+					index.delete();
+				}
+			}
+			
+			//delete the directory
+			directory.delete();
+			
+			System.out.println("All directories and files have been successfully deleted!!!");
+		}
+	}
 	
 	
 	

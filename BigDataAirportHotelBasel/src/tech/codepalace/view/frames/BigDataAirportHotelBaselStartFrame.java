@@ -19,6 +19,17 @@ import javax.swing.border.TitledBorder;
 import tech.codepalace.view.buttons.MyButton;
 import tech.codepalace.view.panels.PanelWithBackgroundOption;
 
+/*
+ * Nota importante. En este proyecto hemos agregado un jar applejavaextensions-1.4.jar para que en windows no nos de error a la hora de llamar a la clase com.apple.eawt.Application;
+ * 
+ * Esta clase la utilizamos para que nuestra aplicacion puede correr tanto en Windos como en mac y en el caso de que corra en mac poder usar las opciones de mac llamadas desde la clase 
+ * Application que no esta presente normalmente en la maquina virtual de Java perteneciente a Windows. 
+ * 
+ * Por eso hemos agregado esta clase en nuestro paquetes de librerias y lo hemos referenciado a las librerias del proyecto.
+ * 
+ */
+
+
 /**
  * 
  * @author Antonio Estevez Gonzalez
@@ -34,6 +45,7 @@ public class BigDataAirportHotelBaselStartFrame extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	
+
 	
 	//we create an instance of a background panel for our main Gui
 		private PanelWithBackgroundOption panelWithBackgroundOption;
@@ -67,6 +79,7 @@ public class BigDataAirportHotelBaselStartFrame extends JFrame {
 		//Variable to set the Image to JLabel
 		private Image myImage;
 		
+
 		
 		
 		
@@ -75,6 +88,7 @@ public class BigDataAirportHotelBaselStartFrame extends JFrame {
 		 * @param bigDataAHBController The reference to the BigDataAHBController object for MVC.
 		 */
 		public BigDataAirportHotelBaselStartFrame() {
+			
 			
 			//Inicializamos los paneles
 			this.panelWithBackgroundOption = new PanelWithBackgroundOption();
@@ -125,12 +139,8 @@ public class BigDataAirportHotelBaselStartFrame extends JFrame {
 
 
 			this.setTitle("Big Data Airport Hotel Basel - powered by Antonio Estevez Gonzalez");
-
-
 			
 			this.setLocationRelativeTo(null);
-
-
 			
 			this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 

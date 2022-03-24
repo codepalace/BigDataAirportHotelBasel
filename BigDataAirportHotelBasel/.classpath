@@ -7,5 +7,6 @@
 	<classpathentry kind="lib" path="libs/derby.jar"/>
 	<classpathentry kind="lib" path="libs/derbyclient.jar"/>
 	<classpathentry kind="lib" path="libs/derbytools.jar"/>
+	<classpathentry kind="lib" path="libs/applejavaextensions-1.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

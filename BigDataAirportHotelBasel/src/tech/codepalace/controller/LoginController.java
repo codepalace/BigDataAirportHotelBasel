@@ -152,11 +152,8 @@ public class LoginController implements ActionListener, KeyListener, WindowListe
 			
 		}else if (e.getSource()==this.loginUser.passwordField && e.getKeyCode() == 10) {
 
-//			System.out.println("Ready for login");
-			
-		
-			
-this.logicModelLogin.setLoginValue();
+
+			this.logicModelLogin.setLoginValue();
 			
 			//We check is the password entered by the user is correct
 			if(this.logicModelLogin.isPasswordIsCorrect()) {
@@ -170,6 +167,7 @@ this.logicModelLogin.setLoginValue();
 					this.bigDataAirportHotelBaselStartFrame.loginUserText.setText(this.bigDataAirportHotelBaselStartFrame.loginUserText.getText() + 
 							" " + this.dataEncryption.decryptData(this.userAHB.getUserName()));
 					
+				
 					this.bigDataAirportHotelBaselStartFrame.parkingButton.requestFocus();
 				} catch (Exception e1) {
 					e1.printStackTrace();
@@ -197,6 +195,7 @@ this.logicModelLogin.setLoginValue();
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
 
 		if (e.getSource()== this.loginUser.cancelLoginButton) {
 
@@ -211,12 +210,12 @@ this.logicModelLogin.setLoginValue();
 		
 		if(e.getSource()== this.loginUser.loginButton) {
 		
-
 			this.logicModelLogin.setLoginValue();
 			
 			//We check is the password entered by the user is correct
 			if(this.logicModelLogin.isPasswordIsCorrect()) {
 
+				
 				
 				
 				try {
@@ -226,7 +225,7 @@ this.logicModelLogin.setLoginValue();
 					//We set the user Value to the JLabel for displaying the user inside the JLabel GUI JFrame
 					this.bigDataAirportHotelBaselStartFrame.loginUserText.setText(this.bigDataAirportHotelBaselStartFrame.loginUserText.getText() + 
 							" " + this.dataEncryption.decryptData(this.userAHB.getUserName()));
-
+					
 					this.bigDataAirportHotelBaselStartFrame.parkingButton.requestFocus();
 				
 					

@@ -11,7 +11,7 @@ package tech.codepalace.utility;
  */
 public class LoginDataUser {
 
-	protected String urlPropertieName, userNamePropertieName, 
+	protected String urlPropertieName, urlDataBaseBackupPropertieName, userNamePropertieName, 
 	passwordPropertieName, passwordEnteredByTheUser,
 	 privilegePropertieName, abkuerzungPropertieName;
 
@@ -42,10 +42,18 @@ public class LoginDataUser {
 	public String getUrlPropertieName() {
 		return urlPropertieName;
 	}
+	
+	public String getUrlDataBaseBackupPropertieName() {
+		return urlDataBaseBackupPropertieName;
+	}
 
 
 	public void setUrlPropertieName(String urlPropertieName) {
 		this.urlPropertieName = urlPropertieName;
+	}
+	
+	public void setUrlDataBaseBackupPropertieName(String urlDataBaseBackupPropertieName) {
+		this.urlDataBaseBackupPropertieName = urlDataBaseBackupPropertieName;
 	}
 
 	public String getUserNamePropertieName() {

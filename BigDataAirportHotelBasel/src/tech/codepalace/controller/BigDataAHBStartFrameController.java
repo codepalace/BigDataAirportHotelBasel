@@ -2,6 +2,8 @@ package tech.codepalace.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
@@ -9,8 +11,6 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 import tech.codepalace.model.LogicModelFundSachen;
@@ -31,7 +31,7 @@ import tech.codepalace.view.frames.Fundsachen;
  *
  */
 
-public class BigDataAHBStartFrameController implements ActionListener, KeyListener, WindowListener, FocusListener{
+public class BigDataAHBStartFrameController implements ActionListener, KeyListener, WindowListener, FocusListener, ComponentListener{
 	
 	// Create an instance of the main Frame class. The first GUI Class JFrame
 	private BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame;
@@ -93,6 +93,7 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 		//Initialize DataEncription for using with the login data
 		this.dataEncryption = new DataEncryption();
 		
+		this.bigDataAirportHotelBaselStartFrame.addComponentListener(this);
 		
 		//addActionListener to the buttons in JFrame
 		this.bigDataAirportHotelBaselStartFrame.parkingButton.addActionListener(this);
@@ -164,40 +165,22 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 	}
 
 	@Override
-	public void windowClosing(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void windowClosing(WindowEvent e) {}
 
 	@Override
-	public void windowClosed(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void windowClosed(WindowEvent e) {}
 
 	@Override
-	public void windowIconified(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void windowIconified(WindowEvent e) {}
 
 	@Override
-	public void windowDeiconified(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void windowDeiconified(WindowEvent e) {}
 
 	@Override
-	public void windowActivated(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void windowActivated(WindowEvent e) {}
 
 	@Override
-	public void windowDeactivated(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void windowDeactivated(WindowEvent e) {}
 	
 	
 	
@@ -207,10 +190,7 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 	
 
 	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void keyTyped(KeyEvent e) {}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -219,13 +199,13 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 		if (e.getSource()== this.logicModelStartFrame.okButtonAdmin && e.getKeyCode()== 10) {
 
 			
-			this.logicModelStartFrame.checkEntryAdmin();
+//			this.logicModelStartFrame.checkEntryAdmin();
 		}else
 		
 		
 		if (e.getSource()== this.logicModelStartFrame.kuerselMAJTextField && e.getKeyCode()== 10) {
 
-			this.logicModelStartFrame.checkEntryAdmin();
+//			this.logicModelStartFrame.checkEntryAdmin();
 		}else if (e.getSource()==this.logicModelStartFrame.abbrechenJButton && e.getKeyCode() == 10) {
 			
 			System.exit(0);
@@ -243,15 +223,14 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 					
 					
 					
-					@SuppressWarnings("unused")
-					AHBParkingController ahbParkingController;
+					
 					
 				
 				
 					ParkingReservation parkingReservation = new ParkingReservation();
 					LogicModelParking logicModelParking = new LogicModelParking(bigDataAirportHotelBaselStartFrame, userAHB, ahbParking, parkingReservation);
-					ahbParkingController = new AHBParkingController(ahbParking, userAHB, logicModelParking, bigDataAirportHotelBaselStartFrame);
-					setMyIcon("/img/iconoHotel.png", ahbParking);
+					new AHBParkingController(ahbParking, userAHB, logicModelParking, bigDataAirportHotelBaselStartFrame);
+//					setMyIcon("/img/iconoHotel.png", ahbParking);   We are going to work on it later
 					ahbParking.setLocationRelativeTo(null);
 					ahbParking.setVisible(true);
 					bigDataAirportHotelBaselStartFrame.dispose();
@@ -267,8 +246,8 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 					
 					Fundsachen fundsachen = new Fundsachen();
 					LogicModelFundSachen logicModelFundSachen = new LogicModelFundSachen(bigDataAirportHotelBaselStartFrame, userAHB);
-					FundsachenController fundsachenController = new FundsachenController(fundsachen, userAHB, logicModelFundSachen);
-					setMyIcon("/img/iconoHotel.png", fundsachen);
+					new FundsachenController(fundsachen, userAHB, logicModelFundSachen);
+//					setMyIcon("/img/iconoHotel.png", fundsachen); //We are going to work on it later
 					fundsachen.setLocationRelativeTo(null);
 					fundsachen.setVisible(true);
 					bigDataAirportHotelBaselStartFrame.dispose();
@@ -307,10 +286,10 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		if (e.getSource()==this.logicModelStartFrame.okButtonAdmin) {
+		if (e.getSource()==this.logicModelStartFrame.okButtonAdmin) {   //Esto vamos a borrarlo este boton no existira mas 
 			
 			//We call the Method checkEntryAdmin to check if the data entered is correctly
-			this.logicModelStartFrame.checkEntryAdmin();
+//			this.logicModelStartFrame.checkEntryAdmin();
 			
 		//abort, we leave the program.
 		}else if (e.getSource()==this.logicModelStartFrame.abbrechenJButton) {
@@ -328,15 +307,10 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 					ParkingReservation parkingReservation = new ParkingReservation();
 					LogicModelParking logicModelParking = new LogicModelParking(bigDataAirportHotelBaselStartFrame, userAHB, ahbParking, parkingReservation);
 					
-					
-					@SuppressWarnings("unused")
-					AHBParkingController ahbParkingController;
-					
-					
-					
+	
 
-					ahbParkingController = new AHBParkingController(ahbParking, userAHB, logicModelParking, bigDataAirportHotelBaselStartFrame);
-					setMyIcon("/img/iconoHotel.png", ahbParking);
+					new AHBParkingController(ahbParking, userAHB, logicModelParking, bigDataAirportHotelBaselStartFrame);
+//					setMyIcon("/img/iconoHotel.png", ahbParking); //We are going to work later on this part
 					ahbParking.setLocationRelativeTo(null);
 					ahbParking.setVisible(true);
 					bigDataAirportHotelBaselStartFrame.dispose();
@@ -354,8 +328,8 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 					
 					Fundsachen fundsachen = new Fundsachen();
 					LogicModelFundSachen logicModelFundSachen = new LogicModelFundSachen(bigDataAirportHotelBaselStartFrame, userAHB);
-					FundsachenController fundsachenController = new FundsachenController(fundsachen, userAHB, logicModelFundSachen);
-					setMyIcon("/img/iconoHotel.png", fundsachen);
+					new FundsachenController(fundsachen, userAHB, logicModelFundSachen);
+//					setMyIcon("/img/iconoHotel.png", fundsachen);  //We are going to work later on this part
 					fundsachen.setLocationRelativeTo(null);
 					fundsachen.setVisible(true);
 					bigDataAirportHotelBaselStartFrame.dispose();
@@ -467,53 +441,35 @@ public void focusLost(FocusEvent e) {
 }
 
 
-/**
- * @description method to set the app icon if it is macos or windows
- * @param iconImage
- * @param jFrame
- */
-public void setMyIcon(String iconImage, JFrame jFrame) {
-	jFrame.setIconImage (new ImageIcon(getClass().getResource("/img/iconoHotel.png")).getImage());
-	
 
-//	if ( existsApple( "com.apple.eawt.Application" ) ){
-//
-//    Application application = Application.getApplication();            
-//    try {
-//    	System.setProperty("apple.awt.application.name", "Your App Name");
-//		application.setDockIconImage(ImageIO.read(getClass().getResource(iconImage)));
-//		
-//	
-//	} catch (IOException e) {
-//		// TODO Auto-generated catch block
-//		e.printStackTrace();
-//	}
-//    }else {
-//    	//set JFrame icon
-//		jFrame.setIconImage (new ImageIcon(getClass().getResource("/img/iconoHotel.png")).getImage());
-//    }
+@Override
+public void componentResized(ComponentEvent e) {}
+
+
+
+
+
+@Override
+public void componentMoved(ComponentEvent e) {
+	
+	this.bigDataAirportHotelBaselStartFrame.setLocationRelativeTo(null);
 	
 }
 
 
 
-///**
-// * @description Method to know if we are working on a macOs.
-// * @param className
-// * @return
-// */
-//public boolean existsApple(String className)
-//{
-//    try {
-//        Class.forName( className, false, null );
-//        return true;
-//    }
-//    catch (ClassNotFoundException exception) {
-//        return false;
-//    }
-//}
-	
-	
+
+
+@Override
+public void componentShown(ComponentEvent e) {}
+
+
+
+
+
+@Override
+public void componentHidden(ComponentEvent e) {}
+
 
 
 }
