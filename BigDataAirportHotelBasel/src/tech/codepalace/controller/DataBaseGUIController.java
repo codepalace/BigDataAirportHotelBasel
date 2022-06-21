@@ -7,6 +7,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
+import tech.codepalace.model.LogicModelFundSachen;
 import tech.codepalace.model.LogicModelParking;
 import tech.codepalace.view.frames.BigDataAirportHotelBaselStartFrame;
 import tech.codepalace.view.frames.DataBaseGUI;
@@ -27,15 +28,17 @@ public class DataBaseGUIController implements ActionListener, KeyListener, Windo
 	private BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame;
 	private DataBaseGUI dataBaseGUI;
 	private LogicModelParking logicModelParking;
+	private LogicModelFundSachen logicModelFundSachen;
 
 	
 	public DataBaseGUIController(BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame, 
-			DataBaseGUI dataBaseGUI, LogicModelParking logicModelParking) {
+			DataBaseGUI dataBaseGUI, LogicModelParking logicModelParking, LogicModelFundSachen logicModelFundSachen) {
 		
 		//We set the values to the Objects
 		this.bigDataAirportHotelBaselStartFrame = bigDataAirportHotelBaselStartFrame;
 		this.dataBaseGUI = dataBaseGUI;
 		this.logicModelParking = logicModelParking;
+		this.logicModelFundSachen = logicModelFundSachen;
 		
 		
 		//Add Listener

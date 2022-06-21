@@ -7,6 +7,7 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import tech.codepalace.controller.DataBaseGUIController;
@@ -50,6 +51,9 @@ public class LogicModel {
 	
 	//Object LogicModelParking declared as static because we need to call it inside some SwingUtilities blocks.
 	private static LogicModelParking logicModelParking;
+	
+	//Opject LogicModelFundSachen
+	private static LogicModelFundSachen logicModelFundSachen;
 	
 	
 	protected DataEncryption dataEncryption = new DataEncryption();
@@ -222,10 +226,16 @@ try {
 				 
 				 //We set the UserAHB value
 				 LogicModel.logicModelParking.setUserAHB(getUserAHB());
+				 
+				 LogicModel.logicModelFundSachen = new LogicModelFundSachen();
+				 
+				 //We set the UserAHB value
+				 LogicModel.logicModelFundSachen.setUserAHB(getUserAHB());
 				
 				
 				 //New Instance of DataBAseGUIController we the arguments we need to pass so we can access from this Object
-				new DataBaseGUIController(LogicModel.bigDataAirportHotelBaselStartFrame, dataBaseGUI, LogicModel.logicModelParking);
+				new DataBaseGUIController(LogicModel.bigDataAirportHotelBaselStartFrame, dataBaseGUI, LogicModel.logicModelParking, 
+						LogicModel.logicModelFundSachen);
 				
 				
 				try {
@@ -257,10 +267,64 @@ try {
 	 * @description Method to display the FundSache JFrame
 	 * @param fundSachenToVisible
 	 */
-	public  void displayFundSachen(LogicModelFundSachen logicModelFundSachen) {
+	public  void displayFundSachen(BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame, String guiCaller) {
 		
+		
+		LogicModel.bigDataAirportHotelBaselStartFrame = bigDataAirportHotelBaselStartFrame;
+		LogicModel.guiCaller = guiCaller;
+		
+		//invoke a new Thread 
+				SwingUtilities.invokeLater(new Runnable() {
 
+					@Override
+					public void run() {
+						
+				         //This Logical Model need the String argument to Know which kind of Application we are calling.
+						 LogicModel.dataBaseGUI = new DataBaseGUI("FUNDSACHEN");
+						 
+						 //This Logical Model need the String argument to Know which kind of Application we are calling.
+						 //The second argument used to know from which GUI we are calling
+						 LogicModel.logicModelDataBaseGUI = new LogicModelDataBaseGUI("FUNDSACHEN", "StartFrame");
+						 
+						 
+						 //We set the UserAHB value
+						 LogicModel.logicModelDataBaseGUI.setUserAHB(getUserAHB());
+						 
+						 LogicModel.logicModelFundSachen = new LogicModelFundSachen();
+						 
+						 //We set the UserAHB value
+						 LogicModel.logicModelFundSachen.setUserAHB(getUserAHB());
+						
+						
+						 //New Instance of DataBAseGUIController we the arguments we need to pass so we can access from this Object
+						new DataBaseGUIController(LogicModel.bigDataAirportHotelBaselStartFrame, dataBaseGUI, LogicModel.logicModelParking, 
+								LogicModel.logicModelFundSachen);
+						
+						
+						try {
+							//We set the value of the loginUserLabel GUI using the dataEncryption instance and calling the decryptData method.
+							dataBaseGUI.loginUserLabel.setText("Benutzer: " + dataEncryption.decryptData(logicModelDataBaseGUI.getUserAHB().getUserName()));
+							
+					} catch (Exception e1) {
+							e1.printStackTrace();
+				}
+						
+						//We checkDatabase
+						logicModelDataBaseGUI.checkDataBase(logicModelDataBaseGUI.getAppCalled());
+						
+
+						
+					}
+				});
+
+		
 	}
+	
+	
+	
+	
+	
+	
 	
 	
 	/**
@@ -331,19 +395,14 @@ try {
 	
 	
 	
-	//Este metodo va a ser llamado solo desde la GUI principal, asi que no nos vamos preocupar en llamarlo desde otra GUI.
-	//Desde otra GUI solo vamos a preocuparnos en llamar si existe la tabla correspondiente.
+
 	
 	/**
 	 * @description Method to check if the DataBase exists.
 	 * @param urlDataBaseFile
 	 */
 	protected void checkExistsDataBase(File urlDataBaseFile) {
-		
-//		JOptionPane.showMessageDialog(null, "guiCaller: " + LogicModel.guiCaller);
-		
-		
-	
+
 		
 		//We check if the received argument File(urlDataBaseFile exists. 
 		if(urlDataBaseFile.exists()) {
@@ -358,6 +417,7 @@ try {
 					loading = new Loading(bigDataAirportHotelBaselStartFrame, true);
 				
 					break;
+					
 
 				default:
 					break;
@@ -379,8 +439,8 @@ try {
 						@Override
 						public void run() {
 							
-//							loading.setVisible(true);
-							//daoParking object receives the parameters including the information "displayParking"
+
+
 							DAOParking daoParking = new DaoParkingImpl(getUserAHB(), dataBaseGUI, loading);
 							
 							try {
@@ -395,6 +455,11 @@ try {
 					});
 					
 					break;
+					
+					
+				case "FUNDSACHEN": 
+					
+					JOptionPane.showMessageDialog(null, "Now we have to create the DAOFundsachen Object");
 
 				default:
 					break;

@@ -11,8 +11,6 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
-import javax.swing.SwingUtilities;
-
 import tech.codepalace.model.LogicModelStartFrame;
 import tech.codepalace.utility.DataEncryption;
 import tech.codepalace.view.frames.BigDataAirportHotelBaselStartFrame;
@@ -174,7 +172,7 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 			
 		}else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.parkingButton &&  e.getKeyCode()==114) {
 			
-//			logicModelStartFrame.displayFundSachen();
+			logicModelStartFrame.displayFundSachen(this.bigDataAirportHotelBaselStartFrame, "StartFrame");
 			
 		}else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.parkingButton &&  e.getKeyCode()==115) {
 			System.out.println("Opening the database Fitness!");
@@ -210,21 +208,15 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 		
 		if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.parkingButton) {
 			
-//El displayParking no tiene siempre que mandar un bigDataAirportHotelBAselStartFrame ya que puede ser llamado de FundSachen por ejemplo
+
 			
 			logicModelStartFrame.displayParking(this.bigDataAirportHotelBaselStartFrame, "StartFrame");
 			
 
 			
 		} else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.fundsachenButton) {
-	SwingUtilities.invokeLater(new Runnable() {
-				
-				@Override
-				public void run() {
-					
-//					logicModelStartFrame.displayFundSachen();
-				}
-			});
+
+			logicModelStartFrame.displayFundSachen(this.bigDataAirportHotelBaselStartFrame, "StartFrame");
 		} 
 		else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.fitnessButton) {
 			System.out.println("you pressed the fitness button");
