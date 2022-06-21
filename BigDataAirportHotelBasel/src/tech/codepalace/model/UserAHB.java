@@ -10,12 +10,20 @@ package tech.codepalace.model;
 
 public class UserAHB {
 	
-protected String userName, password, abbkuerzungMA, privilege, urlDataBase, urlDataBaseBackup;
+protected String userName, password, abkuerzungMA, privilege, urlDataBase, urlDataBaseBackup, dbName;
 	
 	
 	public String getPassword() {
 	return password;
 }
+
+public String getDbName() {
+		return dbName;
+	}
+
+	public void setDbName(String dbName) {
+		this.dbName = dbName;
+	}
 
 public void setPassword(String password) {
 	this.password = password;
@@ -54,12 +62,12 @@ public void setPassword(String password) {
 		this.userName = userName;
 	}
 
-	public String getAbbkuerzungMA() {
-		return abbkuerzungMA;
+	public String getAbkuerzungMA() {
+		return abkuerzungMA;
 	}
 
-	public void setAbbkuerzungMA(String abbkuerzungMA) {
-		this.abbkuerzungMA = abbkuerzungMA;
+	public void setAbkuerzungMA(String abbkuerzungMA) {
+		this.abkuerzungMA = abbkuerzungMA;
 	}
 
 }

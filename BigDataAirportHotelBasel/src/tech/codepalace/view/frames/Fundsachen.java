@@ -41,7 +41,9 @@ public class Fundsachen extends JFrame{
 	//Variable to get the Display Size
 	private Dimension screenSize;
 	
-	private JPanel topPanel, centerPanel, southPanel;
+	private JPanel topPanel, centerPanel; 
+	
+	//southPanel;
 	
 	private JLabel treasure;
 	

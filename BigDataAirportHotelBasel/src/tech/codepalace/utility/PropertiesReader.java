@@ -23,6 +23,8 @@ public class PropertiesReader extends Properties {
 	
 	//necessary instances
 	private LoginDataUser loginDataUser;
+	
+	//UserAHB instance for the logged in user
 	private UserAHB userAHB;
 	
 	// Varialbles of the properties with which we have in the configuration file encrypted their name and also encrypted their values.
@@ -32,15 +34,17 @@ public class PropertiesReader extends Properties {
 	public boolean passwordIsCorrect = false;
 	
 	
-	
+	//Variable for the correct Password
 	private String correctPassword;
 	
 	//Instance Properties
 	private Properties prop = new Properties();
 	
+	//ImageIcon for the Error Dialog Box
 	private ImageIcon errorImg = new ImageIcon(getClass().getResource("/img/error.png"));
 	
 	
+	//Empty Constructor
 	public PropertiesReader() {}
 	
 	
@@ -59,13 +63,12 @@ public class PropertiesReader extends Properties {
 	 *
 	 * 
 	 */
-	public void readPropertiesData(LoginDataUser loginDataUser, UserAHB userAHB) {
+	public void readPropertiesData(LoginDataUser loginDataUser) {
 		
+		//We set the value of the parameter LoginDataUser
 		this.loginDataUser = loginDataUser;
-		this.userAHB = userAHB;
-		
-		
-		
+
+
 		//We set the different values
 		this.urlPropertieName = this.loginDataUser.getUrlPropertieName(); 
 		this.urlDataBaseBackupPropertieName = this.loginDataUser.getUrlDataBaseBackupPropertieName();
@@ -79,7 +82,7 @@ public class PropertiesReader extends Properties {
 		
 		
 		
-		//We proceed to read the configuration file.
+		//We proceed to read the configuration file. Configuration file is located in the same directory our Application is running.
 		//We load the properties file into an InputStream
 		try (InputStream input = new FileInputStream(projectDirectoryString + File.separator + "config.properties")) {
 
@@ -172,14 +175,17 @@ public class PropertiesReader extends Properties {
 		
 			if(this.passwordUserEntered.equals(correctPassword)) {
 //				System.out.println("La contrasena es correcta. Puedes entrar en el programa\n\n");
+			
+				//We create a new Instance of UserAHB so we can set all the information we need for the logged user.
+				this.userAHB = new UserAHB();
 				
-		
+				
 				//The passwords match, then we set the values of userAHB Object
 				this.userAHB.setUrlDataBase(this.prop.getProperty(this.urlPropertieName));
 				this.userAHB.seturlDataBaseBackup(this.prop.getProperty(this.urlDataBaseBackupPropertieName));
 				this.userAHB.setUserName(this.prop.getProperty(this.userNamePropertieName));
 				this.userAHB.setPrivilege(this.prop.getProperty(this.privilegePropertieName));
-				this.userAHB.setAbbkuerzungMA(this.prop.getProperty(this.abkuerzungPropertieName));
+				this.userAHB.setAbkuerzungMA(this.prop.getProperty(this.abkuerzungPropertieName));
 				
 
 				//We set PasswordIsCorrect
@@ -190,8 +196,10 @@ public class PropertiesReader extends Properties {
 			}else {
 //				System.out.println("Password Not Match you are not allowed to enter the program.");
 				
-				
+				//We call to display the Login Error DialogBox.
 				loginAppError();
+				
+				//We set the value to false
 				setPasswordIsCorrect(false);
 			
 				
@@ -211,6 +219,16 @@ public class PropertiesReader extends Properties {
 
 	private void setPasswordIsCorrect(boolean passwordIsCorrect) {
 		this.passwordIsCorrect = passwordIsCorrect;
+	}
+	
+	
+	
+	/**
+	 * @description Method to get the current UserAHB values.
+	 * @return
+	 */
+	public UserAHB getUserAHB() {
+		return this.userAHB;
 	}
 	
 	

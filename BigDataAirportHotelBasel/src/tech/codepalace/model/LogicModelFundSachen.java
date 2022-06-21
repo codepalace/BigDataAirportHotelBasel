@@ -1,16 +1,27 @@
 package tech.codepalace.model;
 
 import tech.codepalace.view.frames.BigDataAirportHotelBaselStartFrame;
+import tech.codepalace.view.frames.Fundsachen;
 
-public class LogicModelFundSachen {
+public class LogicModelFundSachen extends LogicModel {
 	
 	private BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame;
-	private UserAHB userAHB;
 	
-	public LogicModelFundSachen(BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame, UserAHB userAHB) {
-		this.bigDataAirportHotelBaselStartFrame = bigDataAirportHotelBaselStartFrame;
-		this.userAHB = userAHB;
+	private Fundsachen fundSachen;
+	
+//	public LogicModelFundSachen(BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame) {
+//		this.bigDataAirportHotelBaselStartFrame = bigDataAirportHotelBaselStartFrame;
+//		
+//		
+//	}
+	
+	
+	public LogicModelFundSachen(Fundsachen fundSachen) {
+		this.fundSachen = fundSachen;
+		
 		
 	}
+	
+	public LogicModelFundSachen() {}
 
 }

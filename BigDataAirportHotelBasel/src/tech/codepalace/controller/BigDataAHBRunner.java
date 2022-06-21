@@ -7,7 +7,6 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import tech.codepalace.model.LogicModelStartFrame;
-import tech.codepalace.model.UserAHB;
 import tech.codepalace.utility.OperatingSystemCheck;
 import tech.codepalace.utility.SetIconOperatingSystem;
 import tech.codepalace.view.frames.BigDataAirportHotelBaselStartFrame;
@@ -75,28 +74,19 @@ public class BigDataAHBRunner {
 					//Instantiate the main window(The principal GUI JFrame class)
 					BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame = new BigDataAirportHotelBaselStartFrame();
 					
-					//Instantiate UserAHB
-					UserAHB userAHB = new UserAHB();
-					
-					
+
 					//Instantiate LogicModelStartFrame
-				    LogicModelStartFrame logicModelStartFrame = new LogicModelStartFrame(bigDataAirportHotelBaselStartFrame, userAHB);
+				    LogicModelStartFrame logicModelStartFrame = new LogicModelStartFrame(bigDataAirportHotelBaselStartFrame);
 				    
 
-
-							
+				    
 					/* We instantiate the controller class and pass the required arguments to it.
 					 * 
-					 * The userAHB instance, it is necessary that it is present as a parameter in this class, 
-					 * since the controller class will need it to send this instance to each of the parts of the applications that need this instance.
-					 * 
-					 * The bigDataAirportHotelBaselStartFrame class is the main GUI class, the user has from this class access to all parts of the application 
-					 * where they have access to the different database tables and from there it is necessary to get the userAHB instance and therefore it must be present 
-					 * in the controller class(BigDataAHBStartFrameController).
 					 */
-				    new BigDataAHBStartFrameController(bigDataAirportHotelBaselStartFrame, userAHB, logicModelStartFrame);
+				    new BigDataAHBStartFrameController(bigDataAirportHotelBaselStartFrame, logicModelStartFrame);
 
 					
+				    //Center the GUI to the Screen.
 					bigDataAirportHotelBaselStartFrame.setLocationRelativeTo(null);
 					
 					
@@ -142,16 +132,13 @@ EventQueue.invokeLater(new Runnable() {
 					//Instantiate the main window(The principal GUI JFrame class)
 					BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame = new BigDataAirportHotelBaselStartFrame();
 					
-					//Instantiate UserAHB
-					UserAHB userAHB = new UserAHB();
-					
 					
 					//Instantiate LogicModelStartFrame
-				    LogicModelStartFrame logicModelStartFrame = new LogicModelStartFrame(bigDataAirportHotelBaselStartFrame, userAHB);
+				    LogicModelStartFrame logicModelStartFrame = new LogicModelStartFrame(bigDataAirportHotelBaselStartFrame);
 				    
 
 					
-				    new BigDataAHBStartFrameController(bigDataAirportHotelBaselStartFrame, userAHB, logicModelStartFrame);
+				    new BigDataAHBStartFrameController(bigDataAirportHotelBaselStartFrame, logicModelStartFrame);
 					
 					//Set the icon four our JFrame
 					bigDataAirportHotelBaselStartFrame.setLocationRelativeTo(null);

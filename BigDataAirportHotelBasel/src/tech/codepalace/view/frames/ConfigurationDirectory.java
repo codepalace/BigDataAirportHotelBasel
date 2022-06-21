@@ -58,6 +58,12 @@ public class ConfigurationDirectory extends JDialog {
 	
 	
 	
+	/**
+	 * @description ConfigurationDirectory extends from JDialog to block the BigDataAirportHotelBaselStartFrame GUI until the user has proceeded with the configuration that must be set.
+	 * <p>When the value modal is true, BigDataAirportHotelBaselStartFrame will be blocked in background. 
+	 * @param bigDataAirportHotelBaselStartFrame
+	 * @param modal
+	 */
 	public ConfigurationDirectory(BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame, boolean modal) {
 		super(bigDataAirportHotelBaselStartFrame, modal);
 		

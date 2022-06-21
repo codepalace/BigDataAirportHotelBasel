@@ -1,9 +1,12 @@
 package tech.codepalace.dao;
 
-import java.sql.Date;
+import java.sql.Connection;
 import java.util.List;
 
+import javax.swing.JLabel;
+
 import tech.codepalace.model.ParkingReservation;
+import tech.codepalace.model.UserAHB;
 
 
 /**
@@ -14,10 +17,18 @@ import tech.codepalace.model.ParkingReservation;
  */
 public interface DAOParking {
 	
+
+	
+	
+	
+	
 	/**
 	 * @description Method to check if the parking database exists.
 	 */
 	void checkTableParking() throws DaoException;
+	
+	
+	int getDataRowCounter() throws DaoException;
 	
 	
 	/**
@@ -27,15 +38,14 @@ public interface DAOParking {
 	 * @throws DaoException
 	 */
 	
-	void createNewParkingReservation() throws DaoException;
-	
+	void createNewParkingReservation(int currentRecord) throws DaoException;
 	
 	
 	
 	/** Method to add a new entry in the database
 	 *  @author Antonio Estevez Gonzalez
 	 **/
-	void addNewParkingReservation(ParkingReservation parkingReservation) throws DaoException;
+	void addNewParkingReservation(ParkingReservation parkingReservation, UserAHB userAHB) throws DaoException;
 	
 	
 	
@@ -57,6 +67,14 @@ public interface DAOParking {
 	void updateParkingReservation(ParkingReservation parkingReservation) throws DaoException;
 	void deleteParkingReservation(int id) throws DaoException;
 	List<ParkingReservation> orderby(String orderBy) throws DaoException;
+	
+	
+	
+	void createBackUpDataBase(JLabel statusJLabel) throws DaoException;
+	
+	void restoreDatabaseFromBackup(Connection conn) throws DaoException;
+	
+	
 	
 	
 }

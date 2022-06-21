@@ -26,11 +26,13 @@ import tech.codepalace.view.frames.AdminCreator;
 import tech.codepalace.view.frames.BigDataAirportHotelBaselStartFrame;
 import tech.codepalace.view.frames.ConfigurationDirectory;
 
-public class LogicModelConfigurationDirectory {
+public class LogicModelConfigurationDirectory extends LogicModel {
 	
 	private ConfigurationDirectory configurationDirectory;
 	
 	private BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame;
+	
+	private LogicModelStartFrame logicModelStartFrame;
 
 	private JFileChooser jFileChooser;
 	
@@ -73,11 +75,12 @@ public class LogicModelConfigurationDirectory {
 	
 	
 	
-	public LogicModelConfigurationDirectory(ConfigurationDirectory configurationDirectory, BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame, UserAHB userAHB) {
+	public LogicModelConfigurationDirectory(ConfigurationDirectory configurationDirectory, BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame, LogicModelStartFrame logicModelStartFrame) {
 		
 		this.configurationDirectory = configurationDirectory;
 		this.bigDataAirportHotelBaselStartFrame = bigDataAirportHotelBaselStartFrame;
-		this.userAHB = userAHB;
+		this.logicModelStartFrame = logicModelStartFrame;
+		
 		
 		
 		
@@ -764,12 +767,19 @@ SwingUtilities.invokeLater(new Runnable() {
 									 * We save it in the userAHB instance, because this way we avoid writing a new class just to save the URLs. 
 									 * To this instance anyway we have to call often.
 									 */
-									userAHB.setUrlDataBase(urlDataBase);
-									userAHB.seturlDataBaseBackup(urlDataBaseBackup);
+									userAHB = new UserAHB();
+									//First we set the userAHB extended from super Class
+									setUserAHB(userAHB);
+									
+									//We set the values to the userAHB
+									getUserAHB().setUrlDataBase(urlDataBase);
+									getUserAHB().seturlDataBaseBackup(urlDataBaseBackup);
+								
 									
 									//New Instance LogicAdminCreator with the parameters adminCreator and the URLs
-									LogicAdminCreator logicAdminCreator = new LogicAdminCreator(adminCreator, bigDataAirportHotelBaselStartFrame, userAHB);
+									LogicAdminCreator logicAdminCreator = new LogicAdminCreator(adminCreator, bigDataAirportHotelBaselStartFrame, logicModelStartFrame);
 									
+									logicAdminCreator.setUserAHB(getUserAHB());
 									//And the Controller Class.
 									new AdminCreatorController(adminCreator, logicAdminCreator);
 									
@@ -809,19 +819,39 @@ SwingUtilities.invokeLater(new Runnable() {
 								@Override
 								public void run() {
 									
+									//we create an instance of the class AdminCreator which receives the necessary parameters
+									//ThebigDataAirrpotHotelBaselStartFrame and the modal boolean to block the GUI bigDataAirportHOtelBaselStartFrame.
 									AdminCreator adminCreator = new AdminCreator(bigDataAirportHotelBaselStartFrame, true);
 									
-									//We set the URLs for the DataBase and DataBaseBackup
-									userAHB.setUrlDataBase(urlDataBase);
-									userAHB.seturlDataBaseBackup(urlDataBaseBackup);
+									/* We set the URLs for the DataBase and DataBaseBackup. 
+									 * 
+									 * We save it in the userAHB instance, because this way we avoid writing a new class just to save the URLs. 
+									 * To this instance anyway we have to call often.
+									 */
+									userAHB = new UserAHB();
 									
-									LogicAdminCreator logicAdminCreator = new LogicAdminCreator(adminCreator, bigDataAirportHotelBaselStartFrame, userAHB);
+									//First we set the userAHB extended from super Class
+									setUserAHB(userAHB);
 									
+									//We set the values to the userAHB
+									getUserAHB().setUrlDataBase(urlDataBase);
+									getUserAHB().seturlDataBaseBackup(urlDataBaseBackup);
+								
+									
+									//New Instance LogicAdminCreator with the parameters adminCreator and the URLs
+									LogicAdminCreator logicAdminCreator = new LogicAdminCreator(adminCreator, bigDataAirportHotelBaselStartFrame, logicModelStartFrame);
+									
+									logicAdminCreator.setUserAHB(getUserAHB());
+									//And the Controller Class.
 									new AdminCreatorController(adminCreator, logicAdminCreator);
 									
+									
+									//We close the configurationDirectory
 									configurationDirectory.dispose();
 									
 									
+									
+									//And setVisible the adminCreator instance GUI
 									adminCreator.setVisible(true);
 									
 									
@@ -865,11 +895,14 @@ SwingUtilities.invokeLater(new Runnable() {
 									AdminCreator adminCreator = new AdminCreator(bigDataAirportHotelBaselStartFrame, true);
 									
 									//We set the URLs for the DataBase and DataBaseBackup
+									userAHB = new UserAHB();
 									userAHB.setUrlDataBase(urlDataBase);
 									userAHB.seturlDataBaseBackup(urlDataBaseBackup);
 									
 									
-									LogicAdminCreator logicAdminCreator = new LogicAdminCreator(adminCreator, bigDataAirportHotelBaselStartFrame, userAHB);
+									LogicAdminCreator logicAdminCreator = new LogicAdminCreator(adminCreator, bigDataAirportHotelBaselStartFrame, logicModelStartFrame);
+									
+									logicAdminCreator.setUserAHB(getUserAHB());
 									
 									new AdminCreatorController(adminCreator, logicAdminCreator);
 									

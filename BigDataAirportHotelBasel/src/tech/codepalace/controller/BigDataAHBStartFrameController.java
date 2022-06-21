@@ -13,15 +13,9 @@ import java.awt.event.WindowListener;
 
 import javax.swing.SwingUtilities;
 
-import tech.codepalace.model.LogicModelFundSachen;
-import tech.codepalace.model.LogicModelParking;
 import tech.codepalace.model.LogicModelStartFrame;
-import tech.codepalace.model.ParkingReservation;
-import tech.codepalace.model.UserAHB;
 import tech.codepalace.utility.DataEncryption;
-import tech.codepalace.view.frames.AHBParking;
 import tech.codepalace.view.frames.BigDataAirportHotelBaselStartFrame;
-import tech.codepalace.view.frames.Fundsachen;
 
 /**
  * 
@@ -36,14 +30,10 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 	// Create an instance of the main Frame class. The first GUI Class JFrame
 	private BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame;
 
-	// We create instance of the UserAHB that interacts with users
-	private UserAHB userAHB;
-
-	
 	//Instance of LogicModelStartFrame
 	private LogicModelStartFrame logicModelStartFrame;
-	
-	
+		
+
 	/*
 	 * we need this variable because depending on the privileges of the user, 
 	 * we can activate some features of the program or not
@@ -52,16 +42,7 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 	
 	//Create an instance DataEncryption to decrypt the data
 	protected DataEncryption dataEncryption;
-	
-	
-	//Variables for parking
-//	private AHBParking ahbParking = new AHBParking();
-//	private LogicModelParking logicModelParking = new LogicModelParking();
-//	
-//	@SuppressWarnings("unused")
-//	private AHBParkingController ahbParkingController;
-	
-	
+
 	
 	
 	/**
@@ -69,22 +50,12 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 	 * @param bigDataAirportHotelBaselStartFrame
 	 * @param userAHB
 	 */
-	public BigDataAHBStartFrameController(BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame, UserAHB userAHB, LogicModelStartFrame logicModelStartFrame) {
+	public BigDataAHBStartFrameController(BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame, LogicModelStartFrame logicModelStartFrame) {
 		
 		
 		this.bigDataAirportHotelBaselStartFrame = bigDataAirportHotelBaselStartFrame;
-		this.userAHB = userAHB;
 		this.logicModelStartFrame = logicModelStartFrame;
 		
-		//ActionListener for the JButtons(Create Admin Dialog)
-		this.logicModelStartFrame.abbrechenJButton.addActionListener(this);
-		this.logicModelStartFrame.okButtonAdmin.addActionListener(this);
-		
-		
-		//KeyListner for the JButtons(Create Administrator User Dialog and also for kuerselMAJTextField
-		this.logicModelStartFrame.okButtonAdmin.addKeyListener(this);
-		this.logicModelStartFrame.abbrechenJButton.addKeyListener(this);
-		this.logicModelStartFrame.kuerselMAJTextField.addKeyListener(this);
 		
 		//Add Windows Listener to BigDataAirportHotelBaselStartFrame
 		this.bigDataAirportHotelBaselStartFrame.addWindowListener(this);
@@ -133,9 +104,6 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 		this.bigDataAirportHotelBaselStartFrame.btn_exit.setToolTipText("Programm beenden");
 		
 
-		
-
-		
 		
 	}
 	
@@ -195,64 +163,18 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 	@Override
 	public void keyPressed(KeyEvent e) {
 		
+	
+		if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.parkingButton &&  e.getKeyCode() == 113) {
+			
+			
 
-		if (e.getSource()== this.logicModelStartFrame.okButtonAdmin && e.getKeyCode()== 10) {
+			 logicModelStartFrame.displayParking(this.bigDataAirportHotelBaselStartFrame, "StartFrame");
 
-			
-//			this.logicModelStartFrame.checkEntryAdmin();
-		}else
-		
-		
-		if (e.getSource()== this.logicModelStartFrame.kuerselMAJTextField && e.getKeyCode()== 10) {
 
-//			this.logicModelStartFrame.checkEntryAdmin();
-		}else if (e.getSource()==this.logicModelStartFrame.abbrechenJButton && e.getKeyCode() == 10) {
-			
-			System.exit(0);
-		}
-			
-		
-		 else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.parkingButton &&  e.getKeyCode() == 113) {
-			
-			SwingUtilities.invokeLater(new Runnable() {
-				
-				@Override
-				public void run() {
-					
-					AHBParking ahbParking = new AHBParking();
-					
-					
-					
-					
-					
-				
-				
-					ParkingReservation parkingReservation = new ParkingReservation();
-					LogicModelParking logicModelParking = new LogicModelParking(bigDataAirportHotelBaselStartFrame, userAHB, ahbParking, parkingReservation);
-					new AHBParkingController(ahbParking, userAHB, logicModelParking, bigDataAirportHotelBaselStartFrame);
-//					setMyIcon("/img/iconoHotel.png", ahbParking);   We are going to work on it later
-					ahbParking.setLocationRelativeTo(null);
-					ahbParking.setVisible(true);
-					bigDataAirportHotelBaselStartFrame.dispose();
-				}
-			});
 			
 		}else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.parkingButton &&  e.getKeyCode()==114) {
 			
-			SwingUtilities.invokeLater(new Runnable() {
-				
-				@Override
-				public void run() {
-					
-					Fundsachen fundsachen = new Fundsachen();
-					LogicModelFundSachen logicModelFundSachen = new LogicModelFundSachen(bigDataAirportHotelBaselStartFrame, userAHB);
-					new FundsachenController(fundsachen, userAHB, logicModelFundSachen);
-//					setMyIcon("/img/iconoHotel.png", fundsachen); //We are going to work on it later
-					fundsachen.setLocationRelativeTo(null);
-					fundsachen.setVisible(true);
-					bigDataAirportHotelBaselStartFrame.dispose();
-				}
-			});
+//			logicModelStartFrame.displayFundSachen();
 			
 		}else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.parkingButton &&  e.getKeyCode()==115) {
 			System.out.println("Opening the database Fitness!");
@@ -262,17 +184,16 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 			System.out.println("Opening the database Telefonbuch!");
 		}else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.parkingButton &&  e.getKeyCode()==119) {
 			//We call logoutApplication Method by logicModelStartFrame
-			this.logicModelStartFrame.logoutApplication();
+			
+			
+			this.logicModelStartFrame.logoutApplication(this.bigDataAirportHotelBaselStartFrame, this.logicModelStartFrame);
 		}
 		
 		
 	}
 
 	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void keyReleased(KeyEvent e) {}
 
 	
 	
@@ -286,39 +207,14 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		if (e.getSource()==this.logicModelStartFrame.okButtonAdmin) {   //Esto vamos a borrarlo este boton no existira mas 
-			
-			//We call the Method checkEntryAdmin to check if the data entered is correctly
-//			this.logicModelStartFrame.checkEntryAdmin();
-			
-		//abort, we leave the program.
-		}else if (e.getSource()==this.logicModelStartFrame.abbrechenJButton) {
 		
-			System.exit(0);
+		if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.parkingButton) {
 			
-		} else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.parkingButton) {
+//El displayParking no tiene siempre que mandar un bigDataAirportHotelBAselStartFrame ya que puede ser llamado de FundSachen por ejemplo
 			
-			SwingUtilities.invokeLater(new Runnable() {
-				
-				@Override
-				public void run() {
+			logicModelStartFrame.displayParking(this.bigDataAirportHotelBaselStartFrame, "StartFrame");
+			
 
-					AHBParking ahbParking = new AHBParking();
-					ParkingReservation parkingReservation = new ParkingReservation();
-					LogicModelParking logicModelParking = new LogicModelParking(bigDataAirportHotelBaselStartFrame, userAHB, ahbParking, parkingReservation);
-					
-	
-
-					new AHBParkingController(ahbParking, userAHB, logicModelParking, bigDataAirportHotelBaselStartFrame);
-//					setMyIcon("/img/iconoHotel.png", ahbParking); //We are going to work later on this part
-					ahbParking.setLocationRelativeTo(null);
-					ahbParking.setVisible(true);
-					bigDataAirportHotelBaselStartFrame.dispose();
-				}
-			});
-			
-			
-			
 			
 		} else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.fundsachenButton) {
 	SwingUtilities.invokeLater(new Runnable() {
@@ -326,13 +222,7 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 				@Override
 				public void run() {
 					
-					Fundsachen fundsachen = new Fundsachen();
-					LogicModelFundSachen logicModelFundSachen = new LogicModelFundSachen(bigDataAirportHotelBaselStartFrame, userAHB);
-					new FundsachenController(fundsachen, userAHB, logicModelFundSachen);
-//					setMyIcon("/img/iconoHotel.png", fundsachen);  //We are going to work later on this part
-					fundsachen.setLocationRelativeTo(null);
-					fundsachen.setVisible(true);
-					bigDataAirportHotelBaselStartFrame.dispose();
+//					logicModelStartFrame.displayFundSachen();
 				}
 			});
 		} 
@@ -347,7 +237,9 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 		} 
 		else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.logoutButton) {
 			//We call logoutApplication Method by logicModelStartFrame
-			this.logicModelStartFrame.logoutApplication();
+			
+			
+			this.logicModelStartFrame.logoutApplication(this.bigDataAirportHotelBaselStartFrame, this.logicModelStartFrame);
 		} 
 		else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.btn_kontoVerwalten) {
 			System.out.println("you pressed the kontoverwalten button");

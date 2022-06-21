@@ -8,7 +8,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 import tech.codepalace.model.LogicModelLogin;
-import tech.codepalace.model.UserAHB;
+import tech.codepalace.model.LogicModelStartFrame;
 import tech.codepalace.utility.DataEncryption;
 import tech.codepalace.view.frames.BigDataAirportHotelBaselStartFrame;
 import tech.codepalace.view.frames.LoginUser;
@@ -16,9 +16,17 @@ import tech.codepalace.view.frames.LoginUser;
 public class LoginController implements ActionListener, KeyListener, WindowListener {
 	
 	private LoginUser loginUser;
-	private UserAHB userAHB;
+//	private UserAHB userAHB;
 	private BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame;
+	
+	/*
+	 * We need the logicModelStartFrame variable so we can call from here to set The UserAHB values and so we can get the values from the main GUI Frame after having logged in.
+	 */
+
+	
 	private LogicModelLogin logicModelLogin;
+	
+	private LogicModelStartFrame logicModelStartFrame;
 	
 	
 	/*
@@ -33,12 +41,12 @@ public class LoginController implements ActionListener, KeyListener, WindowListe
 	
 	
 	
-	public LoginController(LoginUser loginUser, UserAHB userAHB, BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame, LogicModelLogin logicModelLogin) {
+	public LoginController(LoginUser loginUser, BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame, LogicModelLogin logicModelLogin, LogicModelStartFrame logicModelStartFrame) {
 		
 		this.loginUser = loginUser;
-		this.userAHB = userAHB;
 		this.bigDataAirportHotelBaselStartFrame = bigDataAirportHotelBaselStartFrame;
 		this.logicModelLogin = logicModelLogin;
+		this.logicModelStartFrame = logicModelStartFrame;
 		
 		this.loginUser.addWindowListener(this);
 	
@@ -133,12 +141,17 @@ public class LoginController implements ActionListener, KeyListener, WindowListe
 				
 				try {
 		
-					this.privilegeUser = this.dataEncryption.decryptData(this.userAHB.getPrivilege());
+					//we decrypt the user's privileges
+					this.privilegeUser = this.dataEncryption.decryptData(this.logicModelLogin.getUserAHB().getPrivilege());
 					
 					//We set the user Value to the JLabel for displaying the user inside the JLabel GUI JFrame
 					this.bigDataAirportHotelBaselStartFrame.loginUserText.setText(this.bigDataAirportHotelBaselStartFrame.loginUserText.getText() + 
-							" " + this.dataEncryption.decryptData(this.userAHB.getUserName()));
+							" " + this.dataEncryption.decryptData(this.logicModelLogin.getUserAHB().getUserName()));
 					
+					
+				     this.logicModelStartFrame.setUserAHB(this.logicModelLogin.getUserAHB());
+					
+					//Set the Focus to the parkingButton
 					this.bigDataAirportHotelBaselStartFrame.parkingButton.requestFocus();
 				} catch (Exception e1) {
 					e1.printStackTrace();
@@ -152,7 +165,7 @@ public class LoginController implements ActionListener, KeyListener, WindowListe
 			
 		}else if (e.getSource()==this.loginUser.passwordField && e.getKeyCode() == 10) {
 
-
+			//We set the Loginvalue
 			this.logicModelLogin.setLoginValue();
 			
 			//We check is the password entered by the user is correct
@@ -160,14 +173,17 @@ public class LoginController implements ActionListener, KeyListener, WindowListe
 				
 				
 				try {
-		
-					this.privilegeUser = this.dataEncryption.decryptData(this.userAHB.getPrivilege());
+					
+					//we decrypt the user's privileges
+					this.privilegeUser = this.dataEncryption.decryptData(this.logicModelLogin.getUserAHB().getPrivilege());
 					
 					//We set the user Value to the JLabel for displaying the user inside the JLabel GUI JFrame
 					this.bigDataAirportHotelBaselStartFrame.loginUserText.setText(this.bigDataAirportHotelBaselStartFrame.loginUserText.getText() + 
-							" " + this.dataEncryption.decryptData(this.userAHB.getUserName()));
+							" " + this.dataEncryption.decryptData(this.logicModelLogin.getUserAHB().getUserName()));
 					
-				
+					 this.logicModelStartFrame.setUserAHB(this.logicModelLogin.getUserAHB());
+					
+					//Set the Focus to the parkingButton
 					this.bigDataAirportHotelBaselStartFrame.parkingButton.requestFocus();
 				} catch (Exception e1) {
 					e1.printStackTrace();
@@ -219,13 +235,16 @@ public class LoginController implements ActionListener, KeyListener, WindowListe
 				
 				
 				try {
-					//We get the user privilege.
-					this.privilegeUser = this.dataEncryption.decryptData(this.userAHB.getPrivilege());
-			
+					//we decrypt the user's privileges
+					this.privilegeUser = this.dataEncryption.decryptData(this.logicModelLogin.getUserAHB().getPrivilege());
+					
 					//We set the user Value to the JLabel for displaying the user inside the JLabel GUI JFrame
 					this.bigDataAirportHotelBaselStartFrame.loginUserText.setText(this.bigDataAirportHotelBaselStartFrame.loginUserText.getText() + 
-							" " + this.dataEncryption.decryptData(this.userAHB.getUserName()));
+							" " + this.dataEncryption.decryptData(this.logicModelLogin.getUserAHB().getUserName()));
 					
+					 this.logicModelStartFrame.setUserAHB(this.logicModelLogin.getUserAHB());
+
+					//Set the Focus to the parkingButton
 					this.bigDataAirportHotelBaselStartFrame.parkingButton.requestFocus();
 				
 					
@@ -251,6 +270,8 @@ public class LoginController implements ActionListener, KeyListener, WindowListe
 		
 		/**
 		 * @description this method evaluates the privileges of the user and depending on the privileges of the user we offer different functionalities of the program.
+		 * 
+		 * <p>We use this Method inside this Controller Class because depend of the Privilege Value we will make the buttons below visible or not calling the bigDataAirportHOtelBaselStartFrame object.</p>
 		 */
 		protected void checkPrivilegeUser() {
 				

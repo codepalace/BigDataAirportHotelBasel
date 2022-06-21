@@ -19,17 +19,6 @@ import javax.swing.border.TitledBorder;
 import tech.codepalace.view.buttons.MyButton;
 import tech.codepalace.view.panels.PanelWithBackgroundOption;
 
-/*
- * Nota importante. En este proyecto hemos agregado un jar applejavaextensions-1.4.jar para que en windows no nos de error a la hora de llamar a la clase com.apple.eawt.Application;
- * 
- * Esta clase la utilizamos para que nuestra aplicacion puede correr tanto en Windos como en mac y en el caso de que corra en mac poder usar las opciones de mac llamadas desde la clase 
- * Application que no esta presente normalmente en la maquina virtual de Java perteneciente a Windows. 
- * 
- * Por eso hemos agregado esta clase en nuestro paquetes de librerias y lo hemos referenciado a las librerias del proyecto.
- * 
- */
-
-
 /**
  * 
  * @author Antonio Estevez Gonzalez
@@ -37,6 +26,17 @@ import tech.codepalace.view.panels.PanelWithBackgroundOption;
  *@version 1.0.0 Jan, 23, 2022 - 7:34:00 PM
  *
  *@description Main GUI Class, extends JFrame. First Frame displayed when we start the application.
+ *
+ *<p>Important note. In this project we have added a jar applejavaextensions-1.4.jar 
+ *so that in windows it does not give us an error when calling the class com.apple.eawt.Application;</p>
+ *
+ *<p>As our application can run on both Windows and macOS, we need the Application class belonging to the package com.apple.eawt to be present.</p>
+ *
+ *<p>The Application class is not present in the Windows Java virtual machine. Therefore we have had to avail ourselves of using the jar applejavaextensions-1.4.jar.</p>
+ *
+ *<p>com.apple.eawt.Application. This class will help us to be able to change the icon of our application in a more comfortable way when it runs on MacOS.</p>
+ *
+ *<p>That's why we have added this class in our library packages and we have referenced it to the project libraries.</p>
  */
 public class BigDataAirportHotelBaselStartFrame extends JFrame {
 
@@ -90,7 +90,7 @@ public class BigDataAirportHotelBaselStartFrame extends JFrame {
 		public BigDataAirportHotelBaselStartFrame() {
 			
 			
-			//Inicializamos los paneles
+			//We initialize the panels
 			this.panelWithBackgroundOption = new PanelWithBackgroundOption();
 			
 			
@@ -107,7 +107,7 @@ public class BigDataAirportHotelBaselStartFrame extends JFrame {
 			
 			
 			
-			//Intanciamos los botones
+			//We instantiate the buttons by passing the images they are going to have.
 			 this.logoutButton = new MyButton("/img/btn_logout.png");
 			 this.parkingButton = new MyButton("/img/btn_parking.png");
 			 this.fundsachenButton = new MyButton("/img/btn_fundsachen.png");    
@@ -116,10 +116,10 @@ public class BigDataAirportHotelBaselStartFrame extends JFrame {
 			 this.uebergabeButton = new MyButton("/img/btn_uebergabe.png");
 			
 			 
-			//Creamos el panel contenedor del centro sur
+			//We created the south central container panel
 			this.buttonsPanelSouthContainer = new JPanel();
 			
-			//Creamos el contendor de los botones sur
+			//We create the container of the buttons.
 			this.buttonsPanelSouth = new JPanel();
 			
 			

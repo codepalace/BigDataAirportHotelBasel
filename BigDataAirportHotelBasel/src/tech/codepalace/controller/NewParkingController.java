@@ -11,7 +11,6 @@ import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
-import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 import tech.codepalace.model.LogicModelNewParking;
@@ -166,8 +165,10 @@ public class NewParkingController implements ActionListener, KeyListener, Window
 			//We call to check if all the entries are filled correctly.
 			this.logicModelNewParking.checkAllEntries();
 			
-			//We close the Entries JDialog
+//			We close the Entries JDialog
 			this.newParking.dispose();
+			
+
 			
 			
 			

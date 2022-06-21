@@ -22,13 +22,14 @@ import tech.codepalace.view.frames.AdminCreator;
 import tech.codepalace.view.frames.BigDataAirportHotelBaselStartFrame;
 import tech.codepalace.view.frames.LoginUser;
 
-public class LogicAdminCreator {
+public class LogicAdminCreator extends LogicModel {
 	
 	private AdminCreator adminCreator; 
 	
 	private BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame;
 	
-	private UserAHB userAHB;
+	private LogicModelStartFrame logicModelStartFrame;
+	
 	
 public JDialog dialogExit;
 	
@@ -73,11 +74,12 @@ public JDialog dialogExit;
 	
 	
 	
-	public LogicAdminCreator(AdminCreator adminCreator, BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame, UserAHB userAHB) {
+	public LogicAdminCreator(AdminCreator adminCreator, BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame, LogicModelStartFrame logicModelStartFrame) {
 		
 		this.adminCreator = adminCreator;
 		this.bigDataAirportHotelBaselStartFrame = bigDataAirportHotelBaselStartFrame;
-		this.userAHB = userAHB;
+		this.logicModelStartFrame = logicModelStartFrame;
+	
 		
 		
 		
@@ -371,9 +373,9 @@ public JDialog dialogExit;
 			
 			//We set the values to the variables before encrypt them.
 			this.urlPropertieName = "db.url";
-			this.urlPropertieValue = this.userAHB.getUrlDataBase(); //We get the value from userAHB instance
+			this.urlPropertieValue = getUserAHB().getUrlDataBase(); //We get the value from userAHB instance
 			this.urlDataBaseBackupPropertieName = "db.url.backup";
-			this.urlDataBaseBackupValue = this.userAHB.getUrlDataBaseBackup(); //We get the value from userAHB instance
+			this.urlDataBaseBackupValue = getUserAHB().getUrlDataBaseBackup(); //We get the value from userAHB instance
 			
 			this.userNamePropertieName = "db.user." + this.userName;
 			this.userNamePropertieValue = this.userName;
@@ -429,8 +431,9 @@ public JDialog dialogExit;
 						
 						LoginUser loginUser = new LoginUser(bigDataAirportHotelBaselStartFrame, true);
 						
-					    LogicModelLogin	logicModelLogin = new LogicModelLogin(loginUser, userAHB);
-						new LoginController(loginUser, userAHB, bigDataAirportHotelBaselStartFrame, logicModelLogin);
+					    LogicModelLogin	logicModelLogin = new LogicModelLogin(loginUser);
+					    //r(LoginUser loginUser, BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame, LogicModelLogin logicModelLogin) {
+						new LoginController(loginUser, bigDataAirportHotelBaselStartFrame, logicModelLogin, logicModelStartFrame);
 						loginUser.setLocationRelativeTo(bigDataAirportHotelBaselStartFrame);
 						loginUser.setVisible(true);
 						

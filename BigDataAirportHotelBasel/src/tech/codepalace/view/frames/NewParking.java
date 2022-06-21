@@ -23,11 +23,16 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import tech.codepalace.model.UserAHB;
-import tech.codepalace.utility.DataEncryption;
 import tech.codepalace.utility.PlaceHolderTextField;
 import tech.codepalace.view.panels.PanelWithBackgroundOption;
 
+
+/**
+ * 
+ * @author tonimacaroni
+ * @description NewParking Class extended from JDialog to block the GUI running in background.
+ * <p>We use this class to enter a new Parking-Reservation.</p>
+ */
 public class NewParking extends JDialog {
 
 	/**
@@ -35,19 +40,28 @@ public class NewParking extends JDialog {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	protected UserAHB userAHB;
-	protected long tableCounter;
+	//Variable use to generate a Parking Id number. J = Year in German, The Year in Number for example 2022, and the number of rows we have in 
+	//the table + 1 (J202215) as example.
+	private int tableCounter;
 	
+	//Variable to Know who from the Team has entered the information for the new Parking Reservation.
+	private static String abkuerzungMA;
+	
+	//Our Panel with Background Image
 	private PanelWithBackgroundOption panelWithBackgroundOption;
 	
 	private JPanel entriesPanel, jcomboPanel;
 	
 	private JLabel chevy57;
 	
+	//We use a GridBagLayout in this JDialog.
 	private GridBagLayout gbl;
  	private GridBagConstraints gbc;
  	
- 	protected LocalDateTime now = LocalDateTime.now(ZoneId.ofOffset("UTC", ZoneOffset.ofHours(+2)));
+ 	//LocalDateTime to get the todays Date. It will be used to generate the Parking ID.
+ 	private LocalDateTime now = LocalDateTime.now(ZoneId.ofOffset("UTC", ZoneOffset.ofHours(+2)));
+ 	
+ 	
  	public JLabel idParkingJLabel, idParkingGenerated;
  	
  	private JLabel buchungsNameJLabel;
@@ -83,7 +97,7 @@ public class NewParking extends JDialog {
  	
  	private JPanel buttonPanel;
  	
- 	private DataEncryption dataEncryption;
+
  	
  	
  	public JButton ja = new JButton("Ja");
@@ -98,13 +112,28 @@ public class NewParking extends JDialog {
 	
 	
 	
-	
-	
-	public NewParking(AHBParking ahbParking, boolean modal, UserAHB userAHB, long tableCounter) {
+
+	/**
+	 * 
+	 * @param dataBaseGUI
+	 * @param modal
+	 * @param tableCounter
+	 * @param abkuerzungMA
+	 * @description The constructor received the DataBaseGUI to be blocked in Background. 
+	 * <p>The boolean modal variable to set blocked the DataBaseGUI or not.</p>
+	 * <p>The tableCounter to know how much entries we have up to now.</p>
+	 * <p>String abkuerzungMA, to know who from the team is treating the information.</p> 
+	 * 
+	 */
+	public NewParking(DataBaseGUI dataBaseGUI, boolean modal, int tableCounter, String abkuerzungMA) {
 		
-		super(ahbParking, modal);
-		this.userAHB = userAHB;
+		//We call super and the DataBaseGUI as argument so we specify that dataBaseGUI is the Object that we send that will be blocked 
+		super(dataBaseGUI);
+		
 		this.tableCounter = tableCounter;
+		NewParking.abkuerzungMA = abkuerzungMA;
+		
+		
 		
 		setSize(720, 570);
 		setTitle("Neue Parkplatzreservierung Erstellen");
@@ -119,6 +148,7 @@ public class NewParking extends JDialog {
 			}
 		});
 		
+		//We call the init(), Method
 		init();
 	}
 	
@@ -140,7 +170,7 @@ public class NewParking extends JDialog {
 		
 		
 		
-		
+		//We add all the Elements to the Panel.
 		addElementsToPanel();
 	}
 	
@@ -191,7 +221,7 @@ public class NewParking extends JDialog {
 	
 	private void addElementsToPanel() {
 		
-		this.dataEncryption = new DataEncryption();
+		
 		
 		this.chevy57 = new JLabel(new ImageIcon(getClass().getResource("/img/chevy57up.png")));
 		
@@ -347,18 +377,13 @@ public class NewParking extends JDialog {
 		this.abkuerzungMAJLabel.setFont(new Font("Verdana", Font.BOLD, 16));
 		this.abkuerzungMAJLabel.setForeground(Color.WHITE);
 		
-	
+		this.abkuerzungMAGeneratedJLabel = new JLabel();
 		
-		try {
-			this.abkuerzungMAGeneratedJLabel = new JLabel(this.dataEncryption.decryptData(this.userAHB.getAbbkuerzungMA()));
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 		this.abkuerzungMAGeneratedJLabel.setPreferredSize(new Dimension(300, 20));
 		this.abkuerzungMAGeneratedJLabel.setOpaque(false);
 		this.abkuerzungMAGeneratedJLabel.setFont(new Font("Verdana", Font.BOLD, 16));
+		this.abkuerzungMAGeneratedJLabel.setText(getAbkuerzungMA());
 		
 		
 		
@@ -530,6 +555,11 @@ public class NewParking extends JDialog {
 		
 		
 		
+	}
+	
+	//Method to get the information who from the team is typing the Data.
+	private static String getAbkuerzungMA() {
+		return abkuerzungMA;
 	}
 	
 	

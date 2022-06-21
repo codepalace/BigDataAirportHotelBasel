@@ -27,8 +27,6 @@ public class ParkingTable {
 	
 	ParkingTableModel parkingTableModel; //model MyTableModel
 	
-	private int tableRows;
-	private int tableColumns;
 	
 	
 public ParkingTable() {
@@ -191,8 +189,7 @@ private void buildTable(String[] tableHeaders, Object[][] data) {
 	 */
 	parkingJTable.setModel(parkingTableModel);
 	
-	tableRows=parkingJTable.getRowCount();
-	tableColumns=parkingJTable.getColumnCount();
+	
 	
 	//the type of data that will have the cells of each column defined respectively is assigned to validate its customization
 	parkingJTable.getColumnModel().getColumn(TableParkingUtilities.IDPARKING).setCellRenderer(new CellTableManager("texto"));

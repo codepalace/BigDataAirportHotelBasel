@@ -8,12 +8,12 @@ import tech.codepalace.utility.LoginDataUser;
 import tech.codepalace.utility.PropertiesReader;
 import tech.codepalace.view.frames.LoginUser;
 
-public class LogicModelLogin {
+public class LogicModelLogin extends LogicModel {
 	
 	protected UserAHB userAHB;
 	protected LoginUser loginUser;
 	
-	
+
 	//Variables Login
 	protected String userName = "", password="", abkuerzungMA="";
 	protected char[] userAppTextArray, passwordAppTextArray, abkuerzungMATextArray;
@@ -42,10 +42,16 @@ public class LogicModelLogin {
 	
 	
 	
-	
-	public LogicModelLogin(LoginUser loginUser,  UserAHB userAHB) {
+	/**
+	 * 
+	 * @param loginUser
+	 * @param logicModelStartFrame
+	 * @description This constructor receive LoginUser and also a LogicModelStartFrame so we can use this instance to set the value UserAHB
+	 */
+	public LogicModelLogin(LoginUser loginUser) {
 		this.loginUser = loginUser;
-		this.userAHB = userAHB;
+
+	
 		
 		this.errorImg= new ImageIcon(getClass().getResource("/img/error.png"));
 		
@@ -93,8 +99,6 @@ public class LogicModelLogin {
 				JOptionPane.showMessageDialog(null, "Benutzername oder Passwort dürfen nicht leer sein"
 						   , "Geben Sie einen gültigen Benutzernamen und ein gültiges Passwort ein", JOptionPane.ERROR_MESSAGE, this.errorImg);
 				
-				//Data is empty then we call loginUser method.
-//				loginUser();
 		
 		}else {
 			
@@ -139,11 +143,11 @@ public class LogicModelLogin {
 				this.loginDataUser.setAbkuerzungPropertieName(this.abkuerzungPropertieName);
 				
 				
-				//We call the readPropertiesData method by passing the loginDataUser and userAHB instances as argument
-				this.propertiesReader.readPropertiesData(this.loginDataUser, this.userAHB);
+				//We call the readPropertiesData method by passing the loginDataUser as argument
+				this.propertiesReader.readPropertiesData(this.loginDataUser);
 				
 				
-				//We check if the Password entered by the User is correct
+				//We check if the Password entered by the User is correct calling the Method isPasswordIsCorret by the propertiesReader Instance.
 				if (this.propertiesReader.isPasswordIsCorrect()) {
 					
 
@@ -151,17 +155,24 @@ public class LogicModelLogin {
 					//We set passwordIsCorrect as true
 					this.passwordIsCorrect = true;
 					
+					//We get the userAHB value from propertiesReader instance
+//					this.userAHB = this.propertiesReader.getUserAHB();
+					
+					//We call super class for setting the UserAHB value.
+					setUserAHB(this.propertiesReader.getUserAHB());
+					
+//					JOptionPane.showMessageDialog(null, "Usuario setLoginValue: " + getUserAHB().getUserName());
+					
+					//We set the value of userAHB at Class LogicModelStartFrame so we can get the values what we need to work from the Principal GUI.
+//					this.logicModelStartFrame.setUserAHB(this.userAHB);
 					
 					//Close the Dialog Box
-//					dialogLogin.dispose();
 					this.loginUser.dispose();
 					
-					
-					//Test
-//					System.out.println("Users and passwords are correct");
+
 				}else {
 					
-					//Password is not correct
+					//Password is not correct set the value to false.
 					this.passwordIsCorrect = false;
 					
 					//reset values
@@ -171,9 +182,6 @@ public class LogicModelLogin {
 					
 					//request focus
 					this.loginUser.userLolingJTextField.requestFocus();
-					
-					//Test
-//					System.out.println("Users and passwords are not correct");
 					
 					
 				}
@@ -204,14 +212,5 @@ public class LogicModelLogin {
 	}
 	
 	
-	
-	/**
-	 * return UserAHB
-	 */
-	public UserAHB getUserAHB() {
-		
-		return userAHB;
-	}
-
 
 }

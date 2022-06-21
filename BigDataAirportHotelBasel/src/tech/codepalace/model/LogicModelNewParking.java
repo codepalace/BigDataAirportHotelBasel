@@ -25,21 +25,31 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import tech.codepalace.dao.DAOParking;
-import tech.codepalace.dao.DaoException;
 import tech.codepalace.dao.DaoParkingImpl;
-import tech.codepalace.view.frames.AHBParking;
+import tech.codepalace.view.frames.DataBaseGUI;
+import tech.codepalace.view.frames.Loading;
 import tech.codepalace.view.frames.NewParking;
 
-public class LogicModelNewParking {
+
+/**
+ * description Class to Enter a new Parking-Reservation
+ * @author tonimacaroni
+ *
+ */
+public class LogicModelNewParking extends LogicModel {
 	
 	protected UserAHB userAHB;
-	protected AHBParking ahbParking;
-	protected NewParking newParking;
+	private DataBaseGUI dataBaseGUI;
+	private NewParking newParking;
 	protected ParkingReservation parkingReservation;
-	protected String urlDB, dbName;
+	private Loading loading;
+
 	
 	
+	protected String dbName;
 	
+	
+	//Variable to use in case the user enters incorrect data.
 	public JDialog errorDateFormatAnreise, errorDateFormatAbreise, errorDateFormat, errorEntries;
 	
 	private JButton okButtonAnreiseError = new JButton("OK"), okButtonAbreiseError  = new JButton("OK"), okButtonErrorDateFormat  = new JButton("OK"),  okButtonEntriesError  = new JButton("OK");
@@ -50,32 +60,44 @@ public class LogicModelNewParking {
 	
 	private Object[] optionButtonsAnreise = { this.okButtonAnreiseError }, optionButtonsAbreise = { this.okButtonAbreiseError }, optionButtonEntries = { this.okButtonEntriesError };
 	
-	
-	private long totalDaysToPay;
-	
-	private LocalDate anreiseLocalDate, abreiseLocalDate;
-	
-	protected LocalDateTime now = LocalDateTime.now(ZoneId.ofOffset("UTC", ZoneOffset.ofHours(+2)));
-	
-	protected LocalDate nowLocalDate;
-	
-	private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-	
 	private ImageIcon errorImg = new ImageIcon(getClass().getResource("/img/error.png"));
 	
+	
+	//Variable to get the Total days to be payed.
+	private long totalDaysToPay;
+	
+	//LocalDate for the arrival Date and departure date.
+	private LocalDate anreiseLocalDate, abreiseLocalDate;
+	
+	//LocalDateTime to set the todays Date in LocalDateTime format.
+	protected LocalDateTime now = LocalDateTime.now(ZoneId.ofOffset("UTC", ZoneOffset.ofHours(+2)));
+	
+	//Variable LocalDate to set the todays Date in LocalDate format we need to convert some dates thats why we need both format.
+	protected LocalDate nowLocalDate;
+	
+	//DateTimeFormatter to set the Date Format we need.
+	private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	
+	
+	
+	//Variable boolean to check if the user is finished entering all the information. 
 	private boolean entryCompleted = false;
 	
+	//Variables to set and check if the Arrival and Departure dates are in the expected format.
 	private boolean anreiseOK = false, abreiseOK = false;
 	
+	//Variable to check if the user has pressed clothing NewParkingReservation you will find more information in the code below.
 	private boolean closingNewParkingReservation = false;
 	
+	//Variables to display error, format error in case of Arrival date or departure date. You will find more information in the code below.
 	public boolean errorDateDepartureMessageDelivered = false, errorDateArrivalMessageDelivered = false;
 	
+	//Variable to set or to check Arrival Date Focus.
 	private boolean anreiseFocus = false;
 	
 	
 	
-	
+	//Variable for the total sum what the user of Parking has to pay.
 	protected double betragTotal;
 	
 	
@@ -88,30 +110,40 @@ public class LogicModelNewParking {
 	
 	
 	
-	public LogicModelNewParking(UserAHB userAHB, AHBParking ahbParking, NewParking newParking, ParkingReservation parkingReservation, String urlDB, String dbName) {
+	/**
+	 * @param dataBaseGUI
+	 * @param newParking
+	 * @param userAHB
+	 * @description This constructor receives 4 necessary parameters.
+	 * <p>DataBaseGUI: Will be used to call the constructor of DaoParkingImpl to add the new ParkingReservation.</p>
+	 * <p>NewParking: NewParking GUI.</p>
+	 * <p>UserAHB: necessary parameter in almost all the application environment.</p>
+	 * <p>Loading: Always expected from the DaoParkingImpl class.</p>
+	 */
+	public LogicModelNewParking(DataBaseGUI dataBaseGUI, NewParking newParking, UserAHB userAHB, Loading loading) {
 		
-		this.userAHB = userAHB;
-		this.ahbParking = ahbParking;
+
+		this.dataBaseGUI = dataBaseGUI;
 		this.newParking = newParking;
-		this.parkingReservation = parkingReservation;
-		this.urlDB = urlDB;
-		this.dbName = dbName;
-//		JOptionPane.showMessageDialog(null, "LogicaModelNewParking recibe urldatabase: " + this.urlDB);
-//		JOptionPane.showMessageDialog(null, "LogicaModelNewParking recibe dbName: " + this.dbName);
-		
+		this.userAHB = userAHB;
+		this.loading = loading;
+
 		//nowLoacalDate for the current date in LocalDate variable
 		this.nowLocalDate = now.toLocalDate();
 		
 		
+		//We initialize the error message for the departure date. In case error this will be displayed.
 		this.errorDateFormatAbreise = new JOptionPane(this.myPanelDialogAbreise, JOptionPane.OK_OPTION, JOptionPane.NO_OPTION, this.errorImg,
 				this.optionButtonsAbreise, null).createDialog("kritischer Fehler (Abreisedatum)");
 		
+		
+		//We initialize the error message for the Arrival date. In case error this will be displayed.
 		this.errorDateFormatAnreise = new JOptionPane(this.myPanelDialogAnreise, JOptionPane.OK_OPTION, JOptionPane.NO_OPTION, this.errorImg,
 				this.optionButtonsAnreise, null).createDialog("kritischer Fehler (Anreisedatum)");
 		
 		
 	
-		
+		//Add ActionListener to the OK Button by the Error Message JDialog.
 		this.okButtonErrorDateFormat.addActionListener(new ActionListener() {
 			
 			@Override
@@ -122,6 +154,8 @@ public class LogicModelNewParking {
 			}
 		});
 		
+		
+		//Add KeyListener to the OK Button by the Error Message JDialog.
 		this.okButtonErrorDateFormat.addKeyListener(new KeyListener() {
 			
 			@Override
@@ -141,7 +175,7 @@ public class LogicModelNewParking {
 		
 		
 		
-		
+		//The same for the buttons below.
 		this.okButtonAnreiseError.addActionListener(new ActionListener() {
 			
 			@Override
@@ -256,6 +290,8 @@ this.okButtonEntriesError.addActionListener(new ActionListener() {
 		//Regex Format to evaluate the date Format.
 		String formatDateRegex = "(0[1-9]|[12][0-9]|3[01])\\.(0[1-9]|1[012])\\.((?:19|20)[0-9][0-9])$";
 		
+		
+		//Error message in case a wrong expected Date format. 
 		this.messageAnreiseError = new JLabel(
 				"Sie haben ein falsches Datumsformat eingegeben. bitte geben Sie ein korrektes Datumsformat ein(dd.mm.yyyy)");
 		
@@ -467,17 +503,23 @@ this.okButtonEntriesError.addActionListener(new ActionListener() {
 			
 				
 				
-				//Anreise no es ok procedemos a lanzar un mensaje de error
+				//Arrival date is not OK we display an error message.
 				
 				this.messageAbreiseError.setText("Anreisdatum darf nicht leer sein. bitte geben Sie ein korrektes Datumsformat ein(dd.mm.yyyy)");
 				
 				
+				//We check if errorDateFormatAnreise is visible and we continue evaluate inside the block.
+				//All of this is needed to play with the focus Lost and Get Focus.
 				if(!this.errorDateFormatAnreise.isVisible()) {
 					
+					//if the user has not decided to close the NewParking GUI and Arrival-JTextFiled  has not the Focus.
 					if(!closingNewParkingReservation && !this.anreiseFocus) {
 						
+						//If we did not displayed any Error of Departure Date format.
 						if(!this.errorDateDepartureMessageDelivered) {
 							
+							
+							//Invoke a new Thread with the errorDateFormatAbreise(Error Departure Date).
 							SwingUtilities.invokeLater(new Runnable() {
 								
 								@Override
@@ -520,6 +562,7 @@ this.okButtonEntriesError.addActionListener(new ActionListener() {
 		} else { 
 			
 
+			//The operation of this code is the same principle as the code above.
 			if(!this.errorDateFormatAnreise.isVisible()) {
 				
 				
@@ -623,11 +666,15 @@ public void setAnreiseFocus(boolean anreiseFocus) {
 
 
 /**
- * @description This method will check if all required entries are completed correctly
+ * @description This method will check if all required entries are completed correctly.
+ * 
+ * if all the inputs are correct, it will call the method addNewParkingReservation in the DaoParkingImpl Class.
  */
 public void checkAllEntries() {
 	
-	
+	/*
+	 * If the JTextField it's empty: entryCompleted = false and we paint a Red border to the JTextField.
+	 */
 	if(this.newParking.buchungsNameJTextField.getText().equalsIgnoreCase("") ||
 			this.newParking.buchungsNameJTextField.getText().length()< 3 ) {
 		
@@ -635,11 +682,14 @@ public void checkAllEntries() {
 		this.newParking.buchungsNameJTextField.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
 		
 	}else {
+		
+		//If everything is correctly entered we set the value to the entryCompleted as true.
 		this.entryCompleted=true;
 	}
 	
 	
 	
+	//This code do the same as the code above.
 	if(this.newParking.autoKFZJTextField.getText().equalsIgnoreCase("") ||
 			this.newParking.autoKFZJTextField.getText().length()<3) {
 		this.entryCompleted=false;
@@ -650,7 +700,7 @@ public void checkAllEntries() {
 	}
 	
 	
-	
+	//This code do the same as the code above.
 	if(this.newParking.buchunsKanalJTextField.getText().equalsIgnoreCase("") ||
 			this.newParking.buchunsKanalJTextField.getText().length()<3) {
 		
@@ -683,7 +733,61 @@ public void checkAllEntries() {
 		
 		//If everything is correctly filled in we precede saving the data.
 		if(this.anreiseOK && this.abreiseOK && this.entryCompleted) {
-			addNewParkingReservationToDataBase();
+			try {
+
+				//First we initialize our instance as a new object of ParkingReservation
+				this.parkingReservation = new ParkingReservation();
+				
+				//We set the first three values to the fields, variables of the ParkingReservation object.
+				this.parkingReservation.setIdParking(this.newParking.idParkingGenerated.getText());
+				this.parkingReservation.setBuchungsname(this.newParking.buchungsNameJTextField.getText());
+				this.parkingReservation.setAutoKFZ(this.newParking.autoKFZJTextField.getText());
+				
+				//We use a DateTimeFormatter to set the Date Format we need. 
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+				
+				//We set the value to the LocalDate variables using the LocalDate.parse method and as parameters the Date inside the PlaceHolderTextField
+				//as second argument the DateTimeFormatter with the format we need dd.MM.yyyy for the LocalDate.
+				this.anreiseLocalDate = LocalDate.parse(this.newParking.anreiseDatumPlaceHolderTextField.getText(), formatter);
+				this.abreiseLocalDate = LocalDate.parse(this.newParking.abreiseDatumPlaceholderTextField.getText(), formatter);
+				
+				//Now for the Date variables we get the value using the Date.valueOf Method and as argument we pass the 
+				//LocalDate Variables.
+				this.anreisedatum = Date.valueOf(this.anreiseLocalDate);
+				this.abreisedatum = Date.valueOf(this.abreiseLocalDate);
+				
+				//Now finally we set the value of the variables Date for Arrival and Departure.
+				this.parkingReservation.setAnreiseDatum(anreisedatum);
+				this.parkingReservation.setAbreiseDatum(abreisedatum);
+				
+				//We set the total Dates the user going to park by us.
+				this.parkingReservation.setAnzahlTagen(Integer.parseInt(this.newParking.tagenGeneratedJLabel.getText()));
+				
+				//We set how much he has to pay or he has payed.
+				this.parkingReservation.setBetragParking(this.betragTotal);
+				
+				//We set how was the Parking booked
+				this.parkingReservation.setBuchungsKanal(this.newParking.buchunsKanalJTextField.getText());
+				
+				//Special comments
+				this.parkingReservation.setBemerkungen(this.newParking.bemerkungenJTextField.getText());
+				
+				//leave the key or not
+				this.parkingReservation.setSchluesselInHaus(this.newParking.schluesselBox.getSelectedItem().toString());
+				
+				//And who proceeded to treat the reservation(Team by the Hotel).
+				this.parkingReservation.setAbkuerzungMA(this.newParking.abkuerzungMAGeneratedJLabel.getText());
+				
+
+				//We create a new DAOParking object passing the arguments needed.
+				DAOParking daoParking = new DaoParkingImpl(getUserAHB(), dataBaseGUI, loading);
+				
+				//We call for addNewParkingReservation
+				daoParking.addNewParkingReservation(parkingReservation, userAHB);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 		
@@ -691,74 +795,6 @@ public void checkAllEntries() {
 
 
 
-/**
- * @description Method to add the new Parking Reservation to DataBase Table parking
- */
-protected void addNewParkingReservationToDataBase() {
-	
-
-	
-	this.idParking = this.newParking.idParkingGenerated.getText();
-	this.buchungsname = this.newParking.buchungsNameJTextField.getText();
-	this.autokfz = this.newParking.autoKFZJTextField.getText();
-	
-//	SimpleDateFormat simpeDateFormat = new SimpleDateFormat("dd.MM.yyyy");
-	
-	
-	this.anreisedatum = Date.valueOf(this.anreiseLocalDate);
-	this.abreisedatum = Date.valueOf(this.abreiseLocalDate);
-	
-	this.anzahltagen = (int) this.totalDaysToPay;
-	
-	this.betragparking = this.betragTotal;
-	
-	this.buchungskanal = this.newParking.buchunsKanalJTextField.getText();
-	this.bemerkungen = this.newParking.bemerkungenJTextField.getText();
-	this.schluesselinhaus = this.newParking.schluesselBox.getSelectedItem().toString();
-	
-	this.verkaufer = this.newParking.abkuerzungMAGeneratedJLabel.getText();
-	
-	
-	
-//	String dateToFormat = simpeDateFormat.format(this.anreisedatum);
-
-//	JOptionPane.showMessageDialog(null, "fecha localdate en sql.Date: " +this.anreisedatum);
-//	JOptionPane.showMessageDialog(null, "fecha convertida en String: " + dateToFormat);
-//	
-//	JOptionPane.showMessageDialog(null, "Schluesel in haus: " + this.schluesselinhaus);
-//	
-//	JOptionPane.showMessageDialog(null, "Total days to pay: " + this.anzahltagen);
-//	
-//	JOptionPane.showMessageDialog(null, "Betragparking: " + this.betragparking);
-	
-	
-	
-	//We create a instance of DAOParking parkingReservation parameter 
-	DAOParking daoParking = new DaoParkingImpl(this.urlDB, this.dbName, this.userAHB, this.ahbParking);
-	
-	this.parkingReservation = new ParkingReservation();
-	
-	this.parkingReservation.setIdParking(this.idParking);
-	this.parkingReservation.setBuchungsname(this.buchungsname);
-	this.parkingReservation.setAutoKFZ(this.autokfz);
-	this.parkingReservation.setAnreiseDatum(this.anreisedatum);
-	this.parkingReservation.setAbreiseDatum(this.abreisedatum);
-	this.parkingReservation.setAnzahlTagen(this.anzahltagen);
-	this.parkingReservation.setBetragParking(this.betragparking);
-	this.parkingReservation.setBuchungsKanal(this.buchungskanal);
-	this.parkingReservation.setBemerkungen(this.bemerkungen);
-	this.parkingReservation.setSchluesselInHaus(this.schluesselinhaus);
-	this.parkingReservation.setAbkuerzungMA(this.verkaufer);
-	
-
-	try {
-		daoParking.addNewParkingReservation(this.parkingReservation);
-		
-	} catch (DaoException e) {
-		e.printStackTrace();
-	}
-
-}
 
 
 

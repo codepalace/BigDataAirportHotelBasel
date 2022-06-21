@@ -20,14 +20,13 @@ import javax.swing.SwingConstants;
 
 import tech.codepalace.utility.CenterComponentMoved;
 import tech.codepalace.utility.JTextFieldLimit;
-import tech.codepalace.utility.SetIconOperatingSystem;
 import tech.codepalace.view.buttons.MyButton;
 import tech.codepalace.view.panels.PanelWithBackgroundOption;
 
 @SuppressWarnings("serial")
 public class AdminCreator extends JDialog {
 	
-	private SetIconOperatingSystem setIconOperatingSystem;
+	
 	
 	private PanelWithBackgroundOption panelWithBackgroundOption;
 	private JPanel northPanel, soutPanel;
@@ -43,8 +42,7 @@ public class AdminCreator extends JDialog {
 	private GridBagLayout gridBagLayout;
 	private GridBagConstraints gridBagConstraints;
 	
-	
-	private String urldDataBase = "", urlDataBaseBackup ="";
+
 
 	
 	
@@ -83,7 +81,7 @@ public class AdminCreator extends JDialog {
 		
 		this.setTitle("Erstellen einen neuen Admin-Benutzer");
 		
-		this.setIconOperatingSystem = new SetIconOperatingSystem();
+		
 		this.setIconImage(new ImageIcon("/img/iconoHotel.png").getImage());
 		
 		this.panelWithBackgroundOption =  new PanelWithBackgroundOption();
