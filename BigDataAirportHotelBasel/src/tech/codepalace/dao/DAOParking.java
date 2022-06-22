@@ -23,7 +23,8 @@ public interface DAOParking {
 	
 	
 	/**
-	 * @description Method to check if the parking database exists.
+	 * @description Method to check if the parking table exists in the Database.
+	 * @throws DaoException
 	 */
 	void checkTableParking() throws DaoException;
 	

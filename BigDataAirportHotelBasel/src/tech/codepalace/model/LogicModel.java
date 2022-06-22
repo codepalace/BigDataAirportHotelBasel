@@ -12,6 +12,7 @@ import javax.swing.SwingUtilities;
 
 import tech.codepalace.controller.DataBaseGUIController;
 import tech.codepalace.controller.LoginController;
+import tech.codepalace.dao.DAOFundsachen;
 import tech.codepalace.dao.DAOParking;
 import tech.codepalace.dao.DaoException;
 import tech.codepalace.dao.DaoFactory;
@@ -459,7 +460,18 @@ try {
 					
 				case "FUNDSACHEN": 
 					
-					JOptionPane.showMessageDialog(null, "Now we have to create the DAOFundsachen Object");
+					//We create a new DAOFundsachen Object passing the DaoFundsachenImpl class with the parameters.
+					DAOFundsachen daoFundsachen = new DaoFundsachenImpl(getUserAHB(), dataBaseGUI, loading);
+					
+					try {
+						
+						//now call to check if the Table exists.
+						daoFundsachen.checkTableFundsachen();
+						
+					} catch (DaoException  e) {
+						
+						e.printStackTrace();
+					}
 
 				default:
 					break;
@@ -471,7 +483,7 @@ try {
 			
 			
 			
-			
+			//We have to test before continue in case FUNDSACHEN was called  dataBaseApplication
 
 		}else { //the DataBase do not exists 
 			
