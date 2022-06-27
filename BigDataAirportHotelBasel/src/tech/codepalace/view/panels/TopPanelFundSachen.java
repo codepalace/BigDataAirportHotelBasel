@@ -21,16 +21,17 @@ public class TopPanelFundSachen extends JPanel {
 	public JLabel fundsachenImage;
 	
 	private JButton btnHome,  btnParking,  btnFitness,
-	 btnPhonebook,  btnLogout;
+	 btnPhonebook,  btnLogout, btnNewFundsachen;
 	
 	public TopPanelFundSachen(JButton btnHome, JButton btnParking, JButton btnFitness,
-			JButton btnPhonebook, JButton btnLogout) {
+			JButton btnPhonebook, JButton btnLogout, JButton btnNewFundsachen) {
 		
 		this.btnHome = btnHome;
 		this.btnParking = btnParking;
 		this.btnFitness = btnFitness;
 		this.btnPhonebook = btnPhonebook;
 		this.btnLogout = btnLogout;
+		this.btnNewFundsachen = btnNewFundsachen;
 		
 		init();
 	}
@@ -57,6 +58,7 @@ public class TopPanelFundSachen extends JPanel {
 		this.centerPanelButtons.add(this.btnFitness);
 		this.centerPanelButtons.add(this.btnPhonebook);
 		this.centerPanelButtons.add(this.btnLogout);
+		this.centerPanelButtons.add(this.btnNewFundsachen);
 
 		this.fundsachenImage = new JLabel(new ImageIcon(getClass().getResource("/img/treasure_350x200.png")));
 		

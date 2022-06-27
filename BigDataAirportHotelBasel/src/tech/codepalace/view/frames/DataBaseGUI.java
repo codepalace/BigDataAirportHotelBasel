@@ -56,7 +56,8 @@ public class DataBaseGUI extends JFrame {
 //	private JPanel centerPanelButtons, containerPanelButton;
 	
 	 //Menu JButtons
-	 public JButton btnHome, btnFundsachen, btnFitness, btnPhonebook, btnLogout, btnNewParking, btnParking;
+	 public JButton btnHome, btnFundsachen, btnFitness, btnPhonebook, btnLogout, btnNewParking, btnParking,
+	 				btnNewFundsachen;
 
 	//Jpanel for the user logged
 	private JPanel loginPanel;
@@ -117,10 +118,11 @@ public class DataBaseGUI extends JFrame {
 		// Initialize the JButtons as MyButton
 		this.btnHome = new MyButton("/img/btn_home.png");
 		this.btnParking = new MyButton("/img/btn_parking.png");
-		this.btnFundsachen = new MyButton("/img/btn_fundsachen.png");
+		this.btnFundsachen = new MyButton("/img/btn_fundsachen2.png");
 		this.btnFitness = new MyButton("/img/btn_fitness_abo.png");
 		this.btnPhonebook = new MyButton("/img/btn_telefonbuch.png");
 		this.btnLogout = new MyButton("/img/btn_logout_125x70.png");
+		this.btnNewFundsachen = new MyButton("/img/btn_funsachenplus.png");
 		
 		
 		this.btnNewParking = new MyButton("/img/btn_new_parking.png");
@@ -132,6 +134,7 @@ public class DataBaseGUI extends JFrame {
 		this.btnPhonebook.setPreferredSize(new Dimension(150,70));
 		this.btnLogout.setPreferredSize(new Dimension(125,70));
 		this.btnNewParking.setPreferredSize(new Dimension(150, 70));
+		this.btnNewFundsachen.setPreferredSize(new Dimension(150, 70));
 		
 		setUpFrame();
 		
@@ -234,7 +237,7 @@ public class DataBaseGUI extends JFrame {
 				
 				this.setTitle("Fundsachen Airport Hotel Basel");
 //				
-				this.topPanelFundSachen = new TopPanelFundSachen(this.btnHome, this.btnParking, this.btnFitness, this.btnPhonebook, this.btnLogout);
+				this.topPanelFundSachen = new TopPanelFundSachen(this.btnHome, this.btnParking, this.btnFitness, this.btnPhonebook, this.btnLogout, this.btnNewFundsachen);
 				
 				this.topPanel.add(this.topPanelFundSachen, BorderLayout.NORTH);
 				
