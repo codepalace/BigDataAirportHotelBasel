@@ -18,8 +18,32 @@ public class Fundgegenstand {
 	private int kiste;
 	private String kisteNummer;
 	
+	/*
+	 * this variable rueckGabe it will be used to store the information if a found object was delivered to someone back 
+	 * and the date it was delivered.
+	 */
+	private String rueckGabe;
 	
 	
+	
+	/**
+	 * @return the rueckGabe
+	 */
+	public String getRueckGabe() {
+		return rueckGabe;
+	}
+
+
+
+	/**
+	 * @param rueckGabe the rueckGabe to set
+	 */
+	public void setRueckGabe(String rueckGabe) {
+		this.rueckGabe = rueckGabe;
+	}
+
+
+
 	public Fundgegenstand() {}
 
 

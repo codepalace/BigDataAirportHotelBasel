@@ -100,7 +100,8 @@ public class DaoFactory {
 							}
 						});
 						
-						
+						//We call to create the DataBase
+						createDataBase();
 					    
 						//Call to create the Table with the table name value in the dataBaseApplication variable.
 						createTable(DaoFactory.dataBaseApplication);
@@ -256,8 +257,9 @@ public class DaoFactory {
 	 * @return
 	 */
 	protected static String getUrlDB() {
-		urlDB = url + ";user=" + dbOwner + ";create=true;dataEncryption=true" + ";encryptionAlgorithm=DES/CBC/NoPadding;" + "encryptionKey=" + encryptionKey;
 		
+		//URL Encrypted DataBase without the instruction create=true. In this case Database exists already. It was corrected
+		urlDB = url + ";user=" + dbOwner + ";dataEncryption=true" + ";encryptionAlgorithm=DES/CBC/NoPadding;" + "encryptionKey=" + encryptionKey;
 		
 		return DaoFactory.urlDB;
 	}
@@ -356,6 +358,24 @@ public class DaoFactory {
 						 + "PRIMARY KEY (ID)"
 						 + ")";
 				break;
+				
+			case "FUNDSACHEN":
+				
+				
+				//we proceed to create the table FUNDSACHEN
+				  sql = "CREATE TABLE " + tableName + "( "
+						 
+						 + "ID INT NOT NULL GENERATED ALWAYS AS IDENTITY,"
+						 + "dateItemsWasFound DATE NOT NULL,"
+						 + "foundItem VARCHAR(126) NOT NULL,"
+						 + "roomNumber INTEGER,"
+						 + "inhaber VARCHAR(62) NOT NULL,"
+						 + "kiste VARCHAR(30) NOT NULL,"
+						 + "kisteNummer INTEGER,"
+						 + "rueckGabe VARCHAR(156),"
+						 + "PRIMARY KEY (ID)"
+						 + ")";
+				
 
 			default:
 				break;

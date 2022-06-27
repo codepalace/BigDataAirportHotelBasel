@@ -89,7 +89,7 @@ public class DaoParkingImpl  implements DAOParking {
  	private	PreparedStatement preparedStatement = null;
 
  	//Variable for the Connection
- 	private Connection connection;
+ 	private static Connection connection;
 
 
  	//LocalDateTime with the Todays Date and the Hours Zone +2
@@ -123,8 +123,7 @@ public class DaoParkingImpl  implements DAOParking {
  	
  	private static Loading loading;
  	
-// 	private String task;
-	
+	private static boolean tableChecked = false;
 
  
  	
@@ -138,23 +137,8 @@ public class DaoParkingImpl  implements DAOParking {
  		
  		connection=null;
  		
- 		
-// 		if(task.equals("displayParking") || task.equals("createTableParking")) {
-// 			
-// 			
-// 			SwingUtilities.invokeLater(new Runnable() {
-// 				
-// 				@Override
-// 				public void run() {
-// 					// TODO Auto-generated method stub
-// 					DaoParkingImpl.loading.setVisible(true);
-// 				}
-// 			});
-// 			
-// 		}
- 		
- 		
- 	    
+ 		DaoParkingImpl.tableChecked = false;
+ 
  		
 		
  	}
@@ -175,78 +159,103 @@ public class DaoParkingImpl  implements DAOParking {
 	public void checkTableParking() throws DaoException {
  		
  		
+ 		SwingWorker<Void, Void>worker = new SwingWorker<Void, Void>(){
+ 			
  		
- 		DaoParkingImpl.loading.progressBar.setIndeterminate(true);
- 		DaoParkingImpl.loading.progressBar.setForeground(Color.BLUE);
-		
-		SwingUtilities.invokeLater(new Runnable() {
-			
+
 			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				DaoParkingImpl.loading.setVisible(true);
+			protected Void doInBackground() throws Exception {
+				
+				while(!DaoParkingImpl.tableChecked) {
+					
+					DaoParkingImpl.loading.progressBar.setIndeterminate(true);
+			 		DaoParkingImpl.loading.progressBar.setForeground(Color.BLUE);
+					
+					SwingUtilities.invokeLater(new Runnable() {
+						
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							DaoParkingImpl.loading.setVisible(true);
+						}
+					});
+					
+					
+					/* First of all we call the setURLToConnectCurrentDataBase(), where we set the URL of the current DataBase. 
+			 		 * 
+			 		 * In the setURLToConnectCurrentDataBase() we create the instance of the Object DaoFactory with the url.
+			 		 * 
+			 		 */
+			 		setURLToConnectCurrentDataBase();
+			 		
+			 		
+			 		
+					
+					try {
+						
+						//Now we call for a Connection
+						DaoParkingImpl.connection = daoFactory.connect();
+						
+						//We get the Metadata from our database.
+						DaoParkingImpl.metadata = connection.getMetaData();
+						
+						
+						//resultSet get the value of metadata.getTables(null catalog, null schemaPattern, our table name(PARKING) as uppperCase and the Type is one Array of TABLE
+						DaoParkingImpl.resultSet = metadata.getTables(null, null, table_name.toUpperCase(), new String[] {"TABLE"});
+						
+						//If resultSet has results if we have DATA. That means Table PARKING exists.
+						if(DaoParkingImpl.resultSet.next()) {
+							DaoParkingImpl.tableChecked = true;
+							
+							DaoParkingImpl.loading.setVisible(false);
+							DaoParkingImpl.loading.progressBar.setIndeterminate(false);
+							DaoParkingImpl.loading.progressBar.repaint();
+							
+							
+							//Table PARKING exists
+							//Then we call displayListParking() Method.
+							displayListParking();
+							
+							
+						} 
+						else { //otherwise table Parking do not exists
+							
+							
+							
+							
+							//We call daoFactory to createTable Parking passing the table name(PARKING)
+							DaoParkingImpl.daoFactory.createTable("PARKING");
+							
+							//New Status when was created
+							dataBaseGUI.processStatusJLabel.setText("Database is ready");
+							
+							DaoParkingImpl.tableChecked = true;
+							loading.dispose();
+							dataBaseGUI.setVisible(true);
+							
+							
+						}
+						
+					
+					} catch (SQLException e) {
+						e.printStackTrace();
+					
+					}
+					
+				}
+				
+				return null;
 			}
-		});
- 		
- 		
- 		/* First of all we call the setURLToConnectCurrentDataBase(), where we set the URL of the current DataBase. 
- 		 * 
- 		 * In the setURLToConnectCurrentDataBase() we create the instance of the Object DaoFactory with the url.
- 		 * 
- 		 */
- 		setURLToConnectCurrentDataBase();
+ 			
+ 			
+ 		}; worker.execute();
  		
  		
  		
-		
-		try {
-			
-			//Now we call for a Connection
-			this.connection = daoFactory.connect();
-			
-			//We get the Metadata from our database.
-			DaoParkingImpl.metadata = connection.getMetaData();
-			
-			
-			//resultSet get the value of metadata.getTables(null catalog, null schemaPattern, our table name(PARKING) as uppperCase and the Type is one Array of TABLE
-			DaoParkingImpl.resultSet = metadata.getTables(null, null, table_name.toUpperCase(), new String[] {"TABLE"});
-			
-			//If resultSet has results if we have DATA. That means Table PARKING exists.
-			if(DaoParkingImpl.resultSet.next()) {
-				
-				DaoParkingImpl.loading.setVisible(false);
-				DaoParkingImpl.loading.progressBar.setIndeterminate(false);
-				DaoParkingImpl.loading.progressBar.repaint();
-				
-				
-				//Table PARKING exists
-				//Then we call displayListParking() Method.
-				displayListParking();
-				
-				
-			} 
-			else { //otherwise table Parking do not exists
-				
-				
-				
-				
-				//We call daoFactory to createTable Parking passing the table name(PARKING)
-				DaoParkingImpl.daoFactory.createTable("PARKING");
-				
-				//New Status when was created
-				dataBaseGUI.processStatusJLabel.setText("Database is ready");
-				
-				loading.dispose();
-				dataBaseGUI.setVisible(true);
-				
-				
-			}
-			
-		
-		} catch (SQLException e) {
-			e.printStackTrace();
-		
-		}
+ 		
+ 		
+ 		
+ 		
 
 		
 	}
@@ -316,7 +325,7 @@ public class DaoParkingImpl  implements DAOParking {
 		setURLToConnectCurrentDataBase();
 		
 		//Set value connection calling daoFactory.connect() Method. Calling this Method will return an Object type Connection.
-		this.connection = daoFactory.connect();
+		DaoParkingImpl.connection = daoFactory.connect();
 		
 
 		//If we have a Connection.
@@ -461,7 +470,7 @@ public class DaoParkingImpl  implements DAOParking {
 		DaoParkingImpl.daoFactory = new DaoFactory(getDerbyURL());
 		
 		//We set the value of connection calling daoFactory to connect(). connect Method return a Connection Object.
-		this.connection = DaoParkingImpl.daoFactory.connect();
+		DaoParkingImpl.connection = DaoParkingImpl.daoFactory.connect();
 		
 		
 		//If we have a connection.
@@ -496,7 +505,7 @@ public class DaoParkingImpl  implements DAOParking {
 				this.preparedStatement.executeUpdate();
 				
 				//We save all changed permanent.
-				this.connection.commit();
+				DaoParkingImpl.connection.commit();
 				
 				
 			} catch (SQLException e) {
@@ -511,7 +520,7 @@ public class DaoParkingImpl  implements DAOParking {
 					 */
 					
 					this.preparedStatement.close();
-					this.connection.close();
+					DaoParkingImpl.connection.close();
 					DaoParkingImpl.daoFactory.closeConnection(getDerbyURL());
 					
 				
@@ -555,7 +564,7 @@ public class DaoParkingImpl  implements DAOParking {
 				
 					
 					//Now we call for a Connection
-					this.connection = daoFactory.connect();
+					DaoParkingImpl.connection = daoFactory.connect();
 					
 					//We display all entries included the new one.
 					displayListParking();

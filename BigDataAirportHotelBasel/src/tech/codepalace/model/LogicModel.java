@@ -7,7 +7,6 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import tech.codepalace.controller.DataBaseGUIController;
@@ -463,6 +462,8 @@ try {
 					//We create a new DAOFundsachen Object passing the DaoFundsachenImpl class with the parameters.
 					DAOFundsachen daoFundsachen = new DaoFundsachenImpl(getUserAHB(), dataBaseGUI, loading);
 					
+					
+					
 					try {
 						
 						//now call to check if the Table exists.
@@ -483,7 +484,7 @@ try {
 			
 			
 			
-			//We have to test before continue in case FUNDSACHEN was called  dataBaseApplication
+		
 
 		}else { //the DataBase do not exists 
 			
@@ -514,16 +515,6 @@ try {
 							 
 							 new DaoFactory(url, loading, dataBaseApplication, dataBaseGUI);
 							 
-							 
-							 /*
-							  * Tenemos que mandar aqui el databaseGUI, el logicModel de acuerdo si es StartFrame, 
-							  * para despues de crear la base de datos y la tabla poder abrir la dataBaseGUI y
-							  * llamar o no a checktable Parking. Cosa que es inecesaria despues de haber creado
-							  * la base de datos y haber creado la tabla. 
-							  * 
-							  * Al menos desde aqui. luego para visualizar si existe si deberiamos chequear la tabla
-							  * si existe o no. s
-							  */
 							
 							break;
 
