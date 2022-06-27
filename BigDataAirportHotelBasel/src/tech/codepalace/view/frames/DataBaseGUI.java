@@ -22,6 +22,7 @@ import javax.swing.JTable;
 
 import tech.codepalace.view.buttons.MyButton;
 import tech.codepalace.view.panels.PanelWithBackgroundOption;
+import tech.codepalace.view.panels.TopPanelFundSachen;
 import tech.codepalace.view.panels.TopPanelParking;
 import tech.codepalace.view.tables.ParkingTable;
 
@@ -38,6 +39,9 @@ public class DataBaseGUI extends JFrame {
 	private PanelWithBackgroundOption panelWithBackgroundOption;
 	
 	private TopPanelParking topPanelParking;
+	
+	//Variable in case FundSachen will be displayed in the GUI Table. 
+	private TopPanelFundSachen topPanelFundSachen;
 	
 //	private TopPanelFundSachen topPanelFundSachen;
 	
@@ -112,6 +116,7 @@ public class DataBaseGUI extends JFrame {
 		
 		// Initialize the JButtons as MyButton
 		this.btnHome = new MyButton("/img/btn_home.png");
+		this.btnParking = new MyButton("/img/btn_parking.png");
 		this.btnFundsachen = new MyButton("/img/btn_fundsachen.png");
 		this.btnFitness = new MyButton("/img/btn_fitness_abo.png");
 		this.btnPhonebook = new MyButton("/img/btn_telefonbuch.png");
@@ -225,11 +230,14 @@ public class DataBaseGUI extends JFrame {
 				
 				break;
 
-			case "FUNDSACHEN":
+			case "FUNDSACHEN": //In case Fundsachen we modify the view of this GUI
 				
-//				this.setTitle("Fundsachen Airport Hotel Basel");
+				this.setTitle("Fundsachen Airport Hotel Basel");
 //				
-//				this.topPanelFundSachen = new TopPanelFundSachen(this.btnHome, this.btnParking, this.btnFitness, this.btnPhonebook, this.btnLogout);
+				this.topPanelFundSachen = new TopPanelFundSachen(this.btnHome, this.btnParking, this.btnFitness, this.btnPhonebook, this.btnLogout);
+				
+				this.topPanel.add(this.topPanelFundSachen, BorderLayout.NORTH);
+				
 				
 				//@ToDo create the fundSachenTable to import in the DataBaseGUI, scrollPane receive the fundaschenTable and we center to the GUI Panel.
 				
