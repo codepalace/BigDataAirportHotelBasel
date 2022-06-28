@@ -1,4 +1,4 @@
-package tech.codepalace.model;
+package tech.codepalace.dao;
 
 import java.awt.Color;
 import java.io.File;
@@ -15,9 +15,8 @@ import java.time.ZoneOffset;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
-import tech.codepalace.dao.DAOFundsachen;
-import tech.codepalace.dao.DaoException;
-import tech.codepalace.dao.DaoFactory;
+import tech.codepalace.model.Fundgegenstand;
+import tech.codepalace.model.UserAHB;
 import tech.codepalace.utility.DataEncryption;
 import tech.codepalace.view.frames.DataBaseGUI;
 import tech.codepalace.view.frames.Loading;
@@ -144,7 +143,7 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 							DaoFundsachenImpl.loading.progressBar.repaint();
 							
 						
-							System.out.println("FUNDSACHEN table do not exists");
+							System.out.println("FUNDSACHEN table exists");
 							//Table FUNDSACHEN exists
 							//Then we call displayListFundsachen() Method.
 							displayListFundsachen();
@@ -153,7 +152,7 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 						} 
 						else { //otherwise table FUNDSACHEN do not exists
 							
-							System.out.println("FUNDSACHEN table exists");
+							System.out.println("FUNDSACHEN table do not exists");
 							
 							
 							//We call daoFactory to createTable Parking passing the table name(PARKING)

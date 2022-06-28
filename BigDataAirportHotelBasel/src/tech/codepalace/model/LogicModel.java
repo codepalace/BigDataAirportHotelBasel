@@ -15,6 +15,7 @@ import tech.codepalace.dao.DAOFundsachen;
 import tech.codepalace.dao.DAOParking;
 import tech.codepalace.dao.DaoException;
 import tech.codepalace.dao.DaoFactory;
+import tech.codepalace.dao.DaoFundsachenImpl;
 import tech.codepalace.dao.DaoParkingImpl;
 import tech.codepalace.utility.DataEncryption;
 import tech.codepalace.view.frames.BigDataAirportHotelBaselStartFrame;

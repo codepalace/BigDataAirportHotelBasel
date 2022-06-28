@@ -3,6 +3,7 @@ package tech.codepalace.utility;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -51,8 +52,8 @@ public class TableHeaderManager implements TableCellRenderer {
        jcomponent.setOpaque(true);
        //jcomponent.setBackground( new Color(236,234,219) );
        jcomponent.setBackground( new Color(65,65,65) );
-       jcomponent.setToolTipText("Parking Table");
        jcomponent.setForeground(Color.white); //Color del texto del encabezado
+       jcomponent.setFont(new Font("Verdana", Font.BOLD, 14));
        
        return jcomponent;
 	}

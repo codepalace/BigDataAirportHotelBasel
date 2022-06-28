@@ -24,6 +24,7 @@ import tech.codepalace.view.buttons.MyButton;
 import tech.codepalace.view.panels.PanelWithBackgroundOption;
 import tech.codepalace.view.panels.TopPanelFundSachen;
 import tech.codepalace.view.panels.TopPanelParking;
+import tech.codepalace.view.tables.FundsachenTable;
 import tech.codepalace.view.tables.ParkingTable;
 
 
@@ -70,6 +71,8 @@ public class DataBaseGUI extends JFrame {
 	
 	//Instance JTable for the parkingTable
 	public JTable parkingTable;
+	
+	public JTable fundsachenTable;
 		
 	private JScrollPane scrollPane;
 		
@@ -241,7 +244,11 @@ public class DataBaseGUI extends JFrame {
 				
 				this.topPanel.add(this.topPanelFundSachen, BorderLayout.NORTH);
 				
+				this.fundsachenTable = new FundsachenTable().getJTable();
 				
+				this.scrollPane = new JScrollPane(this.fundsachenTable);
+				
+				this.centerPanel.add(scrollPane);
 				//@ToDo create the fundSachenTable to import in the DataBaseGUI, scrollPane receive the fundaschenTable and we center to the GUI Panel.
 				
 				

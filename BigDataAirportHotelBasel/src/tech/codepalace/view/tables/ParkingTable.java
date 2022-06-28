@@ -32,7 +32,7 @@ public class ParkingTable {
 public ParkingTable() {
 		
 		init();
-		//Metodo para contruir la tabla que llama al metodo consultarListaPersonas
+		
 		buildTable();
 	}
 

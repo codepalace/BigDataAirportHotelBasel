@@ -13,10 +13,10 @@ public class Fundgegenstand {
 	//Variables for the Lost and found items.
 	private Date dateItemsWasFound;
 	private String foundItems;
-	private int roomNumber;
+	private String fundort;
 	private String inhaber;
-	private int kiste;
-	private String kisteNummer;
+	private int kisteNummer;
+	private String kisteName;
 	
 	/*
 	 * this variable rueckGabe it will be used to store the information if a found object was delivered to someone back 
@@ -24,23 +24,14 @@ public class Fundgegenstand {
 	 */
 	private String rueckGabe;
 	
+	private String abkuerzungMA;
 	
 	
-	/**
-	 * @return the rueckGabe
-	 */
-	public String getRueckGabe() {
-		return rueckGabe;
-	}
+	
+	
 
 
-
-	/**
-	 * @param rueckGabe the rueckGabe to set
-	 */
-	public void setRueckGabe(String rueckGabe) {
-		this.rueckGabe = rueckGabe;
-	}
+	
 
 
 
@@ -87,8 +78,8 @@ public class Fundgegenstand {
 	/**
 	 * @return the roomNumber
 	 */
-	public int getRoomNumber() {
-		return roomNumber;
+	public String getFundort() {
+		return fundort;
 	}
 
 
@@ -96,8 +87,8 @@ public class Fundgegenstand {
 	/**
 	 * @param roomNumber the roomNumber to set
 	 */
-	public void setRoomNumber(int roomNumber) {
-		this.roomNumber = roomNumber;
+	public void setFundort(String fundort) {
+		this.fundort = fundort;
 	}
 
 
@@ -123,8 +114,8 @@ public class Fundgegenstand {
 	/**
 	 * @return the kiste
 	 */
-	public int getKiste() {
-		return kiste;
+	public int getKisteNummer() {
+		return kisteNummer;
 	}
 
 
@@ -132,8 +123,8 @@ public class Fundgegenstand {
 	/**
 	 * @param kiste the kiste to set
 	 */
-	public void setKiste(int kiste) {
-		this.kiste = kiste;
+	public void setKisteNummer(int kisteNummer) {
+		this.kisteNummer = kisteNummer;
 	}
 
 
@@ -141,8 +132,8 @@ public class Fundgegenstand {
 	/**
 	 * @return the kisteNummer
 	 */
-	public String getKisteNummer() {
-		return kisteNummer;
+	public String getKisteName() {
+		return kisteName;
 	}
 
 
@@ -150,11 +141,42 @@ public class Fundgegenstand {
 	/**
 	 * @param kisteNummer the kisteNummer to set
 	 */
-	public void setKisteNummer(String kisteNummer) {
-		this.kisteNummer = kisteNummer;
+	public void setKisteNummer(String kisteName) {
+		this.kisteName = kisteName;
 	}
 
 	
+	/**
+	 * @return the abkuerzungMA
+	 */
+	public String getAbkuerzungMA() {
+		return abkuerzungMA;
+	}
+
+
+
+	/**
+	 * @param abkuerzungMA the abkuerzungMA to set
+	 */
+	public void setAbkuerzungMA(String abkuerzungMA) {
+		this.abkuerzungMA = abkuerzungMA;
+	}
+
 	
 
+	/**
+	 * @return the rueckGabe
+	 */
+	public String getRueckGabe() {
+		return rueckGabe;
+	}
+
+
+
+	/**
+	 * @param rueckGabe the rueckGabe to set
+	 */
+	public void setRueckGabe(String rueckGabe) {
+		this.rueckGabe = rueckGabe;
+	}
 }
