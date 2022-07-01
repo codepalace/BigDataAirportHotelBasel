@@ -24,7 +24,7 @@ import tech.codepalace.view.panels.PanelWithBackgroundOption;
 
 /**
  * 
- * @author tonimacaroni
+ * @author Antonio Estevez Gonzalez
  * @description Class for edit a new Found and lost item.
  */
 @SuppressWarnings("serial")
@@ -411,6 +411,31 @@ public class NewFundsachen extends JDialog {
 		//Method to get the information who from the team is typing the Data.
 		private static String getAbkuerzungMA() {
 			return abkuerzungMA;
+		}
+		
+		
+		
+		/**
+		 * @description Method to confirm application closure
+		 */
+		public void confirmClose() {
+
+			  
+			 
+			optionPane.setMessage("Wollen Sie den Eintrag Abbrechen?");
+			 optionPane.setMessageType(JOptionPane.OK_CANCEL_OPTION);
+			 optionPane.setIcon(icon);
+			
+			
+			 dialog = optionPane.createDialog(frame, "Eintrag Abbrechen?");
+			 
+			 optionPane.setOptions(new Object[] {this.neinJButton, this.jaJButton});
+			 
+			
+			 dialog.setVisible(true);
+			 
+	
+				
 		}
 		
 		

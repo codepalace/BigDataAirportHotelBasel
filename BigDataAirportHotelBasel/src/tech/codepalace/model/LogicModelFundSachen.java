@@ -1,16 +1,22 @@
 package tech.codepalace.model;
 
-import javax.swing.JOptionPane;
+import java.awt.EventQueue;
 
+import tech.codepalace.controller.NewFundsachenController;
 import tech.codepalace.utility.DataEncryption;
-import tech.codepalace.view.frames.BigDataAirportHotelBaselStartFrame;
 import tech.codepalace.view.frames.DataBaseGUI;
 import tech.codepalace.view.frames.Loading;
 import tech.codepalace.view.frames.NewFundsachen;
 
+
+/**
+ * @description Logic Class for the FundSachen GUI.
+ * @author Antonio Estevez Gonzalez
+ *
+ */
 public class LogicModelFundSachen extends LogicModel {
 	
-	private BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame;
+
 	
 
 	
@@ -21,11 +27,6 @@ public class LogicModelFundSachen extends LogicModel {
 	
 	private DataEncryption dataEncryption;
 	
-//	public LogicModelFundSachen(BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame) {
-//		this.bigDataAirportHotelBaselStartFrame = bigDataAirportHotelBaselStartFrame;
-//		
-//		
-//	}
 	
 	
 	public LogicModelFundSachen(DataBaseGUI dataBaseGUI, Loading loading) {
@@ -70,12 +71,25 @@ public class LogicModelFundSachen extends LogicModel {
 			e1.printStackTrace();
 		}
 		
-		//	public NewFundsachen(DataBaseGUI dataBaseGUI, boolean modal, String abkuerzungMA) {
-		NewFundsachen newFundsachen = new NewFundsachen(dataBaseGUI, true, abkuerzungMA);
+		EventQueue.invokeLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				
+//				public NewFundsachen(DataBaseGUI dataBaseGUI, boolean modal, String abkuerzungMA) {
+				NewFundsachen newFundsachen = new NewFundsachen(dataBaseGUI, true, abkuerzungMA);
+				
+				LogicModelNewFundsachen logicModelFundSachen = new LogicModelNewFundsachen(dataBaseGUI, newFundsachen, getUserAHB(), loading);
+				
+				new NewFundsachenController(newFundsachen, logicModelFundSachen);
+				
+				newFundsachen.setLocationRelativeTo(null);
+				
+				newFundsachen.setVisible(true);
+			}
+		});
 		
-		newFundsachen.setLocationRelativeTo(null);
 		
-		newFundsachen.setVisible(true);
 		
 		
 		
