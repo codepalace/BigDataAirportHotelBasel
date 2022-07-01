@@ -52,6 +52,11 @@ public class DataBaseGUIController implements ActionListener, KeyListener, Windo
 		this.dataBaseGUI.btnNewParking.addActionListener(this);
 		this.dataBaseGUI.btnNewParking.addKeyListener(this);
 		
+		this.dataBaseGUI.btnNewFundsachen.addActionListener(this);
+		this.dataBaseGUI.btnNewFundsachen.addKeyListener(this);
+		
+		
+		
 	}
 	
 	
@@ -77,6 +82,10 @@ public class DataBaseGUIController implements ActionListener, KeyListener, Windo
 		} else if(e.getSource()==this.dataBaseGUI.btnNewParking) {
 			
 			this.logicModelParking.createNewParkingReservation(dataBaseGUI);
+		
+		} else if(e.getSource()==this.dataBaseGUI.btnNewFundsachen) {
+			
+			this.logicModelFundSachen.enterNewFoundsachenEntries(dataBaseGUI);
 		}
 		
 		

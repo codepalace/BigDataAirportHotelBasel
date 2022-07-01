@@ -128,7 +128,7 @@ public class NewParking extends JDialog {
 	public NewParking(DataBaseGUI dataBaseGUI, boolean modal, int tableCounter, String abkuerzungMA) {
 		
 		//We call super and the DataBaseGUI as argument so we specify that dataBaseGUI is the Object that we send that will be blocked 
-		super(dataBaseGUI);
+		super(dataBaseGUI, modal);
 		
 		this.tableCounter = tableCounter;
 		NewParking.abkuerzungMA = abkuerzungMA;
