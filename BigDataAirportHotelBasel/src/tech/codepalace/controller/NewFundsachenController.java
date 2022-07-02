@@ -38,6 +38,14 @@ public class NewFundsachenController implements ActionListener, WindowListener, 
 		this.newFundsachen.jaJButton.addKeyListener(this);
 		this.newFundsachen.neinJButton.addActionListener(this);
 		this.newFundsachen.neinJButton.addKeyListener(this);
+		
+		this.newFundsachen.datumItemFoundPlaceHolderTextField.addFocusListener(this);
+		
+		this.newFundsachen.cancelFoundSachen.addMouseListener(this);
+		this.newFundsachen.cancelFoundSachen.addActionListener(this);
+		this.newFundsachen.cancelFoundSachen.addKeyListener(this);
+		
+		
 	}
 	
 	
@@ -54,6 +62,10 @@ public class NewFundsachenController implements ActionListener, WindowListener, 
 			this.newFundsachen.dialog.dispose();
 			
 			
+		}else if(e.getSource()==this.newFundsachen.cancelFoundSachen) {
+			
+			this.newFundsachen.confirmClose();
+			
 		}
 		
 	}
@@ -64,6 +76,9 @@ public class NewFundsachenController implements ActionListener, WindowListener, 
 	@Override
 	public void windowClosing(WindowEvent e) {
 
+		//We set the value as true to avoid displaying an error message when the datumItemFoundPlaceHolderTextField Lost focus.
+		this.logicModelNewFundSachen.setClosingNewFundsachen(true);
+		
 		/*
 		 * by JFrame closing we call newFundsachen.confirmClose Method to ask the user if he is really ready to close.
 		 */
@@ -95,6 +110,12 @@ public class NewFundsachenController implements ActionListener, WindowListener, 
 	@Override
 	public void focusLost(FocusEvent e) {
 		
+		if(e.getSource()==this.newFundsachen.datumItemFoundPlaceHolderTextField) {
+			
+			//lost focus by datumItemFoundPlaceHolderTextField(Date was found the Lost and found item). then we check format.
+			logicModelNewFundSachen.checkDateFormat();
+		}
+		
 	}
 
 	@Override
@@ -104,6 +125,10 @@ public class NewFundsachenController implements ActionListener, WindowListener, 
 
 	@Override
 	public void mousePressed(MouseEvent e) {
+		
+		if(e.getSource()==this.newFundsachen.cancelFoundSachen) {
+			this.logicModelNewFundSachen.setClosingNewFundsachen(true);
+		}
 		
 	}
 
@@ -139,6 +164,10 @@ public class NewFundsachenController implements ActionListener, WindowListener, 
 			
 			this.newFundsachen.dialog.dispose();
 			
+			
+		}else if(e.getSource()==this.newFundsachen.cancelFoundSachen & e.getKeyCode()==10) {
+			
+			this.newFundsachen.confirmClose();
 			
 		}
 		
