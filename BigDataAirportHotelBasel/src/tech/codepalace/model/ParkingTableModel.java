@@ -58,7 +58,7 @@ public class ParkingTableModel extends DefaultTableModel {
 			
 			
 			/*
-			 If columns are different from, BUCHUNGSNAME, AUTOKFZ, and ANREISEDATUM etc within the conditional hey cannot be editable 
+			 If columns are different from, BUCHUNGSNAME, AUTOKFZ, and ANREISEDATUM etc within the conditional they cannot be editable 
 			 if they are the ones we have chosen within the conditional if they are editable and we can modify them.
 			 
 			The Constants have the value of each column where they are inside the table

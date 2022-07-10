@@ -1,6 +1,7 @@
 package tech.codepalace.view.tables;
 
 import java.awt.Color;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.JTable;
@@ -37,9 +38,37 @@ public ParkingTable() {
 	}
 
 
+
+@SuppressWarnings("serial")
 private void init() {
 	
-	parkingJTable = new JTable();
+	parkingJTable = new JTable(){
+
+      
+
+		//Implement table cell tool tips.           
+        public String getToolTipText(MouseEvent e) {
+            String tip = null;
+            java.awt.Point p = e.getPoint();
+            int rowIndex = rowAtPoint(p);
+            int colIndex = columnAtPoint(p);
+
+            try {
+                tip = getValueAt(rowIndex, colIndex).toString();
+            } catch (RuntimeException e1) {
+                //catch null pointer exception if mouse is over an empty line
+            }
+
+            return tip;
+        }
+    };
+	
+	
+	
+	
+	
+	
+	
 	parkingJTable.setBackground(Color.WHITE);
 	parkingJTable.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 	
@@ -209,15 +238,15 @@ private void buildTable(String[] tableHeaders, Object[][] data) {
 	parkingJTable.setRowHeight(25);//cell size
 	parkingJTable.setGridColor(new java.awt.Color(0, 0, 0)); 
 	//Define the length size for each column and its contents
-	parkingJTable.getColumnModel().getColumn(TableParkingUtilities.IDPARKING).setPreferredWidth(80);
-	parkingJTable.getColumnModel().getColumn(TableParkingUtilities.BUCHUNGSNAME).setPreferredWidth(180);
+	parkingJTable.getColumnModel().getColumn(TableParkingUtilities.IDPARKING).setPreferredWidth(100);
+	parkingJTable.getColumnModel().getColumn(TableParkingUtilities.BUCHUNGSNAME).setPreferredWidth(150);
 	parkingJTable.getColumnModel().getColumn(TableParkingUtilities.AUTOKFZ).setPreferredWidth(120);
-	parkingJTable.getColumnModel().getColumn(TableParkingUtilities.ANREISEDATUM).setPreferredWidth(100);
-	parkingJTable.getColumnModel().getColumn(TableParkingUtilities.ABREISEDATUM).setPreferredWidth(100);
-	parkingJTable.getColumnModel().getColumn(TableParkingUtilities.ANZAHLDESTAGES).setPreferredWidth(50);
+	parkingJTable.getColumnModel().getColumn(TableParkingUtilities.ANREISEDATUM).setPreferredWidth(125);
+	parkingJTable.getColumnModel().getColumn(TableParkingUtilities.ABREISEDATUM).setPreferredWidth(130);
+	parkingJTable.getColumnModel().getColumn(TableParkingUtilities.ANZAHLDESTAGES).setPreferredWidth(80);
 	parkingJTable.getColumnModel().getColumn(TableParkingUtilities.BETRAG).setPreferredWidth(100);
 	parkingJTable.getColumnModel().getColumn(TableParkingUtilities.BUCHUNGSKANAL).setPreferredWidth(150);
-	parkingJTable.getColumnModel().getColumn(TableParkingUtilities.BEMERKUNGENG).setPreferredWidth(300);
+	parkingJTable.getColumnModel().getColumn(TableParkingUtilities.BEMERKUNGENG).setPreferredWidth(120);
 	parkingJTable.getColumnModel().getColumn(TableParkingUtilities.SCHLUESSEL).setPreferredWidth(80);
 	parkingJTable.getColumnModel().getColumn(TableParkingUtilities.KUERSELMA).setPreferredWidth(80);
 	

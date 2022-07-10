@@ -141,7 +141,7 @@ public class Fundgegenstand {
 	/**
 	 * @param kisteNummer the kisteNummer to set
 	 */
-	public void setKisteNummer(String kisteName) {
+	public void setKisteName(String kisteName) {
 		this.kisteName = kisteName;
 	}
 

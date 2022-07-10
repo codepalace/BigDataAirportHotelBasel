@@ -1,18 +1,14 @@
 package tech.codepalace.model;
 
 import java.awt.EventQueue;
-import java.awt.HeadlessException;
 import java.io.File;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 
-import javax.swing.SwingUtilities;
-
 import tech.codepalace.controller.NewParkingController;
 import tech.codepalace.dao.DAOParking;
 import tech.codepalace.dao.DaoException;
-import tech.codepalace.dao.DaoFactory;
 import tech.codepalace.dao.DaoParkingImpl;
 import tech.codepalace.utility.DataEncryption;
 import tech.codepalace.view.frames.DataBaseGUI;
@@ -30,7 +26,7 @@ public class LogicModelParking extends LogicModel {
 
 	
 	
-	private DataBaseGUI dataBaseGUI;
+	private static DataBaseGUI dataBaseGUI;
 	private Loading loading;
 	
 	protected DataEncryption dataEncryption;
@@ -59,7 +55,7 @@ public class LogicModelParking extends LogicModel {
 	public LogicModelParking(DataBaseGUI dataBaseGUI, Loading loading) {
 		
 
-		this.dataBaseGUI = dataBaseGUI;
+		LogicModelParking.dataBaseGUI = dataBaseGUI;
 		this.loading = loading;
 
 		//We create a new Instance fo DataEncryption, needed to decrypt some Data we need.
@@ -74,121 +70,6 @@ public class LogicModelParking extends LogicModel {
 	
 
 	
-	/**
-	 * @description method for checking the existence of the database
-	 */
-	public void checkParkingDataBase(DataBaseGUI dataBaseGUI) {
-		
-		this.dataBaseGUI = dataBaseGUI;
-		
-		try {
-			
-			
-			//We get the the path where the database should be stored
-			this.urlDataBase = this.dataEncryption.decryptData(getUserAHB().getUrlDataBase()); 
-			
-			//Name of the dataBase for this year. Each year we are going to have a new DataBase, to keep it from getting too big over time.
-			this.dbName = "BigDataAHBaselDB" + now.getYear();
-			
-			//We get the Path ulrDataBase + the dbName and put the value inside a File variable for after checking the existence of the DataBase
-			this.urlDataBaseFile = new File(this.urlDataBase + File.separator + dbName); 
-
-			//We call for checkExistsDataBasel as parameters urlDataBaseFile(File object).
-			checkExistsDataBase(this.urlDataBaseFile);
-			
-			
-			
-		} catch (HeadlessException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		
-	}
-	
-	
-	/**
-	 * @description Method to check if the DataBase exists.
-	 * @param urlDataBaseFile
-	 */
-	protected void checkExistsDataBase(File urlDataBaseFile) {
-		
-		
-		
-		//We check if the received parameter File(urlDataBaseFile eixsts 
-		if(urlDataBaseFile.exists()) {
-			
-			//If exists we invoke a new Thread 
-			SwingUtilities.invokeLater(new Runnable() {
-
-				@Override
-				public void run() {
-					
-					if(daoParking==null) {
-						//Create an Instance of DAOParking interface = DaoParkingImpl(Class implements the DAOParking interface) 
-						//with the parameter userAHB needed, dataBaseGUI, loading 
-						daoParking = new DaoParkingImpl(getUserAHB(), dataBaseGUI, loading);
-					
-					}
-		
-					
-					try {
-						//Check if we have a Parking Table.
-						daoParking.checkTableParking();
-					} catch (DaoException e) {
-						e.printStackTrace();
-					}
-					
-				}
-				
-			});
-			
-			
-		}else { //the DataBase do not exists 
-			
-			/*
-			 * let's proceed with the instructions for creating the database and subsequently create the connection
-			 */
-
-			
-			SwingUtilities.invokeLater(new Runnable() {
-				
-				@Override
-				public void run() {
-					
-					//Variable with the Database Driver Instruction jdbc:derby our Database Derby Embedded. It receive the urlDataBase included the dbName.
-					String url = "jdbc:derby:" + urlDataBase + File.separator + dbName;
-
-					//We create an instance of DaoFactroy 
-					DaoFactory daoFactory = new DaoFactory(url);
-				
-					//We call daoFactory to create the non-existent database
-					daoFactory.createDataBase();
-					
-					if(daoParking==null) {
-						//We create now a new Instance of DAOParking with the needed parameters.
-//						 daoParking = new DaoParkingImpl(getUserAHB(), ahbParking);
-						daoParking = new DaoParkingImpl(getUserAHB(), dataBaseGUI, loading);
-					}
-					
-					//Database was created now we call to checkTableParking
-					try {
-						daoParking.checkTableParking();
-					} catch (DaoException e) {
-						e.printStackTrace();
-					}
-
-				}
-			});
-			
-
-			
-
-		}
-	}
-
-	
 	
 
 	/**
@@ -196,7 +77,7 @@ public class LogicModelParking extends LogicModel {
 	 */
 	public void createNewParkingReservation(DataBaseGUI dataBaseGUI) {
 		
-		this.dataBaseGUI = dataBaseGUI;
+		LogicModelParking.dataBaseGUI = dataBaseGUI;
 
 	
 		try {
@@ -210,7 +91,7 @@ public class LogicModelParking extends LogicModel {
 			
 
 			
-			this.daoParking = new DaoParkingImpl(getUserAHB(), dataBaseGUI, loading);
+			this.daoParking = new DaoParkingImpl(getUserAHB(), LogicModelParking.dataBaseGUI, loading);
 			tableCounter = daoParking.getDataRowCounter() + 1;
 			
 		} catch (DaoException e) {
@@ -248,13 +129,13 @@ public class LogicModelParking extends LogicModel {
 				 * the new Parking.
 				 */
 				
-				NewParking newparking = new NewParking(dataBaseGUI, true, tableCounter, abkuerzungMA);
+				NewParking newparking = new NewParking(LogicModelParking.dataBaseGUI, true, tableCounter, abkuerzungMA);
 				
 				
 				/*
 				 * We create a LogicModelNewParking and passing also the required parameters. Nothing special to explain in this part.
 				 */
-				LogicModelNewParking logicModelNewParking = new LogicModelNewParking(dataBaseGUI, newparking, getUserAHB(), loading);
+				LogicModelNewParking logicModelNewParking = new LogicModelNewParking(LogicModelParking.dataBaseGUI, newparking, getUserAHB(), loading);
 
 					
 				//New Instance of NewParkingController to control the newParking GUI.

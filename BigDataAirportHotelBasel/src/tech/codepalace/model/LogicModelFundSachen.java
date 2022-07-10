@@ -20,7 +20,7 @@ public class LogicModelFundSachen extends LogicModel {
 	
 
 	
-	private DataBaseGUI dataBaseGUI;
+	private static DataBaseGUI dataBaseGUI;
 	private Loading loading;
 	
 	private String  abkuerzungMA = "";
@@ -30,7 +30,7 @@ public class LogicModelFundSachen extends LogicModel {
 	
 	
 	public LogicModelFundSachen(DataBaseGUI dataBaseGUI, Loading loading) {
-		this.dataBaseGUI = dataBaseGUI;
+		LogicModelFundSachen.dataBaseGUI = dataBaseGUI;
 		this.loading = loading;
 		
 		//We create a new Instance fo DataEncryption, needed to decrypt some Data we need.
@@ -53,7 +53,7 @@ public class LogicModelFundSachen extends LogicModel {
 		
 		
 		
-		this.dataBaseGUI = dataBaseGUI;
+		LogicModelFundSachen.dataBaseGUI = dataBaseGUI;
 		
 		
 		try {
@@ -76,8 +76,8 @@ public class LogicModelFundSachen extends LogicModel {
 			@Override
 			public void run() {
 				
-//				public NewFundsachen(DataBaseGUI dataBaseGUI, boolean modal, String abkuerzungMA) {
-				NewFundsachen newFundsachen = new NewFundsachen(dataBaseGUI, true, abkuerzungMA);
+
+				NewFundsachen newFundsachen = new NewFundsachen(LogicModelFundSachen.dataBaseGUI, true, abkuerzungMA);
 				
 				LogicModelNewFundsachen logicModelFundSachen = new LogicModelNewFundsachen(dataBaseGUI, newFundsachen, getUserAHB(), loading);
 				

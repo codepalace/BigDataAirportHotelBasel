@@ -1,6 +1,7 @@
 package tech.codepalace.view.tables;
 
 import java.awt.Color;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.JTable;
@@ -34,9 +35,31 @@ public class FundsachenTable {
 		buildTable();
 	}
 	
+	@SuppressWarnings("serial")
 	private void init() {
 		
-		this.fundsachenJTable = new JTable();
+		this.fundsachenJTable = new JTable(){
+
+		      
+
+			//Implement table cell tool tips.           
+	        public String getToolTipText(MouseEvent e) {
+	            String tip = null;
+	            java.awt.Point p = e.getPoint();
+	            int rowIndex = rowAtPoint(p);
+	            int colIndex = columnAtPoint(p);
+
+	            try {
+	                tip = getValueAt(rowIndex, colIndex).toString();
+	            } catch (RuntimeException e1) {
+	                //catch null pointer exception if mouse is over an empty line
+	            }
+
+	            return tip;
+	        }
+	    };
+		
+		
 		this.fundsachenJTable.setBackground(Color.WHITE);
 		this.fundsachenJTable.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		
@@ -101,8 +124,8 @@ public class FundsachenTable {
 		 */
 		
 		/*
-		 toni: 
-		 Este metodo lo que hace es recorrer toda la informacion y va a comenzar a asignarla en cada posicion de la tabla. 
+	
+		What this method does is go through all the information and it will start assigning it to each position in the table.
 		
 		 we create an information array [listaPersonas.size][listParkingReservations.size] 
 		 
@@ -121,15 +144,15 @@ public class FundsachenTable {
 			 
 			
 
-			 ya se que corresponde a 0, .NOMBRE a 1, etc.
+		
 			 
 			 In a Row.
-			 [0][0] i'll have the IDPARKING
-			 [0][1] i'll have the BUCHUNGSNAME
-			 [0][2] i'll have the AUTOKFZ
+			 [0][0] i'll have the DATUM
+			 [0][1] i'll have the FUNDSACHE
+			 [0][2] i'll have the FUNDORT
 			 etc.
 			 
-			 etc asi sucesivamente con el resto de informacion que se va rellenando en el array con el que se va a mostrar esa informacion.
+			 etc so on with the rest of the information that is being filled in the array with which that information is going to be displayed.
 			 
 			 
 			 
@@ -162,13 +185,13 @@ public class FundsachenTable {
 	private void buildTable(String[] tableHeaders, Object[][] data) {
 		
 		/*
-		 We assign the model the data and titles, which are sent to the constructor of the Model class(ParkingTableModel).
+		 We assign the model the data and titles, which are sent to the constructor of the Model class(FundsachenTableModel).
 		 */
 		fundsachenTableModel=new FundsachenTableModel(data, tableHeaders);
 
 		
 		/*
-		 After we have the model created above, that model is assigned to the parkingJTable.
+		 After we have the model created above, that model is assigned to the fundsachenJTable.
 		 */
 		fundsachenJTable.setModel(fundsachenTableModel);
 		
@@ -189,14 +212,14 @@ public class FundsachenTable {
 		fundsachenJTable.setRowHeight(25);//cell size
 		fundsachenJTable.setGridColor(new java.awt.Color(0, 0, 0)); 
 		//Define the length size for each column and its contents
-		fundsachenJTable.getColumnModel().getColumn(TableFundsachenUtilities.DATUM).setPreferredWidth(30);
-		fundsachenJTable.getColumnModel().getColumn(TableFundsachenUtilities.FUNDSACHEN).setPreferredWidth(280);
+		fundsachenJTable.getColumnModel().getColumn(TableFundsachenUtilities.DATUM).setPreferredWidth(70);
+		fundsachenJTable.getColumnModel().getColumn(TableFundsachenUtilities.FUNDSACHEN).setPreferredWidth(200);
 		fundsachenJTable.getColumnModel().getColumn(TableFundsachenUtilities.FUNDORT).setPreferredWidth(120);
-		fundsachenJTable.getColumnModel().getColumn(TableFundsachenUtilities.INHABER).setPreferredWidth(180);
-		fundsachenJTable.getColumnModel().getColumn(TableFundsachenUtilities.KISTNUMMER).setPreferredWidth(20);
+		fundsachenJTable.getColumnModel().getColumn(TableFundsachenUtilities.INHABER).setPreferredWidth(140);
+		fundsachenJTable.getColumnModel().getColumn(TableFundsachenUtilities.KISTNUMMER).setPreferredWidth(50);
 		fundsachenJTable.getColumnModel().getColumn(TableFundsachenUtilities.KISTENAME).setPreferredWidth(80);
-		fundsachenJTable.getColumnModel().getColumn(TableFundsachenUtilities.RUECKGABE).setPreferredWidth(280);
-		fundsachenJTable.getColumnModel().getColumn(TableFundsachenUtilities.KUERSELMA).setPreferredWidth(10);
+		fundsachenJTable.getColumnModel().getColumn(TableFundsachenUtilities.RUECKGABE).setPreferredWidth(150);
+		fundsachenJTable.getColumnModel().getColumn(TableFundsachenUtilities.KUERSELMA).setPreferredWidth(40);
 
 		
 		

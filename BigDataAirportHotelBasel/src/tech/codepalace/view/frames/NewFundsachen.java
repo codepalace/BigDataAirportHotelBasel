@@ -39,7 +39,10 @@ public class NewFundsachen extends JDialog {
 		private JPanel entriesPanel, buttonPanel, mainJPanel;
 		
 		private JLabel treasure, dateItemFoundJLabel, fundItemsJLabel, fundOrtJLabel, inhaberJLabel, kisteNummerJLabel, 
-		kisteNameJLabel, abkuerzungMAJLabel, abkuerzungMAGeneratedJLabel;
+		kisteNameJLabel, abkuerzungMAJLabel;
+		
+		public JLabel abkuerzungMAGeneratedJLabel;
+		
 		public PlaceHolderTextField datumItemFoundPlaceHolderTextField;
 		
 		/*

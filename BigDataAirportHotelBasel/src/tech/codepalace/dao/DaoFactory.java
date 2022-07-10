@@ -368,14 +368,16 @@ public class DaoFactory {
 						 + "ID INT NOT NULL GENERATED ALWAYS AS IDENTITY,"
 						 + "dateItemsWasFound DATE NOT NULL,"
 						 + "foundItem VARCHAR(126) NOT NULL,"
-						 + "roomNumber INTEGER,"
+						 + "foundPlace VARCHAR(50) NOT NULL,"
 						 + "inhaber VARCHAR(62) NOT NULL,"
-						 + "kiste VARCHAR(30) NOT NULL,"
 						 + "kisteNummer INTEGER,"
+						 + "kisteName VARCHAR(30) NOT NULL,"
 						 + "rueckGabe VARCHAR(156),"
+						 + "verkaufer VARCHAR(20) NOT NULL,"
 						 + "PRIMARY KEY (ID)"
 						 + ")";
 				
+				  break;
 
 			default:
 				break;
