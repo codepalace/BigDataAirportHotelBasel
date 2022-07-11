@@ -92,7 +92,7 @@ public class NewFundsachenController implements ActionListener, WindowListener, 
 			this.logicModelNewFundSachen.checkDateFormat();
 			this.logicModelNewFundSachen.checkAllEntries();
 			
-			this.newFundsachen.dispose();
+		
 			
 		}
 		
@@ -275,7 +275,7 @@ else if(e.getSource()==this.newFundsachen.kisteNummerJComboBox) {
 			
 			this.logicModelNewFundSachen.checkDateFormat();
 			this.logicModelNewFundSachen.checkAllEntries();
-			this.newFundsachen.dispose();
+			
 		}
 	}
 

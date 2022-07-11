@@ -332,7 +332,7 @@ public class LogicModelNewFundsachen extends LogicModel {
 				this.fundgegenstand.setAbkuerzungMA(this.newFundsachen.abkuerzungMAGeneratedJLabel.getText());
 				
 				
-				
+				this.newFundsachen.dispose();
 				
 				
 				try {
