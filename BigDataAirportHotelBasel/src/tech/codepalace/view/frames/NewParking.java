@@ -3,7 +3,6 @@ package tech.codepalace.view.frames;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -50,11 +49,15 @@ public class NewParking extends JDialog {
 	//Our Panel with Background Image
 	private PanelWithBackgroundOption panelWithBackgroundOption;
 	
-	private JPanel entriesPanel, jcomboPanel;
+	private JPanel mainJPanel, entriesPanel;
 	
 	private JLabel chevy57;
 	
 	//We use a GridBagLayout in this JDialog.
+	
+	private GridBagLayout mainGBL;
+	private GridBagConstraints mainGBC;
+	
 	private GridBagLayout gbl;
  	private GridBagConstraints gbc;
  	
@@ -135,7 +138,7 @@ public class NewParking extends JDialog {
 		
 		
 		
-		setSize(720, 570);
+		setSize(720, 450);
 		setTitle("Neue Parkplatzreservierung Erstellen");
 		
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -159,14 +162,14 @@ public class NewParking extends JDialog {
 	private void init() {
 		
 		this.panelWithBackgroundOption = new PanelWithBackgroundOption();
-		this.panelWithBackgroundOption.setLayout(new BorderLayout());
+//		this.panelWithBackgroundOption.setLayout(new BorderLayout());
 		this.panelWithBackgroundOption.setImage("/img/backgroundframe.jpg");
 		
 		setContentPane(this.panelWithBackgroundOption);
 		
 		setIconImage(new ImageIcon(getClass().getResource("/img/iconoHotel.png")).getImage());
 		
-		this.anreiseDatumPlaceHolderTextField = new PlaceHolderTextField();
+		this.anreiseDatumPlaceHolderTextField = new PlaceHolderTextField(20);
 		
 		
 		
@@ -226,15 +229,26 @@ public class NewParking extends JDialog {
 		this.chevy57 = new JLabel(new ImageIcon(getClass().getResource("/img/chevy57up.png")));
 		
 		
-		this.panelWithBackgroundOption.add(chevy57, BorderLayout.WEST);
+//		this.panelWithBackgroundOption.add(chevy57, BorderLayout.WEST);
 		
+		//mainJPanel will be added to the panelWithBckgroundOption and it will be added to this JPanel the other elements.
+		this.mainJPanel = new JPanel();
+		
+		//entriesPanel will contain all the edit elements.
 		this.entriesPanel = new JPanel();
+		
+		this.mainGBL = new GridBagLayout();
+		this.mainGBC = new GridBagConstraints();
 		
 		this.gbl = new GridBagLayout();
 		this.gbc = new GridBagConstraints();
 		
 		this.entriesPanel.setLayout(gbl);
 		this.entriesPanel.setOpaque(false);
+		
+		this.mainJPanel.setLayout(mainGBL);
+		this.mainJPanel.setOpaque(false);
+		
 		
 		this.idParkingJLabel  = new JLabel("ID-Parking:");
 		this.idParkingJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -282,7 +296,7 @@ public class NewParking extends JDialog {
 	
 		
 		
-		this.anreiseDatumPlaceHolderTextField.setPreferredSize(new Dimension(310, 30));
+
 		this.anreiseDatumPlaceHolderTextField.setPlaceholder("dd.MM.JJJJ");
 		this.anreiseDatumPlaceHolderTextField.setFont(new Font("Verdana", Font.BOLD, 14));
 		
@@ -295,8 +309,7 @@ public class NewParking extends JDialog {
 		
 		
 		
-		this.abreiseDatumPlaceholderTextField = new PlaceHolderTextField();
-		this.abreiseDatumPlaceholderTextField.setPreferredSize(new Dimension(310, 30));
+		this.abreiseDatumPlaceholderTextField = new PlaceHolderTextField(20);
 		this.abreiseDatumPlaceholderTextField.setPlaceholder("dd.MM.JJJJ");
 		this.abreiseDatumPlaceholderTextField.setFont(new Font("Verdana", Font.BOLD, 14));
 		
@@ -358,17 +371,12 @@ public class NewParking extends JDialog {
 		this.schluesselJLabel.setFont(new Font("Verdana", Font.BOLD, 16));
 		this.schluesselJLabel.setForeground(Color.WHITE);
 		
-		this.jcomboPanel = new JPanel(new FlowLayout(FlowLayout.LEFT,0,0));
-		this.jcomboPanel.setPreferredSize(new Dimension(300, 30));
 		
 		this.choices = new String[] {"Nein","Ja"};
 		
 		this.schluesselBox = new JComboBox<String>(choices);
 		this.schluesselBox.setFont(new Font("Verdana", Font.BOLD, 14));
-		
-		this.jcomboPanel.add(schluesselBox);
-		this.jcomboPanel.setOpaque(false);
-		
+
 		
 		this.abkuerzungMAJLabel = new JLabel("Kürzel MA:"); //Wird automatisch generiert
 		this.abkuerzungMAJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -386,12 +394,7 @@ public class NewParking extends JDialog {
 		this.abkuerzungMAGeneratedJLabel.setText(getAbkuerzungMA());
 		
 		
-		
-		
-		
-		
-		
-		
+
 		
 
 		gbc.gridx = 0;
@@ -510,15 +513,18 @@ public class NewParking extends JDialog {
 
 		gbc.gridx = 0;
 		gbc.gridy = 9;
-		gbc.insets = new Insets(10, 0, 0, 0);
+		gbc.insets = new Insets(10, 0, 0, 10);
 		gbl.setConstraints(this.schluesselJLabel, gbc);
 		this.entriesPanel.add(this.schluesselJLabel);
 
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.weightx = 0.5;
 		gbc.gridx = 1;
 		gbc.gridy = 9;
-		gbc.insets = new Insets(15, 0, 0, 0);
-		gbl.setConstraints(this.jcomboPanel, gbc);
-		this.entriesPanel.add(jcomboPanel);
+		gbc.insets = new Insets(15, 12, 0, 10); //We could remove this code line if we use MacOs. Windows is sometimes complicated with LookAndFeel.
+		gbc.insets = new Insets(10, 5, 0, 0); //for macOs
+		gbl.setConstraints(this.schluesselBox, gbc);
+		this.entriesPanel.add(this.schluesselBox);
 
 		gbc.gridx = 0;
 		gbc.gridy = 10;
@@ -545,10 +551,25 @@ public class NewParking extends JDialog {
 		this.buttonPanel.add(this.saveParkingReservation, BorderLayout.EAST);
 		this.buttonPanel.add(this.cancelParkingReservation, BorderLayout.WEST);
 		
+		mainGBC.gridx = 0;
+		mainGBC.gridy = 0;
+		mainGBL.setConstraints(chevy57, mainGBC);
+		this.mainJPanel.add(chevy57);
 		
-		this.panelWithBackgroundOption.add(this.entriesPanel, BorderLayout.CENTER);
+		mainGBC.gridx = 1;
+		mainGBC.gridy = 0;
+		mainGBL.setConstraints(this.entriesPanel, mainGBC);
+		this.mainJPanel.add(this.entriesPanel);
 		
-		this.panelWithBackgroundOption.add(this.buttonPanel, BorderLayout.SOUTH);
+		mainGBC.gridx = 0;
+		mainGBC.gridy = 1;
+		mainGBC.fill = GridBagConstraints.HORIZONTAL;
+		mainGBC.gridwidth = 2;
+		mainGBL.setConstraints(buttonPanel, mainGBC);
+		this.mainJPanel.add(buttonPanel);
+		
+		
+		this.panelWithBackgroundOption.add(this.mainJPanel);
 		
 		
 		
