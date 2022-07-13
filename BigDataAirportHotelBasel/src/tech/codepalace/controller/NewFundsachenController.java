@@ -293,6 +293,7 @@ else if(e.getSource()==this.newFundsachen.kisteNummerJComboBox) {
 		if(e.getSource()==this.newFundsachen.kisteNummerJComboBox) {
 			
 			this.logicModelNewFundSachen.checkKistenNummer();
+			this.newFundsachen.kisteNameJTextField.setBorder(UIManager.getLookAndFeel().getDefaults().getBorder("TextField.border"));
 		}
 		
 	}

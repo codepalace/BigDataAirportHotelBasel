@@ -59,8 +59,8 @@ public class LogicModelNewFundsachen extends LogicModel {
 	//Variable to indicate if the Date Format is correct or not.
 	private boolean errorDateFormat = false;
 	
-	//Variable to indicate if all the JTextField are good fill out.
-	private boolean entryCompleted = false;
+	//Variables to indicate if all the JTextField are good fill out.
+	private boolean foundItemCompleted = false, foundPlaceCompleted = false, ownerCompleted = false, boxnameCompleted = false; 
 	
 	//Variable Object Fundgegenstand to save the information Lost And Found items.
 	protected Fundgegenstand fundgegenstand;
@@ -94,7 +94,7 @@ public class LogicModelNewFundsachen extends LogicModel {
 		
 		
 		//We initialize the value for entryCompleted as false.
-		this.entryCompleted = false;
+//		this.entryCompleted = false;
 		
 
 		
@@ -233,24 +233,22 @@ public class LogicModelNewFundsachen extends LogicModel {
 			if(this.newFundsachen.fundItemsJTexfield.getText().equals("") ||
 					this.newFundsachen.fundItemsJTexfield.getText().length()< 3) {
 				
-				this.entryCompleted = false;
+				this.foundItemCompleted = false;
 				this.newFundsachen.fundItemsJTexfield.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
 				
 			}else {
-				
-				this.entryCompleted = true;
+				this.foundItemCompleted = true;
 			}
 			
-			//Check fundOrtJTextField
 			if(this.newFundsachen.fundOrtJTextField.getText().equals("") ||
 					this.newFundsachen.fundOrtJTextField.getText().length()<3) {
 				
-				this.entryCompleted = false;
+				this.foundPlaceCompleted = false;
 				this.newFundsachen.fundOrtJTextField.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
 				
 			}else {
 				
-				this.entryCompleted = true;
+				this.foundPlaceCompleted = true;
 			}
 			
 			
@@ -259,16 +257,13 @@ public class LogicModelNewFundsachen extends LogicModel {
 			if(this.newFundsachen.inhaberJTextField.getText().equals("") ||
 					this.newFundsachen.inhaberJTextField.getText().length()<3) {
 
-					this.entryCompleted = false;
+					this.ownerCompleted = false;
 					this.newFundsachen.inhaberJTextField.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-					
-				
-					this.entryCompleted = false;	
 
 			
 			}else {
 				
-				this.entryCompleted = true;
+				this.ownerCompleted = true;
 			}
 			
 		
@@ -277,12 +272,17 @@ public class LogicModelNewFundsachen extends LogicModel {
 			
 			if(this.newFundsachen.kisteNameJTextField.getText().equals("")) {
 				
+				this.boxnameCompleted = false;
 				this.newFundsachen.kisteNameJTextField.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+			}else {
+				this.boxnameCompleted = true;
 			}
 			
 			
 			//Time to save the Information of the Lost and Found items.
-			if(!this.entryCompleted) {
+			if(!this.foundItemCompleted || !this.foundPlaceCompleted || !this.ownerCompleted || !this.boxnameCompleted ) {
+				
+				System.out.println("foundItem: " + foundItemCompleted + " foundPlace: " + foundPlaceCompleted + " owner: " + ownerCompleted + " boxname: " + boxnameCompleted);
 				
 				this.messageErrorDateLostAndFound = new JLabel("Bitte füllen Sie die rot markierten fehlenden Daten aus!");
 				
@@ -304,7 +304,7 @@ public class LogicModelNewFundsachen extends LogicModel {
 					}
 				});
 				
-			}else {
+			}else  {
 				
 			
 				
@@ -367,7 +367,8 @@ public class LogicModelNewFundsachen extends LogicModel {
 		switch (kistenNummer) {
 			case "Kistenummer wählen":
 				
-				this.entryCompleted = false;
+//				this.entryCompleted = false;
+				this.boxnameCompleted = false;
 				this.newFundsachen.kisteNummerJComboBox.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
 				this.newFundsachen.kisteNameJTextField.setText("");
 				
@@ -377,40 +378,43 @@ public class LogicModelNewFundsachen extends LogicModel {
 				
 				this.newFundsachen.kisteNameJTextField.setText("Elektro Artikel");
 				this.kisteNumme = 1;
+				this.boxnameCompleted = true;
 				break;
 				
 			case "2-Schmuck / Brillen":
-				
 				this.newFundsachen.kisteNameJTextField.setText("Schmuck / Brillen");
 				this.kisteNumme = 2;
+				this.boxnameCompleted = true;
 				break;
 				
 			case "3-Kleidung":
-				
 				this.newFundsachen.kisteNameJTextField.setText("Kleidung");
 				this.kisteNumme = 3;
+				this.boxnameCompleted = true;
 				break;
 				
 			case "4-Kosmetik / Badezimmer":
-				
 				this.newFundsachen.kisteNameJTextField.setText("Kosmetik / Badezimmer");
 				this.kisteNumme = 4;
+				this.boxnameCompleted = true;
 				break;
 				
 			case "5-Bücher":
-				
 				this.newFundsachen.kisteNameJTextField.setText("Bücher");
 				this.kisteNumme = 5;
+				this.boxnameCompleted = true;
 				break;
 				
 			case "6-Briefe / Karten jegliche Art":
 				this.newFundsachen.kisteNameJTextField.setText("Briefe / Karten jegliche Art");
 				this.kisteNumme = 6;
+				this.boxnameCompleted = true;
 				break;
 				
 			case "7-Sonstiges":
 				this.newFundsachen.kisteNameJTextField.setText("Sonstiges");
 				this.kisteNumme = 7;
+				this.boxnameCompleted = true;
 				break;
 			
 			
