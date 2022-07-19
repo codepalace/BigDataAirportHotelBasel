@@ -84,6 +84,7 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 	protected Fundgegenstand fundgegenstand;
 	
 	
+	
 	public DaoFundsachenImpl(UserAHB userAHB, DataBaseGUI dataBaseGUI, Loading loading) {
 		
 		this.userAHB = userAHB;
@@ -434,6 +435,7 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 							 * The values are retrieved from each result found in the table and of course from the corresponding column in the table FUNDSACHEN.
 							 */
 							
+							int id = resultSet.getInt("ID");
 							Date dateItemWasFound = resultSet.getDate("dateItemsWasFound");
 							String foundItem = resultSet.getString("foundItem");
 							String foundPlace = resultSet.getString("foundPlace");
@@ -447,6 +449,7 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 							Fundgegenstand fundgegenstand = new Fundgegenstand();
 							
 							//We set the values of this Object type Fundgegenstand
+							fundgegenstand.setId(id);
 							fundgegenstand.setDateItemsWasFound(dateItemWasFound);
 							fundgegenstand.setFoundItems(foundItem);
 							fundgegenstand.setFundort(foundPlace);
@@ -498,7 +501,7 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 							 * 
 							 * by getBetragParking we add the Euro symbol.
 							 */
-							Object[] row = {chunk.getDateItemsWasFound(), chunk.getFoundItems(), chunk.getFundort(),
+							Object[] row = {chunk.getId(), chunk.getDateItemsWasFound(), chunk.getFoundItems(), chunk.getFundort(),
 									chunk.getInhaber(), chunk.getKisteNummer(), chunk.getKisteName(), 
 									chunk.getRueckGabe(), chunk.getAbkuerzungMA()};
 							
@@ -520,6 +523,7 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 							 * If the cell is type number then it will have a different font color. 
 							 */
 							
+							dataBaseGUI.fundsachenTable.getColumnModel().getColumn(TableFundsachenUtilities.ID).setCellRenderer(new CellTableManager("number"));
 							dataBaseGUI.fundsachenTable.getColumnModel().getColumn(TableFundsachenUtilities.DATUM).setCellRenderer(new CellTableManager("number"));
 							dataBaseGUI.fundsachenTable.getColumnModel().getColumn(TableFundsachenUtilities.FUNDSACHEN).setCellRenderer(new CellTableManager("text"));
 							dataBaseGUI.fundsachenTable.getColumnModel().getColumn(TableFundsachenUtilities.FUNDORT).setCellRenderer(new CellTableManager("text"));
@@ -632,6 +636,76 @@ public class DaoFundsachenImpl implements DAOFundsachen {
  	private static String getDerbyURL() {
  		return DaoFundsachenImpl.derbyUrl;
  	}
+
+
+
+
+	@Override
+	public void updateFundsachen(Fundgegenstand fundgegenstand) throws DaoException {
+
+		//fundgegenstand receives the new value from the parameter. 
+		this.fundgegenstand = fundgegenstand;
+		
+		
+		try {
+
+			//We set the URL to connect to the Database.
+           setURLToConnectCurrentDataBase();
+			
+			
+			//Initialize daoFactory Object with the URL value.
+			DaoFundsachenImpl.daoFactory = new DaoFactory(getDerbyURL());
+			
+			//We set the value of connection calling daoFactory to connect(). connect Method return a Connection Object.
+			DaoFundsachenImpl.connection = DaoFundsachenImpl.daoFactory.connect();
+
+			/*SQL Sentence to update the FUNDSACHEN table in our Database only where the id= got it from the 
+			 * fundgegenstand Object call getId() Method.
+			 */
+			String sql = "Update FUNDSACHEN set dateItemsWasFound=?, foundItem=?, foundPlace=?, "
+												+ "inhaber=?, kisteNummer=?, kisteName=?, rueckGabe=?,"
+												+ "verkaufer=? where id=" + this.fundgegenstand.getId() +"";
+				
+			//Initialize value preparedStatement giving the connection the sql sentence.
+			this.preparedStatement = connection.prepareStatement(sql);
+
+			//We set the new values to the selected row i mean where we have the id number to be modified.
+			this.preparedStatement.setDate(1, this.fundgegenstand.getDateItemsWasFound());
+			this.preparedStatement.setString(2, this.fundgegenstand.getFoundItems());
+			this.preparedStatement.setString(3, this.fundgegenstand.getFundort());
+			this.preparedStatement.setString(4,  this.fundgegenstand.getInhaber());
+			this.preparedStatement.setInt(5,  this.fundgegenstand.getKisteNummer());
+			this.preparedStatement.setString(6, this.fundgegenstand.getKisteName());
+			this.preparedStatement.setString(7,  this.fundgegenstand.getRueckGabe());
+			this.preparedStatement.setString(8, this.fundgegenstand.getAbkuerzungMA());
+			
+			//Ready to update the values
+			this.preparedStatement.executeUpdate();
+			
+			//We write the data definitively
+			DaoFundsachenImpl.connection.commit();
+			
+			
+			
+		
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}finally {
+			
+			try {
+				//Close the connection.
+				this.preparedStatement.close();
+				DaoFundsachenImpl.connection.close();
+				DaoFundsachenImpl.daoFactory.closeConnection(getDerbyURL());
+
+				
+			}catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
  	
  	
  	

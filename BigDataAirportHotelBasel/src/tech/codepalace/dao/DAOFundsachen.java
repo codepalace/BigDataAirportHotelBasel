@@ -41,5 +41,13 @@ public interface DAOFundsachen {
 	void displayListFundsachen() throws DaoException;
 	
 	
+	/**
+	 * @description Method to update the modified data in a selected row inside the JTable 
+	 * @param fundgegenstand
+	 * @throws DaoException
+	 */
+	void updateFundsachen(Fundgegenstand fundgegenstand) throws DaoException;
+	
+	
 
 }

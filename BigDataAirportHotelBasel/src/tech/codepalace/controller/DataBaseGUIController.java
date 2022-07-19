@@ -7,6 +7,10 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.TableModel;
+
 import tech.codepalace.model.LogicModelFundSachen;
 import tech.codepalace.model.LogicModelParking;
 import tech.codepalace.view.frames.BigDataAirportHotelBaselStartFrame;
@@ -22,7 +26,7 @@ import tech.codepalace.view.frames.DataBaseGUI;
  * <p>The LogicModelParking so we can call anyTime for creating a new Parking-Reservation for example.</p>
  *
  */
-public class DataBaseGUIController implements ActionListener, KeyListener, WindowListener {
+public class DataBaseGUIController implements ActionListener, KeyListener, WindowListener, TableModelListener {
 	
 
 	private BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame;
@@ -56,6 +60,20 @@ public class DataBaseGUIController implements ActionListener, KeyListener, Windo
 		this.dataBaseGUI.btnNewFundsachen.addKeyListener(this);
 		
 		
+		/*
+		 * depending on the table that is visible it will be add TableModelListener. 
+		 * 
+		 * So we can know if some cell in the JTable has been modified.
+		 * 
+		 * For that we go to the Method tableChanged
+		 */
+		if(this.dataBaseGUI.parkingTable != null) {
+			this.dataBaseGUI.parkingTable.getModel().addTableModelListener(this);
+		}
+		else if(this.dataBaseGUI.fundsachenTable != null) {
+			this.dataBaseGUI.fundsachenTable.getModel().addTableModelListener(this);
+		}
+
 		
 	}
 	
@@ -144,6 +162,67 @@ public class DataBaseGUIController implements ActionListener, KeyListener, Windo
 
 	@Override
 	public void windowDeactivated(WindowEvent e) {}
+
+
+
+	@Override
+	public void tableChanged(TableModelEvent e) {
+
+		//Variable to get the value of the selected row in the JTable.
+		int selectedRow=0;
+
+		/*
+		 * depending on the table that is visible we get the selected Row calling the 
+		 * Method getSelectedRow().
+		 */
+		if(this.dataBaseGUI.parkingTable != null) {
+			
+			selectedRow = this.dataBaseGUI.parkingTable.getSelectedRow();
+			
+		}else if(this.dataBaseGUI.fundsachenTable != null) {
+			
+			selectedRow = this.dataBaseGUI.fundsachenTable.getSelectedRow();
+			
+		}
+		
+		
+		
+		//TableMode will received the value of the current JTable displayed.
+		TableModel model = (TableModel)e.getSource();
+
+		
+		/* To avoid one ArrayIndexOutOfBoundsException i use one conditional if 
+		 * to evaluate if selectedRow =!-1 of course we can use a try-catch
+		 */
+		if(selectedRow!=-1) {
+		
+
+			//if parkingTable is displayed we call to update the data for Parking
+			if(this.dataBaseGUI.parkingTable != null) {
+				
+				//@TODO update PARKING Table
+				
+		
+			//if fundsachenTable is displayed we call to update the data for FUNDSACHEN(Lost and found)
+			}else if(this.dataBaseGUI.fundsachenTable != null) {
+			
+			
+		
+				/*
+				 * We call the Method updateFundsachen by LogicModelFundsachen. 
+				 * 
+				 * - First Parameter  of this Method is the selected Row
+				 * - Second Parameter the TableModel needed to get all value and generated values for the Instance Fundgegenstand by the Logic Class.
+				 * - Third Parameter the Object DataBaseGUI to be able to send it in the same way to the DAO object. 
+				 */
+				this.logicModelFundSachen.updateFundsachen(selectedRow, model, this.dataBaseGUI);
+				
+			}
+		}
+
+		
+		
+	}
 	
 	
 	

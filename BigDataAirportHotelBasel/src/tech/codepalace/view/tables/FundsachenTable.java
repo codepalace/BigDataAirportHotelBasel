@@ -78,7 +78,7 @@ public class FundsachenTable {
 		 */
 		ArrayList<String> tableHeadersList=new ArrayList<>();
 		
-		
+		tableHeadersList.add("ID");
 		tableHeadersList.add("Datum");
 		tableHeadersList.add("Fundsachen");
 		tableHeadersList.add("Zimmer/Fundort");
@@ -159,6 +159,7 @@ public class FundsachenTable {
 			 
 			 */
 			
+			information[x][TableFundsachenUtilities.ID] = listFundsachen.get(x).getId()+ "";
 			information[x][TableFundsachenUtilities.DATUM] = listFundsachen.get(x).getDateItemsWasFound()+ "";
 			information[x][TableFundsachenUtilities.FUNDSACHEN] = listFundsachen.get(x).getFoundItems()+ "";
 			information[x][TableFundsachenUtilities.FUNDORT] = listFundsachen.get(x).getFundort()+ "";
@@ -198,6 +199,7 @@ public class FundsachenTable {
 		
 		
 		//the type of data that will have the cells of each column defined respectively is assigned to validate its customization
+		fundsachenJTable.getColumnModel().getColumn(TableFundsachenUtilities.ID).setCellRenderer(new CellTableManager("number"));
 		fundsachenJTable.getColumnModel().getColumn(TableFundsachenUtilities.DATUM).setCellRenderer(new CellTableManager("number"));
 		fundsachenJTable.getColumnModel().getColumn(TableFundsachenUtilities.FUNDSACHEN).setCellRenderer(new CellTableManager("texto"));
 		fundsachenJTable.getColumnModel().getColumn(TableFundsachenUtilities.FUNDORT).setCellRenderer(new CellTableManager("texto"));
@@ -212,6 +214,7 @@ public class FundsachenTable {
 		fundsachenJTable.setRowHeight(25);//cell size
 		fundsachenJTable.setGridColor(new java.awt.Color(0, 0, 0)); 
 		//Define the length size for each column and its contents
+		fundsachenJTable.getColumnModel().getColumn(TableFundsachenUtilities.ID).setPreferredWidth(10);
 		fundsachenJTable.getColumnModel().getColumn(TableFundsachenUtilities.DATUM).setPreferredWidth(70);
 		fundsachenJTable.getColumnModel().getColumn(TableFundsachenUtilities.FUNDSACHEN).setPreferredWidth(200);
 		fundsachenJTable.getColumnModel().getColumn(TableFundsachenUtilities.FUNDORT).setPreferredWidth(120);

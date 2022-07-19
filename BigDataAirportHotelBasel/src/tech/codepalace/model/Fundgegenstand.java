@@ -11,6 +11,7 @@ import java.sql.Date;
 public class Fundgegenstand {
 	
 	//Variables for the Lost and found items.
+	private int id;
 	private Date dateItemsWasFound;
 	private String foundItems;
 	private String fundort;
@@ -36,6 +37,27 @@ public class Fundgegenstand {
 
 
 	public Fundgegenstand() {}
+
+
+	
+
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
+
+
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+
 
 
 
