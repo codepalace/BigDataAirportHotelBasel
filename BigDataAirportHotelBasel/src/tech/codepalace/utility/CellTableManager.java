@@ -120,8 +120,7 @@ public class CellTableManager extends DefaultTableCellRenderer {
        }
                
        //if the data type the cell will have is text
-       if( type.equals("text"))
-       {
+       if( type.equals("text")){
        	//if text type defines the background color of the text and cell as well as the alignment
            if (focused) {
         	   backgroundColor=backgroundColorSelection;
@@ -144,8 +143,7 @@ public class CellTableManager extends DefaultTableCellRenderer {
 
        
        //if the data type the cell will have is number
-       if( type.equals("number"))
-       {        
+       if( type.equals("number")){        
     	   
        	if (focused) {
        		backgroundColor=backgroundColorSelection;
@@ -165,6 +163,27 @@ public class CellTableManager extends DefaultTableCellRenderer {
            this.setFont(bold);            
            return this;   
        }
+       
+       
+       
+       
+       
+       if( type.equals("important")) {
+    	   
+    		if (focused) {
+           		backgroundColor=backgroundColorSelection;
+        		}else{
+        			backgroundColor=defaultBackgroundColor;
+        		}
+      
+               this.setHorizontalAlignment( JLabel.CENTER );
+        
+               this.setText( (String) value );  
+    	
+    	   this.setForeground(Color.RED);
+       }
+       
+       
 		
 		return this;
 		

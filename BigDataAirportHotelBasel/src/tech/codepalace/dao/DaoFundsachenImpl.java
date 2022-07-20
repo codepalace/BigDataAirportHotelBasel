@@ -530,7 +530,7 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 							dataBaseGUI.fundsachenTable.getColumnModel().getColumn(TableFundsachenUtilities.INHABER).setCellRenderer(new CellTableManager("text"));
 							dataBaseGUI.fundsachenTable.getColumnModel().getColumn(TableFundsachenUtilities.KISTNUMMER).setCellRenderer(new CellTableManager("number"));
 							dataBaseGUI.fundsachenTable.getColumnModel().getColumn(TableFundsachenUtilities.KISTENAME).setCellRenderer(new CellTableManager("text"));
-							dataBaseGUI.fundsachenTable.getColumnModel().getColumn(TableFundsachenUtilities.RUECKGABE).setCellRenderer(new CellTableManager("text"));
+							dataBaseGUI.fundsachenTable.getColumnModel().getColumn(TableFundsachenUtilities.RUECKGABE).setCellRenderer(new CellTableManager("important"));
 							
 							//aqui tenemos que agregar la constante verkaufer oder mitarbeiter. se queda para la otra aventura.
 							dataBaseGUI.fundsachenTable.getColumnModel().getColumn(TableFundsachenUtilities.KUERSELMA).setCellRenderer(new CellTableManager("text"));

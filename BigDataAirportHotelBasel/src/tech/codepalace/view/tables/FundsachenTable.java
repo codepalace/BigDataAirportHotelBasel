@@ -201,13 +201,13 @@ public class FundsachenTable {
 		//the type of data that will have the cells of each column defined respectively is assigned to validate its customization
 		fundsachenJTable.getColumnModel().getColumn(TableFundsachenUtilities.ID).setCellRenderer(new CellTableManager("number"));
 		fundsachenJTable.getColumnModel().getColumn(TableFundsachenUtilities.DATUM).setCellRenderer(new CellTableManager("number"));
-		fundsachenJTable.getColumnModel().getColumn(TableFundsachenUtilities.FUNDSACHEN).setCellRenderer(new CellTableManager("texto"));
-		fundsachenJTable.getColumnModel().getColumn(TableFundsachenUtilities.FUNDORT).setCellRenderer(new CellTableManager("texto"));
-		fundsachenJTable.getColumnModel().getColumn(TableFundsachenUtilities.INHABER).setCellRenderer(new CellTableManager("texto"));
+		fundsachenJTable.getColumnModel().getColumn(TableFundsachenUtilities.FUNDSACHEN).setCellRenderer(new CellTableManager("text"));
+		fundsachenJTable.getColumnModel().getColumn(TableFundsachenUtilities.FUNDORT).setCellRenderer(new CellTableManager("text"));
+		fundsachenJTable.getColumnModel().getColumn(TableFundsachenUtilities.INHABER).setCellRenderer(new CellTableManager("text"));
 		fundsachenJTable.getColumnModel().getColumn(TableFundsachenUtilities.KISTNUMMER).setCellRenderer(new CellTableManager("number"));
-		fundsachenJTable.getColumnModel().getColumn(TableFundsachenUtilities.KISTENAME).setCellRenderer(new CellTableManager("texto"));
-		fundsachenJTable.getColumnModel().getColumn(TableFundsachenUtilities.RUECKGABE).setCellRenderer(new CellTableManager("text"));
-		fundsachenJTable.getColumnModel().getColumn(TableFundsachenUtilities.KUERSELMA).setCellRenderer(new CellTableManager("texto"));
+		fundsachenJTable.getColumnModel().getColumn(TableFundsachenUtilities.KISTENAME).setCellRenderer(new CellTableManager("text"));
+		fundsachenJTable.getColumnModel().getColumn(TableFundsachenUtilities.RUECKGABE).setCellRenderer(new CellTableManager("important"));
+		fundsachenJTable.getColumnModel().getColumn(TableFundsachenUtilities.KUERSELMA).setCellRenderer(new CellTableManager("text"));
 
 		
 		fundsachenJTable.getTableHeader().setReorderingAllowed(false);
