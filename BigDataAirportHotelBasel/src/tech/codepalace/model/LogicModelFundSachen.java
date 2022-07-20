@@ -176,6 +176,9 @@ public class LogicModelFundSachen extends LogicModel {
 					
 					model.setValueAt(kisteN, selectedRow, 5);//We set the new value to the Column 5 in the JTable
 					
+					//We set also the value for the column6
+					model.setValueAt("Elektro Artikel", selectedRow, 6);
+					
 					
 					break;
 					
@@ -186,7 +189,7 @@ public class LogicModelFundSachen extends LogicModel {
 					kisteNummer = Integer.parseInt(kisteN);
 					
 					model.setValueAt(kisteN, selectedRow, 5);
-					
+					model.setValueAt("Schmuck / Brillen", selectedRow, 6);
 
 					break;
 					
@@ -198,7 +201,7 @@ public class LogicModelFundSachen extends LogicModel {
 					kisteNummer = Integer.parseInt(kisteN);
 					
 					model.setValueAt(kisteN, selectedRow, 5);
-					
+					model.setValueAt("Kleidung", selectedRow, 6);
 
 					break;
 					
@@ -210,7 +213,7 @@ public class LogicModelFundSachen extends LogicModel {
 						kisteNummer = Integer.parseInt(kisteN);
 						
 						model.setValueAt(kisteN, selectedRow, 5);
-						
+						model.setValueAt("Kosmetik / Badezimmer", selectedRow, 6);
 
 						break;
 						
@@ -222,7 +225,7 @@ public class LogicModelFundSachen extends LogicModel {
 						kisteNummer = Integer.parseInt(kisteN);
 						
 						model.setValueAt(kisteN, selectedRow, 5);
-						
+						model.setValueAt("Bücher", selectedRow, 6);
 
 						break;
 						
@@ -234,7 +237,7 @@ public class LogicModelFundSachen extends LogicModel {
 						kisteNummer = Integer.parseInt(kisteN);
 						
 						model.setValueAt(kisteN, selectedRow, 5);
-						
+						model.setValueAt("Briefe / Karten jegliche Art", selectedRow, 6);
 
 						break;
 						
@@ -245,7 +248,7 @@ public class LogicModelFundSachen extends LogicModel {
 						kisteNummer = Integer.parseInt(kisteN);
 						
 						model.setValueAt(kisteN, selectedRow, 5);
-						
+						model.setValueAt("Sonstiges", selectedRow, 6);
 
 						break;
 						
@@ -256,7 +259,7 @@ public class LogicModelFundSachen extends LogicModel {
 						kisteNummer = Integer.parseInt(kisteN);
 						
 						model.setValueAt(kisteN, selectedRow, 5);
-						
+						model.setValueAt("Kiste ohne Namen / Angaben", selectedRow, 6);
 
 						break;
 						

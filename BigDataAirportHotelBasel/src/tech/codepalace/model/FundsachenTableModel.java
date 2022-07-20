@@ -57,7 +57,7 @@ String [] tableHeaders;
 				The Constants have the value of each column where they are inside the table
 				 */
 				if(column!=TableFundsachenUtilities.FUNDSACHEN && column!=TableFundsachenUtilities.FUNDORT && column!=TableFundsachenUtilities.INHABER
-						&& column!=TableFundsachenUtilities.KISTNUMMER && column!=TableFundsachenUtilities.KISTENAME && column!=TableFundsachenUtilities.RUECKGABE) {
+						&& column!=TableFundsachenUtilities.KISTNUMMER  && column!=TableFundsachenUtilities.RUECKGABE) {
 					return false;
 				}else {
 					return true;
