@@ -38,6 +38,7 @@ public class LogicModelFundSachen extends LogicModel {
 	
 	
 	
+	
 	public LogicModelFundSachen(DataBaseGUI dataBaseGUI, Loading loading) {
 		LogicModelFundSachen.dataBaseGUI = dataBaseGUI;
 		this.loading = loading;
@@ -139,9 +140,132 @@ public class LogicModelFundSachen extends LogicModel {
 		 */
 		String kisteN = String.valueOf(model.getValueAt(selectedRow, 5));
 		
-		//This variable will have the parseInt(String) value over here and below was necessary to avoid error Casting.
-		//If you know another walk around you can try. Any way i always think all the ways go to Rome. Important is to get there.
-		int kisteNummer = Integer.parseInt(kisteN);
+		//This variable will have the parseInt(String) value over here and below was necessary to avoid Casting error.
+		int kisteNummer = 0;
+		
+		/*
+		 * Now we are using JComboBox by the Column 5 in the fundsachenTable as DefaultCellEditor.
+		 * 
+		 * The JComboBox contains various String values to be selected, thats why we use one try catch(NumberFormatException).
+		 * 
+		 * When we catch the NumberFormatException inside the catch block i use one switch conditional to evaluate
+		 * the selected item. Selected item value will be set by the JTable selectedRow, Column 5 and this value
+		 * will be saved over by String kisteN. 
+		 * 
+		 * the variable kisteNummer int is initialized 0. 
+		 * 
+		 * We try to set a new value to kisteNummer using parseInt Method and kisteN giving as argument.
+		 * 
+		 * While kisteN at the Moment is not a Number it will come one NumberFormatException in the game.
+		 * 
+		 * Thats why inside the catch block we evaluate with one switch conditional the Value of kistN so we 
+		 * can modify the hole String for only one String number to be parseInt correctly.
+		 */
+		try {
+			kisteNummer = Integer.parseInt(kisteN);
+		} catch (NumberFormatException e) {
+			
+			//Time to catch the NumberFormatException and do something to get the result what we need.
+			switch (kisteN) { //evaluate kisteN
+				
+				case "1-Elektro Artikel": //case this value that was applied from the selected JComboBox item.
+					
+					kisteN = "1"; //We set new value only Number as String
+					
+					kisteNummer = Integer.parseInt(kisteN); //now kisteNummer receive new value parseInt(kisteN)
+					
+					model.setValueAt(kisteN, selectedRow, 5);//We set the new value to the Column 5 in the JTable
+					
+					
+					break;
+					
+				case "2-Schmuck / Brillen":
+					
+					kisteN = "2"; 
+					
+					kisteNummer = Integer.parseInt(kisteN);
+					
+					model.setValueAt(kisteN, selectedRow, 5);
+					
+
+					break;
+					
+				
+				 case "3-Kleidung":
+					
+					kisteN = "3"; 
+					
+					kisteNummer = Integer.parseInt(kisteN);
+					
+					model.setValueAt(kisteN, selectedRow, 5);
+					
+
+					break;
+					
+					
+				 case "4-Kosmetik / Badezimmer":
+						
+						kisteN = "4"; 
+						
+						kisteNummer = Integer.parseInt(kisteN);
+						
+						model.setValueAt(kisteN, selectedRow, 5);
+						
+
+						break;
+						
+						
+				 case "5-Bücher":
+						
+						kisteN = "5"; 
+						
+						kisteNummer = Integer.parseInt(kisteN);
+						
+						model.setValueAt(kisteN, selectedRow, 5);
+						
+
+						break;
+						
+						
+				 case "6-Briefe / Karten jegliche Art":
+						
+						kisteN = "6"; 
+						
+						kisteNummer = Integer.parseInt(kisteN);
+						
+						model.setValueAt(kisteN, selectedRow, 5);
+						
+
+						break;
+						
+				 case "7-Sonstiges":
+						
+						kisteN = "7"; 
+						
+						kisteNummer = Integer.parseInt(kisteN);
+						
+						model.setValueAt(kisteN, selectedRow, 5);
+						
+
+						break;
+						
+				 case "8-Kiste ohne Namen / Angaben":
+						
+						kisteN = "8"; 
+						
+						kisteNummer = Integer.parseInt(kisteN);
+						
+						model.setValueAt(kisteN, selectedRow, 5);
+						
+
+						break;
+						
+				default:
+					break;
+			}
+		}
+		
+		
 		
 
 		String kisteName = (String)model.getValueAt(selectedRow, 6);
@@ -172,5 +296,8 @@ public class LogicModelFundSachen extends LogicModel {
 		
 
 	}
+	
+	
+	
 
 }

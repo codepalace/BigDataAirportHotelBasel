@@ -10,8 +10,10 @@ import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -102,6 +104,14 @@ public class DataBaseGUI extends JFrame {
 	public JDialog exitDBGUI, noExitDBGUI;
 	
 	public JButton btnExitDBGUI, btnNoExitDBGUI;
+	
+	/*Variables for the new CellEditor to be inserted in the JTable fundsachenTable
+	 * I am going to use a JComboBox with the choices to select so we can modify the
+	 * cell content selecting a new choices.
+	 * 
+	 */
+	public JComboBox<String> kisteNummerJComboBox;
+	private String[] choices;
 	
 
 	
@@ -245,6 +255,22 @@ public class DataBaseGUI extends JFrame {
 				this.topPanel.add(this.topPanelFundSachen, BorderLayout.NORTH);
 				
 				this.fundsachenTable = new FundsachenTable().getJTable();
+				
+				//choices array initializes with the values we need 
+				this.choices = new String[] {"Kistenummer wählen","1-Elektro Artikel","2-Schmuck / Brillen", "3-Kleidung",
+						 "4-Kosmetik / Badezimmer", "5-Bücher", "6-Briefe / Karten jegliche Art",
+						 "7-Sonstiges", "8-Kiste ohne Namen / Angaben"};
+
+				//JComboBox initializes taking the choices values.
+				this.kisteNummerJComboBox = new JComboBox<String>(choices);
+				
+				/* Add the new Cell editor.
+				 * 
+				 * . for that we call the getColumnModel Method from the fundsachenTable;
+				 * . getColumn Method with the argument the column number where we are going to place the new Cell Editor;
+				 * . setCellEditor Method with the argument new DefaultCellEditor and also for the argument will be passing the JComboBox we are going to use.
+				 */
+				this.fundsachenTable.getColumnModel().getColumn(5).setCellEditor(new DefaultCellEditor(kisteNummerJComboBox));
 				
 				this.scrollPane = new JScrollPane(this.fundsachenTable);
 				

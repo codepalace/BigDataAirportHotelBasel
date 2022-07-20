@@ -24,7 +24,7 @@ import tech.codepalace.view.frames.DataBaseGUI;
  * <p>This class receives as an argument BigDataAirportHotelBaselStartFrame Object so we can call this object anyTime back.</p>
  * <p>The DataBaseGUI Object is the class will be controlled by this one.</p>
  * <p>The LogicModelParking so we can call anyTime for creating a new Parking-Reservation for example.</p>
- *
+ * <p>The TableModelListener will be used to interact with the changes of the cells by any JTable.</p>
  */
 public class DataBaseGUIController implements ActionListener, KeyListener, WindowListener, TableModelListener {
 	
@@ -33,6 +33,8 @@ public class DataBaseGUIController implements ActionListener, KeyListener, Windo
 	private DataBaseGUI dataBaseGUI;
 	private LogicModelParking logicModelParking;
 	private LogicModelFundSachen logicModelFundSachen;
+	
+	private TableModel model;
 
 	
 	public DataBaseGUIController(BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame, 
@@ -72,6 +74,7 @@ public class DataBaseGUIController implements ActionListener, KeyListener, Windo
 		}
 		else if(this.dataBaseGUI.fundsachenTable != null) {
 			this.dataBaseGUI.fundsachenTable.getModel().addTableModelListener(this);
+
 		}
 
 		
@@ -182,13 +185,14 @@ public class DataBaseGUIController implements ActionListener, KeyListener, Windo
 		}else if(this.dataBaseGUI.fundsachenTable != null) {
 			
 			selectedRow = this.dataBaseGUI.fundsachenTable.getSelectedRow();
+
 			
 		}
 		
 		
 		
 		//TableMode will received the value of the current JTable displayed.
-		TableModel model = (TableModel)e.getSource();
+		model = (TableModel)e.getSource();
 
 		
 		/* To avoid one ArrayIndexOutOfBoundsException i use one conditional if 
@@ -206,7 +210,6 @@ public class DataBaseGUIController implements ActionListener, KeyListener, Windo
 			//if fundsachenTable is displayed we call to update the data for FUNDSACHEN(Lost and found)
 			}else if(this.dataBaseGUI.fundsachenTable != null) {
 			
-			
 		
 				/*
 				 * We call the Method updateFundsachen by LogicModelFundsachen. 
@@ -215,6 +218,7 @@ public class DataBaseGUIController implements ActionListener, KeyListener, Windo
 				 * - Second Parameter the TableModel needed to get all value and generated values for the Instance Fundgegenstand by the Logic Class.
 				 * - Third Parameter the Object DataBaseGUI to be able to send it in the same way to the DAO object. 
 				 */
+				
 				this.logicModelFundSachen.updateFundsachen(selectedRow, model, this.dataBaseGUI);
 				
 			}
@@ -223,10 +227,8 @@ public class DataBaseGUIController implements ActionListener, KeyListener, Windo
 		
 		
 	}
-	
-	
-	
-	
+
+
 	
 	
 
