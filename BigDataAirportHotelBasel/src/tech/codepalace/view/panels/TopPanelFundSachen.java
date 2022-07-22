@@ -9,11 +9,14 @@ import java.awt.Font;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
 import tech.codepalace.utility.RoundJTextField;
+import tech.codepalace.utility.SelectCustomJComboBox;
+import tech.codepalace.utility.SimpleRoundBorder;
 
 @SuppressWarnings("serial")
 public class TopPanelFundSachen extends JPanel {
@@ -33,6 +36,11 @@ public class TopPanelFundSachen extends JPanel {
 	
 	//Object container Panel with background picture to add the searchText object.
 	private PanelWithBackgroundOption containerSearch;
+	
+	//JComboBox to select how we search the result
+	public JComboBox<String> searchJComboBox;
+	//String Array for the JComboBox 
+	private String[] choices;
 	
 	public TopPanelFundSachen(JButton btnHome, JButton btnParking, JButton btnFitness,
 			JButton btnPhonebook, JButton btnLogout, JButton btnNewFundsachen) {
@@ -108,6 +116,36 @@ public class TopPanelFundSachen extends JPanel {
 		
 		//And add the containerSearchSelect to the containerPanelButton position Center.
 		this.containerPanelButton.add(containerSearchSelect, BorderLayout.CENTER);
+		
+		//Initialize the choices for the JComboBox
+		this.choices = new String[] {"Suchen nach Datum", "Suchen nach Fundsachen", 
+									"Suchen nach Namen", "Suchen nach Zimmernummer"};
+		
+		
+		//Initialize the JComboBox for the Search options.
+		this.searchJComboBox = new JComboBox<String>(choices);
+		this.searchJComboBox.setFont(new Font("Verdana", Font.BOLD, 16));
+		
+		
+		//We make setUI for a Custom JComboBox
+		this.searchJComboBox.setUI(SelectCustomJComboBox.createUI(this));
+		
+		this.searchJComboBox.setPreferredSize(new Dimension(320, 40));
+	
+		
+		//Background for the JComboBox
+		this.searchJComboBox.setBackground(Color.LIGHT_GRAY);
+		
+	
+		//We set Round Border to the JComboBox
+		this.searchJComboBox.setBorder(new SimpleRoundBorder());
+		
+
+		//Add JComboBox to our GUI
+		this.containerSearchSelect.add(searchJComboBox);
+		
+		
+		
 		
 		this.add(this.fundsachenImage, BorderLayout.WEST);
 		this.add(containerPanelButton, BorderLayout.CENTER);
