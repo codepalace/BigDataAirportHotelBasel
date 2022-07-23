@@ -39,11 +39,11 @@ public class TopPanelFundSachen extends JPanel {
 	
 	//JComboBox to select how we search the result
 	public JComboBox<String> searchJComboBox;
-	//String Array for the JComboBox 
-	private String[] choices;
+
 	
 	public TopPanelFundSachen(JButton btnHome, JButton btnParking, JButton btnFitness,
-			JButton btnPhonebook, JButton btnLogout, JButton btnNewFundsachen) {
+			JButton btnPhonebook, JButton btnLogout, JButton btnNewFundsachen, 
+			RoundJTextField searchText, JComboBox<String> searchJComboBox) {
 		
 		this.btnHome = btnHome;
 		this.btnParking = btnParking;
@@ -51,6 +51,9 @@ public class TopPanelFundSachen extends JPanel {
 		this.btnPhonebook = btnPhonebook;
 		this.btnLogout = btnLogout;
 		this.btnNewFundsachen = btnNewFundsachen;
+		
+		this.searchText = searchText;
+		this.searchJComboBox = searchJComboBox;
 		
 		init();
 	}
@@ -86,10 +89,7 @@ public class TopPanelFundSachen extends JPanel {
 		
 		this.setOpaque(false);
 		
-		//Initialize the searchText object 14 Column
-		this.searchText = new RoundJTextField(14);
-		this.searchText.setFont(new Font("Verdana", Font.BOLD, 18));
-		this.searchText.setBackground(Color.GRAY);
+		
 		
 		//Initialize the containerSearch Object
 		this.containerSearch = new PanelWithBackgroundOption();
@@ -117,13 +117,7 @@ public class TopPanelFundSachen extends JPanel {
 		//And add the containerSearchSelect to the containerPanelButton position Center.
 		this.containerPanelButton.add(containerSearchSelect, BorderLayout.CENTER);
 		
-		//Initialize the choices for the JComboBox
-		this.choices = new String[] {"Suchen nach Datum", "Suchen nach Fundsachen", 
-									"Suchen nach Namen", "Suchen nach Zimmernummer"};
 		
-		
-		//Initialize the JComboBox for the Search options.
-		this.searchJComboBox = new JComboBox<String>(choices);
 		this.searchJComboBox.setFont(new Font("Verdana", Font.BOLD, 16));
 		
 		

@@ -22,6 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import tech.codepalace.utility.RoundJTextField;
 import tech.codepalace.view.buttons.MyButton;
 import tech.codepalace.view.panels.PanelWithBackgroundOption;
 import tech.codepalace.view.panels.TopPanelFundSachen;
@@ -113,6 +114,16 @@ public class DataBaseGUI extends JFrame {
 	public JComboBox<String> kisteNummerJComboBox;
 	private String[] choices;
 	
+	
+	//Object to search results in the database
+	//JTextField with rounded Border for the Search Entries
+	public RoundJTextField searchText;
+	
+	//JComboBox to select how we search the result
+	public JComboBox<String> searchJComboBox;
+	//String Array for the JComboBox 
+	private String[] choicesSearchFundsachen;
+	
 
 	
 	
@@ -148,6 +159,22 @@ public class DataBaseGUI extends JFrame {
 		this.btnLogout.setPreferredSize(new Dimension(125,70));
 		this.btnNewParking.setPreferredSize(new Dimension(150, 70));
 		this.btnNewFundsachen.setPreferredSize(new Dimension(150, 70));
+		
+		
+		// Initialize the searchText object 14 Column
+		this.searchText = new RoundJTextField(14);
+		this.searchText.setFont(new Font("Verdana", Font.BOLD, 18));
+		this.searchText.setBackground(Color.GRAY);
+		
+		
+		//Initialize the choices for the JComboBox
+		this.choicesSearchFundsachen = new String[] {"Suchen nach Datum", "Suchen nach Fundsachen", 
+											"Suchen nach Namen", "Suchen nach Zimmernummer"};
+		
+		
+		//Initialize the JComboBox for the Search options.
+		this.searchJComboBox = new JComboBox<String>(choicesSearchFundsachen);
+		
 		
 		setUpFrame();
 		
@@ -250,7 +277,8 @@ public class DataBaseGUI extends JFrame {
 				
 				this.setTitle("Fundsachen Airport Hotel Basel");
 //				
-				this.topPanelFundSachen = new TopPanelFundSachen(this.btnHome, this.btnParking, this.btnFitness, this.btnPhonebook, this.btnLogout, this.btnNewFundsachen);
+				this.topPanelFundSachen = new TopPanelFundSachen(this.btnHome, this.btnParking, this.btnFitness, this.btnPhonebook, this.btnLogout, this.btnNewFundsachen,
+						this.searchText, this.searchJComboBox);
 				
 				this.topPanel.add(this.topPanelFundSachen, BorderLayout.NORTH);
 				

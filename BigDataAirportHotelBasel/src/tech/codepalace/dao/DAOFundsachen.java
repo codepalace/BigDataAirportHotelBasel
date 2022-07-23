@@ -49,5 +49,12 @@ public interface DAOFundsachen {
 	void updateFundsachen(Fundgegenstand fundgegenstand) throws DaoException;
 	
 	
+	/**
+	 * Method to search entries in the DataBase where Date = date giving by the user.
+	 * @throws DaoException
+	 */
+	void searchByDateFundsachen() throws DaoException;
+	
+	
 
 }

@@ -76,6 +76,11 @@ public class DataBaseGUIController implements ActionListener, KeyListener, Windo
 			this.dataBaseGUI.fundsachenTable.getModel().addTableModelListener(this);
 
 		}
+		
+		
+		//Add KeyListener to the Search Box
+		this.dataBaseGUI.searchText.addKeyListener(this);
+		
 
 		
 	}
@@ -125,6 +130,18 @@ public class DataBaseGUIController implements ActionListener, KeyListener, Windo
 		
 		if(e.getSource()==this.dataBaseGUI.btnExitDBGUI && e.getKeyCode() ==10) {
 			
+		}
+		
+		else
+		
+			/*
+			 * In case the user type Enter by the searchText object we call the
+			 * searchResultsInDataBase Method passing argument dataBaseGUI to avoid 
+			 * NullPointerException and for having available all the elements from the GUI DataBaseGUI.
+			 */
+			if(e.getSource()==this.dataBaseGUI.searchText  && e.getKeyCode() ==10) {
+			
+				this.logicModelFundSachen.searchResultsInDataBase(this.dataBaseGUI);
 		}
 
 		

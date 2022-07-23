@@ -706,6 +706,16 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 		}
 		
 	}
+
+
+
+
+	@Override
+	public void searchByDateFundsachen() throws DaoException {
+		
+		
+		
+	}
  	
  	
  	

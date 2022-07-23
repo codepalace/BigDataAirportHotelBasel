@@ -1,8 +1,21 @@
 package tech.codepalace.model;
 
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.sql.Date;
+import java.util.regex.Pattern;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.table.TableModel;
 
 import tech.codepalace.controller.NewFundsachenController;
@@ -35,6 +48,22 @@ public class LogicModelFundSachen extends LogicModel {
 	
 	//Variable for the Lost and Found
 	private Fundgegenstand fundgegenstand;
+	
+
+	
+	//Variables for error Message by Wrong Date Format
+	public JDialog errorDateFormatJDialog;
+	
+	private JLabel messageErrorDateFormat;
+
+	private JButton okButtonErrorDateFormat = new JButton("OK");
+	
+	private JPanel panelErrorDateFormat;
+	
+	private Object[] optionButtonErrorDateFormat = {this.okButtonErrorDateFormat};
+	
+	private ImageIcon errorImg = new ImageIcon(getClass().getResource("/img/error.png"));
+	
 	
 	
 	
@@ -300,6 +329,116 @@ public class LogicModelFundSachen extends LogicModel {
 
 	}
 	
+	
+	/**
+	 * @description Method to check how we are going to search the results in the database.
+	 * @param dataBaseGUI
+	 */
+	public void searchResultsInDataBase(DataBaseGUI dataBaseGUI) {
+		
+		//Set the value dataBaseGUI
+		LogicModelFundSachen.dataBaseGUI = dataBaseGUI;
+		
+		//Variable to store the value of the selected item by the searchJComboBox.
+		String searchSelected = LogicModelFundSachen.dataBaseGUI.searchJComboBox.getSelectedItem().toString();
+		
+		String toSearch = LogicModelFundSachen.dataBaseGUI.searchText.getText();
+		
+		
+		
+		
+		switch (searchSelected) {
+			
+			//We are now ready to search the results by date.
+			case "Suchen nach Datum":
+				
+				//First we have to evaluate if the date format is correct
+				checkDateFormat();
+				
+	
+				break;
+
+			default:
+				break;
+		}
+		
+	
+	}
+	
+	
+	/**
+	 * @description Method to check if the Date Format is correct
+	 */
+	private void checkDateFormat() {
+		
+		//Date Format should be dd.mm.yyyy
+		String formatDateRegex = "(0[1-9]|[12][0-9]|3[01])\\.(0[1-9]|1[012])\\.((?:19|20)[0-9][0-9])$";
+		
+		//Initialize the Message text.
+		this.messageErrorDateFormat = new JLabel("Sie haben eine falsches Datumsformat eingegeben. bitte geben Sie ein korrektes Datumsformat ein(dd.mm.yyyy");
+		
+		//JPanel for the Error Message
+		this.panelErrorDateFormat = new JPanel(new BorderLayout());
+		
+		//We Center the Error Messsage to the JPanel
+		this.panelErrorDateFormat.add(messageErrorDateFormat, BorderLayout.CENTER);
+		
+		
+		//To the okButtonErrorDateFormat we add some ActionListener and KeyListener by pressing just close the JDialog.
+		
+		this.okButtonErrorDateFormat.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				errorDateFormatJDialog.dispose();
+				
+			}
+		});
+		
+		
+		this.okButtonErrorDateFormat.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyTyped(KeyEvent e) {}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+
+				errorDateFormatJDialog.dispose();
+				
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {}
+			
+		});
+		
+		
+		//if the Pattern did not matches we call the JDialog Error Message.
+		if(!Pattern.matches(formatDateRegex, LogicModelFundSachen.dataBaseGUI.searchText.getText())) {
+			
+			SwingUtilities.invokeLater(new Runnable() {
+				
+				@Override
+				public void run() {
+
+					errorDateFormatJDialog = new JOptionPane(panelErrorDateFormat, JOptionPane.OK_OPTION, JOptionPane.NO_OPTION, errorImg,
+							optionButtonErrorDateFormat, null).createDialog("Falsches Datumsformat");
+					
+					errorDateFormatJDialog.setAlwaysOnTop(true);
+					errorDateFormatJDialog.setVisible(true);
+					
+					errorDateFormatJDialog.dispose();
+					
+					dataBaseGUI.searchText.requestFocus();
+					
+				}
+			});
+		}
+		
+		
+	}
 	
 	
 
