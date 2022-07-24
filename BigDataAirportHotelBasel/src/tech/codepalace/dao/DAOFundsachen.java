@@ -66,5 +66,13 @@ public interface DAOFundsachen {
 	void seachByLostAndFound(String lostAndFoundItems) throws DaoException;
 	
 	
+	/**
+	 * Method to search entries in the DataBase(FUNDSACHEN Table) where inhaber Column.
+	 * @param guestName
+	 * @throws DaoException
+	 */
+	void seachByGuestName(String guestName) throws DaoException;
+	
+	
 
 }
