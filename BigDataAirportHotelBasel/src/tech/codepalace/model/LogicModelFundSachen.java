@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.regex.Pattern;
 
 import javax.swing.ImageIcon;
@@ -435,6 +437,34 @@ public class LogicModelFundSachen extends LogicModel {
 					
 				}
 			});
+		
+		} else {
+			
+			//DateTimeFormatter for the Pattern format dd.MM.yyyy 
+			DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+			
+			//LocalDate object to store the Date entered by the user. We use this Object to pass also the dateTimeFormatter as argument. 
+			//The format that the date should have.
+			LocalDate lostAndFoundLocalDate = LocalDate.parse(LogicModelFundSachen.dataBaseGUI.searchText.getText(), dateTimeFormatter);
+			
+			//Variable Date to store the Date calling the valueOf Method and as argument the LocalDate variable.
+			Date dateItemsWasFound = Date.valueOf(lostAndFoundLocalDate);
+					
+			//Set the value of loading object, First argument the GUI in Background and true to block it.
+			this.loading = new Loading(dataBaseGUI, true);
+			
+			//Instance of DAOFunsachen
+			DAOFundsachen daoFundsachen = new DaoFundsachenImpl(getUserAHB(), dataBaseGUI, loading);
+			
+			
+			
+			try {
+				//Now we are ready to call searchByDateFundschen Method by the DAO Object.
+				daoFundsachen.searchByDateFundsachen(dateItemsWasFound);
+			} catch (DaoException e1) {
+				e1.printStackTrace();
+			}
+			
 		}
 		
 		

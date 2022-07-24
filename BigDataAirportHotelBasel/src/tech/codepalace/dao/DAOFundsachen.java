@@ -1,5 +1,7 @@
 package tech.codepalace.dao;
 
+import java.sql.Date;
+
 import tech.codepalace.model.Fundgegenstand;
 import tech.codepalace.model.UserAHB;
 
@@ -53,7 +55,7 @@ public interface DAOFundsachen {
 	 * Method to search entries in the DataBase where Date = date giving by the user.
 	 * @throws DaoException
 	 */
-	void searchByDateFundsachen() throws DaoException;
+	void searchByDateFundsachen(Date dateItemsWasFound) throws DaoException;
 	
 	
 

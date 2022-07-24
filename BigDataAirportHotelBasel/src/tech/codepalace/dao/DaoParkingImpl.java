@@ -612,8 +612,7 @@ public class DaoParkingImpl  implements DAOParking {
 			//If resultSet is empty we have to call for create new Parking Reservation
 			if(resultSet.next()== false) {
 				
-				System.out.println("La tabla Parking esta vacia");
-				
+				//Table is Empty. We only make visible the dataBaseGUI with empty JTable.
 
 				//No Parking-reservation we call to visible the DataBaseGUI so the user can enter at any time a new Reservation.
 			    this.dataBaseGUI.setVisible(true);

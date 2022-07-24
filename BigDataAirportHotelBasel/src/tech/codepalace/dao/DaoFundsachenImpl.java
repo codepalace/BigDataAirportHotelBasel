@@ -1,6 +1,11 @@
 package tech.codepalace.dao;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -15,6 +20,12 @@ import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
@@ -82,6 +93,17 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 	private static boolean tableChecked = false;
 	
 	protected Fundgegenstand fundgegenstand;
+	
+	//Variables objects to display Message in case we did not find any results in DataBase.
+	private JPanel messagePanelSearchDataBase;
+	private JLabel messageLabelSearchDataBase;
+	private JButton okButtonSearchDataBase = new JButton("OK");
+	private JDialog dialogSearchDatabase;
+	private Object[]optionSearchDatabase = {okButtonSearchDataBase};
+	private ImageIcon imgSearchDataBase = new ImageIcon(getClass().getResource("/img/dialogo.png"));
+	
+	
+	
 	
 	
 	
@@ -711,7 +733,322 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 
 
 	@Override
-	public void searchByDateFundsachen() throws DaoException {
+	public void searchByDateFundsachen(Date dateItemsWasFound) throws DaoException {
+		
+		//We create a new DefaultTableModel Casting DefaultTableModel our instance ahbParking.parkingTable.getModel to get the Table model.
+		DefaultTableModel model = (DefaultTableModel) dataBaseGUI.fundsachenTable.getModel();
+		
+		//We set the RowCount to 0 for deleting all the content from the JTable.
+		model.setRowCount(0);
+		
+
+		try {
+			//Set new value to the urlDB variable.
+			DaoFundsachenImpl.urlDB = DaoFundsachenImpl.dataEncryption.decryptData(this.userAHB.getUrlDataBase()) + File.separator + getDBName();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		
+
+		// We set the URL to connect to the Database.
+		setURLToConnectCurrentDataBase();
+
+
+		/*SQL Sentence to select all from the FUNDSACHEN table in our Database only where the dateItemsWasFound(Column in Table) = dateItemsWasFound value
+		 */
+		String sql = "SELECT * from FUNDSACHEN WHERE dateItemsWasFound = '" + dateItemsWasFound + "'";
+		
+		
+		try {
+			
+			//Initialize daoFactory Object with the DerbyURL value as argument.
+			daoFactory = new DaoFactory(getDerbyURL());
+			
+			//Initialize the connection object calling the daoFactory Object an connect Method to Connect to the URL where the database is located.
+			connection = DaoFundsachenImpl.daoFactory.connect();
+			
+			//statement createStatement
+			DaoFundsachenImpl.statement = DaoFundsachenImpl.connection.createStatement();
+			
+			//resultSet receive value statement.executeQuerey and the SQL sentence
+			resultSet = statement.executeQuery(sql);
+			
+			
+			//Now first we check if resultSet has any results if == false is empty
+			if(resultSet.next()==false) {
+
+				
+				//Time to display Entries not found.
+				this.messageLabelSearchDataBase = new JLabel("Mit dem eingegebenen Datum wurde kein Ergebnis gefunden");
+				
+				this.messagePanelSearchDataBase = new JPanel(new BorderLayout());
+				
+				this.messagePanelSearchDataBase.add(this.messageLabelSearchDataBase, BorderLayout.CENTER);
+				
+				this.okButtonSearchDataBase.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						
+						try {
+							dialogSearchDatabase.dispose();
+							displayListFundsachen();
+						} catch (DaoException e1) {
+							e1.printStackTrace();
+						}
+						
+					}
+				});
+				
+				this.okButtonSearchDataBase.addKeyListener(new KeyListener() {
+
+					@Override
+					public void keyTyped(KeyEvent e) {}
+
+					@Override
+					public void keyPressed(KeyEvent e) {
+
+						dialogSearchDatabase.dispose();
+						try {
+							displayListFundsachen();
+						} catch (DaoException e1) {
+							e1.printStackTrace();
+						}
+					}
+
+					@Override
+					public void keyReleased(KeyEvent e) {}
+					
+				});
+				
+				
+				dialogSearchDatabase = new JOptionPane(messagePanelSearchDataBase, JOptionPane.OK_OPTION, JOptionPane.NO_OPTION, imgSearchDataBase,
+						optionSearchDatabase, null).createDialog("Kein Ergebnis gefunden");
+				
+				
+				dialogSearchDatabase.setAlwaysOnTop(true);
+				dialogSearchDatabase.setVisible(true);
+				
+				dialogSearchDatabase.dispose();
+				
+				
+				
+			} else { //we have results so we show it.
+				
+				
+				
+				if(loading !=null) {
+					 
+					 
+					  SwingUtilities.invokeLater(new Runnable() {
+			 				
+			 				@Override
+			 				public void run() {
+			 					DaoFundsachenImpl.loading.setVisible(true);
+			 			
+			 				}
+			 			});
+				  }
+				
+				
+				//After that resultSet execute now the Query select * from FUNDSACHEN WHERE dateItemsWasFound. Value of the sql variable
+				resultSet = statement.executeQuery("SELECT count(*) from FUNDSACHEN WHERE dateItemsWasFound = '" + dateItemsWasFound + "'");
+				
+				
+				//We move the cursor
+				resultSet.next();
+				
+				//numberOfRowsDatabase receive the counted rows
+				numberOfRowsDataBase = resultSet.getInt(1);
+				
+				resultSet = statement.executeQuery(sql);
+				
+				 if(loading !=null) {
+						loading.progressBar.setMaximum(numberOfRowsDataBase);
+				}
+				
+				 
+				 
+				//We create a SwingWorker instruction for the new Thread in background
+				 SwingWorker<Void, Fundgegenstand> worker = new SwingWorker<Void, Fundgegenstand>(){
+
+					
+
+					@Override
+					protected Void doInBackground() throws Exception {
+
+						/*
+						 * we create an ArrayList type ParkingReservation to add each ParkingReservation object  that we find inside the table Parking in our DataBase
+						 */
+						List<Fundgegenstand> fundgegenstands = new ArrayList<Fundgegenstand>();
+						
+						int progress = 0;
+						
+						//as long as there are entries in the table
+						while (resultSet.next()) {
+							
+							System.out.println("Tenemos entradas");
+							
+							/*We create the necessary variables of the type we need according to the data stored in the database
+							 * 
+							 * The values are retrieved from each result found in the table and of course from the corresponding column in the table FUNDSACHEN.
+							 */
+							
+							int id = resultSet.getInt("ID");
+							Date dateItemWasFound = resultSet.getDate("dateItemsWasFound");
+							String foundItem = resultSet.getString("foundItem");
+							String foundPlace = resultSet.getString("foundPlace");
+							String inhaber = resultSet.getString("inhaber");
+							int kisteNummer = resultSet.getInt("kisteNummer");
+							String kisteName = resultSet.getString("kisteName");
+							String rueckGabe = resultSet.getString("rueckGabe");
+							String verkaufer = resultSet.getString("verkaufer");
+							
+							//We create an object type Fundgegenstand
+							Fundgegenstand fundgegenstand = new Fundgegenstand();
+							
+							//We set the values of this Object type Fundgegenstand
+							fundgegenstand.setId(id);
+							fundgegenstand.setDateItemsWasFound(dateItemWasFound);
+							fundgegenstand.setFoundItems(foundItem);
+							fundgegenstand.setFundort(foundPlace);
+							fundgegenstand.setInhaber(inhaber);
+							fundgegenstand.setKisteNummer(kisteNummer);
+							fundgegenstand.setKisteName(kisteName);
+							fundgegenstand.setRueckGabe(rueckGabe);
+							fundgegenstand.setAbkuerzungMA(verkaufer);
+							
+							fundgegenstands.add(fundgegenstand);
+							
+							//We send to publish every Object that we are getting by  the interaction inside the while
+							publish(fundgegenstand);
+							
+						
+							
+							//We add 1 to the progress variable. 
+							progress +=1;
+							/*
+							 * you can execute a sleep statement to see the progress bar working.
+							 */
+//							Thread.sleep(500); 
+							
+							if(loading !=null) {
+								loading.progressBar.setValue(progress);
+							}
+						    
+
+						}
+						
+					
+				
+						return null;
+					}
+					
+					
+					
+					
+					@Override
+					protected void process(List<Fundgegenstand> chunks) {
+
+						
+						//forEach loop to loop through the list Tip Fundgegenstand named chunks in the process Method as parameter.
+						for(Fundgegenstand chunk: chunks) {
+
+						
+							/*
+							 * we create an Object array and pass the data contained in our FUNDSACHEN table in the Database.
+							 * 
+							 * 
+							 */
+							Object[] row = {chunk.getId(), chunk.getDateItemsWasFound(), chunk.getFoundItems(), chunk.getFundort(),
+									chunk.getInhaber(), chunk.getKisteNummer(), chunk.getKisteName(), 
+									chunk.getRueckGabe(), chunk.getAbkuerzungMA()};
+							
+							
+							/*
+							 * We create one instance DefaultTableModel and we give the value Casting (DefaultTableModel) and we get the defined TableModel for the FUNDSACHEN 
+							 *
+							 */
+							
+							DefaultTableModel model = (DefaultTableModel)dataBaseGUI.fundsachenTable.getModel();
+						
+							
+							/*
+							 * for the parkingTable we retrieve the column where we want to write the data, using getColumnModel and getColumn for the Column and we also call the TableFundsachenUtilities
+							 * to get the correct Column using the corresponding constant where is defined the column number where it belongs.
+							 * 
+							 * for each column we also call setCellRenderer Method and as argument we pass a new CellTableManager and we specify the type of value that the cell is going to have.
+							 * 
+							 * If the cell is type number then it will have a different font color. 
+							 */
+							
+							dataBaseGUI.fundsachenTable.getColumnModel().getColumn(TableFundsachenUtilities.ID).setCellRenderer(new CellTableManager("number"));
+							dataBaseGUI.fundsachenTable.getColumnModel().getColumn(TableFundsachenUtilities.DATUM).setCellRenderer(new CellTableManager("number"));
+							dataBaseGUI.fundsachenTable.getColumnModel().getColumn(TableFundsachenUtilities.FUNDSACHEN).setCellRenderer(new CellTableManager("text"));
+							dataBaseGUI.fundsachenTable.getColumnModel().getColumn(TableFundsachenUtilities.FUNDORT).setCellRenderer(new CellTableManager("text"));
+							dataBaseGUI.fundsachenTable.getColumnModel().getColumn(TableFundsachenUtilities.INHABER).setCellRenderer(new CellTableManager("text"));
+							dataBaseGUI.fundsachenTable.getColumnModel().getColumn(TableFundsachenUtilities.KISTNUMMER).setCellRenderer(new CellTableManager("number"));
+							dataBaseGUI.fundsachenTable.getColumnModel().getColumn(TableFundsachenUtilities.KISTENAME).setCellRenderer(new CellTableManager("text"));
+							dataBaseGUI.fundsachenTable.getColumnModel().getColumn(TableFundsachenUtilities.RUECKGABE).setCellRenderer(new CellTableManager("important"));
+
+							dataBaseGUI.fundsachenTable.getColumnModel().getColumn(TableFundsachenUtilities.KUERSELMA).setCellRenderer(new CellTableManager("text"));
+							
+							model.addRow(row);
+							
+							
+							
+						
+							
+							
+							
+						}
+						
+					
+					}
+					
+					
+					
+					
+					@Override
+					protected void done() {
+
+						
+						//If loading object exists we close it.
+						if(loading!=null) {
+							loading.dispose();
+						}
+						
+
+						
+						try {
+
+							statement.close();
+							resultSet.close();
+							daoFactory.closeConnection(getDerbyURL());
+							connection.close();
+							
+
+							
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
+						
+					}
+					
+					
+					
+				 };worker.execute();
+				
+			}
+			
+	
+			
+			
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 		
 		
