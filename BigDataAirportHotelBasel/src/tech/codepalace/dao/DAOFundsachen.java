@@ -58,5 +58,13 @@ public interface DAOFundsachen {
 	void searchByDateFundsachen(Date dateItemsWasFound) throws DaoException;
 	
 	
+	/**
+	 * Method to search entries in the DataBase(FUNDSACHEN TABLE) where lostAndFoundItems(foundItem Column in Table) = Lost and Found name entered by the user.
+	 * @param lostAndFoundItems
+	 * @throws DaoException
+	 */
+	void seachByLostAndFound(String lostAndFoundItems) throws DaoException;
+	
+	
 
 }

@@ -359,6 +359,14 @@ public class LogicModelFundSachen extends LogicModel {
 				
 	
 				break;
+				
+			case "Suchen nach Fundsachen":
+				
+			
+				suchenNachFundsachen(toSearch);
+				break;
+				
+				
 
 			default:
 				break;
@@ -467,6 +475,30 @@ public class LogicModelFundSachen extends LogicModel {
 			
 		}
 		
+		
+	}
+	
+	
+	
+	/**
+	 * @description Method to search by Lost and found items.
+	 * @param fundsachen
+	 */
+	public void suchenNachFundsachen(String fundsachen) {
+		
+		System.out.println("Time to search by Lost And Found: " + fundsachen);
+		
+		//Instance of DAOFunsachen
+		DAOFundsachen daoFundsachen = new DaoFundsachenImpl(getUserAHB(), dataBaseGUI, loading);
+		
+		
+		
+		try {
+			//Now we are ready to call searchByDateFundschen Method by the DAO Object.
+			daoFundsachen.seachByLostAndFound(fundsachen);
+		} catch (DaoException e1) {
+			e1.printStackTrace();
+		}
 		
 	}
 	
