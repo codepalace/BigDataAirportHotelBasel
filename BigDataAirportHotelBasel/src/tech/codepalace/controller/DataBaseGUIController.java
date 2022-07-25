@@ -15,6 +15,7 @@ import tech.codepalace.model.LogicModelFundSachen;
 import tech.codepalace.model.LogicModelParking;
 import tech.codepalace.view.frames.BigDataAirportHotelBaselStartFrame;
 import tech.codepalace.view.frames.DataBaseGUI;
+import tech.codepalace.view.frames.Loading;
 
 
 /**
@@ -118,7 +119,13 @@ public class DataBaseGUIController implements ActionListener, KeyListener, Windo
 		
 		else if(e.getSource()==this.dataBaseGUI.reloadDdJButton) {
 			
-			this.logicModelFundSachen.displayFundSachen(this.bigDataAirportHotelBaselStartFrame, "FUNDSACHEN");
+		 /* Time to reload the Lost And Found Data and display in JTable the Results. 
+		  * 
+		  * As argument we pass dataBaseGUI object and a new Loading Object that receives the first argument the 
+		  * GUI in background that should be blocked and true to be blocked.
+		  */
+		  this.logicModelFundSachen.reloadFundsachen(dataBaseGUI, new Loading(this.dataBaseGUI, true));
+		
 		}
 		
 		

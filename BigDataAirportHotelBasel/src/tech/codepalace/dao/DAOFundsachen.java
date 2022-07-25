@@ -82,5 +82,12 @@ public interface DAOFundsachen {
 	void suchenNachFundort(String fundOrt) throws DaoException;
 	
 	
+	/**
+	 * Method to reload all data from FUNDSACHEN table in Database and display in JTable by the GUI.
+	 * @throws DaoException
+	 */
+	void reloadFundsachenData() throws DaoException;
+	
+	
 
 }

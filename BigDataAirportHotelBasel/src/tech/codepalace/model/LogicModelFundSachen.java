@@ -548,5 +548,29 @@ public class LogicModelFundSachen extends LogicModel {
 		}
 	}
 	
+	
+	/**
+	 * @description Method to reload Lost and Found Data and displaying all in the JTable
+	 * @param dataBaseGUI
+	 */
+	public void reloadFundsachen(DataBaseGUI dataBaseGUI, Loading loading) {
+
+		
+		LogicModelFundSachen.dataBaseGUI = dataBaseGUI;
+		
+		//Instance of DAOFunsachen
+		DAOFundsachen daoFundsachen = new DaoFundsachenImpl(getUserAHB(), LogicModelFundSachen.dataBaseGUI, loading);
+
+				
+				
+				
+				try {
+					//Now we are ready to call realoadFundsachenData Method by the DAO Object.
+					daoFundsachen.reloadFundsachenData();
+				} catch (DaoException e1) {
+					e1.printStackTrace();
+				}
+	}
+	
 
 }
