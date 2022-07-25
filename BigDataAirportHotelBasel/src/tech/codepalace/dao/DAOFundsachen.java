@@ -74,5 +74,13 @@ public interface DAOFundsachen {
 	void seachByGuestName(String guestName) throws DaoException;
 	
 	
+	/**
+	 * Method to search entries in the DataBase(FUNDSACHEN Table) where foundPlace Column =?
+	 * @param fundOrt
+	 * @throws DaoException
+	 */
+	void suchenNachFundort(String fundOrt) throws DaoException;
+	
+	
 
 }

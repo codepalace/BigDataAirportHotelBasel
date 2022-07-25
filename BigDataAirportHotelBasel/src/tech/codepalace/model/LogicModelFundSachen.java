@@ -371,6 +371,9 @@ public class LogicModelFundSachen extends LogicModel {
 				break;
 				
 				
+			case "Suchen nach Fundort":
+				suchenNachFundort(toSearch);
+				break;
 
 			default:
 				break;
@@ -527,6 +530,23 @@ public class LogicModelFundSachen extends LogicModel {
 	}
 	
 	
+	
+	/**
+	 * @description Method to search by foundPlace where the items was found.
+	 * @param fundOrt
+	 */
+	private void suchenNachFundort(String fundOrt) {
+		
+		// Instance of DAOFunsachen
+		DAOFundsachen daoFundsachen = new DaoFundsachenImpl(getUserAHB(), dataBaseGUI, loading);
+		
+		try {
+			// Now we are ready to call suchenNachFundort Method by the DAO Object.
+			daoFundsachen.suchenNachFundort(fundOrt);
+		} catch (DaoException e1) {
+			e1.printStackTrace();
+		}
+	}
 	
 
 }

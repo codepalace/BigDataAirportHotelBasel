@@ -169,7 +169,7 @@ public class DataBaseGUI extends JFrame {
 		
 		//Initialize the choices for the JComboBox
 		this.choicesSearchFundsachen = new String[] {"Suchen nach Datum", "Suchen nach Fundsachen", 
-											"Suchen nach Namen", "Suchen nach Zimmernummer"};
+											"Suchen nach Namen", "Suchen nach Fundort"};
 		
 		
 		//Initialize the JComboBox for the Search options.
