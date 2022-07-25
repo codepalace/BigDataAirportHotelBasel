@@ -29,7 +29,7 @@ public class TopPanelFundSachen extends JPanel {
 	public JLabel fundsachenImage;
 	
 	private JButton btnHome,  btnParking,  btnFitness,
-	 btnPhonebook,  btnLogout, btnNewFundsachen;
+	 btnPhonebook,  btnLogout, btnNewFundsachen, reloadDdJButton;
 	
     //JTextField with rounded Border for the Search Entries
 	private RoundJTextField searchText;
@@ -43,7 +43,7 @@ public class TopPanelFundSachen extends JPanel {
 	
 	public TopPanelFundSachen(JButton btnHome, JButton btnParking, JButton btnFitness,
 			JButton btnPhonebook, JButton btnLogout, JButton btnNewFundsachen, 
-			RoundJTextField searchText, JComboBox<String> searchJComboBox) {
+			RoundJTextField searchText, JComboBox<String> searchJComboBox, JButton reloadDdJButton) {
 		
 		this.btnHome = btnHome;
 		this.btnParking = btnParking;
@@ -54,6 +54,8 @@ public class TopPanelFundSachen extends JPanel {
 		
 		this.searchText = searchText;
 		this.searchJComboBox = searchJComboBox;
+		
+		this.reloadDdJButton = reloadDdJButton;
 		
 		init();
 	}
@@ -139,7 +141,8 @@ public class TopPanelFundSachen extends JPanel {
 		this.containerSearchSelect.add(searchJComboBox);
 		
 		
-		
+		//Add reloadDdJButton to our GUI 
+		this.containerSearchSelect.add(reloadDdJButton);
 		
 		this.add(this.fundsachenImage, BorderLayout.WEST);
 		this.add(containerPanelButton, BorderLayout.CENTER);

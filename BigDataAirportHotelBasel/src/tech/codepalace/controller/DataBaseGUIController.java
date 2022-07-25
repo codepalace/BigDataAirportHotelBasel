@@ -81,6 +81,8 @@ public class DataBaseGUIController implements ActionListener, KeyListener, Windo
 		//Add KeyListener to the Search Box
 		this.dataBaseGUI.searchText.addKeyListener(this);
 		
+		this.dataBaseGUI.reloadDdJButton.addActionListener(this);
+		
 
 		
 	}
@@ -114,6 +116,10 @@ public class DataBaseGUIController implements ActionListener, KeyListener, Windo
 			this.logicModelFundSachen.enterNewFoundsachenEntries(dataBaseGUI);
 		}
 		
+		else if(e.getSource()==this.dataBaseGUI.reloadDdJButton) {
+			
+			this.logicModelFundSachen.displayFundSachen(this.bigDataAirportHotelBaselStartFrame, "FUNDSACHEN");
+		}
 		
 		
 	}

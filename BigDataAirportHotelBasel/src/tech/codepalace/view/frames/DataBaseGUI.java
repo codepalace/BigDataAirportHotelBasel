@@ -124,6 +124,10 @@ public class DataBaseGUI extends JFrame {
 	//String Array for the JComboBox 
 	private String[] choicesSearchFundsachen;
 	
+	
+	//JButton for reload DataBase
+	public JButton reloadDdJButton;
+	
 
 	
 	
@@ -140,7 +144,7 @@ public class DataBaseGUI extends JFrame {
 		this.panelWithBackgroundOption = new PanelWithBackgroundOption();
 		
 		// Initialize the JButtons as MyButton
-		this.btnHome = new MyButton("/img/btn_home.png");
+		this.btnHome = new MyButton("/img/home.png");
 		this.btnParking = new MyButton("/img/btn_parking.png");
 		this.btnFundsachen = new MyButton("/img/btn_fundsachen2.png");
 		this.btnFitness = new MyButton("/img/btn_fitness_abo.png");
@@ -151,6 +155,8 @@ public class DataBaseGUI extends JFrame {
 		
 		this.btnNewParking = new MyButton("/img/btn_new_parking.png");
 		
+		this.reloadDdJButton = new MyButton("/img/reload.png");
+		
 		
 		this.btnHome.setPreferredSize(new Dimension(125,70));
 		this.btnFundsachen.setPreferredSize(new Dimension(150,70));
@@ -159,6 +165,10 @@ public class DataBaseGUI extends JFrame {
 		this.btnLogout.setPreferredSize(new Dimension(125,70));
 		this.btnNewParking.setPreferredSize(new Dimension(150, 70));
 		this.btnNewFundsachen.setPreferredSize(new Dimension(150, 70));
+		
+		this.reloadDdJButton.setPreferredSize(new Dimension(51, 39));
+		
+		this.reloadDdJButton.setToolTipText("Datenbank neu laden");
 		
 		
 		// Initialize the searchText object 14 Column
@@ -278,7 +288,7 @@ public class DataBaseGUI extends JFrame {
 				this.setTitle("Fundsachen Airport Hotel Basel");
 //				
 				this.topPanelFundSachen = new TopPanelFundSachen(this.btnHome, this.btnParking, this.btnFitness, this.btnPhonebook, this.btnLogout, this.btnNewFundsachen,
-						this.searchText, this.searchJComboBox);
+						this.searchText, this.searchJComboBox, this.reloadDdJButton);
 				
 				this.topPanel.add(this.topPanelFundSachen, BorderLayout.NORTH);
 				
