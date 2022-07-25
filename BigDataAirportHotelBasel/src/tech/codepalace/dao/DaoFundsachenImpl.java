@@ -176,7 +176,7 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 							DaoFundsachenImpl.loading.progressBar.repaint();
 							
 						
-							System.out.println("FUNDSACHEN table exists");
+//							System.out.println("FUNDSACHEN table exists");
 							//Table FUNDSACHEN exists
 							//Then we call displayListFundsachen() Method.
 							displayListFundsachen();

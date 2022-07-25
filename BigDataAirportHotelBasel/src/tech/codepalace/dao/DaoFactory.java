@@ -293,7 +293,6 @@ public class DaoFactory {
                     throw se;
                 }
             }
-//            System.out.println("Database shut down normally");
 
             try {
             	//DriverManager reset URL for shutdown
@@ -306,7 +305,7 @@ public class DaoFactory {
                 }
             }
 
-            System.out.println("Derby system shut down normally");
+//            System.out.println("Derby system shut down normally");
             
             //We close the connection
             connection.close();

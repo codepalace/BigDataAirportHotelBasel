@@ -2,6 +2,8 @@ package tech.codepalace.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
@@ -27,7 +29,7 @@ import tech.codepalace.view.frames.Loading;
  * <p>The LogicModelParking so we can call anyTime for creating a new Parking-Reservation for example.</p>
  * <p>The TableModelListener will be used to interact with the changes of the cells by any JTable.</p>
  */
-public class DataBaseGUIController implements ActionListener, KeyListener, WindowListener, TableModelListener {
+public class DataBaseGUIController implements ActionListener, KeyListener, WindowListener, TableModelListener, ItemListener {
 	
 
 	private BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame;
@@ -81,10 +83,10 @@ public class DataBaseGUIController implements ActionListener, KeyListener, Windo
 		
 		//Add KeyListener to the Search Box
 		this.dataBaseGUI.searchText.addKeyListener(this);
-		
+	    
 		this.dataBaseGUI.reloadDdJButton.addActionListener(this);
 		
-
+		this.dataBaseGUI.searchJComboBox.addItemListener(this);
 		
 	}
 	
@@ -256,6 +258,16 @@ public class DataBaseGUIController implements ActionListener, KeyListener, Windo
 
 		
 		
+	}
+
+
+
+	@Override
+	public void itemStateChanged(ItemEvent e) {
+		
+		this.dataBaseGUI.searchText.setText("");
+		this.dataBaseGUI.searchText.requestFocus();
+
 	}
 
 
