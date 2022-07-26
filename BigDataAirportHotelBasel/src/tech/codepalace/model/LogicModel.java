@@ -212,6 +212,9 @@ try {
 			@Override
 			public void run() {
 				
+				if(LogicModel.dataBaseGUI.isVisible()) {
+					LogicModel.dataBaseGUI.dispose();
+				}
 		         //This Logical Model need the String argument to Know which kind of Application we are calling.
 				 LogicModel.dataBaseGUI = new DataBaseGUI("PARKING");
 				 

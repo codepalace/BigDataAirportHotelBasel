@@ -17,8 +17,10 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
@@ -70,7 +72,7 @@ public class DataBaseGUI extends JFrame {
 	public JLabel loginUserLabel;
 	
 	//Variable to know which database table we should call.
-	private String dataBaseApplication;
+	public String dataBaseApplication;
 	
 	//Instance JTable for the parkingTable
 	public JTable parkingTable;
@@ -129,7 +131,9 @@ public class DataBaseGUI extends JFrame {
 	public JButton reloadDdJButton;
 	
 
+	public JPopupMenu popupMenu;
 	
+	public JMenuItem deleteItem = new JMenuItem("Ausgewählten Eintrag löschen");
 	
 	
 	
@@ -145,7 +149,7 @@ public class DataBaseGUI extends JFrame {
 		
 		// Initialize the JButtons as MyButton
 		this.btnHome = new MyButton("/img/home.png");
-		this.btnParking = new MyButton("/img/btn_parking.png");
+		this.btnParking = new MyButton("/img/parking_btn2.png");
 		this.btnFundsachen = new MyButton("/img/btn_fundsachen2.png");
 		this.btnFitness = new MyButton("/img/btn_fitness_abo.png");
 		this.btnPhonebook = new MyButton("/img/btn_telefonbuch.png");
@@ -256,8 +260,11 @@ public class DataBaseGUI extends JFrame {
 			
 			
 			
+			this.popupMenu = new JPopupMenu();
 			
 			
+	        popupMenu.add(deleteItem);
+
 		
 		//We evaluate the dataBAseApplication to know which elements we have to create for adding to the DataBaseGUI Class.
 		//We also need to know that to display the correct database Table and correct data.
@@ -309,6 +316,8 @@ public class DataBaseGUI extends JFrame {
 				 * . setCellEditor Method with the argument new DefaultCellEditor and also for the argument will be passing the JComboBox we are going to use.
 				 */
 				this.fundsachenTable.getColumnModel().getColumn(5).setCellEditor(new DefaultCellEditor(kisteNummerJComboBox));
+				
+				this.fundsachenTable.setComponentPopupMenu(popupMenu);
 				
 				this.scrollPane = new JScrollPane(this.fundsachenTable);
 				

@@ -1,7 +1,10 @@
 package tech.codepalace.controller;
 
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
@@ -9,6 +12,10 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
@@ -29,7 +36,8 @@ import tech.codepalace.view.frames.Loading;
  * <p>The LogicModelParking so we can call anyTime for creating a new Parking-Reservation for example.</p>
  * <p>The TableModelListener will be used to interact with the changes of the cells by any JTable.</p>
  */
-public class DataBaseGUIController implements ActionListener, KeyListener, WindowListener, TableModelListener, ItemListener {
+public class DataBaseGUIController implements ActionListener, KeyListener, WindowListener, 
+TableModelListener, ItemListener, FocusListener, PopupMenuListener {
 	
 
 	private BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame;
@@ -38,6 +46,8 @@ public class DataBaseGUIController implements ActionListener, KeyListener, Windo
 	private LogicModelFundSachen logicModelFundSachen;
 	
 	private TableModel model;
+	
+
 
 	
 	public DataBaseGUIController(BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame, 
@@ -53,7 +63,13 @@ public class DataBaseGUIController implements ActionListener, KeyListener, Windo
 		//Add Listener
 		this.dataBaseGUI.addWindowListener(this);
 		
+		this.dataBaseGUI.addKeyListener(this);
+		this.dataBaseGUI.btnHome.addKeyListener(this);
+	
+		
 		this.dataBaseGUI.btnHome.addActionListener(this);
+		
+		
 		
 		this.dataBaseGUI.btnExitDBGUI.addActionListener(this);
 		this.dataBaseGUI.btnNoExitDBGUI.addActionListener(this);
@@ -88,6 +104,23 @@ public class DataBaseGUIController implements ActionListener, KeyListener, Windo
 		
 		this.dataBaseGUI.searchJComboBox.addItemListener(this);
 		
+		
+		//Add FocusListener to the elements Fundsachen
+		this.dataBaseGUI.btnHome.addFocusListener(this);
+		this.dataBaseGUI.btnParking.addFocusListener(this);
+		this.dataBaseGUI.btnFitness.addFocusListener(this);
+		this.dataBaseGUI.btnPhonebook.addFocusListener(this);
+		this.dataBaseGUI.btnLogout.addFocusListener(this);
+		this.dataBaseGUI.btnNewFundsachen.addFocusListener(this);
+		this.dataBaseGUI.searchText.addFocusListener(this);
+		this.dataBaseGUI.searchJComboBox.addFocusListener(this);
+		
+		this.dataBaseGUI.btnHome.requestFocus();
+		
+		
+		this.dataBaseGUI.deleteItem.addActionListener(this);
+		
+		this.dataBaseGUI.popupMenu.addPopupMenuListener(this);
 	}
 	
 	
@@ -130,6 +163,11 @@ public class DataBaseGUIController implements ActionListener, KeyListener, Windo
 		
 		}
 		
+		else if(e.getSource()==this.dataBaseGUI.deleteItem) {
+			 JOptionPane.showMessageDialog(null, "Right-click performed on table and choose DELETE");
+	          
+		}
+		
 		
 	}
 
@@ -143,6 +181,33 @@ public class DataBaseGUIController implements ActionListener, KeyListener, Windo
 	@Override
 	public void keyPressed(KeyEvent e) {
 		
+
+		
+		if(e.getSource()==this.dataBaseGUI.btnHome && e.getKeyCode() == 112
+				||e.getSource()==this.dataBaseGUI.searchJComboBox && e.getKeyCode() == 112
+				||e.getSource()==this.dataBaseGUI.searchText && e.getKeyCode() == 112) 
+		
+		
+		{
+			this.bigDataAirportHotelBaselStartFrame.setVisible(true);
+			this.dataBaseGUI.dispose();
+		}
+		
+		else
+			if(e.getSource()==this.dataBaseGUI.btnHome && e.getKeyCode()== 113) {
+		
+				this.logicModelFundSachen.displayParking(bigDataAirportHotelBaselStartFrame, "PARKING");
+	}
+	
+	
+	
+	else
+		
+		
+			
+		
+		
+	
 		if(e.getSource()==this.dataBaseGUI.btnExitDBGUI && e.getKeyCode() ==10) {
 			
 		}
@@ -268,6 +333,80 @@ public class DataBaseGUIController implements ActionListener, KeyListener, Windo
 		this.dataBaseGUI.searchText.setText("");
 		this.dataBaseGUI.searchText.requestFocus();
 
+	}
+
+
+
+	@Override
+	public void focusGained(FocusEvent e) {
+	
+		//It will be returned the Focus to btnHombe so we can play with the KeyCode Pressed Key
+		if (e.getSource() == this.dataBaseGUI.btnHome) {
+			this.dataBaseGUI.btnHome.requestFocus();
+
+		} else if (e.getSource() == this.dataBaseGUI.btnParking) {
+
+			this.dataBaseGUI.btnHome.requestFocus();
+		}
+
+		else if (e.getSource() == this.dataBaseGUI.btnFitness) {
+			this.dataBaseGUI.btnHome.requestFocus();
+		}
+
+		else if (e.getSource() == this.dataBaseGUI.btnPhonebook) {
+			this.dataBaseGUI.btnHome.requestFocus();
+
+		}
+
+		else if (e.getSource() == this.dataBaseGUI.btnLogout) {
+			this.dataBaseGUI.btnHome.requestFocus();
+		}
+
+		else if (e.getSource() == this.dataBaseGUI.btnNewFundsachen) {
+			this.dataBaseGUI.btnHome.requestFocus();
+		}
+		
+		
+	}
+
+
+
+	@Override
+	public void focusLost(FocusEvent e) {}
+
+
+
+	@Override
+	public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+
+		
+		if(this.dataBaseGUI.dataBaseApplication.equalsIgnoreCase("FUNDSACHEN")) {
+			SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    int rowAtPoint = dataBaseGUI.fundsachenTable.rowAtPoint(SwingUtilities.convertPoint(dataBaseGUI.popupMenu, new Point(0, 0), dataBaseGUI.fundsachenTable));
+                    if (rowAtPoint > -1) {
+                    	dataBaseGUI.fundsachenTable.setRowSelectionInterval(rowAtPoint, rowAtPoint);
+                    }
+                }
+            });
+		}
+	}
+
+
+
+	@Override
+	public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void popupMenuCanceled(PopupMenuEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 
