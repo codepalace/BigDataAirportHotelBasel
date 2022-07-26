@@ -162,8 +162,25 @@ public class DaoFactory {
 		 * and with pass also the encryptionKey. 
 		 * 
 		 * The encryptionKey value in this class but we could use an external source where to look for the key for example like an USB Stick.
+		 
+		 Add new instruction to create the DataBase with a Territory and to Create a case-insensitive database
+		 territory=de_DE;collation=TERRITORY_BASED:PRIMARY
+		 
+		 When you create a database using locale-based collation, the collation=collation value TERRITORY_BASED uses the default collation strength for the locale, usually TERTIARY, which will consider character case significant in searches and comparisons.
+
+		To make the database use case-insensitive searches, specify an explicit strength lower than TERTIARY with the collation=collation attribute. The strength name is appended to TERRITORY_BASED with a colon to separate them.
+
+		For example, you could specify the following connection URL:
+
+		jdbc:derby:SwedishDB;create=true;territory=sv_SE;collation=TERRITORY_BASED:PRIMARY
+
+		With strength PRIMARY, the characters 'A' and 'a' will be considered equal, as well as 'à' ('a' with a grave accent). (This behavior is commonly the default with many other databases.) To make searches respect differences in accent, use strength SECONDARY.
+
+		The exact interpretation of the strength part of the attribute depends upon the locale.
+		
+		Source Info-Link: https://db.apache.org/derby/docs/10.13/devguide/tdevdvlpcaseinscoll.html
 		 */
-		String urlDB = url + ";user=" + dbOwner + ";create=true;dataEncryption=true" + ";encryptionAlgorithm=DES/CBC/NoPadding;" + "encryptionKey=" + encryptionKey;	
+		String urlDB = url + ";user=" + dbOwner + ";create=true;territory=de_DE;collation=TERRITORY_BASED:PRIMARY;dataEncryption=true" + ";encryptionAlgorithm=DES/CBC/NoPadding;" + "encryptionKey=" + encryptionKey;	
 		
 		
 		
