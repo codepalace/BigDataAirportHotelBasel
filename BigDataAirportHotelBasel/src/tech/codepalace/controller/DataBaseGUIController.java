@@ -12,7 +12,6 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
-import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
@@ -48,7 +47,8 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener {
 	private TableModel model;
 	
 
-
+	//Variable to get the value of the selected row in the JTable.
+	private int selectedRow=0;
 	
 	public DataBaseGUIController(BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame, 
 			DataBaseGUI dataBaseGUI, LogicModelParking logicModelParking, LogicModelFundSachen logicModelFundSachen) {
@@ -164,8 +164,25 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener {
 		}
 		
 		else if(e.getSource()==this.dataBaseGUI.deleteItem) {
-			 JOptionPane.showMessageDialog(null, "Right-click performed on table and choose DELETE");
-	          
+//			 JOptionPane.showMessageDialog(null, "Right-click performed on table and choose DELETE");
+	        
+			/*
+			 * we evaluate which is the table that currently exists within our GUI dataBaseGUI.
+			 * 
+			 * depending on the table that exists we call the delete method.
+			 */
+	         if(this.dataBaseGUI.fundsachenTable!=null) {
+	        	 
+	        	 //We set the value of selectedRow calling the getSelectedRow Method of the fundsachenTable !=null in this case.
+	        	 this.selectedRow = this.dataBaseGUI.fundsachenTable.getSelectedRow();
+	        	 
+	        	 //We get the TableModel of the JTable
+	        	 this.model = this.dataBaseGUI.fundsachenTable.getModel();
+	        	 
+	        	 //We call the deleteRowDataBase Method with the arguments selectedRow and the name of the table we are going to try to delete.
+	        	 this.logicModelFundSachen.deleteRowDataBase(this.selectedRow, "FUNDSACHEN", this.model);
+	         }
+		
 		}
 		
 		
@@ -268,8 +285,7 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener {
 	@Override
 	public void tableChanged(TableModelEvent e) {
 
-		//Variable to get the value of the selected row in the JTable.
-		int selectedRow=0;
+		
 
 		/*
 		 * depending on the table that is visible we get the selected Row calling the 
@@ -316,7 +332,12 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener {
 				 * - Third Parameter the Object DataBaseGUI to be able to send it in the same way to the DAO object. 
 				 */
 				
-				this.logicModelFundSachen.updateFundsachen(selectedRow, model, this.dataBaseGUI);
+				if(!this.logicModelFundSachen.getDataBaseStatus().equalsIgnoreCase("RELOAD")) {
+					
+					this.logicModelFundSachen.updateFundsachen(selectedRow, model, this.dataBaseGUI);
+					
+				}
+				
 				
 			}
 		}

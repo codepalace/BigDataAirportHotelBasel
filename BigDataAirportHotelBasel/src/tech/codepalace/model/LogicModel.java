@@ -7,7 +7,9 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import javax.swing.table.TableModel;
 
 import tech.codepalace.controller.DataBaseGUIController;
 import tech.codepalace.controller.LoginController;
@@ -83,9 +85,15 @@ public class LogicModel {
 	private static LogicModelLogin logicModelLogin;
 	
 	
+	//Variable to store TableModel from JTable
+	private TableModel tableModel;
 	
+	
+	private int selectedRow;
+	private String tableName;
 
 
+	private String dataBaseStatus="";
 
 	
 	//Methods to set and get the UserAHB need it for some classes.
@@ -464,7 +472,7 @@ try {
 				case "FUNDSACHEN": 
 					
 					//We create a new DAOFundsachen Object passing the DaoFundsachenImpl class with the parameters.
-					DAOFundsachen daoFundsachen = new DaoFundsachenImpl(getUserAHB(), dataBaseGUI, loading);
+					DAOFundsachen daoFundsachen = new DaoFundsachenImpl(getUserAHB(), dataBaseGUI, loading, logicModelFundSachen);
 					
 					
 					
@@ -541,8 +549,101 @@ try {
 		
 		
 	}
+	
+	
+	/**
+	 * @description Method to delete a row from the database.
+	 * <p>This method has 2 parameters:<br/></p>
+	 * <ol>
+	 * 		<li>int selectedRow(for the selected row;</li>
+	 * 		<li>String tableName(with the Table name(containing the name of the table where the row should be deleted in the database);</li>
+	 * 		<li>TableModel with the TableModel of the current JTable we want to delete a row.</li>
+	 * </ol>
+	 * 
+	 * <h2>Condition required to be able to delete</h2>
+	 * 
+	 * <p>- Only admin users can delete entries from the database.</p>
+	 * 
+	 * <p>With this we avoid the bad manipulation of the data saved in the database by unauthorized persons.</p>
+	 * @param selectedRow
+	 * @param tableName
+	 * @param tableModel
+	 */
+	public void deleteRowDataBase(int selectedRow, String tableName, TableModel tableModel) {
+		
+		//We set the values of our variables
+		this.selectedRow = selectedRow;
+		this.tableName = tableName;
+		this.tableModel = tableModel;
+	
+		int id = (int)this.tableModel.getValueAt(this.selectedRow, 0);
+		
+		
+		
+		/*
+		 *variable that stores the privileges of the user.
+		 *We will know if the user can delete any entry from the database 
+		 *or it is forbidden for the current user 
+		 */
+		String privilege = "";
+		
+		try {
+			/*
+			 * we decrypt the value of the current user privilege and store it in our variable.
+			 */
+			privilege = this.dataEncryption.decryptData(getUserAHB().getPrivilege());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		/*
+		 *We evaluate what privileges the user has to authorize or not the deletion of the entry.
+		 *
+		 * if(privilege = ADMIN we can then we can proceed to create the DAO object to call the deleteEntryDataBase.
+		 int id = (int)model.getValueAt(selectedRow, 0);
+		 */
+		
+		if(privilege.equals("ADMIN")) {
+			
+			//We create a new DAOFundsachen Object passing the DaoFundsachenImpl class with the parameters.
+			DAOFundsachen daoFundsachen = new DaoFundsachenImpl(getUserAHB(), dataBaseGUI, loading, logicModelFundSachen);
+			
+			//We call the Method to deleteDatabaseEntry
+			try {
+				daoFundsachen.deleteDatabaseEntry(this.tableName, id);
+			} catch (DaoException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}else {
+			
+			//Other users cannot delete from Database
+		}
+		
+	}
 
 	
+	
+	public LogicModelFundSachen getLogicModelFundsachen() {
+		return LogicModel.logicModelFundSachen;
+	}
+
+	/**
+	 * @return the dataBaseStatus
+	 */
+	public String getDataBaseStatus() {
+		return dataBaseStatus;
+	}
+
+	/**
+	 * @param dataBaseStatus the dataBaseStatus to set
+	 */
+	public void setDataBaseStatus(String dataBaseStatus) {
+		this.dataBaseStatus = dataBaseStatus;
+	}
 
 
+	
+	
 }

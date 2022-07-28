@@ -225,6 +225,11 @@ public class FundsachenTable {
 		fundsachenJTable.getColumnModel().getColumn(TableFundsachenUtilities.KUERSELMA).setPreferredWidth(40);
 
 		
+		//We set the ID Column width so it will be not visible but we can still having access to 
+		//this column to work with the ID Column. So we can Then retrieve the data.
+		fundsachenJTable.getColumnModel().getColumn(0).setMinWidth(0);
+		fundsachenJTable.getColumnModel().getColumn(0).setMaxWidth(0);
+		fundsachenJTable.getColumnModel().getColumn(0).setWidth(0);
 		
 		//customize the header
 		JTableHeader jtableHeader = fundsachenJTable.getTableHeader();

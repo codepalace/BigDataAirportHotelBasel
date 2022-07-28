@@ -319,7 +319,7 @@ public class LogicModelFundSachen extends LogicModel {
 		this.fundgegenstand.setAbkuerzungMA(abkuerzungMA);
 		
 		//Instance of DAOFunsachen
-		DAOFundsachen daoFundsachen = new DaoFundsachenImpl(getUserAHB(), dataBaseGUI, loading);
+		DAOFundsachen daoFundsachen = new DaoFundsachenImpl(getUserAHB(), dataBaseGUI, loading, this);
 		
 		try {
 			//Call to updateFundsachen passing the argument fundgegenstand containing all the data
@@ -469,7 +469,7 @@ public class LogicModelFundSachen extends LogicModel {
 			this.loading = new Loading(dataBaseGUI, true);
 			
 			//Instance of DAOFunsachen
-			DAOFundsachen daoFundsachen = new DaoFundsachenImpl(getUserAHB(), dataBaseGUI, loading);
+			DAOFundsachen daoFundsachen = new DaoFundsachenImpl(getUserAHB(), dataBaseGUI, loading, this);
 			
 			
 			
@@ -495,7 +495,7 @@ public class LogicModelFundSachen extends LogicModel {
 		
 		
 		//Instance of DAOFunsachen
-		DAOFundsachen daoFundsachen = new DaoFundsachenImpl(getUserAHB(), dataBaseGUI, loading);
+		DAOFundsachen daoFundsachen = new DaoFundsachenImpl(getUserAHB(), dataBaseGUI, loading, this);
 		
 		
 		
@@ -519,7 +519,7 @@ public class LogicModelFundSachen extends LogicModel {
 	private void suchenNachNamen(String namen) {
 		
 		// Instance of DAOFunsachen
-		DAOFundsachen daoFundsachen = new DaoFundsachenImpl(getUserAHB(), dataBaseGUI, loading);
+		DAOFundsachen daoFundsachen = new DaoFundsachenImpl(getUserAHB(), dataBaseGUI, loading, this);
 
 		try {
 			// Now we are ready to call searchByGuestName Method by the DAO Object.
@@ -538,7 +538,7 @@ public class LogicModelFundSachen extends LogicModel {
 	private void suchenNachFundort(String fundOrt) {
 		
 		// Instance of DAOFunsachen
-		DAOFundsachen daoFundsachen = new DaoFundsachenImpl(getUserAHB(), dataBaseGUI, loading);
+		DAOFundsachen daoFundsachen = new DaoFundsachenImpl(getUserAHB(), dataBaseGUI, loading, this);
 		
 		try {
 			// Now we are ready to call suchenNachFundort Method by the DAO Object.
@@ -559,7 +559,7 @@ public class LogicModelFundSachen extends LogicModel {
 		LogicModelFundSachen.dataBaseGUI = dataBaseGUI;
 		
 		//Instance of DAOFunsachen
-		DAOFundsachen daoFundsachen = new DaoFundsachenImpl(getUserAHB(), LogicModelFundSachen.dataBaseGUI, loading);
+		DAOFundsachen daoFundsachen = new DaoFundsachenImpl(getUserAHB(), LogicModelFundSachen.dataBaseGUI, loading, this);
 
 				
 				
@@ -571,6 +571,7 @@ public class LogicModelFundSachen extends LogicModel {
 					e1.printStackTrace();
 				}
 	}
+	
 	
 
 }

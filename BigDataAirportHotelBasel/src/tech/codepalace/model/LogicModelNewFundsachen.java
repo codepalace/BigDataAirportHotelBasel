@@ -338,7 +338,7 @@ public class LogicModelNewFundsachen extends LogicModel {
 				try {
 					//Ready to save the data in Database Table FUNDSACHEN
 
-					DAOFundsachen daoFundsachen = new DaoFundsachenImpl(this.userAHB, dataBaseGUI, loading);
+					DAOFundsachen daoFundsachen = new DaoFundsachenImpl(this.userAHB, dataBaseGUI, loading, getLogicModelFundsachen());
 					daoFundsachen.addNewFundsachen(fundgegenstand, this.userAHB);
 				} catch (DaoException e) {
 					e.printStackTrace();

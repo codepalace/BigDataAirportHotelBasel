@@ -31,6 +31,7 @@ import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
 
 import tech.codepalace.model.Fundgegenstand;
+import tech.codepalace.model.LogicModelFundSachen;
 import tech.codepalace.model.UserAHB;
 import tech.codepalace.utility.CellTableManager;
 import tech.codepalace.utility.DataEncryption;
@@ -58,8 +59,11 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 	// Variable to create Statements for working with the DataBase.
 	protected static Statement statement = null;
 
-	// Variable for the Table name. in this case Parking.
+	// Variable for the Table name. in this case FUNDSACHEN.
 	protected String table_name = "FUNDSACHEN";
+	
+	//id from selected Entry in Database Table
+	private int id;
 
 	// Variable ResultSet required for working with our DataBase Data.
 	private static ResultSet resultSet = null;
@@ -69,6 +73,8 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 	private UserAHB userAHB;
 	private DataBaseGUI dataBaseGUI;
 	private static Loading loading;
+	
+	private  static LogicModelFundSachen logicModelFundSachen;
 	
 	
 	// Instance DataEncryption for decrypt the Data we need to get.
@@ -103,11 +109,10 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 	private ImageIcon imgSearchDataBase = new ImageIcon(getClass().getResource("/img/dialogo.png"));
 	
 	
+
 	
 	
-	
-	
-	public DaoFundsachenImpl(UserAHB userAHB, DataBaseGUI dataBaseGUI, Loading loading) {
+	public DaoFundsachenImpl(UserAHB userAHB, DataBaseGUI dataBaseGUI, Loading loading, LogicModelFundSachen logicModelFundSachen) {
 		
 		this.userAHB = userAHB;
 		this.dataBaseGUI = dataBaseGUI;
@@ -117,6 +122,8 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 		DaoFundsachenImpl.tableChecked = false;
 		
 		DaoFundsachenImpl.dataEncryption = new DataEncryption();
+		
+		DaoFundsachenImpl.logicModelFundSachen = logicModelFundSachen;
 		
 	}
 	
@@ -389,8 +396,8 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 		setURLToConnectCurrentDataBase();
 		
 		daoFactory.connect();
-		
-		String sqlString = "SELECT * From FUNDSACHEN";
+		//ORDER BY date_field ASC | DESC;
+		String sqlString = "SELECT * From FUNDSACHEN ORDER BY dateItemsWasFound ASC";
 			
 		try {
 			
@@ -557,6 +564,7 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 							
 							//aqui tenemos que agregar la constante verkaufer oder mitarbeiter. se queda para la otra aventura.
 							dataBaseGUI.fundsachenTable.getColumnModel().getColumn(TableFundsachenUtilities.KUERSELMA).setCellRenderer(new CellTableManager("text"));
+							
 							
 							model.addRow(row);
 							
@@ -2056,10 +2064,12 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 						// We set the URL to connect to the Database.
 						setURLToConnectCurrentDataBase();
 
+						
+		
 
 						/*SQL Sentence to select all from the FUNDSACHEN table in our Database.
 						 */
-						String sql = "SELECT * from FUNDSACHEN";
+						String sql = "SELECT * from FUNDSACHEN ORDER BY dateItemsWasFound ASC";
 						
 						
 						try {
@@ -2293,10 +2303,91 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 							e.printStackTrace();
 						}
 	}
+
+
+
+	
+	
+	
+
+	@Override
+	public void deleteDatabaseEntry(String tableName, int id) {
+
+		this.table_name = tableName;
+		this.id = id;
+		
+		//SQL Query instruction
+	String sql = "delete from " + this.table_name + " where id=" + this.id + "";
+	
+	
+	try {
+		//Set new value to the urlDB variable.
+		DaoFundsachenImpl.urlDB = DaoFundsachenImpl.dataEncryption.decryptData(this.userAHB.getUrlDataBase()) + File.separator + getDBName();
+	} catch (Exception e1) {
+		e1.printStackTrace();
+	}
+	
+	// We set the URL to connect to the Database.
+	setURLToConnectCurrentDataBase();
+	
+		
+	
+	//Initialize daoFactory Object with the DerbyURL value as argument.
+	daoFactory = new DaoFactory(getDerbyURL());
+			
+	//Initialize the connection object calling the daoFactory Object an connect Method to Connect to the URL where the database is located.
+	connection = DaoFundsachenImpl.daoFactory.connect();
+	
+	try {
+		
+	
+		//statement createStatement
+		DaoFundsachenImpl.statement = DaoFundsachenImpl.connection.createStatement();
+		
+		//We set the value for the id got from variable id.
+//		this.preparedStatement.setInt(1, this.id);
+		
+		//Now execute the statement.executeUpdate
+		DaoFundsachenImpl.statement.executeUpdate(sql);
+		
+		//And now write in Database permanently
+		DaoFundsachenImpl.connection.commit();
+		
+		
+	}catch (SQLException e) {
+
+		e.printStackTrace();
+	}finally {
+		
+		try {
+			//Close the connection.
+			DaoFundsachenImpl.statement.close();
+			DaoFundsachenImpl.connection.close();
+			DaoFundsachenImpl.daoFactory.closeConnection(getDerbyURL());
+			
+			
+			
+//			displayListFundsachen();
+			logicModelFundSachen.setDataBaseStatus("RELOAD");
+			reloadFundsachenData();
+			logicModelFundSachen.setDataBaseStatus("");
+
+			
+		}catch (SQLException | DaoException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+	
+	}
  	
  	
  	
 
+	
+	
 	
 	
 	

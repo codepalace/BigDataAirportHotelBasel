@@ -89,5 +89,13 @@ public interface DAOFundsachen {
 	void reloadFundsachenData() throws DaoException;
 	
 	
+	/**
+	 * @description Method to delete an Entry of the DataBase(Table)
+	 * @param tableName
+	 * @param id
+	 */
+	void deleteDatabaseEntry(String tableName, int id) throws DaoException;
+	
+	
 
 }
