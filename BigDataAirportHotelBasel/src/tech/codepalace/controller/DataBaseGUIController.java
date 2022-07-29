@@ -93,6 +93,7 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener {
 		}
 		else if(this.dataBaseGUI.fundsachenTable != null) {
 			this.dataBaseGUI.fundsachenTable.getModel().addTableModelListener(this);
+			this.dataBaseGUI.fundsachenTable.addKeyListener(this);
 
 		}
 		
@@ -202,7 +203,8 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener {
 		
 		if(e.getSource()==this.dataBaseGUI.btnHome && e.getKeyCode() == 112
 				||e.getSource()==this.dataBaseGUI.searchJComboBox && e.getKeyCode() == 112
-				||e.getSource()==this.dataBaseGUI.searchText && e.getKeyCode() == 112) 
+				||e.getSource()==this.dataBaseGUI.searchText && e.getKeyCode() == 112 
+				||e.getSource()==this.dataBaseGUI.fundsachenTable && e.getKeyCode() ==112)
 		
 		
 		{
@@ -211,7 +213,12 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener {
 		}
 		
 		else
-			if(e.getSource()==this.dataBaseGUI.btnHome && e.getKeyCode()== 113) {
+			if(e.getSource()==this.dataBaseGUI.btnHome && e.getKeyCode()== 113
+					||e.getSource()==this.dataBaseGUI.searchJComboBox && e.getKeyCode() == 113
+					||e.getSource()==this.dataBaseGUI.searchText && e.getKeyCode() == 113 
+					||e.getSource()==this.dataBaseGUI.fundsachenTable && e.getKeyCode() ==113)
+			
+			{
 		
 				this.logicModelFundSachen.displayParking(bigDataAirportHotelBaselStartFrame, "PARKING");
 	}
