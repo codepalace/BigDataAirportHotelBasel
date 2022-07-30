@@ -21,6 +21,7 @@ import javax.swing.table.TableModel;
 
 import tech.codepalace.model.LogicModelFundSachen;
 import tech.codepalace.model.LogicModelParking;
+import tech.codepalace.model.LogicModelStartFrame;
 import tech.codepalace.view.frames.BigDataAirportHotelBaselStartFrame;
 import tech.codepalace.view.frames.DataBaseGUI;
 import tech.codepalace.view.frames.Loading;
@@ -43,6 +44,7 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener {
 	private DataBaseGUI dataBaseGUI;
 	private LogicModelParking logicModelParking;
 	private LogicModelFundSachen logicModelFundSachen;
+	private LogicModelStartFrame logicModelStartFrame;
 	
 	private TableModel model;
 	
@@ -51,13 +53,15 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener {
 	private int selectedRow=0;
 	
 	public DataBaseGUIController(BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame, 
-			DataBaseGUI dataBaseGUI, LogicModelParking logicModelParking, LogicModelFundSachen logicModelFundSachen) {
+			DataBaseGUI dataBaseGUI, LogicModelParking logicModelParking, LogicModelFundSachen logicModelFundSachen,
+			LogicModelStartFrame logicModelStartFrame) {
 		
 		//We set the values to the Objects
 		this.bigDataAirportHotelBaselStartFrame = bigDataAirportHotelBaselStartFrame;
 		this.dataBaseGUI = dataBaseGUI;
 		this.logicModelParking = logicModelParking;
 		this.logicModelFundSachen = logicModelFundSachen;
+		this.logicModelStartFrame = logicModelStartFrame;
 		
 		
 		//Add Listener
@@ -222,7 +226,33 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener {
 		
 				this.logicModelFundSachen.displayParking(bigDataAirportHotelBaselStartFrame, "PARKING");
 	}
+		
+			else
+				
+			if(e.getSource()==this.dataBaseGUI.btnHome && e.getKeyCode()== 119
+					||e.getSource()==this.dataBaseGUI.searchJComboBox && e.getKeyCode() == 119
+					||e.getSource()==this.dataBaseGUI.searchText && e.getKeyCode() == 119 
+					||e.getSource()==this.dataBaseGUI.fundsachenTable && e.getKeyCode() ==119) 
+			
+			{
+				this.bigDataAirportHotelBaselStartFrame.setVisible(true);
+				this.dataBaseGUI.dispose();
+				this.logicModelFundSachen.logoutApplication(bigDataAirportHotelBaselStartFrame, this.logicModelStartFrame);
+				
+			}
 	
+		
+			else
+				
+				if(e.getSource()==this.dataBaseGUI.btnHome && e.getKeyCode()== 120
+						||e.getSource()==this.dataBaseGUI.searchJComboBox && e.getKeyCode() == 120
+						||e.getSource()==this.dataBaseGUI.searchText && e.getKeyCode() == 120 
+						||e.getSource()==this.dataBaseGUI.fundsachenTable && e.getKeyCode() ==120) 
+				
+				{
+					this.logicModelFundSachen.enterNewFoundsachenEntries(dataBaseGUI);
+					
+				}
 	
 	
 	else

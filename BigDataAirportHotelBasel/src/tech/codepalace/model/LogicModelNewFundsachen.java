@@ -139,7 +139,6 @@ public class LogicModelNewFundsachen extends LogicModel {
 	 */
 	public void checkDateFormat() {
 		
-		System.out.println("checkformat");
 		//Regex Format to evaluate the date Format.
 		String formatDateRegex = "(0[1-9]|[12][0-9]|3[01])\\.(0[1-9]|1[012])\\.((?:19|20)[0-9][0-9])$";
 		

@@ -7,7 +7,6 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableModel;
 
@@ -243,11 +242,16 @@ try {
 				 
 				 //We set the UserAHB value
 				 LogicModel.logicModelFundSachen.setUserAHB(getUserAHB());
+				 
+				
+				 //
+				 LogicModel.logicModelStartFrame = new LogicModelStartFrame(LogicModel.bigDataAirportHotelBaselStartFrame);
+				 LogicModel.logicModelStartFrame.setUserAHB(getUserAHB());
 				
 				
 				 //New Instance of DataBAseGUIController we the arguments we need to pass so we can access from this Object
 				new DataBaseGUIController(LogicModel.bigDataAirportHotelBaselStartFrame, dataBaseGUI, LogicModel.logicModelParking, 
-						LogicModel.logicModelFundSachen);
+						LogicModel.logicModelFundSachen, LogicModel.logicModelStartFrame);
 				
 				
 				try {
@@ -306,11 +310,15 @@ try {
 						 
 						 //We set the UserAHB value
 						 LogicModel.logicModelFundSachen.setUserAHB(getUserAHB());
+						 
+						 //
+						 LogicModel.logicModelStartFrame = new LogicModelStartFrame(LogicModel.bigDataAirportHotelBaselStartFrame);
+						 LogicModel.logicModelStartFrame.setUserAHB(getUserAHB());
 						
 						
 						 //New Instance of DataBAseGUIController we the arguments we need to pass so we can access from this Object
 						new DataBaseGUIController(LogicModel.bigDataAirportHotelBaselStartFrame, dataBaseGUI, LogicModel.logicModelParking, 
-								LogicModel.logicModelFundSachen);
+								LogicModel.logicModelFundSachen, LogicModel.logicModelStartFrame);
 						
 						
 						try {

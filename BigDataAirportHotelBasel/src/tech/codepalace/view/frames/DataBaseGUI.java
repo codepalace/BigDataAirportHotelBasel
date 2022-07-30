@@ -210,6 +210,10 @@ public class DataBaseGUI extends JFrame {
 		//Resizable none
 		this.setResizable(false);
 		
+		//Set icon GUI in case Windows Operating System.
+		setIconImage (new ImageIcon(getClass().getResource("/img/iconoHotel.png")).getImage());
+		
+		
 		//Background JPanel
 		 this.panelWithBackgroundOption.setImage("/img/backgroundframe.jpg");
 		 

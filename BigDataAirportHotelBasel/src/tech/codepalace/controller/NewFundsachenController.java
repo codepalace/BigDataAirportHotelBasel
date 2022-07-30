@@ -47,9 +47,11 @@ public class NewFundsachenController implements ActionListener, WindowListener, 
 		this.newFundsachen.cancelFoundSachen.addMouseListener(this);
 		this.newFundsachen.cancelFoundSachen.addActionListener(this);
 		this.newFundsachen.cancelFoundSachen.addKeyListener(this);
+		this.newFundsachen.cancelFoundSachen.addFocusListener(this);
 		
 		this.newFundsachen.saveFoundSachen.addActionListener(this);
 		this.newFundsachen.saveFoundSachen.addKeyListener(this);
+		this.newFundsachen.saveFoundSachen.addFocusListener(this);
 		
 		
 		//We add also FocusListener to the entries Boxes
@@ -171,10 +173,18 @@ public class NewFundsachenController implements ActionListener, WindowListener, 
 		}
 		
 		
+		else
+			
+			if(e.getSource()==this.newFundsachen.saveFoundSachen) {
+				 this.newFundsachen.saveFoundSachen.setOpacity(1);
+			}
 		
 		
-		
-		
+			else
+				
+				if(e.getSource()==this.newFundsachen.cancelFoundSachen) {
+					 this.newFundsachen.cancelFoundSachen.setOpacity(1);
+				}
 		
 		
 		
@@ -212,6 +222,20 @@ else if(e.getSource()==this.newFundsachen.kisteNummerJComboBox) {
 	this.logicModelNewFundSachen.checkKistenNummer();
 	
 }
+	
+		
+		
+else	if(e.getSource()==this.newFundsachen.saveFoundSachen) {
+			 this.newFundsachen.saveFoundSachen.setOpacity(0.5f);
+		}	
+		
+else
+	
+	if(e.getSource()==this.newFundsachen.cancelFoundSachen) {
+		 this.newFundsachen.cancelFoundSachen.setOpacity(0.5f);
+	}
+		
+		
 		
 	}
 

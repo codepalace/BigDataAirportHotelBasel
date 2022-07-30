@@ -3,6 +3,7 @@ package tech.codepalace.view.frames;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -20,6 +21,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import tech.codepalace.utility.PlaceHolderTextField;
+import tech.codepalace.view.buttons.MyButton;
 import tech.codepalace.view.panels.PanelWithBackgroundOption;
 
 /**
@@ -56,7 +58,7 @@ public class NewFundsachen extends JDialog {
 		private String[] choices;
 		
 		
-		public JButton saveFoundSachen, cancelFoundSachen;
+		public MyButton saveFoundSachen, cancelFoundSachen;
 		
 		//JButton in case cancel
 		public JButton jaJButton = new JButton("Ja"), neinJButton = new JButton("Nein");
@@ -81,6 +83,9 @@ public class NewFundsachen extends JDialog {
 		private GridBagLayout gbl;
 	 	private GridBagConstraints gbc;
 	 	
+	 	//Variables for the Custom Windows Title
+	 	private JPanel infoJPanel;
+		private JLabel infoJLabel;
 	 	
 	 	
 	 	public NewFundsachen(DataBaseGUI dataBaseGUI, boolean modal, String abkuerzungMA) {
@@ -90,8 +95,9 @@ public class NewFundsachen extends JDialog {
 	 		
 	 		NewFundsachen.abkuerzungMA = abkuerzungMA;
 	 		
-	 		setSize(730, 450);
+	 		setSize(730, 470);
 			setTitle("Neue Fundsachen Eintragen");
+			setUndecorated(true);
 			
 			setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 			setResizable(false);
@@ -366,15 +372,23 @@ public class NewFundsachen extends JDialog {
 			gbl.setConstraints(abkuerzungMAGeneratedJLabel, gbc);
 			this.entriesPanel.add(abkuerzungMAGeneratedJLabel);
 			
-			this.saveFoundSachen = new JButton("Speichern");
-			this.saveFoundSachen.setFocusable(true);
-			this.cancelFoundSachen = new JButton("Abbrechen");
+//			this.saveFoundSachen = new JButton("Speichern");
+			this.saveFoundSachen = new MyButton("/img/btn_speichern.png");
+//			this.saveFoundSachen.setFocusable(true);
+			this.cancelFoundSachen = new MyButton("/img/btn_abbrechen.png");
 			
 			this.buttonPanel = new JPanel(new BorderLayout());
 			this.buttonPanel.setOpaque(false);
 			
 			this.buttonPanel.add(this.saveFoundSachen, BorderLayout.EAST);
 			this.buttonPanel.add(this.cancelFoundSachen, BorderLayout.WEST);
+			
+			this.infoJPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+			this.infoJLabel = new JLabel("Neue Fundsachen Eintrag");
+			this.infoJLabel.setFont(new Font("Verdana", Font.BOLD, 14));
+			this.infoJLabel.setForeground(Color.WHITE);
+			this.infoJPanel.setBackground(Color.GRAY);
+			this.infoJPanel.add(this.infoJLabel);
 			
 			
 			mainGBC.gridx = 0;
@@ -400,9 +414,11 @@ public class NewFundsachen extends JDialog {
 			//We add the JButton s to the mainJPanel
 			this.mainJPanel.add(buttonPanel);
 			
+			this.panelWithBackgroundOption.setLayout(new BorderLayout());
 			
+			this.panelWithBackgroundOption.add(infoJPanel, BorderLayout.NORTH);
 			//Finally we add the mainJPanel to the Contentpanel.
-			this.panelWithBackgroundOption.add(this.mainJPanel);
+			this.panelWithBackgroundOption.add(this.mainJPanel, BorderLayout.CENTER);
 
 
 			
