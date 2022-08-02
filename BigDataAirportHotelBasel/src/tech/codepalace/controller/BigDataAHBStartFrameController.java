@@ -184,7 +184,9 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 			//We call logoutApplication Method by logicModelStartFrame
 			
 			
-			this.logicModelStartFrame.logoutApplication(this.bigDataAirportHotelBaselStartFrame, this.logicModelStartFrame);
+			this.bigDataAirportHotelBaselStartFrame.dispose();
+			
+			this.logicModelStartFrame.logoutApplication();
 		}
 		
 		
@@ -231,7 +233,11 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 			//We call logoutApplication Method by logicModelStartFrame
 			
 			
-			this.logicModelStartFrame.logoutApplication(this.bigDataAirportHotelBaselStartFrame, this.logicModelStartFrame);
+			
+			    
+				this.bigDataAirportHotelBaselStartFrame.dispose();
+			
+			this.logicModelStartFrame.logoutApplication();
 		} 
 		else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.btn_kontoVerwalten) {
 			System.out.println("you pressed the kontoverwalten button");

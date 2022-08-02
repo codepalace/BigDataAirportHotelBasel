@@ -1,17 +1,21 @@
 package tech.codepalace.model;
 
+import java.awt.EventQueue;
 import java.awt.HeadlessException;
 import java.io.File;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.TableModel;
 
+import tech.codepalace.controller.BigDataAHBStartFrameController;
 import tech.codepalace.controller.DataBaseGUIController;
-import tech.codepalace.controller.LoginController;
 import tech.codepalace.dao.DAOFundsachen;
 import tech.codepalace.dao.DAOParking;
 import tech.codepalace.dao.DaoException;
@@ -19,10 +23,11 @@ import tech.codepalace.dao.DaoFactory;
 import tech.codepalace.dao.DaoFundsachenImpl;
 import tech.codepalace.dao.DaoParkingImpl;
 import tech.codepalace.utility.DataEncryption;
+import tech.codepalace.utility.OperatingSystemCheck;
+import tech.codepalace.utility.SetIconOperatingSystem;
 import tech.codepalace.view.frames.BigDataAirportHotelBaselStartFrame;
 import tech.codepalace.view.frames.DataBaseGUI;
 import tech.codepalace.view.frames.Loading;
-import tech.codepalace.view.frames.LoginUser;
 
 /**
  * 
@@ -79,11 +84,6 @@ public class LogicModel {
 	private static String guiCaller;
 	
 	
-	//Variables for Login and Logout
-	private static LoginUser loginUser;
-	private static LogicModelLogin logicModelLogin;
-	
-	
 	//Variable to store TableModel from JTable
 	private TableModel tableModel;
 	
@@ -108,82 +108,139 @@ public class LogicModel {
 	
 	
 	/**
-	 * @description logoutApplication it will be called from any JFrame. The first argument is the JFrame we have to close.
-	 * <p/>The second argument is the JFrame we have to make visible to makes possible the login again.
-	 * @param jframeToDispose
-	 * @param jframeToVisible
+	 * @description logoutApplication it will be called from any JFrame.
 	 */
-	public  void logoutApplication(BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame, LogicModelStartFrame logicModelStartFrame) {
+	public  void logoutApplication() {
 		
 
-		LogicModel.logicModelStartFrame = logicModelStartFrame;
-		LogicModel.loginUser = new LoginUser(LogicModel.bigDataAirportHotelBaselStartFrame, true);
+		
+		/*
+		 * We create an instance of the class. 
+		 * 
+		 * This class is useful to set the icon of our JFrame depending on the operating system where we are running our application.
+		 * 
+		 * This will be useful for us especially when we run the application on the macOS operating system. 
+		 * 
+		 * In this way we will be able to put the application icon in the Dock. 
+		 */
+	
+		SetIconOperatingSystem setIconOperatingSystem = new SetIconOperatingSystem();
 		
 		
-		SwingUtilities.invokeLater(new Runnable() {
-
-			@Override
-			public void run() {
-
-				//Clean the value loginUserText
-				bigDataAirportHotelBaselStartFrame.loginUserText.setText("Benutzer: ");
-
+		//We evaluate which operating system we are running
+				switch (OperatingSystemCheck.getOparatingSystem()) {
 				
-				//Disable the admin Buttons and makes them not visible.
-				bigDataAirportHotelBaselStartFrame.btn_benutzerVerwalten.setVisible(false);
-				bigDataAirportHotelBaselStartFrame.btn_benutzerVerwalten.setEnabled(false);
-				bigDataAirportHotelBaselStartFrame.btn_createDB.setVisible(false);
-				bigDataAirportHotelBaselStartFrame.btn_createDB.setEnabled(false);
-				
-			
-
-				//Clean the Textboxes
-				LogicModel.loginUser.userLolingJTextField.setText("");
-				LogicModel.loginUser.passwordField.setText("");
-				
-				//We hide the Buttons
-				bigDataAirportHotelBaselStartFrame.btn_benutzerVerwalten.setVisible(false);
-				bigDataAirportHotelBaselStartFrame.btn_benutzerVerwalten.setEnabled(false);
-				bigDataAirportHotelBaselStartFrame.btn_createDB.setVisible(false);
-				bigDataAirportHotelBaselStartFrame.btn_createDB.setEnabled(false);
-				
-				
-				
-				//if else to call for Login again.
-				try {
-					if(LogicModel.logicModelLogin==null) {
-
-						SwingUtilities.invokeLater(new Runnable() {
+				//In the case of running a macOs operating system
+				case MAC: 
+					
+					
+					//we set some properties for our macos operating system
+					System.setProperty("apple.laf.useScreenMenuBar", "true");
+					System.setProperty("com.apple.mrj.application.apple.menu.about.name", "BigData Airport Hotel Basel");
+					
+					
+					//We start with a new thread
+					EventQueue.invokeLater(new Runnable() {
+						
+						@Override
+						public void run() {
 							
-							@Override
-							public void run() {
-								
-								LogicModel.logicModelLogin = new LogicModelLogin(LogicModel.loginUser);
-								new LoginController(LogicModel.loginUser, bigDataAirportHotelBaselStartFrame, LogicModel.logicModelLogin, LogicModel.logicModelStartFrame);
-								
-								LogicModel.loginUser.setLocationRelativeTo(bigDataAirportHotelBaselStartFrame);
-								LogicModel.loginUser.setVisible(true);
-								
-								
-							}
-						});
-					}else {
-						
-						bigDataAirportHotelBaselStartFrame.btn_benutzerVerwalten.setVisible(false);
-						bigDataAirportHotelBaselStartFrame.btn_benutzerVerwalten.setEnabled(false);
-						bigDataAirportHotelBaselStartFrame.btn_createDB.setVisible(false);
-						bigDataAirportHotelBaselStartFrame.btn_createDB.setEnabled(false);
-						
-						LogicModel.loginUser.setVisible(true);
-					}
-				} catch (Exception e) {
 
-					e.printStackTrace();
-				}
+							try {
+								//get Default System LookAndFeel
+								UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+								
+							} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+									| UnsupportedLookAndFeelException e) {
+								e.printStackTrace();
+							}	
 
-			}
+
+							//Instantiate the main window(The principal GUI JFrame class)
+							BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame = new BigDataAirportHotelBaselStartFrame();
+							
+
+							//Instantiate LogicModelStartFrame
+						    LogicModelStartFrame logicModelStartFrame = new LogicModelStartFrame(bigDataAirportHotelBaselStartFrame);
+						    
+
+						    
+							/* We instantiate the controller class and pass the required arguments to it.
+							 * 
+							 */
+						    new BigDataAHBStartFrameController(bigDataAirportHotelBaselStartFrame, logicModelStartFrame);
+
+							
+						    //Center the GUI to the Screen.
+							bigDataAirportHotelBaselStartFrame.setLocationRelativeTo(null);
+							
+							
+							/*
+							 * We call to set the Application Icon depending on the operating system we are running. 
+							 * 
+							 * The first parameter it receives is the JFrame that is going to set the icon. 
+							 * The second parameter the path with the image that is in our resources folder and inside a package named img.
+							 */
+							setIconOperatingSystem.setIconJFrame(bigDataAirportHotelBaselStartFrame, "/img/iconoHotel.png");
+							
+							//We setVisible our GUI
+							bigDataAirportHotelBaselStartFrame.setVisible(true);
+						}
+					});
+
+					
+					break;
+					
+
 			
-		});
+					//In the case of running a another operating system	
+				default:
+					
+				
+					
+		EventQueue.invokeLater(new Runnable() {
+						
+						@Override
+						public void run() {
+							
+
+							try {
+								
+								UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+								
+							} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+									| UnsupportedLookAndFeelException e) {
+								e.printStackTrace();
+							}	
+
+
+							//Instantiate the main window(The principal GUI JFrame class)
+							BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame = new BigDataAirportHotelBaselStartFrame();
+							
+							
+							//Instantiate LogicModelStartFrame
+						    LogicModelStartFrame logicModelStartFrame = new LogicModelStartFrame(bigDataAirportHotelBaselStartFrame);
+						    
+
+							
+						    new BigDataAHBStartFrameController(bigDataAirportHotelBaselStartFrame, logicModelStartFrame);
+							
+							//Set the icon four our JFrame
+							bigDataAirportHotelBaselStartFrame.setLocationRelativeTo(null);
+							
+							//We set the JFrame icon calling the setIconImage Method.
+							bigDataAirportHotelBaselStartFrame.setIconImage (new ImageIcon(getClass().getResource("/img/iconoHotel.png")).getImage());
+							
+							
+							bigDataAirportHotelBaselStartFrame.setVisible(true);
+						}
+					});
+					
+					
+					break;
+				
+				
+				}
 		
 	}
 	

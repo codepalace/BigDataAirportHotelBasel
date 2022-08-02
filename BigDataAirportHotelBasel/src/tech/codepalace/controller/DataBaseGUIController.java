@@ -235,9 +235,11 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener {
 					||e.getSource()==this.dataBaseGUI.fundsachenTable && e.getKeyCode() ==119) 
 			
 			{
-				this.bigDataAirportHotelBaselStartFrame.setVisible(true);
-				this.dataBaseGUI.dispose();
-				this.logicModelFundSachen.logoutApplication(bigDataAirportHotelBaselStartFrame, this.logicModelStartFrame);
+				
+				
+					this.dataBaseGUI.dispose();
+				
+				this.logicModelFundSachen.logoutApplication();
 				
 			}
 	

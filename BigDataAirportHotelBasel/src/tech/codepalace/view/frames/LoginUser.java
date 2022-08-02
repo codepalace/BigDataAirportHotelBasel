@@ -315,6 +315,7 @@ public class LoginUser extends JDialog  {
 			public void keyPressed(KeyEvent e) {
 				
 				if(e.getKeyCode()==10) {
+					userLolingJTextField.requestFocus();
 					dialog.dispose();
 					
 				}
