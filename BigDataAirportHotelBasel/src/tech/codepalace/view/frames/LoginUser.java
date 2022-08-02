@@ -11,7 +11,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -22,8 +21,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.border.Border;
 
+import tech.codepalace.view.buttons.MyButton;
 import tech.codepalace.view.panels.PanelWithBackgroundOption;
 
 /**
@@ -43,23 +42,20 @@ import tech.codepalace.view.panels.PanelWithBackgroundOption;
 public class LoginUser extends JDialog  {
 	
 	private PanelWithBackgroundOption panelWithBackgroundOption;
-	private JPanel centerPanel, centerPanelWest, centerPanelEast, southPanel, containerButtonPanel;
+	private JPanel mainJPanel, entriesPanel, containerButtonPanel;
 	
 	private JLabel userNameJLabel, passwordJLabel; 
 	
 	//Image for the modal Window
 	private JLabel imgModal;
 	
-	public JButton loginButton, cancelLoginButton;
+	public MyButton loginButton, cancelLoginButton;
 	
 	public JTextField userLolingJTextField;
 	public JPasswordField passwordField;
-	
-	//Border for the centerPanelButtons
-	private Border etchedBorder;
-	
-	private GridBagLayout gbl;
-	private GridBagConstraints gbc;
+
+	private GridBagLayout mainGBL, gbl;
+	private GridBagConstraints mainGBC, gbc;
 	
 	
 	
@@ -86,118 +82,9 @@ public class LoginUser extends JDialog  {
 		super(bigDataAirportHotelBaselStartFrame, modal);
 		
 
+		//we initialize the elements
+		init();
 		
-		setSize(500, 180);
-		setTitle("Bitte geben Sie Ihren Benutzernamen und Ihr Passwort ein.");
-		setLocationRelativeTo(null);
-		setResizable(false);
-		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		
-		this.panelWithBackgroundOption = new PanelWithBackgroundOption();
-		this.panelWithBackgroundOption.setImage("/img/backgroundframe.jpg");
-		this.panelWithBackgroundOption.setLayout(new BorderLayout());
-		
-		
-		this.centerPanel = new JPanel(new BorderLayout());
-		this.centerPanel.setOpaque(false);
-		
-		this.centerPanelWest = new JPanel(new BorderLayout());
-		this.centerPanelWest.setOpaque(false);
-		this.centerPanelWest.setBorder(BorderFactory.createEmptyBorder(0,10,0, 0));
-		
-		this.imgModal = new JLabel();
-		this.imgModal.setOpaque(false);
-		
-		this.imgModal.setIcon(new ImageIcon(getClass().getResource("/img/face90x90.png")));
-		
-		this.centerPanelWest.add(this.imgModal);
-	
-		
-		this.userNameJLabel = new JLabel("Benutzer:");
-		this.userNameJLabel.setPreferredSize(new Dimension(110,20));
-		this.userNameJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		this.userNameJLabel.setFont(new Font("Verdana", Font.BOLD, 16));
-		
-		this.passwordJLabel = new JLabel("Password:");
-		this.passwordJLabel.setPreferredSize(new Dimension(110,20));
-		this.passwordJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		this.passwordJLabel.setFont(new Font("Verdana", Font.BOLD, 16));
-		
-		
-		this.userLolingJTextField = new JTextField(20);
-		this.userLolingJTextField.setText("");
-		
-		this.passwordField = new JPasswordField(20);
-		this.passwordField.setText("");
-		
-
-		this.gbl = new GridBagLayout();
-		this.gbc = new GridBagConstraints();
-
-		this.centerPanelEast = new JPanel();
-		this.centerPanelEast.setOpaque(false);
-		this.centerPanelEast.setBorder(BorderFactory.createEmptyBorder(0,0,0, 10));
-		this.centerPanelEast.setLayout(gbl);
-		
-		
-		this.gbc.gridx = 0;
-		this.gbc.gridy = 0;
-		this.centerPanelEast.add(this.userNameJLabel, gbc);
-		
-
-		this.gbc.gridx = 1;
-		this.gbc.gridy = 0;
-		this.gbc.insets = new Insets(0, 5, 0, 0);
-		this.centerPanelEast.add(this.userLolingJTextField, gbc);
-		
-		
-		this.gbc.gridx = 0; 
-		this.gbc.gridy = 1; 
-		this.gbc.insets = new Insets(5, 0, 0, 0);
-		this.centerPanelEast.add(this.passwordJLabel, gbc);
-		
-
-		this.gbc.gridx = 1;
-		this.gbc.gridy = 1; 
-		this.gbc.insets = new Insets(5, 5, 0, 0);
-		this.centerPanelEast.add(this.passwordField, gbc);
-		
-		
-		
-		
-		this.centerPanel.add(this.centerPanelWest, BorderLayout.WEST);
-		this.centerPanel.add(centerPanelEast, BorderLayout.EAST);
-		
-		
-		
-		this.southPanel = new JPanel(new BorderLayout());
-		this.southPanel.setOpaque(false);
-		
-		//Initialize the Border
-		this.etchedBorder = BorderFactory.createEtchedBorder();
-		
-//		this.southPanel.setBorder(etchedBorder);
-		
-		this.loginButton = new JButton("Login");
-		this.cancelLoginButton = new JButton("Abbrechen");
-		
-		this.containerButtonPanel = new JPanel(new BorderLayout());
-		this.containerButtonPanel.setOpaque(false);
-		
-		this.containerButtonPanel.add(this.loginButton, BorderLayout.EAST);
-		this.containerButtonPanel.add(this.cancelLoginButton, BorderLayout.WEST);
-		
-		this.containerButtonPanel.setBorder(etchedBorder);
-		
-		this.southPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		
-		this.southPanel.add(containerButtonPanel);
-		
-		
-		this.panelWithBackgroundOption.add(centerPanel, BorderLayout.CENTER);
-		this.panelWithBackgroundOption.add(this.southPanel, BorderLayout.SOUTH);
-		
-
 		
 		setContentPane(this.panelWithBackgroundOption);
 		
@@ -222,6 +109,143 @@ public class LoginUser extends JDialog  {
 	
 	
 	
+	private void init() {
+		
+		setSize(500, 180);
+		setTitle("Bitte geben Sie Ihren Benutzernamen und Ihr Passwort ein.");
+		setLocationRelativeTo(null);
+		setResizable(false);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		
+		this.panelWithBackgroundOption = new PanelWithBackgroundOption();
+		this.panelWithBackgroundOption.setImage("/img/backgroundframe.jpg");
+		this.panelWithBackgroundOption.setLayout(new BorderLayout());
+		
+		//mainJPanel will be added to the panelWithBckgroundOption and it will be added to this JPanel the other elements.
+		this.mainJPanel = new JPanel();
+		
+		this.imgModal = new JLabel();
+		this.imgModal.setOpaque(false);
+		
+		this.imgModal.setIcon(new ImageIcon(getClass().getResource("/img/face90x90.png")));
+		
+		// GridBagLayout for the mainJPanel
+		this.mainGBL = new GridBagLayout();
+
+		// GridBagConstraints for the mainJPanel
+		this.mainGBC = new GridBagConstraints();
+		
+		
+		this.gbl = new GridBagLayout();
+		this.gbc = new GridBagConstraints();
+		
+		// setLayout to the mainJPanel the GridBagLayout
+		this.mainJPanel.setLayout(mainGBL);
+		this.mainJPanel.setOpaque(false);
+		
+		this.entriesPanel =  new JPanel(gbl);
+		this.entriesPanel.setOpaque(false);
+		
+		this.userNameJLabel = new JLabel("Benutzer:");
+		this.userNameJLabel.setPreferredSize(new Dimension(110,20));
+		this.userNameJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		this.userNameJLabel.setFont(new Font("Verdana", Font.BOLD, 16));
+		
+		this.passwordJLabel = new JLabel("Password:");
+		this.passwordJLabel.setPreferredSize(new Dimension(110,20));
+		this.passwordJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		this.passwordJLabel.setFont(new Font("Verdana", Font.BOLD, 16));
+		
+		
+		this.userLolingJTextField = new JTextField(20);
+		this.userLolingJTextField.setText("");
+		
+		this.passwordField = new JPasswordField(20);
+		this.passwordField.setText("");
+		
+		
+		//MyButton and containerButtonPanel
+		this.loginButton = new MyButton("/img/login_login_gui.png");
+		this.cancelLoginButton = new MyButton("/img/abbrechen_login_gui.png");
+		
+		this.containerButtonPanel = new JPanel(new BorderLayout());
+		this.containerButtonPanel.setOpaque(false);
+		
+		
+		
+		//Add all elements to the GUI
+		addElementsToGUI();
+		
+	}
+	
+	
+	
+	private void addElementsToGUI() {
+		
+		//Setting the elements GridBagConstraints and add to entriesPanel with GridBagLayout
+		
+		this.gbc.insets = new Insets(10, 0, 10, 0);
+		this.gbc.gridx = 0;
+		this.gbc.gridy = 0;
+		this.entriesPanel.add(this.userNameJLabel, gbc);
+		
+
+		this.gbc.gridx = 1;
+		this.gbc.gridy = 0;
+		this.gbc.insets = new Insets(0, 5, 0, 0);
+		this.entriesPanel.add(this.userLolingJTextField, gbc);
+		
+		
+		this.gbc.gridx = 0; 
+		this.gbc.gridy = 1; 
+		this.gbc.insets = new Insets(5, 0, 0, 0);
+		this.entriesPanel.add(this.passwordJLabel, gbc);
+		
+
+		this.gbc.gridx = 1;
+		this.gbc.gridy = 1; 
+		this.gbc.insets = new Insets(5, 5, 0, 0);
+		this.entriesPanel.add(this.passwordField, gbc);
+		
+
+	
+		
+		//We add the entriesPanel to the mainJPanel
+		this.mainJPanel.add(this.entriesPanel);
+		
+		
+		//Add the Buttons to the containerButtonPanel
+		this.containerButtonPanel.add(this.loginButton, BorderLayout.EAST);
+		this.containerButtonPanel.add(this.cancelLoginButton, BorderLayout.WEST);
+		
+		
+		
+		//Setting the elements GridBagConstraints and add to mainJPanel with GridBagLayout
+		this.mainGBC.insets = new Insets(10, 0, 0, 0);
+		mainGBC.gridx = 0;
+		mainGBC.gridy = 0;
+		mainGBL.setConstraints(imgModal, mainGBC);
+		this.mainJPanel.add(imgModal);
+		
+		mainGBC.gridx = 1;
+		mainGBC.gridy = 0;
+		mainGBL.setConstraints(this.entriesPanel, mainGBC);
+		
+		
+		
+		mainGBC.gridx = 0;
+		mainGBC.gridy = 1;
+		mainGBC.fill = GridBagConstraints.HORIZONTAL;
+		mainGBC.gridwidth = 2;
+		mainGBL.setConstraints(this.containerButtonPanel, mainGBC);
+		
+		//We add the JButton s to the mainJPanel
+		this.mainJPanel.add(containerButtonPanel);
+		
+		this.panelWithBackgroundOption.add(this.mainJPanel, BorderLayout.NORTH);
+		
+		
+	}
 	
 	
 	/**
@@ -260,7 +284,9 @@ public class LoginUser extends JDialog  {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//Close JDialog and continue loging GUI
+				userLolingJTextField.requestFocus();
 				dialog.dispose();
+				
 				
 			}
 		});
@@ -290,6 +316,7 @@ public class LoginUser extends JDialog  {
 				
 				if(e.getKeyCode()==10) {
 					dialog.dispose();
+					
 				}
 				
 			}
@@ -312,7 +339,9 @@ public class LoginUser extends JDialog  {
 				if(e.getKeyCode()==10) {
 					
 					//Call for the confirmation
-					confirmClose();
+//					confirmClose();
+					dialog.dispose();
+					System.exit(0);
 				}
 				
 			}

@@ -2,6 +2,8 @@ package tech.codepalace.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
@@ -13,7 +15,7 @@ import tech.codepalace.utility.DataEncryption;
 import tech.codepalace.view.frames.BigDataAirportHotelBaselStartFrame;
 import tech.codepalace.view.frames.LoginUser;
 
-public class LoginController implements ActionListener, KeyListener, WindowListener {
+public class LoginController implements ActionListener, KeyListener, WindowListener, FocusListener {
 	
 	private LoginUser loginUser;
 //	private UserAHB userAHB;
@@ -52,10 +54,12 @@ public class LoginController implements ActionListener, KeyListener, WindowListe
 	
 		this.loginUser.loginButton.addActionListener(this);
 		this.loginUser.loginButton.addKeyListener(this);
+		this.loginUser.loginButton.addFocusListener(this);
 		this.loginUser.passwordField.addKeyListener(this);
 		
 		this.loginUser.cancelLoginButton.addActionListener(this);
 		this.loginUser.cancelLoginButton.addKeyListener(this);
+		this.loginUser.cancelLoginButton.addFocusListener(this);
 		
 		this.dataEncryption = new DataEncryption();
 		
@@ -66,10 +70,7 @@ public class LoginController implements ActionListener, KeyListener, WindowListe
 	
 
 	@Override
-	public void windowOpened(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void windowOpened(WindowEvent e) {}
 
 	@Override
 	public void windowClosing(WindowEvent e) {
@@ -81,41 +82,22 @@ public class LoginController implements ActionListener, KeyListener, WindowListe
 	}
 
 	@Override
-	public void windowClosed(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-		
-	}
+	public void windowClosed(WindowEvent e) {}
 
 	@Override
-	public void windowIconified(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void windowIconified(WindowEvent e) {}
 
 	@Override
-	public void windowDeiconified(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void windowDeiconified(WindowEvent e) {}
 
 	@Override
-	public void windowActivated(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void windowActivated(WindowEvent e) {}
 
 	@Override
-	public void windowDeactivated(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void windowDeactivated(WindowEvent e) {}
 
 	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void keyTyped(KeyEvent e) {}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -204,10 +186,7 @@ public class LoginController implements ActionListener, KeyListener, WindowListe
 	
 
 	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void keyReleased(KeyEvent e) {}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -290,5 +269,34 @@ public class LoginController implements ActionListener, KeyListener, WindowListe
 					break;
 				}
 			}
+
+
+
+		@Override
+		public void focusGained(FocusEvent e) {
+			
+			if(e.getSource()==this.loginUser.loginButton) {
+				this.loginUser.loginButton.setOpacity(1);
+			}
+			
+			else if(e.getSource()==this.loginUser.cancelLoginButton) {
+				this.loginUser.cancelLoginButton.setOpacity(1);
+			}
+			
+		}
+
+
+
+		@Override
+		public void focusLost(FocusEvent e) {
+			
+			if(e.getSource()==this.loginUser.loginButton) {
+				this.loginUser.loginButton.setOpacity(0.5f);
+			}
+			
+			else if(e.getSource()==this.loginUser.cancelLoginButton) {
+				this.loginUser.cancelLoginButton.setOpacity(0.5f);
+			}
+		}
 
 }
