@@ -501,7 +501,7 @@ public class LogicModelFundSachen extends LogicModel {
 		
 		try {
 			//Now we are ready to call seachByLostAndFound Method by the DAO Object.
-			daoFundsachen.seachByLostAndFound(fundsachen);
+			daoFundsachen.searchByLostAndFound(fundsachen);
 		} catch (DaoException e1) {
 			e1.printStackTrace();
 		}
@@ -523,7 +523,7 @@ public class LogicModelFundSachen extends LogicModel {
 
 		try {
 			// Now we are ready to call searchByGuestName Method by the DAO Object.
-			daoFundsachen.seachByGuestName(namen);
+			daoFundsachen.searchByGuestName(namen);
 		} catch (DaoException e1) {
 			e1.printStackTrace();
 		}

@@ -63,7 +63,7 @@ public interface DAOFundsachen {
 	 * @param lostAndFoundItems
 	 * @throws DaoException
 	 */
-	void seachByLostAndFound(String lostAndFoundItems) throws DaoException;
+	void searchByLostAndFound(String lostAndFoundItems) throws DaoException;
 	
 	
 	/**
@@ -71,7 +71,7 @@ public interface DAOFundsachen {
 	 * @param guestName
 	 * @throws DaoException
 	 */
-	void seachByGuestName(String guestName) throws DaoException;
+	void searchByGuestName(String guestName) throws DaoException;
 	
 	
 	/**

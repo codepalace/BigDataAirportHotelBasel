@@ -126,6 +126,10 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener {
 		this.dataBaseGUI.deleteItem.addActionListener(this);
 		
 		this.dataBaseGUI.popupMenu.addPopupMenuListener(this);
+		
+		this.dataBaseGUI.btnParking.addActionListener(this);
+		
+		this.dataBaseGUI.btnLogout.addActionListener(this);
 	}
 	
 	
@@ -144,7 +148,21 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener {
 			this.dataBaseGUI.exitDBGUI.dispose();
 			this.dataBaseGUI.dispose();
 			
-		} else if (e.getSource()== this.dataBaseGUI.btnNoExitDBGUI) {
+		} 
+		
+		else if(e.getSource()==this.dataBaseGUI.btnParking) {
+		
+			this.logicModelFundSachen.displayParking(bigDataAirportHotelBaselStartFrame, "PARKING");
+		}
+		
+		else if(e.getSource()==this.dataBaseGUI.btnLogout) {
+			
+			this.dataBaseGUI.dispose();
+			
+			this.logicModelFundSachen.logoutApplication();
+		}
+		
+		else if (e.getSource()== this.dataBaseGUI.btnNoExitDBGUI) {
 			
 			this.dataBaseGUI.exitDBGUI.dispose();
 		

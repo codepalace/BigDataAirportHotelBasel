@@ -1070,7 +1070,7 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 	
 
 	@Override
-	public void seachByLostAndFound(String lostAndFoundItems) throws DaoException {
+	public void searchByLostAndFound(String lostAndFoundItems) throws DaoException {
 
 		//We create a new DefaultTableModel Casting DefaultTableModel our instance dataBaseGUI.fundsachenTable.getModel to get the Table model.
 		DefaultTableModel model = (DefaultTableModel) dataBaseGUI.fundsachenTable.getModel();
@@ -1093,8 +1093,9 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 
 				/*SQL Sentence to select all from the FUNDSACHEN table in our Database only where the foundItem(Column in Table) = lostAndFoundItems value
 				 */
-				String sql = "SELECT * from FUNDSACHEN WHERE foundItem = '" + lostAndFoundItems + "'";
-				
+//				String sql = "SELECT * from FUNDSACHEN WHERE foundItem = '" + lostAndFoundItems + "'";
+				String sql = "SELECT * from FUNDSACHEN WHERE foundItem LIKE '%" + lostAndFoundItems + "%'";
+		
 				
 				try {
 					
@@ -1189,7 +1190,7 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 						
 						
 						//After that resultSet execute now the Query select * from FUNDSACHEN WHERE dateItemsWasFound. Value of the sql variable
-						resultSet = statement.executeQuery("SELECT count(*) from FUNDSACHEN WHERE foundItem = '" + lostAndFoundItems + "'");
+						resultSet = statement.executeQuery("SELECT count(*) from FUNDSACHEN WHERE foundItem LIKE '%" + lostAndFoundItems + "%'");
 						
 						
 						//We move the cursor
@@ -1394,7 +1395,7 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 
 
 	@Override
-	public void seachByGuestName(String guestName) throws DaoException {
+	public void searchByGuestName(String guestName) throws DaoException {
 
 		//We create a new DefaultTableModel Casting DefaultTableModel our instance dataBaseGUI.fundsachenTable.getModel to get the Table model.
 				DefaultTableModel model = (DefaultTableModel) dataBaseGUI.fundsachenTable.getModel();
