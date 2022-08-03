@@ -12,6 +12,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
@@ -29,12 +30,16 @@ import tech.codepalace.view.frames.Loading;
 
 /**
  * 
- * @author tonimacaroni
+ * 
  * @description Controller Class for DataBaseGUI.
  * <p>This class receives as an argument BigDataAirportHotelBaselStartFrame Object so we can call this object anyTime back.</p>
  * <p>The DataBaseGUI Object is the class will be controlled by this one.</p>
  * <p>The LogicModelParking so we can call anyTime for creating a new Parking-Reservation for example.</p>
  * <p>The TableModelListener will be used to interact with the changes of the cells by any JTable.</p>
+ * <p>The ItemListener will be used in this class to interact with the itemStateChanged by JComboBox. 
+ * So inside the itemStateChanged Method we give the Focus to searchText JTextBox.</p>
+ * <p>FocusListener for the focusGained and focusLost.</p>
+ * <p>PopupMenuListener for the PopUp Menu.</p>
  */
 public class DataBaseGUIController implements ActionListener, KeyListener, WindowListener, 
 TableModelListener, ItemListener, FocusListener, PopupMenuListener {
@@ -94,6 +99,7 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener {
 		 */
 		if(this.dataBaseGUI.parkingTable != null) {
 			this.dataBaseGUI.parkingTable.getModel().addTableModelListener(this);
+			this.dataBaseGUI.parkingTable.addKeyListener(this);
 		}
 		else if(this.dataBaseGUI.fundsachenTable != null) {
 			this.dataBaseGUI.fundsachenTable.getModel().addTableModelListener(this);
@@ -130,6 +136,11 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener {
 		this.dataBaseGUI.btnParking.addActionListener(this);
 		
 		this.dataBaseGUI.btnLogout.addActionListener(this);
+		
+		this.dataBaseGUI.btnFundsachen.addKeyListener(this);
+		this.dataBaseGUI.btnFundsachen.addActionListener(this);
+		this.dataBaseGUI.btnFundsachen.addFocusListener(this);
+		
 	}
 	
 	
@@ -152,7 +163,7 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener {
 		
 		else if(e.getSource()==this.dataBaseGUI.btnParking) {
 		
-			this.logicModelFundSachen.displayParking(bigDataAirportHotelBaselStartFrame, "PARKING");
+			this.logicModelFundSachen.displayParking(bigDataAirportHotelBaselStartFrame);
 		}
 		
 		else if(e.getSource()==this.dataBaseGUI.btnLogout) {
@@ -209,6 +220,11 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener {
 		}
 		
 		
+		else if(e.getSource()==this.dataBaseGUI.btnFundsachen) {
+			this.logicModelParking.displayFundSachen(bigDataAirportHotelBaselStartFrame);
+		}
+		
+		
 	}
 
 	
@@ -226,7 +242,8 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener {
 		if(e.getSource()==this.dataBaseGUI.btnHome && e.getKeyCode() == 112
 				||e.getSource()==this.dataBaseGUI.searchJComboBox && e.getKeyCode() == 112
 				||e.getSource()==this.dataBaseGUI.searchText && e.getKeyCode() == 112 
-				||e.getSource()==this.dataBaseGUI.fundsachenTable && e.getKeyCode() ==112)
+				||e.getSource()==this.dataBaseGUI.fundsachenTable && e.getKeyCode() ==112
+				||e.getSource()==this.dataBaseGUI.parkingTable && e.getKeyCode() ==112)
 		
 		
 		{
@@ -242,7 +259,7 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener {
 			
 			{
 		
-				this.logicModelFundSachen.displayParking(bigDataAirportHotelBaselStartFrame, "PARKING");
+				this.logicModelFundSachen.displayParking(bigDataAirportHotelBaselStartFrame);
 	}
 		
 			else
@@ -250,7 +267,8 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener {
 			if(e.getSource()==this.dataBaseGUI.btnHome && e.getKeyCode()== 119
 					||e.getSource()==this.dataBaseGUI.searchJComboBox && e.getKeyCode() == 119
 					||e.getSource()==this.dataBaseGUI.searchText && e.getKeyCode() == 119 
-					||e.getSource()==this.dataBaseGUI.fundsachenTable && e.getKeyCode() ==119) 
+					||e.getSource()==this.dataBaseGUI.fundsachenTable && e.getKeyCode() ==119
+					||e.getSource()==this.dataBaseGUI.parkingTable && e.getKeyCode() ==119) 
 			
 			{
 				
@@ -267,12 +285,33 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener {
 				if(e.getSource()==this.dataBaseGUI.btnHome && e.getKeyCode()== 120
 						||e.getSource()==this.dataBaseGUI.searchJComboBox && e.getKeyCode() == 120
 						||e.getSource()==this.dataBaseGUI.searchText && e.getKeyCode() == 120 
-						||e.getSource()==this.dataBaseGUI.fundsachenTable && e.getKeyCode() ==120) 
+						||e.getSource()==this.dataBaseGUI.fundsachenTable && e.getKeyCode() ==120
+						||e.getSource()==this.dataBaseGUI.parkingTable && e.getKeyCode() ==120) 
 				
 				{
-					this.logicModelFundSachen.enterNewFoundsachenEntries(dataBaseGUI);
+					
+					if(this.dataBaseGUI.fundsachenTable!=null) {
+						this.logicModelFundSachen.enterNewFoundsachenEntries(dataBaseGUI);
+					
+					} else if(this.dataBaseGUI.parkingTable!=null) {
+						this.logicModelParking.createNewParkingReservation(dataBaseGUI);
+					}
+					
 					
 				}
+		
+		
+				else 
+				
+					if(e.getSource()==this.dataBaseGUI.btnHome && e.getKeyCode()== 114
+					||e.getSource()==this.dataBaseGUI.searchJComboBox && e.getKeyCode() == 114
+					||e.getSource()==this.dataBaseGUI.searchText && e.getKeyCode() == 114 
+					||e.getSource()==this.dataBaseGUI.parkingTable && e.getKeyCode() ==114) 
+					
+					{
+						this.logicModelParking.displayFundSachen(bigDataAirportHotelBaselStartFrame);
+						
+					}
 	
 	
 	else
@@ -441,6 +480,15 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener {
 		}
 
 		else if (e.getSource() == this.dataBaseGUI.btnNewFundsachen) {
+			this.dataBaseGUI.btnHome.requestFocus();
+		}
+		
+		else if(e.getSource()== this.dataBaseGUI.btnFundsachen) {
+			this.dataBaseGUI.btnHome.requestFocus();
+		}
+		
+		
+		else if(e.getSource()==this.dataBaseGUI.btnNewParking) {
 			this.dataBaseGUI.btnHome.requestFocus();
 		}
 		

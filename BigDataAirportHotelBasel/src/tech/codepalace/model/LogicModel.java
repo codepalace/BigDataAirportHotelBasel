@@ -80,10 +80,6 @@ public class LogicModel {
 	//Variable to know which kind of DataBase application has called. Or we need to call for Data.
 	private static String dataBaseApplication;
 	
-	//Variable to know which GUI has called.
-	private static String guiCaller;
-	
-	
 	//Variable to store TableModel from JTable
 	private TableModel tableModel;
 	
@@ -254,12 +250,19 @@ public class LogicModel {
 	 * @description Method for calling to display the Parking Data.
 	 * @param bigDataAirportHotelBaselStartFrame
 	 */
-	public void displayParking(BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame, String guiCaller) {
+	public void displayParking(BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame) {
 		
 		//We set the value to the bigDataAirportHotelBaselStartFrame variable.
 		LogicModel.bigDataAirportHotelBaselStartFrame = bigDataAirportHotelBaselStartFrame;
-		LogicModel.guiCaller = guiCaller;
-//		LogicModel.bigDataAirportHotelBaselStartFrame.setEnabled(false);
+		
+		/*
+		 * Before we call to open the dataBaseGUI to display inside the JTable the Data from Table Parking located in DataBase we check if 
+		 * bigDataAirportHotelBaselStartFrame is not null and isVisible to dispose this GUI Class so we avoid the user could game with the JButtons.
+		 */
+		if(LogicModel.bigDataAirportHotelBaselStartFrame !=null && LogicModel.bigDataAirportHotelBaselStartFrame.isVisible()) {
+			LogicModel.bigDataAirportHotelBaselStartFrame.dispose();
+		}
+
 		
 		
 try {
@@ -286,7 +289,7 @@ try {
 				 
 				 //This Logical Model need the String argument to Know which kind of Application we are calling.
 				 //The second argument used to know from which GUI we are calling
-				 LogicModel.logicModelDataBaseGUI = new LogicModelDataBaseGUI("PARKING", "StartFrame");
+				 LogicModel.logicModelDataBaseGUI = new LogicModelDataBaseGUI("PARKING");
 				 
 				 
 				 //We set the UserAHB value
@@ -342,11 +345,18 @@ try {
 	 * @description Method to display the FundSache JFrame
 	 * @param fundSachenToVisible
 	 */
-	public  void displayFundSachen(BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame, String guiCaller) {
+	public  void displayFundSachen(BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame) {
 		
 		
 		LogicModel.bigDataAirportHotelBaselStartFrame = bigDataAirportHotelBaselStartFrame;
-		LogicModel.guiCaller = guiCaller;
+		
+		/*
+		 * Before we call to open the dataBaseGUI to display inside the JTable the Data from Table Parking located in DataBase we check if 
+		 * bigDataAirportHotelBaselStartFrame is not null and isVisible to dispose this GUI Class so we avoid the user could game with the JButtons.
+		 */
+		if(LogicModel.bigDataAirportHotelBaselStartFrame !=null && LogicModel.bigDataAirportHotelBaselStartFrame.isVisible()) {
+			LogicModel.bigDataAirportHotelBaselStartFrame.dispose();
+		}
 		
 		//invoke a new Thread 
 				SwingUtilities.invokeLater(new Runnable() {
@@ -354,12 +364,16 @@ try {
 					@Override
 					public void run() {
 						
+						if(LogicModel.dataBaseGUI !=null && LogicModel.dataBaseGUI.isVisible()) {
+							LogicModel.dataBaseGUI.dispose();
+						}
+						
 				         //This Logical Model need the String argument to Know which kind of Application we are calling.
 						 LogicModel.dataBaseGUI = new DataBaseGUI("FUNDSACHEN");
 						 
 						 //This Logical Model need the String argument to Know which kind of Application we are calling.
 						 //The second argument used to know from which GUI we are calling
-						 LogicModel.logicModelDataBaseGUI = new LogicModelDataBaseGUI("FUNDSACHEN", "StartFrame");
+						 LogicModel.logicModelDataBaseGUI = new LogicModelDataBaseGUI("FUNDSACHEN");
 						 
 						 
 						 //We set the UserAHB value
@@ -485,22 +499,12 @@ try {
 		
 		//We check if the received argument File(urlDataBaseFile exists. 
 		if(urlDataBaseFile.exists()) {
-			
-			
-			switch (LogicModel.guiCaller) {
 				
-				
-				case "StartFrame":
-					
+			
 					//we are going to call for a new instance of Loading Class with the JFrame in Background and the true to blocked
 					loading = new Loading(bigDataAirportHotelBaselStartFrame, true);
 				
-					break;
-					
-
-				default:
-					break;
-			}
+			
 			
 		
 			
@@ -582,24 +586,14 @@ try {
 					//Variable with the Database Driver Instruction jdbc:derby our Database Derby Embedded. It receive the urlDataBase included the dbName.
 					String url = "jdbc:derby:" + urlDataBase + File.separator + dbName;
 					
-					switch (LogicModel.guiCaller) {
-						
-						
-						case "StartFrame":
-							
-
+					
 							
 							 loading = new Loading(bigDataAirportHotelBaselStartFrame, true);
 							 
 							 
 							 new DaoFactory(url, loading, dataBaseApplication, dataBaseGUI);
 							 
-							
-							break;
-
-						default:
-							break;
-					}
+					
 	
 					
 

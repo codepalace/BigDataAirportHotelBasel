@@ -3,12 +3,12 @@ package tech.codepalace.model;
 public class LogicModelDataBaseGUI extends LogicModel {
 	
 	private String appCalled;
-	private String guiCaller;
+//	private String guiCaller;
 	
-	public LogicModelDataBaseGUI(String appCalled, String guiCaller) {
+	public LogicModelDataBaseGUI(String appCalled) {
 		
 		this.appCalled = appCalled;
-		this.guiCaller = guiCaller;
+//		this.guiCaller = guiCaller;
 	}
 	
 	
@@ -16,8 +16,8 @@ public class LogicModelDataBaseGUI extends LogicModel {
 		return this.appCalled;
 	}
 	
-	public String getGUICaller() {
-		return this.guiCaller;
-	}
+//	public String getGUICaller() {
+//		return this.guiCaller;
+//	}
 
 }

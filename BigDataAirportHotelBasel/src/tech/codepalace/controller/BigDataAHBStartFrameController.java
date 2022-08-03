@@ -166,13 +166,13 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 			
 			
 
-			 logicModelStartFrame.displayParking(this.bigDataAirportHotelBaselStartFrame, "StartFrame");
+			 logicModelStartFrame.displayParking(this.bigDataAirportHotelBaselStartFrame);
 
 
 			
 		}else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.parkingButton &&  e.getKeyCode()==114) {
 			
-			logicModelStartFrame.displayFundSachen(this.bigDataAirportHotelBaselStartFrame, "StartFrame");
+			logicModelStartFrame.displayFundSachen(this.bigDataAirportHotelBaselStartFrame);
 			
 		}else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.parkingButton &&  e.getKeyCode()==115) {
 			System.out.println("Opening the database Fitness!");
@@ -212,13 +212,14 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 			
 
 			
-			logicModelStartFrame.displayParking(this.bigDataAirportHotelBaselStartFrame, "StartFrame");
+			logicModelStartFrame.displayParking(this.bigDataAirportHotelBaselStartFrame);
 			
 
 			
 		} else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.fundsachenButton) {
 
-			logicModelStartFrame.displayFundSachen(this.bigDataAirportHotelBaselStartFrame, "StartFrame");
+
+			logicModelStartFrame.displayFundSachen(this.bigDataAirportHotelBaselStartFrame);
 		} 
 		else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.fitnessButton) {
 			System.out.println("you pressed the fitness button");
