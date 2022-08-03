@@ -677,7 +677,7 @@ public class DaoParkingImpl  implements DAOParking {
 							 * 
 							 * The values are retrieved from each result found in the table and of course from the corresponding column in the table Parking.
 							 */
-							
+							int id = resultSet.getInt("ID");
 							String idParking = resultSet.getString("idparking");
 							String buchungsName = resultSet.getString("buchungsname");
 							String autokfz = resultSet.getString("autokfz");
@@ -696,6 +696,7 @@ public class DaoParkingImpl  implements DAOParking {
 							ParkingReservation parkingReservation2 = new ParkingReservation();
 							
 							//We set the values of this Object type ParkingReservation 
+							parkingReservation2.setId(id);
 							parkingReservation2.setIdParking(idParking);
 							parkingReservation2.setBuchungsname(buchungsName);
 							parkingReservation2.setAutoKFZ(autokfz);
@@ -750,7 +751,7 @@ public class DaoParkingImpl  implements DAOParking {
 							 * 
 							 * by getBetragParking we add the Euro symbol.
 							 */
-							Object[] row = {chunk.getIdParking(), chunk.getBuchungsname(), chunk.getAutoKFZ(),
+							Object[] row = {chunk.getId(), chunk.getIdParking(), chunk.getBuchungsname(), chunk.getAutoKFZ(),
 									chunk.getAnreiseDatum(), chunk.getAbreiseDatum(), chunk.getAnzahlTagen(), 
 									chunk.getBetragParking() + " €", chunk.getBuchungsKanal(), chunk.getBemerkungen(), 
 									chunk.getSchluesselInHaus(), chunk.getAbkuerzungMA()};
@@ -772,7 +773,7 @@ public class DaoParkingImpl  implements DAOParking {
 							 * 
 							 * If the cell is type number then it will have a different font color. 
 							 */
-							
+							dataBaseGUI.parkingTable.getColumnModel().getColumn(TableParkingUtilities.ID).setCellRenderer(new CellTableManager("number"));
 							dataBaseGUI.parkingTable.getColumnModel().getColumn(TableParkingUtilities.IDPARKING).setCellRenderer(new CellTableManager("text"));
 							dataBaseGUI.parkingTable.getColumnModel().getColumn(TableParkingUtilities.BUCHUNGSNAME).setCellRenderer(new CellTableManager("text"));
 							dataBaseGUI.parkingTable.getColumnModel().getColumn(TableParkingUtilities.AUTOKFZ).setCellRenderer(new CellTableManager("text"));

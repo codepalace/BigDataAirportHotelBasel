@@ -99,6 +99,7 @@ private void buildTable() {
 	 */
 	ArrayList<String> tableHeadersList=new ArrayList<>();
 	
+	tableHeadersList.add("ID");
 	tableHeadersList.add("ID-Parking");
 	tableHeadersList.add("Buchungsname");
 	tableHeadersList.add("Auto-KFZ");
@@ -178,7 +179,7 @@ private Object[][] getDataArray(ArrayList<String> tableHeadersList) {
 		 
 		 
 		 */
-		
+		information[x][TableParkingUtilities.ID] = listParkingReservations.get(x).getId()+ "";
 		information[x][TableParkingUtilities.IDPARKING] = listParkingReservations.get(x).getIdParking()+ "";
 		information[x][TableParkingUtilities.BUCHUNGSNAME] = listParkingReservations.get(x).getBuchungsname()+ "";
 		information[x][TableParkingUtilities.AUTOKFZ] = listParkingReservations.get(x).getAutoKFZ()+ "";
@@ -221,23 +222,25 @@ private void buildTable(String[] tableHeaders, Object[][] data) {
 	
 	
 	//the type of data that will have the cells of each column defined respectively is assigned to validate its customization
-	parkingJTable.getColumnModel().getColumn(TableParkingUtilities.IDPARKING).setCellRenderer(new CellTableManager("texto"));
-	parkingJTable.getColumnModel().getColumn(TableParkingUtilities.BUCHUNGSNAME).setCellRenderer(new CellTableManager("texto"));
-	parkingJTable.getColumnModel().getColumn(TableParkingUtilities.AUTOKFZ).setCellRenderer(new CellTableManager("texto"));
+	parkingJTable.getColumnModel().getColumn(TableParkingUtilities.ID).setCellRenderer(new CellTableManager("number"));
+	parkingJTable.getColumnModel().getColumn(TableParkingUtilities.IDPARKING).setCellRenderer(new CellTableManager("text"));
+	parkingJTable.getColumnModel().getColumn(TableParkingUtilities.BUCHUNGSNAME).setCellRenderer(new CellTableManager("text"));
+	parkingJTable.getColumnModel().getColumn(TableParkingUtilities.AUTOKFZ).setCellRenderer(new CellTableManager("text"));
 	parkingJTable.getColumnModel().getColumn(TableParkingUtilities.ANREISEDATUM).setCellRenderer(new CellTableManager("number"));
 	parkingJTable.getColumnModel().getColumn(TableParkingUtilities.ABREISEDATUM).setCellRenderer(new CellTableManager("number"));
 	parkingJTable.getColumnModel().getColumn(TableParkingUtilities.ANZAHLDESTAGES).setCellRenderer(new CellTableManager("number"));
 	parkingJTable.getColumnModel().getColumn(TableParkingUtilities.BETRAG).setCellRenderer(new CellTableManager("number"));
-	parkingJTable.getColumnModel().getColumn(TableParkingUtilities.BUCHUNGSKANAL).setCellRenderer(new CellTableManager("texto"));
-	parkingJTable.getColumnModel().getColumn(TableParkingUtilities.BEMERKUNGENG).setCellRenderer(new CellTableManager("texto"));
-	parkingJTable.getColumnModel().getColumn(TableParkingUtilities.SCHLUESSEL).setCellRenderer(new CellTableManager("texto"));
-	parkingJTable.getColumnModel().getColumn(TableParkingUtilities.KUERSELMA).setCellRenderer(new CellTableManager("texto"));
+	parkingJTable.getColumnModel().getColumn(TableParkingUtilities.BUCHUNGSKANAL).setCellRenderer(new CellTableManager("text"));
+	parkingJTable.getColumnModel().getColumn(TableParkingUtilities.BEMERKUNGENG).setCellRenderer(new CellTableManager("text"));
+	parkingJTable.getColumnModel().getColumn(TableParkingUtilities.SCHLUESSEL).setCellRenderer(new CellTableManager("text"));
+	parkingJTable.getColumnModel().getColumn(TableParkingUtilities.KUERSELMA).setCellRenderer(new CellTableManager("text"));
 
 	
 	parkingJTable.getTableHeader().setReorderingAllowed(false);
 	parkingJTable.setRowHeight(25);//cell size
 	parkingJTable.setGridColor(new java.awt.Color(0, 0, 0)); 
 	//Define the length size for each column and its contents
+	parkingJTable.getColumnModel().getColumn(TableParkingUtilities.ID).setPreferredWidth(10);
 	parkingJTable.getColumnModel().getColumn(TableParkingUtilities.IDPARKING).setPreferredWidth(100);
 	parkingJTable.getColumnModel().getColumn(TableParkingUtilities.BUCHUNGSNAME).setPreferredWidth(150);
 	parkingJTable.getColumnModel().getColumn(TableParkingUtilities.AUTOKFZ).setPreferredWidth(120);
@@ -250,6 +253,11 @@ private void buildTable(String[] tableHeaders, Object[][] data) {
 	parkingJTable.getColumnModel().getColumn(TableParkingUtilities.SCHLUESSEL).setPreferredWidth(80);
 	parkingJTable.getColumnModel().getColumn(TableParkingUtilities.KUERSELMA).setPreferredWidth(80);
 	
+	//We set the ID Column width so it will be not visible but we can still having access to 
+	//this column to work with the ID Column. So we can Then retrieve the data.
+	parkingJTable.getColumnModel().getColumn(0).setMinWidth(0);
+	parkingJTable.getColumnModel().getColumn(0).setMaxWidth(0);
+	parkingJTable.getColumnModel().getColumn(0).setWidth(0);
 	
 	//customize the header
 	JTableHeader jtableHeader = parkingJTable.getTableHeader();
