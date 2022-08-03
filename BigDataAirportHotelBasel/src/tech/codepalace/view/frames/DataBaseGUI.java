@@ -181,15 +181,6 @@ public class DataBaseGUI extends JFrame {
 		this.searchText.setBackground(Color.GRAY);
 		
 		
-		//Initialize the choices for the JComboBox
-		this.choicesSearchFundsachen = new String[] {"Suchen nach Datum", "Suchen nach Fundsachen", 
-											"Suchen nach Namen", "Suchen nach Fundort"};
-		
-		
-		//Initialize the JComboBox for the Search options.
-		this.searchJComboBox = new JComboBox<String>(choicesSearchFundsachen);
-		
-		
 		setUpFrame();
 		
 		
@@ -278,7 +269,16 @@ public class DataBaseGUI extends JFrame {
 				
 				this.setTitle("Langzeit Parking Airport Hotel Basel");
 				
-				this.topPanelParking = new TopPanelParking(this.btnHome, this.btnFundsachen, this.btnFitness, this.btnPhonebook, this.btnLogout, this.btnNewParking);
+				//Initialize the choices for the JComboBox
+				this.choicesSearchFundsachen = new String[] {"Suchen nach ID-Parking", "Suchen nach Buchungsname", 
+													"Suchen nach Auto-KFZ", "Suchen nach Anreisedatum"};
+				
+				
+				//Initialize the JComboBox for the Search options.
+				this.searchJComboBox = new JComboBox<String>(choicesSearchFundsachen);
+				
+				this.topPanelParking = new TopPanelParking(this.btnHome, this.btnFundsachen, this.btnFitness, this.btnPhonebook, this.btnLogout, 
+						this.btnNewParking, this.searchText, this.searchJComboBox, this.reloadDdJButton);
 				
 				this.topPanel.add(this.topPanelParking, BorderLayout.NORTH);
 				
@@ -297,6 +297,15 @@ public class DataBaseGUI extends JFrame {
 			case "FUNDSACHEN": //In case Fundsachen we modify the view of this GUI
 				
 				this.setTitle("Fundsachen Airport Hotel Basel");
+				
+				
+				//Initialize the choices for the JComboBox
+				this.choicesSearchFundsachen = new String[] {"Suchen nach Datum", "Suchen nach Fundsachen", 
+													"Suchen nach Namen", "Suchen nach Fundort"};
+				
+				
+				//Initialize the JComboBox for the Search options.
+				this.searchJComboBox = new JComboBox<String>(choicesSearchFundsachen);
 //				
 				this.topPanelFundSachen = new TopPanelFundSachen(this.btnHome, this.btnParking, this.btnFitness, this.btnPhonebook, this.btnLogout, this.btnNewFundsachen,
 						this.searchText, this.searchJComboBox, this.reloadDdJButton);

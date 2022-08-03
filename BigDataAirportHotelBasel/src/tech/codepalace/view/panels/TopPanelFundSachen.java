@@ -126,7 +126,7 @@ public class TopPanelFundSachen extends JPanel {
 		//We make setUI for a Custom JComboBox
 		this.searchJComboBox.setUI(SelectCustomJComboBox.createUI(this));
 		
-		this.searchJComboBox.setPreferredSize(new Dimension(320, 40));
+		this.searchJComboBox.setPreferredSize(new Dimension(350, 40));
 	
 		
 		//Background for the JComboBox
