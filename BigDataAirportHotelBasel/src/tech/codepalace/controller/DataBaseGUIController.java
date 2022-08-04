@@ -491,6 +491,14 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener {
 			this.dataBaseGUI.btnHome.requestFocus();
 		}
 		
+		else if(e.getSource()==this.dataBaseGUI.searchText) {
+			
+			if(this.dataBaseGUI.fundsachenTable!=null) {
+
+				this.dataBaseGUI.fundsachenTable.getSelectionModel().clearSelection();
+			}
+		}
+		
 		
 	}
 

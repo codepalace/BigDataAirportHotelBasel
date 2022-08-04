@@ -148,28 +148,93 @@ public class LogicModelFundSachen extends LogicModel {
 		//Initialize Fundgegenstand
 		this.fundgegenstand = new Fundgegenstand();
 		
+		//Variables to store the value of each column of the selected row in the JTable
+		int id = 0;
+		Date dateItemsWasFound = null;
+		String foundItems = "";
+		String fundort = "";
+		String inhaber = "";
+		String kisteN = "";
+		String kisteName = "";
+		String rueckGabe = "";
+		String abkuerzungMA = "";
 
-		/*Variables to save the values got it from the TableModel received in the Method arguments.
+		try {
+	
+			
+			/*
+			 * - Each variable receive the value Casting first the type of value we want to store in the variable;
+			 * - Then we call the method getValueAt using the variable TableModel(model);
+			 * - As first argument we pass the selectedRow(Argument for the rowIndex and for the second argument the Table Column(columnIndex);
+			 * - The columnIndex has a type value stored in dataBase. 
+			 */
+			id = (int)model.getValueAt(selectedRow, 0);
+			dateItemsWasFound = (Date)model.getValueAt(selectedRow, 1);
+			foundItems = (String)model.getValueAt(selectedRow, 2);
+			fundort = (String)model.getValueAt(selectedRow, 3);
+			inhaber = (String)model.getValueAt(selectedRow, 4);
+			
+			
+			/*
+			 * kisteN(String) store the value of kisteNummer as String
+			 */
+			kisteN = String.valueOf(model.getValueAt(selectedRow, 5));
+			
+			
+			kisteName = (String)model.getValueAt(selectedRow, 6);
+			rueckGabe = (String)model.getValueAt(selectedRow, 7);
+			abkuerzungMA = (String)model.getValueAt(selectedRow, 8);
+			
+		}catch (ArrayIndexOutOfBoundsException e) {
+			
+			/* We do nothing. I catch ArrayIndexOutOfBoundsException because when i search and after i select a row in JTable and still selected and 
+			pressed to search again with the cursor by Search Text Box i become this Exception. 
+			
+			catching this exception the Program continue working without crash and all functionality are available.
+			*/
+			
+		 
+			/*
+			 * you can uncomment the instruction below. 
+			 * Select a row in the table and enter a data to search and hit enter to see that the message is displayed.
+			 * 
+			 * When you select a row and then go with to the search box and proceed to the search something you become the ArrayIndexOutOfBoundsException.
+			 * 
+			 * That's why we catch the ArrayIndexOutOfBoundsException to avoid Application crash.
+			 * 
+			 * 
+			 */
+			
+//			System.out.print("Row in JTable is still selected");
+			
+			/*
+			 * !!! Very very important: you wont see what i mean if you do not go to the DataBaseGUIController and inside the focusGained Method 
+			 * 
+			 * comment this lines: 
+			 * 
+			 * 
+			 *    else if(e.getSource()==this.dataBaseGUI.searchText) {
+			 *
+			 *      if(this.dataBaseGUI.fundsachenTable!=null) {
+			 *
+			 *	      this.dataBaseGUI.fundsachenTable.getSelectionModel().clearSelection();
+			 *      }
+		     *    }
+		     *    
+		     *    
+		     *    If you comment the instructions above by the DataBaseGUIController focusGained Method and the System.out.print instruction uncomment
+		     *    you will see what i mean. 
+		     *    
+		     *    Any way it is enough with the instruction by focusGained to avoid the bugs i prefer to catch also the ArrayIndexOutOfBoundsException
+			 */
+			
+			
+			
+		}
 		
-		selectedRow argument(int) got from the JTable.getSelectedRow call Method.
 		
-		databaseGUI needed to call the DAO Object for updating the data in the Database(FUNDSACHEN table). 
 		
-		Each variables below get the Casting value from model.getValueAt(The selectedRow, and the Corresponding column with the value Tip).
-		*/
-		int id = (int)model.getValueAt(selectedRow, 0);
-		Date dateItemsWasFound = (Date)model.getValueAt(selectedRow, 1);
-		String foundItems = (String)model.getValueAt(selectedRow, 2);
-		String fundort = (String)model.getValueAt(selectedRow, 3);
-		String inhaber = (String)model.getValueAt(selectedRow, 4);
-		
-		//For this variable we get the int value and save it in one String
-		/*
-		 * The 2 variables(instruction below we have to check to remove the space to avoid errors. 
-		 * 
-		 * But i am thinking to insert a Dropdownlist in the JTable
-		 */
-		String kisteN = String.valueOf(model.getValueAt(selectedRow, 5));
+	
 		
 		//This variable will have the parseInt(String) value over here and below was necessary to avoid Casting error.
 		int kisteNummer = 0;
@@ -302,9 +367,7 @@ public class LogicModelFundSachen extends LogicModel {
 		
 		
 
-		String kisteName = (String)model.getValueAt(selectedRow, 6);
-		String rueckGabe = (String)model.getValueAt(selectedRow, 7);
-		String abkuerzungMA = (String)model.getValueAt(selectedRow, 8);
+		
 		
 		
 		//fundgegenstand set values to be sent to the dao Object.
