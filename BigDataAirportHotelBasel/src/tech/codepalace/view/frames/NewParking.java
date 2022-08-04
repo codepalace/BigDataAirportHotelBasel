@@ -23,6 +23,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import tech.codepalace.utility.PlaceHolderTextField;
+import tech.codepalace.view.buttons.MyButton;
 import tech.codepalace.view.panels.PanelWithBackgroundOption;
 
 
@@ -96,7 +97,7 @@ public class NewParking extends JDialog {
  	
  	public JLabel abkuerzungMAJLabel, abkuerzungMAGeneratedJLabel;
  	
- 	public JButton saveParkingReservation, cancelParkingReservation;
+ 	public MyButton saveParkingReservation, cancelParkingReservation;
  	
  	private JPanel buttonPanel;
  	
@@ -541,9 +542,9 @@ public class NewParking extends JDialog {
 		
 		
 		
-		this.saveParkingReservation = new JButton("Speichern");
+		this.saveParkingReservation = new MyButton("/img/btn_speichern.png");
 		this.saveParkingReservation.setFocusable(true);
-		this.cancelParkingReservation = new JButton("Abbrechen");
+		this.cancelParkingReservation = new MyButton("/img/btn_abbrechen.png");
 		
 		this.buttonPanel = new JPanel(new BorderLayout());
 		this.buttonPanel.setOpaque(false);

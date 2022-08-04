@@ -30,9 +30,12 @@ public class NewParkingController implements ActionListener, KeyListener, Window
 		
 		this.newParking.saveParkingReservation.addActionListener(this);
 		this.newParking.saveParkingReservation.addKeyListener(this);
+		this.newParking.saveParkingReservation.addFocusListener(this);
+		
 		this.newParking.cancelParkingReservation.addActionListener(this);
 		this.newParking.cancelParkingReservation.addFocusListener(this);
 		this.newParking.cancelParkingReservation.addKeyListener(this);
+		
 		this.newParking.anreiseDatumPlaceHolderTextField.addFocusListener(this);
 		this.newParking.abreiseDatumPlaceholderTextField.addFocusListener(this);
 		
@@ -45,6 +48,7 @@ public class NewParkingController implements ActionListener, KeyListener, Window
 		
 		this.newParking.ja.addActionListener(this);
 		this.newParking.ja.addKeyListener(this);
+		
 		this.newParking.nein.addActionListener(this);
 		this.newParking.nein.addKeyListener(this);
 		
@@ -225,9 +229,22 @@ public class NewParkingController implements ActionListener, KeyListener, Window
 			this.newParking.buchunsKanalJTextField.setBorder(UIManager.getLookAndFeel().getDefaults().getBorder("TextField.border"));
 			
 		}
+		
+		else if(e.getSource()==this.newParking.saveParkingReservation) {
+			
+			this.newParking.saveParkingReservation.setOpacity(1);
+		}
+		
+		else if(e.getSource()==this.newParking.cancelParkingReservation) {
+			
+			this.newParking.cancelParkingReservation.setOpacity(1);
+		}
 
 		
 	}
+	
+	
+	
 
 	@Override
 	public void focusLost(FocusEvent e) {
@@ -247,6 +264,16 @@ public class NewParkingController implements ActionListener, KeyListener, Window
 					//We call to check the Departure Date
 					logicModelNewParking.checkAbreiseDateFormat();
 
+		}
+		
+else if(e.getSource()==this.newParking.saveParkingReservation) {
+			
+			this.newParking.saveParkingReservation.setOpacity(0.5f);
+		}
+		
+		else if(e.getSource()==this.newParking.cancelParkingReservation) {
+			
+			this.newParking.cancelParkingReservation.setOpacity(0.5f);
 		}
 		
 	}
