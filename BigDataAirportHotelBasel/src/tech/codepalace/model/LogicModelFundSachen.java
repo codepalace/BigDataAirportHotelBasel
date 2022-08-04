@@ -1,23 +1,8 @@
 package tech.codepalace.model;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.sql.Date;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.regex.Pattern;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 import javax.swing.table.TableModel;
 
 import tech.codepalace.controller.NewFundsachenController;
@@ -53,18 +38,18 @@ public class LogicModelFundSachen extends LogicModel {
 	
 
 	
-	//Variables for error Message by Wrong Date Format
-	public JDialog errorDateFormatJDialog;
-	
-	private JLabel messageErrorDateFormat;
-
-	private JButton okButtonErrorDateFormat = new JButton("OK");
-	
-	private JPanel panelErrorDateFormat;
-	
-	private Object[] optionButtonErrorDateFormat = {this.okButtonErrorDateFormat};
-	
-	private ImageIcon errorImg = new ImageIcon(getClass().getResource("/img/error.png"));
+//	//Variables for error Message by Wrong Date Format
+//	public JDialog errorDateFormatJDialog;
+//	
+//	private JLabel messageErrorDateFormat;
+//
+//	private JButton okButtonErrorDateFormat = new JButton("OK");
+//	
+//	private JPanel panelErrorDateFormat;
+//	
+//	private Object[] optionButtonErrorDateFormat = {this.okButtonErrorDateFormat};
+//	
+//	private ImageIcon errorImg = new ImageIcon(getClass().getResource("/img/error.png"));
 	
 	
 	
@@ -395,30 +380,49 @@ public class LogicModelFundSachen extends LogicModel {
 	}
 	
 	
-	/**
-	 * @description Method to check how we are going to search the results in the database.
-	 * @param dataBaseGUI
-	 */
+	
+
+	
+	
+	@Override
 	public void searchResultsInDataBase(DataBaseGUI dataBaseGUI) {
 		
-		//Set the value dataBaseGUI
+		//we call the super Method
+		super.searchResultsInDataBase(dataBaseGUI);
+		
+		//Set value for the dataBaseGUI
 		LogicModelFundSachen.dataBaseGUI = dataBaseGUI;
+
 		
-		//Variable to store the value of the selected item by the searchJComboBox.
-		String searchSelected = LogicModelFundSachen.dataBaseGUI.searchJComboBox.getSelectedItem().toString();
-		
-		String toSearch = LogicModelFundSachen.dataBaseGUI.searchText.getText();
-		
-		
-		
-		
-		switch (searchSelected) {
-			
-			//We are now ready to search the results by date.
+		//Block switch conditional to evaluate what we are going to search in database
+		switch (getSearchSelected()) {
 			case "Suchen nach Datum":
 				
-				//First we have to evaluate if the date format is correct
-				checkDateFormat();
+				/* First we have to evaluate if the date format is correct.
+				 * 
+				 * For that we are going to call the checkDateFormatToSearchInDataBase Method from the super Class LogicModel. 
+				 * 
+				 * if return true. The Date format is correct 
+				 */
+
+				if(checkDateFormatToSearchInDataBase()) {
+
+					
+					//Set the value of loading object, First argument the GUI in Background and true to block it.
+					this.loading = new Loading(dataBaseGUI, true);
+					
+					//Instance of DAOFunsachen
+					DAOFundsachen daoFundsachen = new DaoFundsachenImpl(getUserAHB(), LogicModelFundSachen.dataBaseGUI, loading, this);
+					
+					
+					
+					try {
+						//Now we are ready to call searchByDateFundschen Method by the DAO Object.
+						daoFundsachen.searchByDateFundsachen(getDateToSearchInDataBase());
+					} catch (DaoException e1) {
+						e1.printStackTrace();
+					}
+				}
 				
 	
 				break;
@@ -426,130 +430,31 @@ public class LogicModelFundSachen extends LogicModel {
 			case "Suchen nach Fundsachen":
 				
 			
-				suchenNachFundsachen(toSearch);
+				suchenNachFundsachen(getToSearch());
 				break;
 				
 			case "Suchen nach Namen":
-				suchenNachNamen(toSearch);
+				suchenNachNamen(getToSearch());
 				break;
 				
 				
 			case "Suchen nach Fundort":
-				suchenNachFundort(toSearch);
+				suchenNachFundort(getToSearch());
 				break;
 
 			default:
 				break;
 		}
 		
-	
-	}
-	
-	
-	/**
-	 * @description Method to check if the Date Format is correct
-	 */
-	private void checkDateFormat() {
-		
-		//Date Format should be dd.mm.yyyy
-		String formatDateRegex = "(0[1-9]|[12][0-9]|3[01])\\.(0[1-9]|1[012])\\.((?:19|20)[0-9][0-9])$";
-		
-		//Initialize the Message text.
-		this.messageErrorDateFormat = new JLabel("Sie haben eine falsches Datumsformat eingegeben. bitte geben Sie ein korrektes Datumsformat ein(dd.mm.yyyy");
-		
-		//JPanel for the Error Message
-		this.panelErrorDateFormat = new JPanel(new BorderLayout());
-		
-		//We Center the Error Messsage to the JPanel
-		this.panelErrorDateFormat.add(messageErrorDateFormat, BorderLayout.CENTER);
-		
-		
-		//To the okButtonErrorDateFormat we add some ActionListener and KeyListener by pressing just close the JDialog.
-		
-		this.okButtonErrorDateFormat.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				errorDateFormatJDialog.dispose();
-				
-			}
-		});
-		
-		
-		this.okButtonErrorDateFormat.addKeyListener(new KeyListener() {
-
-			@Override
-			public void keyTyped(KeyEvent e) {}
-
-			@Override
-			public void keyPressed(KeyEvent e) {
-
-				errorDateFormatJDialog.dispose();
-				
-			}
-
-			@Override
-			public void keyReleased(KeyEvent e) {}
-			
-		});
-		
-		
-		//if the Pattern did not matches we call the JDialog Error Message.
-		if(!Pattern.matches(formatDateRegex, LogicModelFundSachen.dataBaseGUI.searchText.getText())) {
-			
-			SwingUtilities.invokeLater(new Runnable() {
-				
-				@Override
-				public void run() {
-
-					errorDateFormatJDialog = new JOptionPane(panelErrorDateFormat, JOptionPane.OK_OPTION, JOptionPane.NO_OPTION, errorImg,
-							optionButtonErrorDateFormat, null).createDialog("Falsches Datumsformat");
-					
-					errorDateFormatJDialog.setAlwaysOnTop(true);
-					errorDateFormatJDialog.setVisible(true);
-					
-					errorDateFormatJDialog.dispose();
-					
-					dataBaseGUI.searchText.requestFocus();
-					
-				}
-			});
-		
-		} else {
-			
-			//DateTimeFormatter for the Pattern format dd.MM.yyyy 
-			DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-			
-			//LocalDate object to store the Date entered by the user. We use this Object to pass also the dateTimeFormatter as argument. 
-			//The format that the date should have.
-			LocalDate lostAndFoundLocalDate = LocalDate.parse(LogicModelFundSachen.dataBaseGUI.searchText.getText(), dateTimeFormatter);
-			
-			//Variable Date to store the Date calling the valueOf Method and as argument the LocalDate variable.
-			Date dateItemsWasFound = Date.valueOf(lostAndFoundLocalDate);
-					
-			//Set the value of loading object, First argument the GUI in Background and true to block it.
-			this.loading = new Loading(dataBaseGUI, true);
-			
-			//Instance of DAOFunsachen
-			DAOFundsachen daoFundsachen = new DaoFundsachenImpl(getUserAHB(), dataBaseGUI, loading, this);
-			
-			
-			
-			try {
-				//Now we are ready to call searchByDateFundschen Method by the DAO Object.
-				daoFundsachen.searchByDateFundsachen(dateItemsWasFound);
-			} catch (DaoException e1) {
-				e1.printStackTrace();
-			}
-			
-		}
-		
 		
 	}
 	
 	
+
 	
+	
+	
+
 	/**
 	 * @description Method to search by Lost and found items.
 	 * @param fundsachen

@@ -1,14 +1,28 @@
 package tech.codepalace.model;
 
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.HeadlessException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.util.regex.Pattern;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -89,6 +103,45 @@ public class LogicModel {
 
 
 	private String dataBaseStatus="";
+	
+	/* Variables to search in dataBase */
+	//Variable to store like what we are going to search in database.
+	private String searchSelected = "";
+	
+	//Variable to store the value what we are going to search in database. 
+	private String toSearch = "";
+	
+	// Variables for error Message by Wrong Date Format
+	//Date Format should be dd.mm.yyyy
+	private String formatDateRegex = "(0[1-9]|[12][0-9]|3[01])\\.(0[1-9]|1[012])\\.((?:19|20)[0-9][0-9])$";
+	
+	public JDialog errorDateFormatJDialog;
+
+	private JLabel messageErrorDateFormat;
+
+	private JButton okButtonErrorDateFormat = new JButton("OK");
+
+	private JPanel panelErrorDateFormat;
+
+	private Object[] optionButtonErrorDateFormat = { this.okButtonErrorDateFormat };
+
+	private ImageIcon errorImg = new ImageIcon(getClass().getResource("/img/error.png"));
+	
+	
+	//Variables in case Date to search format is correct
+	//DateTimeFormatter for the Pattern format dd.MM.yyyy 
+	private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+	
+	//LocalDate object to store the Date entered by the user. We use this Object to pass also the dateTimeFormatter as argument. 
+	//The format that the date should have.
+	LocalDate localDateToSearchInDataBase = null;
+	
+	//Variable Date to store the Date calling the valueOf Method and as argument the LocalDate variable.
+	Date dateToSearchInDataBase = null;
+	
+	
+	
+	
 
 	
 	//Methods to set and get the UserAHB need it for some classes.
@@ -703,8 +756,149 @@ try {
 	public void setDataBaseStatus(String dataBaseStatus) {
 		this.dataBaseStatus = dataBaseStatus;
 	}
+	
+	
+	
+	
+	public void searchResultsInDataBase(DataBaseGUI dataBaseGUI) {
+		
+		LogicModel.dataBaseGUI = dataBaseGUI;
+		
+		searchSelected = LogicModel.dataBaseGUI.searchJComboBox.getSelectedItem().toString();
+		
+		toSearch = LogicModel.dataBaseGUI.searchText.getText();
+		
+	}
+
+	/**
+	 * @description Method to get the value like what we are searching in database
+	 * @return the searchSelected
+	 */
+	public String getSearchSelected() {
+		return searchSelected;
+	}
+
+	/**
+	 * @description Method to get the value of the keyword we are going to search in Database.
+	 * @return the toSearch
+	 */
+	public String getToSearch() {
+		return toSearch;
+	}
+	
+	
+	
+	/**
+	 * @description Method to check if the Date Format is correct before we search in Database for a Date Entry.
+	 */
+	public boolean checkDateFormatToSearchInDataBase() {
+		
+		
+		
+				//Initialize the Message text.
+				this.messageErrorDateFormat = new JLabel("Sie haben eine falsches Datumsformat eingegeben. bitte geben Sie ein korrektes Datumsformat ein(dd.mm.yyyy");
+				
+				//JPanel for the Error Message
+				this.panelErrorDateFormat = new JPanel(new BorderLayout());
+				
+				//We Center the Error Messsage to the JPanel
+				this.panelErrorDateFormat.add(messageErrorDateFormat, BorderLayout.CENTER);
+				
+				
+				//To the okButtonErrorDateFormat we add some ActionListener and KeyListener by pressing just close the JDialog.
+				
+				this.okButtonErrorDateFormat.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						
+						errorDateFormatJDialog.dispose();
+						
+					}
+				});
+				
+				
+				this.okButtonErrorDateFormat.addKeyListener(new KeyListener() {
+
+					@Override
+					public void keyTyped(KeyEvent e) {}
+
+					@Override
+					public void keyPressed(KeyEvent e) {
+
+						errorDateFormatJDialog.dispose();
+						
+					}
+
+					@Override
+					public void keyReleased(KeyEvent e) {}
+					
+				});
+				
+				
+				
+				//if the Date format is not correct we invoke to display errorDateFormatJDialog with the error message and return false
+				if(!Pattern.matches(formatDateRegex, dataBaseGUI.searchText.getText())) {
+					
+					SwingUtilities.invokeLater(new Runnable() {
+						
+						@Override
+						public void run() {
+
+							errorDateFormatJDialog = new JOptionPane(panelErrorDateFormat, JOptionPane.OK_OPTION, JOptionPane.NO_OPTION, errorImg,
+									optionButtonErrorDateFormat, null).createDialog("Falsches Datumsformat");
+							
+							errorDateFormatJDialog.setAlwaysOnTop(true);
+							errorDateFormatJDialog.setVisible(true);
+							
+							errorDateFormatJDialog.dispose();
+							
+							dataBaseGUI.searchText.requestFocus();
+							
+						}
+					});
+				
+					return false;
+				} else {
+					
+					//The Date format is correct
+					
+					//We set the values for the Date to search in Database. First the LocalDate format
+					localDateToSearchInDataBase = LocalDate.parse(dataBaseGUI.searchText.getText(), dateTimeFormatter);
+					
+					//We set the value as Date format calling the valueOf(LocalDate variable)
+					dateToSearchInDataBase = Date.valueOf(localDateToSearchInDataBase);
+					
+					//return true to continue by the LogicModel extended classes.
+					return true;
+				}
+				
+				
+		
+	}
+
+	
+	
+	/**
+	 * @description Method to get the Date we want to search in Database Table.
+	 * @return the dateToSearchInDataBase
+	 */
+	public Date getDateToSearchInDataBase() {
+		return dateToSearchInDataBase;
+	}
+	
+	
+	
+	
+	
+	
+	
 
 
+
+
+	
+	
 	
 	
 }

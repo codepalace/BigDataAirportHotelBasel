@@ -332,8 +332,23 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener {
 			 * NullPointerException and for having available all the elements from the GUI DataBaseGUI.
 			 */
 			if(e.getSource()==this.dataBaseGUI.searchText  && e.getKeyCode() ==10) {
+				
+				
+				/*
+				 * We check with a conditional if else which JTable is visible
+				 */
+				if(this.dataBaseGUI.fundsachenTable!=null) {
+					this.logicModelFundSachen.searchResultsInDataBase(this.dataBaseGUI);
+				
+				}
+				
+				else 
+					if(this.dataBaseGUI.parkingTable!=null) {
+						
+						//It will be continued.
+					}
 			
-				this.logicModelFundSachen.searchResultsInDataBase(this.dataBaseGUI);
+				
 		}
 
 		
