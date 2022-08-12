@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.regex.Pattern;
 
 import javax.swing.ImageIcon;
@@ -113,8 +114,12 @@ public class LogicModel {
 	
 	// Variables for error Message by Wrong Date Format
 	//Date Format should be dd.mm.yyyy
-	private String formatDateRegex = "(0[1-9]|[12][0-9]|3[01])\\.(0[1-9]|1[012])\\.((?:19|20)[0-9][0-9])$";
+//	private String formatDateRegex = "(0[1-9]|[12][0-9]|3[01])\\.(0[1-9]|1[012])\\.((?:19|20)[0-9][2-9])$";
 	
+	//New Date Format Regex dd.mm.yyyy that aloud until 9999
+	private String formatDateRegex = "(0[1-9]|[12][0-9]|3[01])\\.(0[1-9]|1[0-2])\\.\\d{4}";
+	
+	//(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.\d{4}
 	public JDialog errorDateFormatJDialog;
 
 	private JLabel messageErrorDateFormat;
@@ -132,13 +137,58 @@ public class LogicModel {
 	//DateTimeFormatter for the Pattern format dd.MM.yyyy 
 	private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 	
+	
+	//necesitamos este patron de formato de fecha para poder guardar el valor en las variables de tipo LocalDate
+	//Las fechas van a ser introducidas por el usuario en formato dd.MM.yyyy para poder comprobar si son correctas. 
+	//Luego si el formato dd.MM.yyyy es correcto pasamos dentro de la misma clase controladora a setLocalDates remplazando el . por /
+	//De ahi que necesitmos que esta variable reciba este patron dd/MM/yyyy para darle el valor adecuando que necesitamos a las variables LocalDate
+	//Localdate recibe el valor convertido a partir de un String. Es por eso.
+	private DateTimeFormatter dateTimeFormatterForSavingDataBase = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	
 	//LocalDate object to store the Date entered by the user. We use this Object to pass also the dateTimeFormatter as argument. 
 	//The format that the date should have.
-	LocalDate localDateToSearchInDataBase = null;
+	private LocalDate localDateToSearchInDataBase = null;
 	
 	//Variable Date to store the Date calling the valueOf Method and as argument the LocalDate variable.
-	Date dateToSearchInDataBase = null;
+	private Date dateToSearchInDataBase = null;
 	
+	//Variables to check Date format entered by the user before we are going to save the new Entry in DataBase any Table. 
+	private String dateEnteredByUser = "";
+	private static String inputTextBoxName = "";
+	
+	private String componentHadFocus="";
+
+	private boolean dateFormatCorrect = false;
+	
+	
+	//variable to store the calculation of the sum of two dates
+	private long totalDaysPlus;
+	
+	//variables to calculate to LocalDates
+	private LocalDate firstDate, secondDate;
+	
+	public LogicModel() {
+		
+		init();
+	}
+	
+	
+	private void init() {
+		
+		
+		
+		//Initialize the Message text.
+		this.messageErrorDateFormat = new JLabel("Sie haben eine falsches Datumsformat eingegeben. bitte geben Sie ein korrektes Datumsformat ein(dd.mm.yyyy)");
+		
+		//JPanel for the Error Message
+		this.panelErrorDateFormat = new JPanel(new BorderLayout());
+		
+		//We Center the Error Messsage to the JPanel
+		this.panelErrorDateFormat.add(messageErrorDateFormat, BorderLayout.CENTER);
+		
+		
+		
+	}
 	
 	
 	
@@ -759,7 +809,14 @@ try {
 	
 	
 	
-	
+	/**
+	 * @description Method to search Results in DataBase Table. 
+	 * <p>Receives a DataBaseGUI Parameter so we can access the GUI.</p>
+	 * <p>It will be set the value in this Method for the searchSelected variable. This value comes from the GUI Selected item by JComboBox.</p>
+	 * <p>toSearch inside the Method receives the value of the searchTextBox Element RoundJTextField Element.</p>
+	 * <p>This Method is called from different classes to search any value in Table DataBase depending GUI and as what we are searching in Table inside DataBase.</p>
+	 * @param dataBaseGUI
+	 */
 	public void searchResultsInDataBase(DataBaseGUI dataBaseGUI) {
 		
 		LogicModel.dataBaseGUI = dataBaseGUI;
@@ -814,6 +871,7 @@ try {
 						
 						errorDateFormatJDialog.dispose();
 						
+						
 					}
 				});
 				
@@ -825,8 +883,9 @@ try {
 
 					@Override
 					public void keyPressed(KeyEvent e) {
-
+						
 						errorDateFormatJDialog.dispose();
+						
 						
 					}
 
@@ -891,6 +950,170 @@ try {
 	
 	
 	
+	/**
+	 * @description Method to check if the Date Format is correct before we save any Data in DataBase any Table .
+	 */
+	public boolean checkDateFormatBeforeSaveData(String dateEnteredByUser, String inputTextBoxName, String componentHadFocus) {
+		
+		this.dateEnteredByUser = dateEnteredByUser;
+		LogicModel.inputTextBoxName = inputTextBoxName;
+		
+		setComponentHadFocus(componentHadFocus);
+		
+		//If the date do not matches with the date Expression Regular Format it will be display one JOptionPane with the error message. 
+		if(!Pattern.matches(formatDateRegex, this.dateEnteredByUser)) {
+			
+			//To the okButtonErrorDateFormat we add some ActionListener and KeyListener by pressing just close the JDialog.
+			
+			this.okButtonErrorDateFormat.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					
+					
+					errorDateFormatJDialog.dispose();
+					
+					
+				}
+			});
+			
+			
+			this.okButtonErrorDateFormat.addKeyListener(new KeyListener() {
+
+				@Override
+				public void keyTyped(KeyEvent e) {}
+
+				@Override
+				public void keyPressed(KeyEvent e) {
+
+					
+					errorDateFormatJDialog.dispose();
+					
+					
+				}
+
+				@Override
+				public void keyReleased(KeyEvent e) {}
+				
+			});
+		
+			/* This Message will be displayed online if componentHadFocus has a value "" empty. 
+			 * This Method will be override and in the case is equals "" it will displayed the Error Message from the Child Class or extended class from this super class.
+			 */
+			if(getComponentHadFocus().equalsIgnoreCase("")) {
+				JOptionPane.showMessageDialog(null, panelErrorDateFormat,  "Kritische Fehler(" + LogicModel.inputTextBoxName + ")", JOptionPane.OK_OPTION, errorImg);
+				
+			}
+
+			
+			//We set the dateFormatCorrect to false.
+			//And it will be returned a false value
+			setDateFormatCorrect(false);
+			return false;
+		}else {
+			
+			/*
+			 * It matches with the correct Regex Format then we set dateFormatCorrect to true
+			 * it will be returned a true value.
+			 */
+			setDateFormatCorrect(true);
+			return true;
+		}
+		
+		
+		
+	}
+
+
+	/**
+	 * @return the componentHadFocus
+	 */
+	public String getComponentHadFocus() {
+		return componentHadFocus;
+	}
+
+
+	/**
+	 * @param componentHadFocus the componentHadFocus to set
+	 */
+	public void setComponentHadFocus(String componentHadFocus) {
+		this.componentHadFocus = componentHadFocus;
+	}
+	
+	
+	
+	
+
+
+	/**
+	 * @return the dateEnteredByUser
+	 */
+	public String getDateEnteredByUser() {
+		return dateEnteredByUser;
+	}
+
+
+	/**
+	 * @param dateEnteredByUser the dateEnteredByUser to set
+	 */
+	public void setDateEnteredByUser(String dateEnteredByUser) {
+		this.dateEnteredByUser = dateEnteredByUser;
+	}
+
+
+	
+
+
+	/**
+	 * @description Method to check if the Date Format entered by the user is correct.
+	 * @return the dateFormatCorrect
+	 */
+	public boolean isDateFormatCorrect() {
+		return dateFormatCorrect;
+	}
+
+
+	/**
+	 * @description Method to set dateFormatCorrect Date format correct or not entered by the user.
+	 * @param dateFormatCorrect the dateFormatCorrect to set
+	 */
+	public void setDateFormatCorrect(boolean dateFormatCorrect) {
+		this.dateFormatCorrect = dateFormatCorrect;
+	}
+
+
+	/** 
+	 * @description Method to return a DateTimeFormatter. 
+	 * <p>This Method will return the dateTimeFormatterForSavingDataBase: With the Pattern dd/MM/yyyy.</p>
+	 * @return the dateTimeFormatter
+	 */
+	public DateTimeFormatter getDateTimeFormatterForSavingDataBase() {
+		return dateTimeFormatterForSavingDataBase;
+	}
+	
+	
+	
+	/**
+	 * @description Method to calculate the sum of the total days having 2 LocalDates to store a long value of the sum of those Dates(LocalDate).
+	 * <p>The Method has 2 LocalDate Parameters, firstDate and secondDate.</p>
+	 * <p>The long variable totalDaysPlus store a value using the ChronoUnit Enum Calling DAYS and calling between with the 2 dates to be calculated.</p>
+	 * @param firstDate
+	 * @param secondDate
+	 * @return
+	 */
+	public long calculateDatesPlus(LocalDate firstDate, LocalDate secondDate) {
+		
+		this.firstDate = firstDate;
+		this.secondDate = secondDate;
+		
+		this.totalDaysPlus = ChronoUnit.DAYS.between(this.firstDate, this.secondDate);
+		
+		return this.totalDaysPlus;
+		
+	}
+	
+	
+
 	
 	
 

@@ -55,6 +55,8 @@ public class NewParkingController implements ActionListener, KeyListener, Window
 		
 		this.newParking.anreiseDatumPlaceHolderTextField.addMouseListener(this);
 		
+		
+		
 
 	}
 
@@ -109,27 +111,22 @@ public class NewParkingController implements ActionListener, KeyListener, Window
 			//the user keeps editing, we keep the dialog open
 			this.newParking.dialog.dispose();
 			
-			//Set the closingNewParkingReservation to false
-			this.logicModelNewParking.setClosingNewParkingReservation(false);
+			//Set the readyToCloseNewParkingReservation to false
+			this.logicModelNewParking.setReadyToCloseNewParkingReservation(false);
 		
 		}else if (e.getSource()==this.newParking.saveParkingReservation && e.getKeyCode()==10) {
 			/*
-			 * the user presses the saveParkingReservation button, we establish that the error messages have not been delivered yet. 
+			 * the user pressed the saveParkingReservation button, we establish that the error messages have not been delivered yet. 
 			 * 
 			 * This helps us to check the dates of arrival and departure and avoid warning messages when the loss of focus occurs by arrival and departure entry boxes.
 			 */
-			this.logicModelNewParking.setErrorDateDepartureMessageDelivered(false);
-			this.logicModelNewParking.setErrorDateArrivalMessageDelivered(false);
+	
 			
-			//We call to check Arrival Date and Departure Date.
-			this.logicModelNewParking.checkAnreiseDateFormat();
-			this.logicModelNewParking.checkAbreiseDateFormat();
+			this.logicModelNewParking.setEntryCompleted(false);
 			
 			//We call to check if all the entries are filled correctly.
 			this.logicModelNewParking.checkAllEntries();
 			
-			//We close the Entries JDialog
-			this.newParking.dispose();
 		
 		}else if(e.getSource()==this.newParking.cancelParkingReservation && e.getKeyCode()==10) {
 			
@@ -139,6 +136,7 @@ public class NewParkingController implements ActionListener, KeyListener, Window
 			this.newParking.confirmClose();
 			
 		}
+		
 		
 	
 	}
@@ -154,41 +152,50 @@ public class NewParkingController implements ActionListener, KeyListener, Window
 
 		if(e.getSource()== this.newParking.saveParkingReservation) {
 
-			/*
-			 * the user presses the saveParkingReservation button, we establish that the error messages have not been delivered yet. 
+
+			/* We set the Entries completed as false when the user pressed to the Button to save Parking in DataBase.
 			 * 
-			 * This helps us to check the dates of arrival and departure and avoid warning messages when the loss of focus occurs by arrival and departure entry boxes.
+			 * this is useful because in case the user delete some entries before saving the information and after we call to save then Data again pressing the Save Button 
+			 * we can always start from zero supposing that all the entries are not filled out completed yet. 
+			 * 
+			 * After that we can call to checkAllEntries.
+			 * 
 			 */
-			this.logicModelNewParking.setErrorDateDepartureMessageDelivered(false);
-			this.logicModelNewParking.setErrorDateArrivalMessageDelivered(false);
+			this.logicModelNewParking.setEntryCompleted(false);
 			
-			//We call to check Arrival Date and Departure Date.
-			this.logicModelNewParking.checkAnreiseDateFormat();
-			this.logicModelNewParking.checkAbreiseDateFormat();
-			
-			//We call to check if all the entries are filled correctly.
+			//We call to check if all the entries are filled out correctly.
 			this.logicModelNewParking.checkAllEntries();
-			
-//			We close the Entries JDialog
-			this.newParking.dispose();
-			
 
 			
-			
-			
-			
 		}else if (e.getSource()==this.newParking.cancelParkingReservation) {
+
 			/*
 			 * The user pressed canceParkingReservation. We call the confirClose Method
 			 */
 			this.newParking.confirmClose();
 		
 		}else if(e.getSource()==this.newParking.nein) {
+			
+			this.logicModelNewParking.setReadyToCloseNewParkingReservation(false);
+			
+			 switch (this.logicModelNewParking.getElementHadFocus()) {
+				 
+				
+				case "anreiseDatumPlaceHolderTextField":
+					
+					this.newParking.anreiseDatumPlaceHolderTextField.requestFocus();
+					this.newParking.dialog.dispose();
+					break;
+
+				default:
+					break;
+			}
+			
 			/*
 			 * the user does not want to close the edit dialog box. We close only the dialog JDialog alert. We also set closingNewParkingReservation to false.
 			 */
 			this.newParking.dialog.dispose();
-			this.logicModelNewParking.setClosingNewParkingReservation(false);
+			this.logicModelNewParking.setReadyToCloseNewParkingReservation(false);
 			
 		}else if (e.getSource()==this.newParking.ja) {
 			
@@ -211,13 +218,44 @@ public class NewParkingController implements ActionListener, KeyListener, Window
 		
 		//In case the focus is on newParking.anreiseDatumPlaceHolderTextField for the Arrival Date
 		if(e.getSource()==this.newParking.anreiseDatumPlaceHolderTextField) {
+				
+			//reset the original border for the element
+			this.newParking.anreiseDatumPlaceHolderTextField.setBorder(UIManager.getLookAndFeel().getDefaults().getBorder("TextField.border"));
 			
-			//We set errorDateDepartureMessageDelivered to false
-			this.logicModelNewParking.setErrorDateDepartureMessageDelivered(false);	
+			//We set readyToCloseNewParkingReservation to initial value false.
+			this.logicModelNewParking.setReadyToCloseNewParkingReservation(false);
+			
+			//Set anreiseOK to initial value false
+			this.logicModelNewParking.setAnreiseOk(false);
+			
+			//Set anreiseLocalDate to initial value null
+			this.logicModelNewParking.setAnreiseLocalDate(null);
+
 		}
 		
 		else if (e.getSource()==this.newParking.abreiseDatumPlaceholderTextField) {
+			
+			//reset the original border for the element
 			this.newParking.abreiseDatumPlaceholderTextField.setBorder(UIManager.getLookAndFeel().getDefaults().getBorder("TextField.border"));
+			
+			//We set readyToCloseNewParkingReservation to initial value false.
+			this.logicModelNewParking.setReadyToCloseNewParkingReservation(false);
+			
+			this.logicModelNewParking.setAbreiseOK(false);
+			
+			//We set the abreiseLocalDate initial value to null
+			this.logicModelNewParking.setAbreiseLocalDate(null);
+
+			/*
+			 * In case everything is NOT OK by anreiseOK value == false
+			 */
+			if(!this.logicModelNewParking.isAnreiseOK()) {
+				
+				/* We do not keep the focus by abreiseDatumPlaceholderTextField it will be send it back to anreiseDatumPlaceHolderTextField.
+				 * We call anreiseDatumPlaceHolderTextField.requestFocus to set the Mouse cursor to this element below.
+				 */
+				this.newParking.anreiseDatumPlaceHolderTextField.requestFocus();
+			}
 			
 		}else if (e.getSource()==this.newParking.buchungsNameJTextField) {
 			this.newParking.buchungsNameJTextField.setBorder(UIManager.getLookAndFeel().getDefaults().getBorder("TextField.border"));
@@ -230,6 +268,7 @@ public class NewParkingController implements ActionListener, KeyListener, Window
 			
 		}
 		
+		//Setting the opacity value to 1 to MyButton
 		else if(e.getSource()==this.newParking.saveParkingReservation) {
 			
 			this.newParking.saveParkingReservation.setOpacity(1);
@@ -251,23 +290,23 @@ public class NewParkingController implements ActionListener, KeyListener, Window
 		
 		if(e.getSource()==this.newParking.anreiseDatumPlaceHolderTextField) {
 			
-					//lost focus by Arrival then we call checkAnreiseDateFormat
-					logicModelNewParking.checkAnreiseDateFormat();
-					
-					//We set the focus for Arrival to false if we do not, when the arrival date is later than the departure date, it throws an error message only once.
-					//To avoid this and that we always get an error message in the event that the arrival date is later than the departure date, we set the anreiseFocus value to false.
-					logicModelNewParking.setAnreiseFocus(false);
-
+			//In case the element anreiseDatumPlaceHolderTextField lost focus we checkAnreiseDate(Arrival Date Format...)
+			this.logicModelNewParking.checkAnreiseDate();
 			
-		}else if (e.getSource()==this.newParking.abreiseDatumPlaceholderTextField) {
-			
-					//We call to check the Departure Date
-					logicModelNewParking.checkAbreiseDateFormat();
 
+		}
+		//In case the element abreiseDatumPlaceholderTextField lost Focus we checkAbreiseDate(Departure Date Format....)
+		else if (e.getSource()==this.newParking.abreiseDatumPlaceholderTextField) {
+			
+
+			this.logicModelNewParking.checkAbreiseDate();
+			
+	
 		}
 		
 else if(e.getSource()==this.newParking.saveParkingReservation) {
 			
+			//Giving back the Opacity initial value to MyButton
 			this.newParking.saveParkingReservation.setOpacity(0.5f);
 		}
 		
@@ -291,10 +330,10 @@ else if(e.getSource()==this.newParking.saveParkingReservation) {
 		
 		//In case we pressed the cancelParkingReservation button we set the closingNewParkingReservation (true)
 		if(e.getSource()==this.newParking.cancelParkingReservation) {
-			this.logicModelNewParking.setClosingNewParkingReservation(true);
-		}else if(e.getSource()==this.newParking.anreiseDatumPlaceHolderTextField){
-			//in this case we set the arrival date focus true.
-			this.logicModelNewParking.setAnreiseFocus(true);
+			
+
+			this.logicModelNewParking.setReadyToCloseNewParkingReservation(true);
+
 		}
 		
 	}
@@ -303,10 +342,60 @@ else if(e.getSource()==this.newParking.saveParkingReservation) {
 	public void mouseReleased(MouseEvent e) {}
 
 	@Override
-	public void mouseEntered(MouseEvent e) {}
+	public void mouseEntered(MouseEvent e) {
+	
+	  //If the Mouse Entered by cancelParkingReservation JButton
+	  if(e.getSource()==this.newParking.cancelParkingReservation) {
+		  
+		  //Evaluate if anreiseDatumPlaceHolderTextField has the Focus
+		  if(this.newParking.anreiseDatumPlaceHolderTextField.hasFocus()) {
+				
+			    /*
+			     * We set one Value String with the Element name has actually the Focus so we can use this information in case type error not correct to 
+			     * return the focus to this element.
+			     */
+				this.logicModelNewParking.setElementHadFocus("anreiseDatumPlaceHolderTextField");
+			}
+			
+		    //in case abreiseDatumPlaceholderTextField
+			else if(this.newParking.abreiseDatumPlaceholderTextField.hasFocus()) {
+				this.logicModelNewParking.setElementHadFocus("abreiseDatumPlaceholderTextField");
+			}
+		  
+		   /*
+		    * We set the value readyToCloseNewParkingReservation as true so we don't have any Error Message or alert when anreiseDatumPlaceHolderTextField or
+		    * when abreiseDAtumPlaceHolderTextField lost Focus.
+		    */
+			this.logicModelNewParking.setReadyToCloseNewParkingReservation(true);
+	  }
+		
+		
+		
+		
+	}
 
+	
 	@Override
-	public void mouseExited(MouseEvent e) {}
+	public void mouseExited(MouseEvent e) {
+		
+		 //If the Mouse Exited by cancelParkingReservation JButton
+		  if(e.getSource()==this.newParking.cancelParkingReservation) {
+			  
+		//We set element had focus
+		if(this.newParking.anreiseDatumPlaceHolderTextField.hasFocus()) {
+		
+			this.logicModelNewParking.setElementHadFocus("anreiseDatumPlaceHolderTextField");
+		}
+		
+		else if(this.newParking.abreiseDatumPlaceholderTextField.hasFocus()) {
+			this.logicModelNewParking.setElementHadFocus("abreiseDatumPlaceholderTextField");
+		}
+		
+		//And here we are not ready to close the GUI also we set the value as false.
+		this.logicModelNewParking.setReadyToCloseNewParkingReservation(false);
+		
+	 }
+	}
 	
 
 
