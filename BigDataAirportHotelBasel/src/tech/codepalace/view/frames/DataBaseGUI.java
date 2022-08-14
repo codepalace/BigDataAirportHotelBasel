@@ -124,7 +124,7 @@ public class DataBaseGUI extends JFrame {
 	//JComboBox to select how we search the result
 	public JComboBox<String> searchJComboBox;
 	//String Array for the JComboBox 
-	private String[] choicesSearchFundsachen;
+	private String[] choicesSearchFundsachen, choicesSearchParking;
 	
 	
 	//JButton for reload DataBase
@@ -270,12 +270,12 @@ public class DataBaseGUI extends JFrame {
 				this.setTitle("Langzeit Parking Airport Hotel Basel");
 				
 				//Initialize the choices for the JComboBox
-				this.choicesSearchFundsachen = new String[] {"Suchen nach ID-Parking", "Suchen nach Buchungsname", 
+				this.choicesSearchParking = new String[] {"Suchen nach ID-Parking", "Suchen nach Buchungsname", 
 													"Suchen nach Auto-KFZ", "Suchen nach Anreisedatum"};
 				
 				
 				//Initialize the JComboBox for the Search options.
-				this.searchJComboBox = new JComboBox<String>(choicesSearchFundsachen);
+				this.searchJComboBox = new JComboBox<String>(choicesSearchParking);
 				
 				this.topPanelParking = new TopPanelParking(this.btnHome, this.btnFundsachen, this.btnFitness, this.btnPhonebook, this.btnLogout, 
 						this.btnNewParking, this.searchText, this.searchJComboBox, this.reloadDdJButton);
@@ -284,6 +284,8 @@ public class DataBaseGUI extends JFrame {
 				
 				//the instance JTable parkingTable = new ParkingTable and we get for that the JTable with the getJTable() method.
 				this.parkingTable = new ParkingTable().getJTable();
+				
+				this.parkingTable.setComponentPopupMenu(popupMenu);
 				
 				//JScrollPane for our parkingTable
 				this.scrollPane = new JScrollPane(this.parkingTable);

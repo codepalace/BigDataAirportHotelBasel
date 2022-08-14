@@ -214,7 +214,23 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener {
 	        	 
 	        	 //We call the deleteRowDataBase Method with the arguments selectedRow and the name of the table we are going to try to delete.
 	        	 this.logicModelFundSachen.deleteRowDataBase(this.selectedRow, "FUNDSACHEN", this.model);
+	         
 	         }
+	         
+	         else if(this.dataBaseGUI.parkingTable!=null)
+	         {
+	        	//We set the value of selectedRow calling the getSelectedRow Method of the fundsachenTable !=null in this case.
+	        	 this.selectedRow = this.dataBaseGUI.parkingTable.getSelectedRow();
+	        	 
+	        	 //We get the TableModel of the JTable
+	        	 this.model = this.dataBaseGUI.parkingTable.getModel();
+	        	 
+	        	 //We call the deleteRowDataBase Method with the arguments selectedRow and the name of the table we are going to try to delete.
+	        	 this.logicModelParking.deleteRowDataBase(this.selectedRow, "PARKING", this.model);
+
+	         }
+	         
+	         
 		
 		}
 		
@@ -527,7 +543,9 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener {
 	@Override
 	public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
 
-		
+		/*
+		 * if the JTable active is fundsachenTable by click right PopupMenu will be active and marking the selecting row to give the option to delete.
+		 */
 		if(this.dataBaseGUI.dataBaseApplication.equalsIgnoreCase("FUNDSACHEN")) {
 			SwingUtilities.invokeLater(new Runnable() {
                 @Override
@@ -535,6 +553,24 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener {
                     int rowAtPoint = dataBaseGUI.fundsachenTable.rowAtPoint(SwingUtilities.convertPoint(dataBaseGUI.popupMenu, new Point(0, 0), dataBaseGUI.fundsachenTable));
                     if (rowAtPoint > -1) {
                     	dataBaseGUI.fundsachenTable.setRowSelectionInterval(rowAtPoint, rowAtPoint);
+                    }
+                }
+            });
+		
+		
+		}
+		
+		/*
+		 * if the JTable active is parkingTable by click right PopupMenu will be active and marking the selecting row to give the option to delete.
+		 */
+		else if(this.dataBaseGUI.dataBaseApplication.equalsIgnoreCase("PARKING")) {
+//		
+			SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    int rowAtPoint = dataBaseGUI.parkingTable.rowAtPoint(SwingUtilities.convertPoint(dataBaseGUI.popupMenu, new Point(0, 0), dataBaseGUI.parkingTable));
+                    if (rowAtPoint > -1) {
+                    	dataBaseGUI.parkingTable.setRowSelectionInterval(rowAtPoint, rowAtPoint);
                     }
                 }
             });

@@ -43,8 +43,7 @@ public class LogicModelNewParking extends LogicModel {
 	protected ParkingReservation parkingReservation;
 	private Loading loading;
 
-	
-	
+
 	protected String dbName;
 	
 	private boolean readyToCloseNewParkingReservation = false;
@@ -127,6 +126,7 @@ public class LogicModelNewParking extends LogicModel {
 		LogicModelNewParking.newParking = newParking;
 		this.userAHB = userAHB;
 		this.loading = loading;
+
 
 		//nowLoacalDate for the current date in LocalDate variable
 		this.nowLocalDate = now.toLocalDate();
@@ -749,7 +749,7 @@ protected void addNewParkingReservationToDataBase() {
 	
 	//We create a new DAOParking object passing the arguments needed.
 
-	DAOParking daoParking = new DaoParkingImpl(getUserAHB(), dataBaseGUI, loading);
+	DAOParking daoParking = new DaoParkingImpl(getUserAHB(), dataBaseGUI, loading, getLogicModelParking());
 
 
 

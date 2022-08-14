@@ -91,7 +91,7 @@ public class LogicModelParking extends LogicModel {
 			
 
 			
-			this.daoParking = new DaoParkingImpl(getUserAHB(), LogicModelParking.dataBaseGUI, loading);
+			this.daoParking = new DaoParkingImpl(getUserAHB(), LogicModelParking.dataBaseGUI, loading, this);
 			tableCounter = daoParking.getDataRowCounter() + 1;
 			
 		} catch (DaoException e) {

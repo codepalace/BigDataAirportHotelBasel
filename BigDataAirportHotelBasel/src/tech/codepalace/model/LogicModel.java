@@ -627,7 +627,7 @@ try {
 							
 
 
-							DAOParking daoParking = new DaoParkingImpl(getUserAHB(), dataBaseGUI, loading);
+							DAOParking daoParking = new DaoParkingImpl(getUserAHB(), dataBaseGUI, loading, logicModelParking);
 							
 							try {
 								//Check if we have a Parking Table.
@@ -769,16 +769,44 @@ try {
 		
 		if(privilege.equals("ADMIN")) {
 			
-			//We create a new DAOFundsachen Object passing the DaoFundsachenImpl class with the parameters.
-			DAOFundsachen daoFundsachen = new DaoFundsachenImpl(getUserAHB(), dataBaseGUI, loading, logicModelFundSachen);
-			
-			//We call the Method to deleteDatabaseEntry
-			try {
-				daoFundsachen.deleteDatabaseEntry(this.tableName, id);
-			} catch (DaoException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			switch(this.tableName) {
+				
+				case "FUNDSACHEN":
+					
+					//We create a new DAOFundsachen Object passing the DaoFundsachenImpl class with the parameters.
+					DAOFundsachen daoFundsachen = new DaoFundsachenImpl(getUserAHB(), dataBaseGUI, loading, logicModelFundSachen);
+					
+					//We call the Method to deleteDatabaseEntry inside the selected TABLE by the Database(tableName, (id) selected to be deleted).
+					try {
+						daoFundsachen.deleteDatabaseEntry(this.tableName, id);
+					} catch (DaoException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+				break;
+				
+				case "PARKING":
+					
+					//We create a new DAOFundsachen Object passing the DaoFundsachenImpl class with the parameters.
+//					DAOFundsachen daoFundsachen = new DaoFundsachenImpl(getUserAHB(), dataBaseGUI, loading, logicModelFundSachen);
+					DAOParking daoParking = new DaoParkingImpl(getUserAHB(), dataBaseGUI, loading, logicModelParking);
+					
+					
+					//We call the Method to deleteDatabaseEntry inside the selected TABLE by the Database(tableName, (id) selected to be deleted).
+					try {
+						daoParking.deleteParkingReservation(this.tableName, id);
+						
+					} catch (DaoException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
 			}
+			
+			
+			
+			
 			
 		}else {
 			
@@ -791,6 +819,11 @@ try {
 	
 	public LogicModelFundSachen getLogicModelFundsachen() {
 		return LogicModel.logicModelFundSachen;
+	}
+	
+	
+	public LogicModelParking getLogicModelParking() {
+		return LogicModel.logicModelParking;
 	}
 
 	/**

@@ -61,12 +61,27 @@ public interface DAOParking {
 	void displayListParking() throws DaoException;
 	
 	
+	/**
+	 * @description Method to delete an Entry of the DataBase(Table)
+	 * @param tableName
+	 * @param id
+	 */
+	void deleteParkingReservation(String tableName, int id) throws DaoException;
+	
+	
+	/**
+	 * Method to reload all data from PARKING table in Database and display in JTable by the GUI.
+	 * @throws DaoException
+	 */
+	void reloadParkingData() throws DaoException;
+	
+	
 	List<ParkingReservation>displayParkingFoundLikeName(String name);
 	List<ParkingReservation>displayParkingFoundLikeCarNumber(String carNumer);
 	List<ParkingReservation>displayParkingFoundLikeDate(String date);  //Buscar como fecha a trabajarlo segun los argumentos
 	List<ParkingReservation>displayParkingFoundLikeAnyEntry(String likeAnyEntry);
 	void updateParkingReservation(ParkingReservation parkingReservation) throws DaoException;
-	void deleteParkingReservation(int id) throws DaoException;
+	
 	List<ParkingReservation> orderby(String orderBy) throws DaoException;
 	
 	
