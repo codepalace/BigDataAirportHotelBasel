@@ -786,21 +786,6 @@ try {
 					
 				break;
 				
-				case "PARKING":
-					
-					//We create a new DAOFundsachen Object passing the DaoFundsachenImpl class with the parameters.
-//					DAOFundsachen daoFundsachen = new DaoFundsachenImpl(getUserAHB(), dataBaseGUI, loading, logicModelFundSachen);
-					DAOParking daoParking = new DaoParkingImpl(getUserAHB(), dataBaseGUI, loading, logicModelParking);
-					
-					
-					//We call the Method to deleteDatabaseEntry inside the selected TABLE by the Database(tableName, (id) selected to be deleted).
-					try {
-						daoParking.deleteParkingReservation(this.tableName, id);
-						
-					} catch (DaoException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
 					
 			}
 			

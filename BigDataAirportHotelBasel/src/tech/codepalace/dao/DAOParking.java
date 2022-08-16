@@ -61,12 +61,7 @@ public interface DAOParking {
 	void displayListParking() throws DaoException;
 	
 	
-	/**
-	 * @description Method to delete an Entry of the DataBase(Table)
-	 * @param tableName
-	 * @param id
-	 */
-	void deleteParkingReservation(String tableName, int id) throws DaoException;
+	
 	
 	
 	/**

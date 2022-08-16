@@ -285,7 +285,6 @@ public class DataBaseGUI extends JFrame {
 				//the instance JTable parkingTable = new ParkingTable and we get for that the JTable with the getJTable() method.
 				this.parkingTable = new ParkingTable().getJTable();
 				
-				this.parkingTable.setComponentPopupMenu(popupMenu);
 				
 				//JScrollPane for our parkingTable
 				this.scrollPane = new JScrollPane(this.parkingTable);
@@ -332,6 +331,7 @@ public class DataBaseGUI extends JFrame {
 				 */
 				this.fundsachenTable.getColumnModel().getColumn(5).setCellEditor(new DefaultCellEditor(kisteNummerJComboBox));
 				
+				//We set the PopUpMenu to our fundsacheTable object.
 				this.fundsachenTable.setComponentPopupMenu(popupMenu);
 				
 				this.scrollPane = new JScrollPane(this.fundsachenTable);
