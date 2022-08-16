@@ -421,7 +421,7 @@ try {
 				
 				 //New Instance of DataBAseGUIController we the arguments we need to pass so we can access from this Object
 				new DataBaseGUIController(LogicModel.bigDataAirportHotelBaselStartFrame, dataBaseGUI, LogicModel.logicModelParking, 
-						LogicModel.logicModelFundSachen, LogicModel.logicModelStartFrame);
+						LogicModel.logicModelFundSachen);
 				
 				
 				try {
@@ -499,7 +499,7 @@ try {
 						
 						 //New Instance of DataBAseGUIController we the arguments we need to pass so we can access from this Object
 						new DataBaseGUIController(LogicModel.bigDataAirportHotelBaselStartFrame, dataBaseGUI, LogicModel.logicModelParking, 
-								LogicModel.logicModelFundSachen, LogicModel.logicModelStartFrame);
+								LogicModel.logicModelFundSachen);
 						
 						
 						try {
@@ -632,7 +632,7 @@ try {
 							
 
 
-							DAOParking daoParking = new DaoParkingImpl(getUserAHB(), dataBaseGUI, loading, logicModelParking);
+							DAOParking daoParking = new DaoParkingImpl(getUserAHB(), dataBaseGUI, loading);
 							
 							try {
 								//Check if we have a Parking Table.

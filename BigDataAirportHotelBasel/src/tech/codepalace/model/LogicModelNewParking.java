@@ -749,7 +749,7 @@ protected void addNewParkingReservationToDataBase() {
 	
 	//We create a new DAOParking object passing the arguments needed.
 
-	DAOParking daoParking = new DaoParkingImpl(getUserAHB(), dataBaseGUI, loading, getLogicModelParking());
+	DAOParking daoParking = new DaoParkingImpl(getUserAHB(), dataBaseGUI, loading);
 
 
 

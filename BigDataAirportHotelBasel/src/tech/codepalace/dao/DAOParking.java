@@ -71,7 +71,22 @@ public interface DAOParking {
 	void reloadParkingData() throws DaoException;
 	
 	
+	/**
+	 * Method to search in the Database Table PARKING by idParking
+	 * @param idParking
+	 * @throws DaoException
+	 */
 	void searchByIDParking(String idParking) throws DaoException;
+	
+	
+	/**
+	 * Method search in the Database table Parking by buchungsname(person who made the parking reservation).  
+	 * @param buchungsname
+	 * @throws DaoException
+	 */
+	void suchenNachBuchungsName(String buchungsname) throws DaoException;
+	
+	
 	
 	
 	List<ParkingReservation>displayParkingFoundLikeName(String name);

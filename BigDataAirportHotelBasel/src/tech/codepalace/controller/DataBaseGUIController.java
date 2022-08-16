@@ -21,7 +21,6 @@ import javax.swing.table.TableModel;
 
 import tech.codepalace.model.LogicModelFundSachen;
 import tech.codepalace.model.LogicModelParking;
-import tech.codepalace.model.LogicModelStartFrame;
 import tech.codepalace.view.frames.BigDataAirportHotelBaselStartFrame;
 import tech.codepalace.view.frames.DataBaseGUI;
 import tech.codepalace.view.frames.Loading;
@@ -48,7 +47,7 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener {
 	private DataBaseGUI dataBaseGUI;
 	private LogicModelParking logicModelParking;
 	private LogicModelFundSachen logicModelFundSachen;
-	private LogicModelStartFrame logicModelStartFrame;
+	
 	
 	private TableModel model;
 	
@@ -57,15 +56,14 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener {
 	private int selectedRow=0;
 	
 	public DataBaseGUIController(BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame, 
-			DataBaseGUI dataBaseGUI, LogicModelParking logicModelParking, LogicModelFundSachen logicModelFundSachen,
-			LogicModelStartFrame logicModelStartFrame) {
+			DataBaseGUI dataBaseGUI, LogicModelParking logicModelParking, LogicModelFundSachen logicModelFundSachen) {
 		
 		//We set the values to the Objects
 		this.bigDataAirportHotelBaselStartFrame = bigDataAirportHotelBaselStartFrame;
 		this.dataBaseGUI = dataBaseGUI;
 		this.logicModelParking = logicModelParking;
 		this.logicModelFundSachen = logicModelFundSachen;
-		this.logicModelStartFrame = logicModelStartFrame;
+
 		
 		
 		//Add Listener
@@ -431,8 +429,6 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener {
 			//if parkingTable is displayed we call to update the data for Parking
 			if(this.dataBaseGUI.parkingTable != null) {
 				
-				//@TODO update PARKING Table
-				
 		
 			//if fundsachenTable is displayed we call to update the data for FUNDSACHEN(Lost and found)
 			}else if(this.dataBaseGUI.fundsachenTable != null) {
@@ -554,18 +550,12 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener {
 
 
 	@Override
-	public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {}
 
 
 
 	@Override
-	public void popupMenuCanceled(PopupMenuEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void popupMenuCanceled(PopupMenuEvent e) {}
 
 
 	

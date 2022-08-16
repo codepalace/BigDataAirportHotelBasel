@@ -6,8 +6,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 
-import javax.swing.JOptionPane;
-
 import tech.codepalace.controller.NewParkingController;
 import tech.codepalace.dao.DAOParking;
 import tech.codepalace.dao.DaoException;
@@ -93,7 +91,7 @@ public class LogicModelParking extends LogicModel {
 			
 
 			
-			this.daoParking = new DaoParkingImpl(getUserAHB(), LogicModelParking.dataBaseGUI, loading, this);
+			this.daoParking = new DaoParkingImpl(getUserAHB(), LogicModelParking.dataBaseGUI, loading);
 			tableCounter = daoParking.getDataRowCounter() + 1;
 			
 		} catch (DaoException e) {
@@ -180,6 +178,8 @@ public class LogicModelParking extends LogicModel {
 				
 			case "Suchen nach Buchungsname":
 				
+				suchenNachBuchungsName(getToSearch());
+				
 				break;
 				
 			case "Suchen nach Auto-KFZ":
@@ -203,7 +203,7 @@ public class LogicModelParking extends LogicModel {
 	private void suchenNachIDParking(String IDParking) {
 		
 		
-		DAOParking daoParking = new DaoParkingImpl(getUserAHB(), dataBaseGUI, new Loading(dataBaseGUI, true), this);
+		DAOParking daoParking = new DaoParkingImpl(getUserAHB(), dataBaseGUI, new Loading(dataBaseGUI, true));
 		
 		try {
 			daoParking.searchByIDParking(IDParking);
@@ -216,6 +216,19 @@ public class LogicModelParking extends LogicModel {
 	
 	
 	
+	
+	private void suchenNachBuchungsName(String buchungsname) {
+		
+		DAOParking daoParking = new DaoParkingImpl(getUserAHB(), dataBaseGUI, new Loading(dataBaseGUI, true));
+		
+		try {
+			daoParking.suchenNachBuchungsName(buchungsname);
+		} catch (DaoException e) {
+			e.printStackTrace();
+			
+		}
+		
+	}
 	
 	
 	
