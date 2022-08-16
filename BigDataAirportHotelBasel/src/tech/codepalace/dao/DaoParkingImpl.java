@@ -934,29 +934,7 @@ public class DaoParkingImpl  implements DAOParking {
 	
 	
 
-	@Override
-	public List<ParkingReservation> displayParkingFoundLikeName(String name) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	public List<ParkingReservation> displayParkingFoundLikeCarNumber(String carNumer) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<ParkingReservation> displayParkingFoundLikeDate(String date) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<ParkingReservation> displayParkingFoundLikeAnyEntry(String likeAnyEntry) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public void updateParkingReservation(ParkingReservation parkingReservation) throws DaoException {
@@ -1998,6 +1976,287 @@ public class DaoParkingImpl  implements DAOParking {
 				}catch (SQLException e) {
 					
 				}
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	@Override
+	public void suchenByAutoNr(String autokfz) throws DaoException {
+		
+		//We create a new DefaultTableModel Casting DefaultTableModel our instance dataBaseGUI.parkingTable.getModel to get the Table model.
+		DefaultTableModel model = (DefaultTableModel) dataBaseGUI.parkingTable.getModel();
+		
+		//We set the RowCount to 0 for deleting all the content from the JTable.
+		model.setRowCount(0);
+		
+		
+		try {
+			
+			//Set new value to the urlDB variable
+			DaoParkingImpl.urlDB = DaoParkingImpl.dataEncryption.decryptData(this.userAHB.getUrlDataBase()) + File.separator + getDBName();
+
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		// We set the URL to connect to the Database.
+		setURLToConnectCurrentDataBase();
+
+		//We could use LIKE here by the SQL Sentence buchungsname but we want at the Moment to have exact name.
+		String sql = "SELECT * from PARKING WHERE autokfz = '" + autokfz + "'";
+		
+		try {
+			
+			//Initialize daoFactory Object with the DerbyURL value as argument.
+			daoFactory = new DaoFactory(getDerbyURL());
+			
+			//Initialize the connection object calling the daoFactory Object an connect Method to Connect to the URL where the database is located.
+			connection = DaoParkingImpl.daoFactory.connect();
+			
+			//statement createStatement
+			DaoParkingImpl.statement = DaoParkingImpl.connection.createStatement();
+			
+			//resultSet receive value statement.executeQuerey and the SQL sentence
+			resultSet = statement.executeQuery(sql);
+			
+			
+			//Now first we check if resultSet has any results if == false is empty
+			if(resultSet.next()==false) {
+
+//				DaoParkingImpl.logicModelParking.displayErrorDataSearch("Mit dem eingegebenen ID-Parking wurde kein Ergebnis gefunden");
+				
+				JOptionPane.showMessageDialog(null, "Mit dem eingegebenen Autokennzeichen wurde kein Ergebnis gefunden",  
+						"Kein Ergebnis gefunden", JOptionPane.OK_OPTION, this.dialogImg);
+				
+				//We call to reload o refresh the JTable
+				reloadParkingData();
+			} //We have results so we show it.
+			
+			else 
+			{
+				if(loading !=null) {
+					 
+					 
+					  SwingUtilities.invokeLater(new Runnable() {
+			 				
+			 				@Override
+			 				public void run() {
+			 					DaoParkingImpl.loading.setVisible(true);
+			 			
+			 				}
+			 			});
+				  }
+				
+				
+				//After that resultSet execute now the Query select * from FUNDSACHEN WHERE dateItemsWasFound. Value of the sql variable
+				resultSet = statement.executeQuery("SELECT count(*) from PARKING WHERE autokfz = '" + autokfz + "'");
+				
+				
+				//We move the cursor
+				resultSet.next();
+				
+				//numberOfRowsDatabase receive the counted rows
+				numberOfRowsDataBase = resultSet.getInt(1);
+				
+				resultSet = statement.executeQuery(sql);
+				
+				 if(loading !=null) {
+						loading.progressBar.setMaximum(numberOfRowsDataBase);
+				}
+				 
+				 
+				//We create a SwingWorker instruction for the new Thread in background
+				 SwingWorker<Void, ParkingReservation> worker = new SwingWorker<Void, ParkingReservation>(){
+
+					
+
+					@Override
+					protected Void doInBackground() throws Exception {
+
+						/*
+						 * we create an ArrayList type ParkingReservation to add each ParkingReservation object  that we find inside the table Parking in our DataBase
+						 */
+						List<ParkingReservation> parkingReservation = new ArrayList<ParkingReservation>();
+						
+						int progress = 0;
+						
+						//as long as there are entries in the table
+						while (resultSet.next()) {
+							
+							/*We create the necessary variables of the type we need according to the data stored in the database
+							 * 
+							 * The values are retrieved from each result found in the table and of course from the corresponding column in the table Parking.
+							 */
+							int id = resultSet.getInt("ID");
+							String idParking = resultSet.getString("idparking");
+							String buchungsName = resultSet.getString("buchungsname");
+							String autokfz = resultSet.getString("autokfz");
+							Date anreisedatum = resultSet.getDate("anreisedatum");
+							Date abreisedatum = resultSet.getDate("abreisedatum");
+							int anzahltagen = resultSet.getInt("anzahltagen");
+							double betragparking = resultSet.getDouble("betragparking");
+							String buchungskanal = resultSet.getString("buchungskanal");
+							String bemerkungen = resultSet.getString("bemerkungen");
+							String schluesselinhaus = resultSet.getString("schluesselinhaus");
+							String verkaufer = resultSet.getString("verkaufer");
+							
+							
+							
+							//We create an object type ParkingReservation
+							ParkingReservation parkingReservation2 = new ParkingReservation();
+							
+							//We set the values of this Object type ParkingReservation 
+							parkingReservation2.setId(id);
+							parkingReservation2.setIdParking(idParking);
+							parkingReservation2.setBuchungsname(buchungsName);
+							parkingReservation2.setAutoKFZ(autokfz);
+							parkingReservation2.setAnreiseDatum(anreisedatum);
+							parkingReservation2.setAbreiseDatum(abreisedatum);
+							parkingReservation2.setAnzahlTagen(anzahltagen);
+							parkingReservation2.setBetragParking(betragparking);
+							parkingReservation2.setBuchungsKanal(buchungskanal);
+							parkingReservation2.setBemerkungen(bemerkungen);
+							parkingReservation2.setSchluesselInHaus(schluesselinhaus);
+							parkingReservation2.setAbkuerzungMA(verkaufer);
+							
+							
+							//add the Object ParkingReservation(parkingReservation2) to the ArrayList parkingReservation
+							parkingReservation.add(parkingReservation2);
+
+							publish(parkingReservation2);
+							
+							
+							//We add 1 to the progress variable. 
+							progress +=1;
+							/*
+							 * you can execute a sleep statement to see the progress bar working.
+							 */
+//							Thread.sleep(500); 
+							
+							if(loading !=null) {
+								loading.progressBar.setValue(progress);
+							}
+						    
+
+						}
+						
+					
+				
+						return null;
+					}
+					
+					
+					
+					
+					@Override
+					protected void process(List<ParkingReservation> chunks) {
+	
+						
+						//forEach loop to loop through the list Tip ParkingReservation named chunks in the process Method as parameter.
+						for(ParkingReservation chunk: chunks) {
+
+						
+							/*
+							 * we create an Object array and pass the data contained in our parking table in the Database.
+							 * 
+							 * by getBetragParking we add the Euro symbol.
+							 */
+							Object[] row = {chunk.getId(), chunk.getIdParking(), chunk.getBuchungsname(), chunk.getAutoKFZ(),
+									chunk.getAnreiseDatum(), chunk.getAbreiseDatum(), chunk.getAnzahlTagen(), 
+									chunk.getBetragParking() + " €", chunk.getBuchungsKanal(), chunk.getBemerkungen(), 
+									chunk.getSchluesselInHaus(), chunk.getAbkuerzungMA()};
+							
+							
+							/*
+							 * We create one instance DefaultTableModel and we give the value Casting (DefaultTableModel) and we get the defined TableModel for the parkingTable 
+							 * by the AHBParking class.
+							 */
+							
+							DefaultTableModel model = (DefaultTableModel)dataBaseGUI.parkingTable.getModel();
+						
+							
+							/*
+							 * for the parkingTable we retrieve the column where we want to write the data, using getColumnModel and getColumn for the Column and we also call the TableParkingUtilities
+							 * to get the correct Column using the corresponding constant where is defined the column number where it belongs.
+							 * 
+							 * for each column we also call setCellRenderer Method and as argument we pass a new CellTableManager and we specify the type of value that the cell is going to have.
+							 * 
+							 * If the cell is type number then it will have a different font color. 
+							 */
+							dataBaseGUI.parkingTable.getColumnModel().getColumn(TableParkingUtilities.ID).setCellRenderer(new CellTableManager("number"));
+							dataBaseGUI.parkingTable.getColumnModel().getColumn(TableParkingUtilities.IDPARKING).setCellRenderer(new CellTableManager("text"));
+							dataBaseGUI.parkingTable.getColumnModel().getColumn(TableParkingUtilities.BUCHUNGSNAME).setCellRenderer(new CellTableManager("text"));
+							dataBaseGUI.parkingTable.getColumnModel().getColumn(TableParkingUtilities.AUTOKFZ).setCellRenderer(new CellTableManager("text"));
+							dataBaseGUI.parkingTable.getColumnModel().getColumn(TableParkingUtilities.ANREISEDATUM).setCellRenderer(new CellTableManager("number"));
+							dataBaseGUI.parkingTable.getColumnModel().getColumn(TableParkingUtilities.BETRAG).setCellRenderer(new CellTableManager("number"));
+							dataBaseGUI.parkingTable.getColumnModel().getColumn(TableParkingUtilities.BUCHUNGSKANAL).setCellRenderer(new CellTableManager("text"));
+							dataBaseGUI.parkingTable.getColumnModel().getColumn(TableParkingUtilities.BEMERKUNGENG).setCellRenderer(new CellTableManager("text"));
+							dataBaseGUI.parkingTable.getColumnModel().getColumn(TableParkingUtilities.SCHLUESSEL).setCellRenderer(new CellTableManager("text"));
+							dataBaseGUI.parkingTable.getColumnModel().getColumn(TableParkingUtilities.KUERSELMA).setCellRenderer(new CellTableManager("text"));
+							model.addRow(row);
+							
+							
+							
+						
+							
+							
+							
+						}
+						
+					
+					}
+					
+					
+					
+					
+					@Override
+					protected void done() {
+						
+						//All the Data are loaded then we setVisible the dataBaseGUI Object.
+						
+					
+						dataBaseGUI.setVisible(true);
+						
+						//If loading object exists we close it.
+						if(loading!=null) {
+							loading.dispose();
+						}
+						
+	
+						
+						try {
+
+
+							statement.close();
+							resultSet.close();
+							daoFactory.closeConnection(getDerbyURL());
+							connection.close();
+							
+
+							
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
+						
+					}
+					
+					
+					
+				 };worker.execute();
+				
+			}
+			
+		}catch (SQLException e) {
+			
+		}
 	}
 
 

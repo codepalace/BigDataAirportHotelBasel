@@ -184,6 +184,7 @@ public class LogicModelParking extends LogicModel {
 				
 			case "Suchen nach Auto-KFZ":
 				
+				suchenByAutoNr(getToSearch());
 				break;
 				
 			case "Suchen nach Anreisedatum":
@@ -228,6 +229,22 @@ public class LogicModelParking extends LogicModel {
 			
 		}
 		
+	}
+	
+	
+	
+	
+	
+	private void suchenByAutoNr(String autokfz) {
+		
+		DAOParking daoParking = new DaoParkingImpl(getUserAHB(), dataBaseGUI, new Loading(dataBaseGUI, true));
+		
+		try {
+			daoParking.suchenByAutoNr(autokfz);
+		} catch (DaoException e) {
+			e.printStackTrace();
+			
+		}
 	}
 	
 	

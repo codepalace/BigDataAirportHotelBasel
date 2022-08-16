@@ -80,7 +80,7 @@ public interface DAOParking {
 	
 	
 	/**
-	 * Method search in the Database table Parking by buchungsname(person who made the parking reservation).  
+	 * @description Method search in the Database table Parking by buchungsname(person who made the parking reservation).  
 	 * @param buchungsname
 	 * @throws DaoException
 	 */
@@ -88,11 +88,14 @@ public interface DAOParking {
 	
 	
 	
+	/**
+	 * @description Method to search by car number, car licence plat
+	 * @param autokfz
+	 * @throws DaoException
+	 */
+	void suchenByAutoNr(String autokfz) throws DaoException;
 	
-	List<ParkingReservation>displayParkingFoundLikeName(String name);
-	List<ParkingReservation>displayParkingFoundLikeCarNumber(String carNumer);
-	List<ParkingReservation>displayParkingFoundLikeDate(String date);  //Buscar como fecha a trabajarlo segun los argumentos
-	List<ParkingReservation>displayParkingFoundLikeAnyEntry(String likeAnyEntry);
+
 	void updateParkingReservation(ParkingReservation parkingReservation) throws DaoException;
 	
 	List<ParkingReservation> orderby(String orderBy) throws DaoException;
