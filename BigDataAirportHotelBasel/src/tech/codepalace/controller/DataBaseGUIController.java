@@ -185,13 +185,22 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener {
 		
 		else if(e.getSource()==this.dataBaseGUI.reloadDdJButton) {
 			
-		 /* Time to reload the Lost And Found Data and display in JTable the Results. 
-		  * 
-		  * As argument we pass dataBaseGUI object and a new Loading Object that receives the first argument the 
-		  * GUI in background that should be blocked and true to be blocked.
-		  */
-		  this.logicModelFundSachen.reloadFundsachen(dataBaseGUI, new Loading(this.dataBaseGUI, true));
-		
+			
+		 if(this.dataBaseGUI.fundsachenTable!=null) 
+		 {	
+			 /* Time to reload the Lost And Found Data and display in JTable the Results. 
+			  * 
+			  * As argument we pass dataBaseGUI object and a new Loading Object that receives the first argument the 
+			  * GUI in background that should be blocked and true to be blocked.
+			  */
+			  this.logicModelFundSachen.reloadFundsachen(dataBaseGUI, new Loading(this.dataBaseGUI, true));
+		  
+		 }
+		 
+		 else if(this.dataBaseGUI.parkingTable!=null) 
+		 
+		 {
+			 this.logicModelParking.reloadParkingDataBase(dataBaseGUI, new Loading(this.dataBaseGUI, false));
 		}
 		
 		else if(e.getSource()==this.dataBaseGUI.deleteItem) {
@@ -222,6 +231,8 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener {
 		
 		else if(e.getSource()==this.dataBaseGUI.btnFundsachen) {
 			this.logicModelParking.displayFundSachen(bigDataAirportHotelBaselStartFrame);
+		}
+		 
 		}
 		
 		

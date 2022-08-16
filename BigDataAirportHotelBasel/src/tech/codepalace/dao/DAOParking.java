@@ -1,7 +1,7 @@
 package tech.codepalace.dao;
 
 import java.sql.Connection;
-import java.util.List;
+import java.sql.Date;
 
 import javax.swing.JLabel;
 
@@ -89,17 +89,23 @@ public interface DAOParking {
 	
 	
 	/**
-	 * @description Method to search by car number, car licence plat
+	 * @description Method to search by car number, car license plate
 	 * @param autokfz
 	 * @throws DaoException
 	 */
 	void suchenByAutoNr(String autokfz) throws DaoException;
 	
+	
+	
+	/**
+	 * @description Method to search by arrival date in Database PARKING table.
+	 * @param anreisedatum
+	 * @throws DaoException
+	 */
+	void searchByArrivalDate(Date anreisedatum) throws DaoException;
+	
 
 	void updateParkingReservation(ParkingReservation parkingReservation) throws DaoException;
-	
-	List<ParkingReservation> orderby(String orderBy) throws DaoException;
-	
 	
 	
 	void createBackUpDataBase(JLabel statusJLabel) throws DaoException;

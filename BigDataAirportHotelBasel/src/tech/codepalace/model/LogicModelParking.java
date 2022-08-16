@@ -188,6 +188,26 @@ public class LogicModelParking extends LogicModel {
 				break;
 				
 			case "Suchen nach Anreisedatum":
+
+				if(checkDateFormatToSearchInDataBase()) {
+
+					
+					//Set the value of loading object, First argument the GUI in Background and true to block it.
+					this.loading = new Loading(dataBaseGUI, true);
+					
+					//Instance of DAOFunsachen
+//					DAOFundsachen daoFundsachen = new DaoFundsachenImpl(getUserAHB(), LogicModelFundSachen.dataBaseGUI, loading, this);
+					DAOParking daoParking = new DaoParkingImpl(getUserAHB(), dataBaseGUI, loading);
+					
+					
+					
+					try {
+						//Now we are ready to call searchByDateFundschen Method by the DAO Object.
+						daoParking.searchByArrivalDate(getDateToSearchInDataBase());
+					} catch (DaoException e1) {
+						e1.printStackTrace();
+					}
+				}
 				
 				break;
 		}
@@ -217,7 +237,10 @@ public class LogicModelParking extends LogicModel {
 	
 	
 	
-	
+	/**
+	 * @description Method to search by booker name. call to the DAO Object to search in Database
+	 * @param buchungsname
+	 */
 	private void suchenNachBuchungsName(String buchungsname) {
 		
 		DAOParking daoParking = new DaoParkingImpl(getUserAHB(), dataBaseGUI, new Loading(dataBaseGUI, true));
@@ -234,7 +257,10 @@ public class LogicModelParking extends LogicModel {
 	
 	
 	
-	
+	/**
+	 * @description Method to search by Car Number
+	 * @param autokfz
+	 */
 	private void suchenByAutoNr(String autokfz) {
 		
 		DAOParking daoParking = new DaoParkingImpl(getUserAHB(), dataBaseGUI, new Loading(dataBaseGUI, true));
@@ -246,6 +272,31 @@ public class LogicModelParking extends LogicModel {
 			
 		}
 	}
+	
+	
+	
+	
+	/**
+	 * @description Method to reload or refresh the DataBase Table PARKING.
+	 * @param dataBaseGUI
+	 * @param loading
+	 */
+	public void reloadParkingDataBase(DataBaseGUI dataBaseGUI, Loading loading) {
+		
+		DAOParking daoParking = new DaoParkingImpl(getUserAHB(), LogicModelParking.dataBaseGUI, loading);
+		
+		try {
+			
+			daoParking.reloadParkingData();
+			
+		}catch (DaoException e) {
+			e.printStackTrace();
+		
+		}
+		
+	}
+	
+
 	
 	
 	
