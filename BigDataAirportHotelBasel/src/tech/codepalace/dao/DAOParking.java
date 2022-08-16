@@ -71,6 +71,9 @@ public interface DAOParking {
 	void reloadParkingData() throws DaoException;
 	
 	
+	void searchByIDParking(String idParking) throws DaoException;
+	
+	
 	List<ParkingReservation>displayParkingFoundLikeName(String name);
 	List<ParkingReservation>displayParkingFoundLikeCarNumber(String carNumer);
 	List<ParkingReservation>displayParkingFoundLikeDate(String date);  //Buscar como fecha a trabajarlo segun los argumentos

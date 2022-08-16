@@ -112,6 +112,8 @@ public class LogicModel {
 	//Variable to store the value what we are going to search in database. 
 	private String toSearch = "";
 	
+
+	
 	// Variables for error Message by Wrong Date Format
 	//Date Format should be dd.mm.yyyy
 //	private String formatDateRegex = "(0[1-9]|[12][0-9]|3[01])\\.(0[1-9]|1[012])\\.((?:19|20)[0-9][2-9])$";
@@ -166,6 +168,9 @@ public class LogicModel {
 	
 	//variables to calculate to LocalDates
 	private LocalDate firstDate, secondDate;
+	
+	
+	
 	
 	public LogicModel() {
 		
@@ -398,7 +403,7 @@ try {
 				 //We set the UserAHB value
 				 LogicModel.logicModelDataBaseGUI.setUserAHB(getUserAHB());
 				 
-				 LogicModel.logicModelParking = new LogicModelParking();
+				 LogicModel.logicModelParking = new LogicModelParking(dataBaseGUI, loading);
 				 
 				 //We set the UserAHB value
 				 LogicModel.logicModelParking.setUserAHB(getUserAHB());
@@ -1129,17 +1134,9 @@ try {
 		return this.totalDaysPlus;
 		
 	}
-	
-	
 
 	
-	
 
-
-
-
-	
-	
 	
 	
 }

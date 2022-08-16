@@ -6,6 +6,8 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 
+import javax.swing.JOptionPane;
+
 import tech.codepalace.controller.NewParkingController;
 import tech.codepalace.dao.DAOParking;
 import tech.codepalace.dao.DaoException;
@@ -153,6 +155,70 @@ public class LogicModelParking extends LogicModel {
 		
 		
 	}
+
+	
+	
+	
+	
+	
+	
+	@Override
+	public void searchResultsInDataBase(DataBaseGUI dataBaseGUI) {
+		//we call the super Method
+		super.searchResultsInDataBase(dataBaseGUI);
+		
+		LogicModelParking.dataBaseGUI = dataBaseGUI;
+		
+		//Block switch conditional to evaluate what we are going to search in database
+		switch (getSearchSelected()) {
+			
+			case "Suchen nach ID-Parking":
+				
+				suchenNachIDParking(getToSearch());
+				
+				break;
+				
+			case "Suchen nach Buchungsname":
+				
+				break;
+				
+			case "Suchen nach Auto-KFZ":
+				
+				break;
+				
+			case "Suchen nach Anreisedatum":
+				
+				break;
+		}
+		
+	}
+	
+	
+	
+	
+	/**
+	 * @description Method to call to search in DataBase as ID-Parking(idParking Column in Table Parking).
+	 * @param IDParking
+	 */
+	private void suchenNachIDParking(String IDParking) {
+		
+		
+		DAOParking daoParking = new DaoParkingImpl(getUserAHB(), dataBaseGUI, new Loading(dataBaseGUI, true), this);
+		
+		try {
+			daoParking.searchByIDParking(IDParking);
+		} catch (DaoException e) {
+			e.printStackTrace();
+			
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
 
 
 }

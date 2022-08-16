@@ -348,7 +348,8 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener {
 				else 
 					if(this.dataBaseGUI.parkingTable!=null) {
 						
-						//It will be continued.
+						//case parkingTable searchResultsInDataBase called through  logicModelParking
+						this.logicModelParking.searchResultsInDataBase(dataBaseGUI);
 					}
 			
 				

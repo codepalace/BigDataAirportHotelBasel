@@ -463,7 +463,7 @@ public class LogicModelFundSachen extends LogicModel {
 		
 		
 		//Instance of DAOFunsachen
-		DAOFundsachen daoFundsachen = new DaoFundsachenImpl(getUserAHB(), dataBaseGUI, loading, this);
+		DAOFundsachen daoFundsachen = new DaoFundsachenImpl(getUserAHB(), dataBaseGUI, new Loading(dataBaseGUI, true), this);
 		
 		
 		
@@ -479,7 +479,6 @@ public class LogicModelFundSachen extends LogicModel {
 	
 	
 	
-	
 	/**
 	 * @description Method to search by Guest name
 	 * @param namen
@@ -487,7 +486,7 @@ public class LogicModelFundSachen extends LogicModel {
 	private void suchenNachNamen(String namen) {
 		
 		// Instance of DAOFunsachen
-		DAOFundsachen daoFundsachen = new DaoFundsachenImpl(getUserAHB(), dataBaseGUI, loading, this);
+		DAOFundsachen daoFundsachen = new DaoFundsachenImpl(getUserAHB(), dataBaseGUI, new Loading(dataBaseGUI, true), this);
 
 		try {
 			// Now we are ready to call searchByGuestName Method by the DAO Object.
@@ -506,7 +505,7 @@ public class LogicModelFundSachen extends LogicModel {
 	private void suchenNachFundort(String fundOrt) {
 		
 		// Instance of DAOFunsachen
-		DAOFundsachen daoFundsachen = new DaoFundsachenImpl(getUserAHB(), dataBaseGUI, loading, this);
+		DAOFundsachen daoFundsachen = new DaoFundsachenImpl(getUserAHB(), dataBaseGUI, new Loading(dataBaseGUI, true), this);
 		
 		try {
 			// Now we are ready to call suchenNachFundort Method by the DAO Object.
