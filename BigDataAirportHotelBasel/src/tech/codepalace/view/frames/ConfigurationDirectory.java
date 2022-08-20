@@ -42,7 +42,7 @@ public class ConfigurationDirectory extends JDialog {
 
 	public JLabel dataBaseSelectedJLabel, backupDataBaseSelectedJLabel;
 	
-	public JButton selectDatabaseLocalJButton, selectBackupDataBaseJButton, savePathsJButton, cancelSavePathsJButton;
+	public JButton selectDatabaseLocalJButton, selectBackupDataBaseJButton, savePathsJButton, cancelSavePathsJButton, loadConfig;
 
 	private GridBagLayout gridBagLayoutNorth;
 	private GridBagConstraints gridBagConstraintsNorth;
@@ -125,6 +125,10 @@ public class ConfigurationDirectory extends JDialog {
 		this.cancelSavePathsJButton = new MyButton("/img/abbrechendb.png");
 		this.cancelSavePathsJButton.setBorder(BorderFactory.createEmptyBorder(0, 10, 5, 0));
 		
+		this.loadConfig = new JButton("Load Config");
+		this.loadConfig.setPreferredSize(new Dimension(100, 20)); //will be change the design in next.
+		
+		
 		this.dataBaseSelectedJLabel = new JLabel();
 		this.dataBaseSelectedJLabel.setPreferredSize(new Dimension(420,20));
 		this.dataBaseSelectedJLabel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
@@ -186,6 +190,7 @@ public class ConfigurationDirectory extends JDialog {
 		
 		this.southPanel.setOpaque(false);
 		this.southPanel.add(cancelSavePathsJButton, BorderLayout.WEST);
+		this.southPanel.add(this.loadConfig, BorderLayout.CENTER);
 		this.southPanel.add(savePathsJButton, BorderLayout.EAST);
 		
 		this.panelWithBackgroundOption.add(this.southPanel);

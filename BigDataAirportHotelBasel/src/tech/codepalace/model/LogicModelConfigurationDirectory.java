@@ -19,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import tech.codepalace.controller.AdminCreatorController;
 import tech.codepalace.utility.OperatingSystemCheck;
@@ -74,6 +75,7 @@ public class LogicModelConfigurationDirectory extends LogicModel {
 	
 	
 	
+	private String urlSource, urlTarget;
 	
 	public LogicModelConfigurationDirectory(ConfigurationDirectory configurationDirectory, BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame, LogicModelStartFrame logicModelStartFrame) {
 		
@@ -349,6 +351,138 @@ public class LogicModelConfigurationDirectory extends LogicModel {
 	
 	
 	
+	
+	
+	
+	
+	/**
+	 * @description Method to load a configuration file and to copy in the Application Directory
+	 */
+	public void loadConfigFile() {
+		
+		
+		
+
+		
+		/*
+		 * Now when we load the configuration file, we copy this loaded file to the App Directory. 
+		 */
+		
+		
+switch (OperatingSystemCheck.getOparatingSystem()) {
+		
+		case MAC:
+		
+			System.setProperty("apple.awt.fileDialogForDirectories", "true");
+			this.fileDialog = new FileDialog(this.configurationDirectory, "Backup Datenbankpfad wählen", FileDialog.LOAD);
+			
+			EventQueue.invokeLater(new Runnable() {
+
+				@Override
+				public void run() {
+					fileDialog.setVisible(true);
+					
+					if(fileDialog.getFile()!=null) {
+						
+						urlSource = fileDialog.getFile();
+						JOptionPane.showMessageDialog(null, "ruta archivo: " + urlSource);
+					}
+					
+			
+					
+				}
+				
+			});
+			
+			
+		   break;
+		   
+		case WINDOWS:
+			
+			EventQueue.invokeLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					
+					
+					
+					jFileChooser = new JFileChooser();
+					jFileChooser.setCurrentDirectory(new java.io.File("."));
+					
+					jFileChooser.setDialogTitle("Select Config File");
+					jFileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+					
+					FileNameExtensionFilter filter = new FileNameExtensionFilter("CONFIG PROPERTIES FILES", "properties");
+					jFileChooser.setFileFilter(filter);
+
+					
+					int returnVal = jFileChooser.showOpenDialog(configurationDirectory);
+					
+					if (returnVal == JFileChooser.APPROVE_OPTION) {
+
+						urlSource = jFileChooser.getSelectedFile().toString();
+
+						
+						JOptionPane.showMessageDialog(null, "Source config file: " + urlSource);
+						
+					}else {
+						
+						//In case we do not select any configuration file we return one error Message
+						
+					}
+					
+					
+					
+					
+				}
+			});
+			
+			break;
+			
+		default:
+			
+			
+			
+			EventQueue.invokeLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					
+					
+					
+					jFileChooser = new JFileChooser();
+					jFileChooser.setCurrentDirectory(new java.io.File("."));
+					
+					jFileChooser.setDialogTitle("Backup Datenbankpfad wählen");
+					jFileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+					
+					jFileChooser.setAcceptAllFileFilterUsed(false);
+					
+					int returnVal = jFileChooser.showOpenDialog(configurationDirectory);
+					
+					if (returnVal == JFileChooser.APPROVE_OPTION) {
+						configurationDirectory.getBackupDatabaseSelectedPath().setText(jFileChooser.getSelectedFile().toString());
+						urlDataBaseBackup = jFileChooser.getSelectedFile().toString();
+						
+					}else {
+						configurationDirectory.getBackupDatabaseSelectedPath().setText("");
+						urlDataBaseBackup = "";
+						
+					}
+					
+					
+					
+					
+				}
+			});
+				
+		
+		break;
+		
+		}
+		
+		
+	}
 	
 	
 	
