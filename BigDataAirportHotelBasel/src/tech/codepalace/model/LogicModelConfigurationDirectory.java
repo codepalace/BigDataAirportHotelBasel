@@ -10,6 +10,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -75,7 +77,13 @@ public class LogicModelConfigurationDirectory extends LogicModel {
 	
 	
 	
-	private String urlSource, urlTarget;
+
+	private File sourceFile, destinationFile; 
+	
+	//Path of the project where the configuration file will be located
+	protected String projectDirectoryString = System.getProperty("user.dir");
+	
+	
 	
 	public LogicModelConfigurationDirectory(ConfigurationDirectory configurationDirectory, BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame, LogicModelStartFrame logicModelStartFrame) {
 		
@@ -357,6 +365,9 @@ public class LogicModelConfigurationDirectory extends LogicModel {
 	
 	/**
 	 * @description Method to load a configuration file and to copy in the Application Directory
+	 * <p>This Method will be called in case the user by the first load of the application the program do not find a configuration file.</p>
+	 * <p>It could be possible that some of the Team delete the configuration file from the application directory and we need to save again the configuration file in 
+	 * application directory.</p>
 	 */
 	public void loadConfigFile() {
 		
@@ -385,8 +396,28 @@ switch (OperatingSystemCheck.getOparatingSystem()) {
 					
 					if(fileDialog.getFile()!=null) {
 						
-						urlSource = fileDialog.getFile();
-						JOptionPane.showMessageDialog(null, "ruta archivo: " + urlSource);
+						
+						
+						
+						sourceFile = new File(fileDialog.getDirectory() + fileDialog.getFile());
+						JOptionPane.showMessageDialog(null, "sourceFile: " + sourceFile);
+						
+						destinationFile = new File(projectDirectoryString +  File.separator + "config.properties");
+						
+						 try {
+								copyFileUsingJava7Files(sourceFile, destinationFile);
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							   bigDataAirportHotelBaselStartFrame.dispose();
+							   configurationDirectory.dispose();
+							   logoutApplication();
+						
+						
+					}else {
+						
+						//In case we do not select any configuration file we return one error Message
 					}
 					
 			
@@ -421,14 +452,39 @@ switch (OperatingSystemCheck.getOparatingSystem()) {
 					
 					if (returnVal == JFileChooser.APPROVE_OPTION) {
 
-						urlSource = jFileChooser.getSelectedFile().toString();
+					
 
 						
-						JOptionPane.showMessageDialog(null, "Source config file: " + urlSource);
+						sourceFile = new File(jFileChooser.getSelectedFile().toString());
+						JOptionPane.showMessageDialog(null, "sourceFile: " + sourceFile);
+						
+					
+					   
+					   destinationFile = new File(projectDirectoryString +  File.separator + "config.properties");
+					   
+					   JOptionPane.showMessageDialog(null, "destinationFile: " + destinationFile);
+					   
+					   
+					   /*
+					    * source = new File("/Users/pankaj/tmp/sourceJava7.avi");
+        dest = new File("/Users/pankaj/tmp/destJava7.avi");
+					    */
+					   
+					   try {
+						copyFileUsingJava7Files(sourceFile, destinationFile);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					   bigDataAirportHotelBaselStartFrame.dispose();
+					   configurationDirectory.dispose();
+					   logoutApplication();
 						
 					}else {
 						
 						//In case we do not select any configuration file we return one error Message
+						
+						JOptionPane.showMessageDialog(null, "Not any configuration file was selected");
 						
 					}
 					
@@ -1074,5 +1130,13 @@ SwingUtilities.invokeLater(new Runnable() {
 
 		
 	}
+	
+	
+	private static void copyFileUsingJava7Files(File source, File dest) throws IOException {
+	    Files.copy(source.toPath(), dest.toPath());
+	}
+	
+	
+	
 
 }
