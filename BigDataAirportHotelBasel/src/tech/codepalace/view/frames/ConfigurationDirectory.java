@@ -125,7 +125,9 @@ public class ConfigurationDirectory extends JDialog {
 		this.cancelSavePathsJButton = new MyButton("/img/abbrechendb.png");
 		this.cancelSavePathsJButton.setBorder(BorderFactory.createEmptyBorder(0, 10, 5, 0));
 		
-		this.loadConfig = new JButton("Load Config");
+//		this.loadConfig = new JButton("Load Config");
+		this.loadConfig = new MyButton("/img/btn_config_open.png");
+		
 		this.loadConfig.setPreferredSize(new Dimension(100, 20)); //will be change the design in next.
 		
 		

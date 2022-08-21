@@ -373,8 +373,9 @@ switch (OperatingSystemCheck.getOparatingSystem()) {
 		
 		case MAC:
 		
-			System.setProperty("apple.awt.fileDialogForDirectories", "true");
+			System.setProperty("apple.awt.fileDialogForDirectories", "false");
 			this.fileDialog = new FileDialog(this.configurationDirectory, "Backup Datenbankpfad wählen", FileDialog.LOAD);
+			
 			
 			EventQueue.invokeLater(new Runnable() {
 
