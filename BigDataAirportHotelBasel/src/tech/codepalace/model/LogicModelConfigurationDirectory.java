@@ -10,6 +10,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.nio.file.Files;
 
@@ -82,6 +83,8 @@ public class LogicModelConfigurationDirectory extends LogicModel {
 	
 	//Path of the project where the configuration file will be located
 	protected String projectDirectoryString = System.getProperty("user.dir");
+	
+	private ImageIcon errorImage = new ImageIcon(getClass().getResource("/img/error.png"));
 	
 	
 	
@@ -379,37 +382,109 @@ public class LogicModelConfigurationDirectory extends LogicModel {
 		 * Now when we load the configuration file, we copy this loaded file to the App Directory. 
 		 */
 		
-		
+	
 switch (OperatingSystemCheck.getOparatingSystem()) {
-		
+	
+	
+	/*
+	 * 	In case macOs we use FileDialog to load our config.properties file
+	 */
 		case MAC:
 		
 			System.setProperty("apple.awt.fileDialogForDirectories", "false");
-			this.fileDialog = new FileDialog(this.configurationDirectory, "Backup Datenbankpfad wählen", FileDialog.LOAD);
 			
+			/* We initialize the FileDialog Object
+			 * - First argument the Dialog parent(configurationDirectory GUI).
+			 * - Second argument Title. 
+			 * Third argument Mode. In this case LOAD Mode. 
+			 */
+			this.fileDialog = new FileDialog(this.configurationDirectory, "Konfigurationsdatei wählen", FileDialog.LOAD);
 			
+			//invoke one new event
 			EventQueue.invokeLater(new Runnable() {
 
 				@Override
 				public void run() {
+					
+					//We set the Filter files
+					fileDialog.setFilenameFilter(new FilenameFilter() {  
+						
+						/*
+						 * this Method accept return receive 2 Arguments File for the File
+						 * second argument for the name of the file. 
+						 * 
+						 * It will be returned the name just ends by the extent of the File(I mean how ends the file .txt, .jpg etc).
+						 * 
+						 * In our case the configuration file ends by .properties. That means our FileDialog should only aloud to select .properties files. 
+						 */
+	                    public boolean accept(File dir, String name) {
+	                        return  name.endsWith(".properties");
+	                    }
+	                });
+					
+					//We set the FileDialog object visible.
 					fileDialog.setVisible(true);
 					
+					   
+					//File was selected
 					if(fileDialog.getFile()!=null) {
 						
 						
 						
-						
+						//We set the value of the sourcFile Variable(File) mix getDirectory + getFile to have the absolute path.
 						sourceFile = new File(fileDialog.getDirectory() + fileDialog.getFile());
-						JOptionPane.showMessageDialog(null, "sourceFile: " + sourceFile);
 						
+						/*
+						 * desstinationFile(File). We set the value projectDirectoryString(Application directory) +
+						 * File.separator for any operating system and the name config.properties(name should have our configuration file). 
+						 */
 						destinationFile = new File(projectDirectoryString +  File.separator + "config.properties");
 						
+						
+						
 						 try {
+							    
+							 /*
+							  * We call the copyFileUsingJava7Files Method. 
+							  * 
+							  * Method to copy the selected file to the destinationFile(application Directory)
+							  * 
+							  * First argument is the sourceFile(File), Second argument destinationFile(File).
+							  * 
+							  * 
+							  */
 								copyFileUsingJava7Files(sourceFile, destinationFile);
 							} catch (IOException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
+						 
+						 	  /*
+						 	   * After having selected our configuration file and is copied to the  application directory.
+						 	   * 
+						 	   * - We close the bigDataAirportHotelBaselStartFrame GUI;
+						 	   * - We close configurationDirectoy GUI;
+						 	   * - And call logoutApplication so the bigDataAirportHotelBaselStartFrame will be loaded again and the LoginUser GUI.
+						 	   * 
+						 	   * Now we have again our configuration file with the user and passwords saved in our Application directory and we can login. 
+						 	   * 
+						 	   * All this will be used just in the case some one copy the application to another directory and while the application is portable 
+						 	   * we do not have the old configuration file in the new directory where the application was copied and while we are using one 
+						 	   * Application called from a directory located in a LocalDisk accessible from different computers we 
+						 	   * could load the configuration file we have created at the first start to save it in the new Application directory. 
+						 	   * 
+						 	   * Thats not the Idea to have a Copy of the Application in every computer. The Idea is to launch the application from the same 
+						 	   * local disk directory. We can better have shortcut from our application in every Desktop our any other Taskbar from Windows that
+						 	   * always have access to call our Application located in the Network Local Disk.
+						 	   * 
+						 	   * Anyway if somebody make a copy of the application because they have delete the shortcut and instead of make a new shortcut they 
+						 	   * just make copy paste of our application we have the choice to load the configuration file and it will be placed beside this new copy. 
+						 	   * so we have the same login data. 
+						 	   * 
+						 	   * i know that this whole way of working of this application sometimes seems a confusing way and that it could be done better, 
+						 	   * such as accessing an online file to read the data or modify them so we would avoid erroneous manipulations, but we are restricted at the moment with these options. 
+							   *
+							   *Let the client decide afterwards if he wants to modify the way of reading the configuration file, from where we read the configuration file, from an online server etc.
+						 	   */
 							   bigDataAirportHotelBaselStartFrame.dispose();
 							   configurationDirectory.dispose();
 							   logoutApplication();
@@ -418,6 +493,10 @@ switch (OperatingSystemCheck.getOparatingSystem()) {
 					}else {
 						
 						//In case we do not select any configuration file we return one error Message
+						JOptionPane.showMessageDialog(null, "Sie haben kein Konfigurationsdatei ausgewählt!", "Kein Konfigurationsdatei ausgewählt", JOptionPane.OK_OPTION, errorImage);
+		
+						
+						
 					}
 					
 			
@@ -429,6 +508,11 @@ switch (OperatingSystemCheck.getOparatingSystem()) {
 			
 		   break;
 		   
+		   
+		   /*
+		    * In case WINDOWS we use almost the same instructions with the different we use in this case 
+		    * JFileChooser and not FileDialog Object. 
+		    */
 		case WINDOWS:
 			
 			EventQueue.invokeLater(new Runnable() {
@@ -437,55 +521,71 @@ switch (OperatingSystemCheck.getOparatingSystem()) {
 				public void run() {
 					
 					
-					
+					//Initialize the JFileChooser Object
 					jFileChooser = new JFileChooser();
+					
+					//We set the current directory
 					jFileChooser.setCurrentDirectory(new java.io.File("."));
 					
-					jFileChooser.setDialogTitle("Select Config File");
+					//Title for the JFileChooser Dialog
+					jFileChooser.setDialogTitle("Konfigurationsdatei auswählen!");
+					
+					//I indicate that only Files could be chosen.
 					jFileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 					
+					//Instance FileNameExtensionFilter to set the file filter we aloud to select
 					FileNameExtensionFilter filter = new FileNameExtensionFilter("CONFIG PROPERTIES FILES", "properties");
+					
+					//Add the choosable Filter.
+					jFileChooser.addChoosableFileFilter(filter);
+					
+					//set the Filter to aour JFileChooser Object.
 					jFileChooser.setFileFilter(filter);
 
-					
+					//Variable to validate if select file or not
 					int returnVal = jFileChooser.showOpenDialog(configurationDirectory);
 					
+					//If returnVale something was selected
 					if (returnVal == JFileChooser.APPROVE_OPTION) {
 
-					
-
-						
+						//Set the value to sourceFile. The selected File
 						sourceFile = new File(jFileChooser.getSelectedFile().toString());
-						JOptionPane.showMessageDialog(null, "sourceFile: " + sourceFile);
+					
 						
 					
-					   
+					   //destinationFile set value the Application directory and the name of the file
 					   destinationFile = new File(projectDirectoryString +  File.separator + "config.properties");
-					   
-					   JOptionPane.showMessageDialog(null, "destinationFile: " + destinationFile);
-					   
-					   
-					   /*
-					    * source = new File("/Users/pankaj/tmp/sourceJava7.avi");
-        dest = new File("/Users/pankaj/tmp/destJava7.avi");
-					    */
+
+
 					   
 					   try {
-						copyFileUsingJava7Files(sourceFile, destinationFile);
+							/*
+							 * We call the copyFileUsingJava7Files Method.
+							 * 
+							 * Method to copy the selected file to the destinationFile(application
+							 * Directory)
+							 * 
+							 * First argument is the sourceFile(File), Second argument
+							 * destinationFile(File).
+							 * 
+							 * 
+							 */
+							copyFileUsingJava7Files(sourceFile, destinationFile);
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
+						
 						e.printStackTrace();
 					}
-					   bigDataAirportHotelBaselStartFrame.dispose();
-					   configurationDirectory.dispose();
-					   logoutApplication();
+					   
+					   //The same process that macOs 
+					   bigDataAirportHotelBaselStartFrame.dispose(); //Close this GUI
+					   configurationDirectory.dispose(); //Close this GUI
+					   logoutApplication(); //Call for logout and login again.
 						
 					}else {
 						
 						//In case we do not select any configuration file we return one error Message
-						
-						JOptionPane.showMessageDialog(null, "Not any configuration file was selected");
-						
+						JOptionPane.showMessageDialog(null, "Sie haben kein Konfigurationsdatei ausgewählt!", "Kein Konfigurationsdatei ausgewählt", JOptionPane.OK_OPTION, errorImage);
+		
 					}
 					
 					
@@ -1132,6 +1232,14 @@ SwingUtilities.invokeLater(new Runnable() {
 	}
 	
 	
+	
+	/**
+	 * @description Method to copy a file from a source directory to a destination directory.
+	 * <p>It will be used Files Class from packet java.nio.file(Java7).</p>
+	 * @param source
+	 * @param dest
+	 * @throws IOException
+	 */
 	private static void copyFileUsingJava7Files(File source, File dest) throws IOException {
 	    Files.copy(source.toPath(), dest.toPath());
 	}

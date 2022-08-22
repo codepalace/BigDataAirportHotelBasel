@@ -7,8 +7,6 @@ import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
-import javax.swing.JOptionPane;
-
 import tech.codepalace.model.LogicModelConfigurationDirectory;
 import tech.codepalace.view.frames.ConfigurationDirectory;
 
@@ -84,8 +82,7 @@ public class ConfigurationDirectoryController implements ActionListener, MouseLi
 		
 		else if(e.getSource()==this.configurationDirectory.loadConfig) {
 			
-			JOptionPane.showMessageDialog(null, "Time to load Configuration Files");
-			
+			//We load the configuration File to copy in the application directory.
 			this.logicModelConfigurationDirectory.loadConfigFile();
 			
 		}
