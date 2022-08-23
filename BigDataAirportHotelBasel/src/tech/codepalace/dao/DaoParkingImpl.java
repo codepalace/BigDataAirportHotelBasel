@@ -938,7 +938,68 @@ public class DaoParkingImpl  implements DAOParking {
 
 	@Override
 	public void updateParkingReservation(ParkingReservation parkingReservation) throws DaoException {
-		// TODO Auto-generated method stub
+		
+	
+		//parkingReservation set value
+		this.parkingReservation = parkingReservation;
+		
+		try {
+			
+			//We set the URL to connect to the Database.
+			setURLToConnectCurrentDataBase();
+			
+			DaoParkingImpl.daoFactory = new DaoFactory(getDerbyURL());
+			
+			DaoParkingImpl.connection = DaoParkingImpl.daoFactory.connect();
+			
+			
+			/*SQL Sentence to update the PARKING table in our Database only where the id= got it from the 
+			 * parkingReservation Object call getId() Method.
+			 */
+			String sql = "Update PARKING set idparking=?, buchungsname=?, autokfz=?, anreisedatum=?,"
+					+ " abreisedatum=?, anzahltagen=?, betragparking=?, buchungskanal=?, bemerkungen=?,"
+					+ " schluesselinhaus=?, verkaufer=? where id=" + this.parkingReservation.getId() + "";
+			
+			//Initialize value preparedStatement giving the connection the sql sentence.
+			this.preparedStatement = connection.prepareStatement(sql);
+			
+			//We set the new values to the selected row i mean where we have the id number to be modified.
+			this.preparedStatement.setString(1, this.parkingReservation.getIdParking());
+			this.preparedStatement.setString(2, this.parkingReservation.getBuchungsname());
+			this.preparedStatement.setString(3, this.parkingReservation.getAutoKFZ());
+			this.preparedStatement.setDate(4, this.parkingReservation.getAnreiseDatum());
+			this.preparedStatement.setDate(5, this.parkingReservation.getAbreiseDatum());
+			this.preparedStatement.setInt(6, this.parkingReservation.getAnzahlTagen());
+			this.preparedStatement.setDouble(7, this.parkingReservation.getBetragParking());
+			this.preparedStatement.setString(8, this.parkingReservation.getBuchungsKanal());
+			this.preparedStatement.setString(9, this.parkingReservation.getBemerkungen());
+			this.preparedStatement.setString(10, this.parkingReservation.getSchluesselInHaus());
+			this.preparedStatement.setString(11, this.parkingReservation.getAbkuerzungMA());
+			
+			
+			//Ready to update the values
+			this.preparedStatement.executeUpdate();
+			
+			//We write the data definitively
+			DaoParkingImpl.connection.commit();
+			
+			
+		}catch (Exception e) {
+			
+			e.printStackTrace();
+		}finally {
+			
+			try {
+				//Close the connection.
+				this.preparedStatement.close();
+				DaoParkingImpl.connection.close();
+				DaoParkingImpl.daoFactory.closeConnection(getDerbyURL());
+
+				
+			}catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 		
 	}
 

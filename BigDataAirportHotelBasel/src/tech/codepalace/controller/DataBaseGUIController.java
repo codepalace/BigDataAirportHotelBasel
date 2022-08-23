@@ -19,6 +19,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
+import tech.codepalace.dao.DaoException;
 import tech.codepalace.model.LogicModelFundSachen;
 import tech.codepalace.model.LogicModelParking;
 import tech.codepalace.view.frames.BigDataAirportHotelBaselStartFrame;
@@ -455,6 +456,25 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener {
 
 			//if parkingTable is displayed we call to update the data for Parking
 			if(this.dataBaseGUI.parkingTable != null) {
+				
+				/*
+				 * We call the Method updateFundsachen by LogicModelFundsachen. 
+				 * 
+				 * - First Parameter  of this Method is the selected Row
+				 * - Second Parameter the TableModel needed to get all value and generated values for the Instance Fundgegenstand by the Logic Class.
+				 * - Third Parameter the Object DataBaseGUI to be able to send it in the same way to the DAO object. 
+				 */
+				
+				if(!this.logicModelParking.getDataBaseStatus().equalsIgnoreCase("RELOAD")) {
+					
+					try {
+						this.logicModelParking.updateParking(selectedRow, model, this.dataBaseGUI);
+					} catch (DaoException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+				}
 				
 		
 			//if fundsachenTable is displayed we call to update the data for FUNDSACHEN(Lost and found)

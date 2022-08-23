@@ -2,9 +2,12 @@ package tech.codepalace.model;
 
 import java.awt.EventQueue;
 import java.io.File;
+import java.sql.Date;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
+
+import javax.swing.table.TableModel;
 
 import tech.codepalace.controller.NewParkingController;
 import tech.codepalace.dao.DAOParking;
@@ -298,8 +301,93 @@ public class LogicModelParking extends LogicModel {
 	
 
 	
+	/**
+	 * @description Method that receives the Data to be update in the Database Table Parking throw DAO Object.
+	 * @param selectedRow
+	 * @param model
+	 * @param dataBaseGUI
+	 * @throws DaoException
+	 */
+	public void updateParking(int selectedRow, TableModel model, DataBaseGUI dataBaseGUI) throws DaoException {
+		
+		//We set the value of the dataBaseGUI
+		LogicModelParking.dataBaseGUI = dataBaseGUI;
+		
+		//Initialize the parkingReservation Object.
+		this.parkingReservation = new ParkingReservation();
+		
 	
-	
+		//Variables for the ParkingReservation Object
+		int id = 0;
+		String idParking = "";
+		String buchungsname = "";
+		String autokfz = "";
+		Date anreisedatum = null;
+		Date abreisedatum = null;
+		int anzahltagen = 0;
+		double betragparking = 0.0;
+		String buchungskanal = "";
+		String bemerkungen = "";
+		String schluesselinhaus = "";
+		String verkaufer = "";
+		
+		
+		//We set the values Casting the Type calling model and getValueAt(the selected Row and the Column).
+		id = (int)model.getValueAt(selectedRow, 0);
+		idParking = (String)model.getValueAt(selectedRow, 1);
+		buchungsname = (String)model.getValueAt(selectedRow, 2);
+		autokfz = (String)model.getValueAt(selectedRow, 3);
+		anreisedatum = (Date)model.getValueAt(selectedRow, 4);
+		abreisedatum = (Date)model.getValueAt(selectedRow, 5);
+		anzahltagen = (int)model.getValueAt(selectedRow, 6);
+		
+		/*
+		 * In this double object we call the Method parseDouble getting the value of the String in the column 7.
+		 * 
+		 * To this value we call the replaceAll(We replace the € symbol for empty String) so we can get only a double value.
+		 */
+		betragparking = Double.parseDouble(String.valueOf(model.getValueAt(selectedRow, 7)).replaceAll("€", ""));
+		
+		
+		buchungskanal = (String)model.getValueAt(selectedRow, 8	);
+		bemerkungen = (String)model.getValueAt(selectedRow, 9);
+		schluesselinhaus = (String)model.getValueAt(selectedRow, 10);
+		verkaufer = (String)model.getValueAt(selectedRow, 11);
+		
+		this.parkingReservation.setId(id);
+		this.parkingReservation.setIdParking(idParking);
+		this.parkingReservation.setBuchungsname(buchungsname);
+		this.parkingReservation.setAutoKFZ(autokfz);
+		this.parkingReservation.setAnreiseDatum(anreisedatum);
+		this.parkingReservation.setAbreiseDatum(abreisedatum);
+		this.parkingReservation.setAnzahlTagen(anzahltagen);
+		this.parkingReservation.setBetragParking(betragparking);
+		this.parkingReservation.setBuchungsKanal(buchungskanal);
+		this.parkingReservation.setBemerkungen(bemerkungen);
+		this.parkingReservation.setSchluesselInHaus(schluesselinhaus);
+		this.parkingReservation.setAbkuerzungMA(verkaufer);
+		
+		
+		//Initialize the DAOParking Object
+		DAOParking daoParking = new DaoParkingImpl(getUserAHB(), LogicModelParking.dataBaseGUI, new Loading(LogicModelParking.dataBaseGUI, true));
+		
+		
+		
+		try {
+			
+			//We call for the updateParkingReservation Method with the parkingReservation argument.
+			daoParking.updateParkingReservation(parkingReservation);
+			
+			
+		}catch (DaoException e) {
+			
+			//In case of exception we display a new DaoException Message.
+			throw new DaoException("Impossible to connect to Database");
+		
+		}
+		
+		
+	}
 
 
 }
