@@ -628,8 +628,11 @@ public class LogicModelParking extends LogicModel {
 
 //			reloadParkingDataBase(dataBaseGUI, new Loading(dataBaseGUI, true));
 			
+			//We store the message we want to display for the user.
+			String message = "Das Abreisedatum darf nicht vor dem Anreisedatum sein. bitte ändern Sie das Abreisedatum";
 			
-			
+			//Call the displayRequestLaterDateCorrection Method so the user could modify the Departure Date.
+			displayRequestLaterDateCorrection(model, selectedRow, selectedColumn, message);
 			
 			
 			

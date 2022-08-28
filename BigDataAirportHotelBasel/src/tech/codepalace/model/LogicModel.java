@@ -177,6 +177,28 @@ public class LogicModel {
 	private String dateAsStringToBeModified = "";
 	
 	
+	/*
+	 * Variable to store the value as String for a Later Date we have to make a correction. 
+	 * 
+	 *  For example if we have a Arrival Date and a Departure Date in Parking Application GUI JTable and the user has modified The Arrival Date and this arrival Date modified is later than the Departure Date. This is not applicable. 
+	 *  
+	 *  It doesn't make sense with the Chronology. We become one error of calculation the Chronology between one Date and the other. For this reason we store the value the user have to modify again for the departure so that 
+	 *  departure is later than arrival. 
+	 *  
+	 *  This value from the laterDateCorrection variable it will be obtained from displayRequestLaterDateCorrection Method. Depending if the user make a modification and accept will be modified in the JTable or we return the Date we had before by both dates. 
+	 *  
+	 *  We have create this variable in this LogicModel Super Class so we can access from ParkingReservation and from Fitness Registration Contract. In this future Fitness Table we are going to have also the Start Date and the End Date of the contract. 
+	 *  
+	 *  In case by Fitness we have a modification and the date Chronology is also not good we need to store the value for the End Date and call the method to display one input box by JOptionPane and give the possibility to the user to modificate the value.
+	 */
+	private String laterDateCorrection = "";
+	
+	
+	//Variables to modify values in JTable
+	private TableModel model;
+	private int selectedColumn;
+	
+	
 	public LogicModel() {
 		
 		init();
@@ -1221,6 +1243,29 @@ try {
 	 */
 	public void setDateAsStringToBeModified(String dateAsStringToBeModified) {
 		this.dateAsStringToBeModified = dateAsStringToBeModified;
+	}
+	
+	
+	
+	
+	/**
+	 * @description Method to request with the Help from JOptionPane input Dialog to the User to enter a modification of the second Date. The later Date in case we have to Dates to compare the Chronology.
+	 * @param model
+	 * @param selectedRow
+	 * @param selectedColumn
+	 * @return
+	 */
+	public String displayRequestLaterDateCorrection(TableModel model, int selectedRow, int selectedColumn, String message) {
+		
+		this.model = model;
+		this.selectedRow = selectedRow;
+		this.selectedColumn = selectedColumn;
+		
+//		JOptionPane.showMessageDialog(null, "Time to make a correction by the row: " + this.selectedRow  + " Column: " + this.selectedColumn);
+		
+		JOptionPane.showMessageDialog(null, message);
+		
+		return this.laterDateCorrection;
 	}
 	
 	
