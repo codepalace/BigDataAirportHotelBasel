@@ -1,12 +1,25 @@
 package tech.codepalace.model;
 
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.table.TableModel;
 
 import tech.codepalace.controller.NewParkingController;
@@ -55,6 +68,28 @@ public class LogicModelParking extends LogicModel {
 	private DAOParking daoParking = null;
 	
 	
+	//Variable to use in case the user enters incorrect data.
+	public JDialog errorDateFormat, errorEntries;
+		
+	private JButton okButtonErrorDateFormat  = new JButton("OK");
+		
+	private Object[] optionButtonErrorDateFormat = { this.okButtonErrorDateFormat };
+		
+	private JLabel messageErrorDateFormat;
+	
+	private JPanel panelErrorDateFormat = new JPanel(new BorderLayout());
+
+		
+	private ImageIcon errorImg = new ImageIcon(getClass().getResource("/img/error.png"));
+	
+	private static int selectedRow=0;
+	private static int selectedColumn=0;
+	
+	private LocalDate arrivalLocalDate = null, departureLocalDate = null;
+	
+
+	
+	
 	public LogicModelParking(DataBaseGUI dataBaseGUI, Loading loading) {
 		
 
@@ -65,11 +100,42 @@ public class LogicModelParking extends LogicModel {
 		this.dataEncryption = new DataEncryption();
 		
 		
+		//Add ActionListener to the OK Button by the Error Message JDialog.
+		this.okButtonErrorDateFormat.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+//				int selectedRow = LogicModelParking.dataBaseGUI.parkingTable.getSelectedRow();
+//				LogicModelParking.dataBaseGUI.parkingTable.getModel().setValueAt(getDateAsStringToBeModified(), selectedRow, 4);
+				errorDateFormat.dispose();
+
+			}
+		});
+		
+		
+		//Add KeyListener to the OK Button by the Error Message JDialog.
+		this.okButtonErrorDateFormat.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+
+//				int selectedRow = LogicModelParking.dataBaseGUI.parkingTable.getSelectedRow();
+//				LogicModelParking.dataBaseGUI.parkingTable.getModel().setValueAt(getDateAsStringToBeModified(), selectedRow, 4);
+				errorDateFormat.dispose();
+
+			}
+		});
+		
+		
 	}
-	
-	public LogicModelParking() {
-		this.dataEncryption = new DataEncryption();
-	}
+
 	
 
 	
@@ -308,86 +374,370 @@ public class LogicModelParking extends LogicModel {
 	 * @param dataBaseGUI
 	 * @throws DaoException
 	 */
-	public void updateParking(int selectedRow, TableModel model, DataBaseGUI dataBaseGUI) throws DaoException {
+	public void updateParking(int selectedRow, int selectedColumn, TableModel model, DataBaseGUI dataBaseGUI) throws DaoException {
 		
 		//We set the value of the dataBaseGUI
 		LogicModelParking.dataBaseGUI = dataBaseGUI;
 		
-		//Initialize the parkingReservation Object.
-		this.parkingReservation = new ParkingReservation();
-		
-	
-		//Variables for the ParkingReservation Object
-		int id = 0;
-		String idParking = "";
-		String buchungsname = "";
-		String autokfz = "";
-		Date anreisedatum = null;
-		Date abreisedatum = null;
-		int anzahltagen = 0;
-		double betragparking = 0.0;
-		String buchungskanal = "";
-		String bemerkungen = "";
-		String schluesselinhaus = "";
-		String verkaufer = "";
-		
-		
-		//We set the values Casting the Type calling model and getValueAt(the selected Row and the Column).
-		id = (int)model.getValueAt(selectedRow, 0);
-		idParking = (String)model.getValueAt(selectedRow, 1);
-		buchungsname = (String)model.getValueAt(selectedRow, 2);
-		autokfz = (String)model.getValueAt(selectedRow, 3);
-		anreisedatum = (Date)model.getValueAt(selectedRow, 4);
-		abreisedatum = (Date)model.getValueAt(selectedRow, 5);
-		anzahltagen = (int)model.getValueAt(selectedRow, 6);
-		
 		/*
-		 * In this double object we call the Method parseDouble getting the value of the String in the column 7.
-		 * 
-		 * To this value we call the replaceAll(We replace the € symbol for empty String) so we can get only a double value.
+		 * We set the value of selectedRow. It's going to be needed mostly if case not correct Date Format.
 		 */
-		betragparking = Double.parseDouble(String.valueOf(model.getValueAt(selectedRow, 7)).replaceAll("€", ""));
+		LogicModelParking.selectedRow = selectedRow;
 		
-		
-		buchungskanal = (String)model.getValueAt(selectedRow, 8	);
-		bemerkungen = (String)model.getValueAt(selectedRow, 9);
-		schluesselinhaus = (String)model.getValueAt(selectedRow, 10);
-		verkaufer = (String)model.getValueAt(selectedRow, 11);
-		
-		this.parkingReservation.setId(id);
-		this.parkingReservation.setIdParking(idParking);
-		this.parkingReservation.setBuchungsname(buchungsname);
-		this.parkingReservation.setAutoKFZ(autokfz);
-		this.parkingReservation.setAnreiseDatum(anreisedatum);
-		this.parkingReservation.setAbreiseDatum(abreisedatum);
-		this.parkingReservation.setAnzahlTagen(anzahltagen);
-		this.parkingReservation.setBetragParking(betragparking);
-		this.parkingReservation.setBuchungsKanal(buchungskanal);
-		this.parkingReservation.setBemerkungen(bemerkungen);
-		this.parkingReservation.setSchluesselInHaus(schluesselinhaus);
-		this.parkingReservation.setAbkuerzungMA(verkaufer);
-		
-		
-		//Initialize the DAOParking Object
-		DAOParking daoParking = new DaoParkingImpl(getUserAHB(), LogicModelParking.dataBaseGUI, new Loading(LogicModelParking.dataBaseGUI, true));
-		
+		//We set the value of selectedColumn. 
+		LogicModelParking.selectedColumn = selectedColumn;
 		
 		
 		try {
+			/*
+			 * We evaluate selectedColumn and depending of the value we check if Date format is correct from selected row, column. I mean exact the cell we
+			 * want to modify in the JTable.
+			 */
+			switch (LogicModelParking.selectedColumn) {
+				case 4:
+					
+					/*
+					 * 
+					 * We check if the entered date has a correct format.
+					 * 
+					 * - First argument is the value entered by the user. Value taken from the selectedRow, Column 4 for Arrival date(Anreisedatum)
+					 * - Second argument is the inputTextBox or Cell name what we give manually in this case Anreisedatum for in case error to display information where is the error. 
+					 * - Third argument is the component had focus. In this case was one of the JTable Cell Anreisedatum. We have give manually the name Anreisedatum Parking. 
+					 * this will be used to evaluate by the checkDateFormatBeforeSaveData Method the value we send to this method and depending of the value, in case of wrong date format 
+					 * we write back to the cell it has lost the focus the value it had before.
+					 */
+					
+					if(checkDateFormatBeforeSaveData((String)model.getValueAt(selectedRow, 4).toString(), "Anreisedatum", "Anreisedatum Parking")) { 
+						
+						//if checkDAteFormatBeforeSaveData return true. Date Format Regex(Expression language for date is correct). 
+						
+						//We set the LocalDate value to be modified getting the value from the selected row and the selecting cell. Replacing character(.) to (/). 
+						
+						setArrivalLocalDate(LocalDate.parse((String)model.getValueAt(selectedRow, 4).toString().replace('.', '/'), getDateTimeFormatterForSavingDataBase()));
+						
+						
+						//We set the value of departureLocalDate
+						setDepartureLocalDate(LocalDate.parse((String)model.getValueAt(selectedRow, 5).toString().replace('.', '/'), getDateTimeFormatterForSavingDataBase()));
+					
+					
+							checkChronologyOfDates(model);
+						
+						
+						
+//						model.setValueAt(5, LogicModelParking.selectedRow, 6);
+					
+					
+					}
 			
-			//We call for the updateParkingReservation Method with the parkingReservation argument.
-			daoParking.updateParkingReservation(parkingReservation);
-			
-			
-		}catch (DaoException e) {
-			
-			//In case of exception we display a new DaoException Message.
-			throw new DaoException("Impossible to connect to Database");
-		
+					
+					break;
+					
+				case 5: 
+					
+					//The same procedure for Departure
+					
+						if(checkDateFormatBeforeSaveData((String)model.getValueAt(selectedRow, 5).toString(), "Abreisedatum", "Abreisedatum Parking")) { 
+						
+						//if checkDAteFormatBeforeSaveData return true. Date Format Regex(Expression language for date is correct). 
+						
+						//We set the LocalDate value to be modified getting the value from the selected row and the selecting cell. Replacing character(.) to (/). 
+						
+						
+							//We set the value of departureLocalDate
+							setDepartureLocalDate(LocalDate.parse((String)model.getValueAt(selectedRow, 5).toString().replace('.', '/'), getDateTimeFormatterForSavingDataBase()));
+							
+							setArrivalLocalDate(LocalDate.parse((String)model.getValueAt(selectedRow, 4).toString().replace('.', '/'), getDateTimeFormatterForSavingDataBase()));
+						
+						
+							
+								checkChronologyOfDates(model);
+					
+					
+					}
+					break;
+					
+
+			}
+		}catch (ArrayIndexOutOfBoundsException e) {
+			// TODO: handle exception
 		}
 		
 		
+		
+		
+	
+		
+		
+
+		
+		
+					
+
+		
+		
+		
+	
+		
+		
+
+		
 	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	/*
+	 * We Override this Method in case the Date Modified in any Date Cell is not correct so we can  display error message.
+	 * 
+	 * We also return the Focus back to the column.
+	 */
+	@Override
+	public boolean checkDateFormatBeforeSaveData(String dateEnteredByUser, String inputTextBoxName,
+			String componentHadFocus) {
+
+		
+		setComponentHadFocus(componentHadFocus);
+		
+			//Initialize the erroDateFormat JDialog with initial value
+				errorDateFormat = new JOptionPane(panelErrorDateFormat, JOptionPane.OK_OPTION, JOptionPane.NO_OPTION, 
+						errorImg, optionButtonErrorDateFormat, null).createDialog("Kritische Fehler(" + inputTextBoxName + ")");
+				
+			if(!errorDateFormat.isVisible()) {
+				
+				SwingUtilities.invokeLater(new Runnable() {
+					
+					@Override
+					public void run() {
+						
+						messageErrorDateFormat = new JLabel(
+								"Sie haben eine falsches Datumsformat eingegeben. bitte geben Sie ein korrektes Datumsformat ein(dd.mm.yyyy)");
+						
+						panelErrorDateFormat = new JPanel(new BorderLayout());
+						
+						// We Center the Error Messsage to the JPanel
+						panelErrorDateFormat.add(messageErrorDateFormat, BorderLayout.CENTER);
+						
+						errorDateFormat = new JOptionPane(panelErrorDateFormat, JOptionPane.OK_OPTION, JOptionPane.NO_OPTION, 
+								errorImg, optionButtonErrorDateFormat, null).createDialog("Kritische Fehler(" + inputTextBoxName + ")");
+						
+						if(!isDateFormatCorrect()) {
+
+							errorDateFormat.setVisible(true);
+							messageErrorDateFormat.setText("");
+
+							switch (getComponentHadFocus()) {
+								case "Anreisedatum Parking":
+									
+									// If Date format is not correct we set back the value for the Column 5 (Arrival)
+									
+									LogicModelParking.dataBaseGUI.parkingTable.getModel().setValueAt(getDateAsStringToBeModified(), LogicModelParking.selectedRow, 4);
+									break;
+									
+								case "Abreisedatum Parking": 
+									
+									
+									 // If Date format is not correct we set back the value for the Column 5 (Departure)
+									 
+									LogicModelParking.dataBaseGUI.parkingTable.getModel().setValueAt(getDateAsStringToBeModified(), LogicModelParking.selectedRow, 5);
+									break;
+
+							}
+							
+						}
+						
+
+						
+
+						
+					}
+				});
+			}
+		
+		return super.checkDateFormatBeforeSaveData(dateEnteredByUser, inputTextBoxName, componentHadFocus);
+	}
+
+
+
+
+
+
+	/**
+	 * @return the arrivalLocalDate
+	 */
+	public LocalDate getArrivalLocalDate() {
+		return arrivalLocalDate;
+	}
+
+
+
+
+
+
+	/**
+	 * @param arrivalLocalDate the arrivalLocalDate to set
+	 */
+	public void setArrivalLocalDate(LocalDate arrivalLocalDate) {
+		this.arrivalLocalDate = arrivalLocalDate;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the departureLocalDate
+	 */
+	public LocalDate getDepartureLocalDate() {
+		return departureLocalDate;
+	}
+
+
+
+
+
+
+	/**
+	 * @param departureLocalDate the departureLocalDate to set
+	 */
+	public void setDepartureLocalDate(LocalDate departureLocalDate) {
+		this.departureLocalDate = departureLocalDate;
+	}
+	
+	
+	
+	
+	
+	/**
+	 * @description method for checking the chronology of dates
+	 * @param model
+	 */
+	private void checkChronologyOfDates(TableModel model) {
+
+		
+		if(getArrivalLocalDate().isAfter(getDepartureLocalDate())) {
+			
+//			System.out.println("the arrival date must not be later than the departure date");
+
+			//We could display one input box to give the option to the user to enter a later departure date or we let the value unchanged
+
+//			reloadParkingDataBase(dataBaseGUI, new Loading(dataBaseGUI, true));
+			
+			
+			
+			
+			
+			
+		}else {
+		
+			
+			//Variables for the ParkingReservation Object
+			int id = 0;
+			String idParking = "";
+			String buchungsname = "";
+			String autokfz = "";
+			Date anreisedatum = null;
+			Date abreisedatum = null;
+			int anzahltagen = 0;
+			double betragparking = 0.0;
+			String buchungskanal = "";
+			String bemerkungen = "";
+			String schluesselinhaus = "";
+			String verkaufer = "";
+			
+			
+			//We set the values Casting the Type calling model and getValueAt(the selected Row and the Column).
+			id = (int)model.getValueAt(selectedRow, 0);
+			idParking = (String)model.getValueAt(selectedRow, 1);
+			buchungsname = (String)model.getValueAt(selectedRow, 2);
+			autokfz = (String)model.getValueAt(selectedRow, 3);
+			
+			//We set the value for the Date(anreisedatum). Value needed to save in our ParkingReservation object to sending to the DAO object to save in Database with the new value.
+			anreisedatum = Date.valueOf(getArrivalLocalDate());
+			
+			//We set the value for the Date(abreisedatum). Value needed to save in our ParkingReservation object to sending to the DAO object to save in Database with the new value.
+			abreisedatum = Date.valueOf(getDepartureLocalDate());
+			
+			
+			//We have to calculate the total of days. It will be continue
+			anzahltagen = (int) calculateDatesPlus(getArrivalLocalDate(), getDepartureLocalDate()) + 1;
+
+			
+
+			/*
+			 * In this double object we call the Method parseDouble getting the value of the String in the column 7.
+			 * 
+			 * To this value we call the replaceAll(We replace the € symbol for empty String) so we can get only a double value.
+			 */
+			betragparking = Double.parseDouble(String.valueOf(model.getValueAt(selectedRow, 7)).replaceAll("€", ""));
+			
+			
+			
+			buchungskanal = (String)model.getValueAt(selectedRow, 8	);
+			bemerkungen = (String)model.getValueAt(selectedRow, 9);
+			schluesselinhaus = (String)model.getValueAt(selectedRow, 10);
+			verkaufer = (String)model.getValueAt(selectedRow, 11);
+			
+			
+			
+			
+			//Initialize the parkingReservation Object.
+			parkingReservation = new ParkingReservation();
+			
+			parkingReservation.setId(id);
+			parkingReservation.setIdParking(idParking);
+			parkingReservation.setBuchungsname(buchungsname);
+			parkingReservation.setAutoKFZ(autokfz);
+			parkingReservation.setAnreiseDatum(anreisedatum);
+			parkingReservation.setAbreiseDatum(abreisedatum);
+			parkingReservation.setAnzahlTagen(anzahltagen);
+			parkingReservation.setBetragParking(betragparking);
+			parkingReservation.setBuchungsKanal(buchungskanal);
+			parkingReservation.setBemerkungen(bemerkungen);
+			parkingReservation.setSchluesselInHaus(schluesselinhaus);
+			parkingReservation.setAbkuerzungMA(verkaufer);
+			
+			
+			
+			//Initialize the DAOParking Object
+			DAOParking daoParking = new DaoParkingImpl(getUserAHB(), LogicModelParking.dataBaseGUI, new Loading(LogicModelParking.dataBaseGUI, true));
+			
+			
+			
+			try {
+				
+										
+				//We call for the updateParkingReservation Method with the parkingReservation argument.
+				daoParking.updateParkingReservation(parkingReservation);
+				
+				
+				
+				
+			}catch (DaoException e) {
+				
+				e.printStackTrace();
+			
+			}
+			
+			
+			LogicModelParking.dataBaseGUI.parkingTable.setCellSelectionEnabled(true);
+			LogicModelParking.dataBaseGUI.parkingTable.changeSelection(selectedRow, 6, false, false);
+			LogicModelParking.dataBaseGUI.parkingTable.requestFocus();
+
+			
+			model.setValueAt(anzahltagen, LogicModelParking.selectedRow, 6);
+			
+			
+		}
+		
+
+	}
+	
 
 
 }

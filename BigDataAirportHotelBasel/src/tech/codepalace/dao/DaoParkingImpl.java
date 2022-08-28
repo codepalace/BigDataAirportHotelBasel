@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -131,7 +132,7 @@ public class DaoParkingImpl  implements DAOParking {
  	
 	private static boolean tableChecked = false;
 	
-
+	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
 
  
  	
@@ -762,10 +763,18 @@ public class DaoParkingImpl  implements DAOParking {
 							 * by getBetragParking we add the Euro symbol.
 							 */
 							Object[] row = {chunk.getId(), chunk.getIdParking(), chunk.getBuchungsname(), chunk.getAutoKFZ(),
-									chunk.getAnreiseDatum(), chunk.getAbreiseDatum(), chunk.getAnzahlTagen(), 
-									chunk.getBetragParking() + " €", chunk.getBuchungsKanal(), chunk.getBemerkungen(), 
-									chunk.getSchluesselInHaus(), chunk.getAbkuerzungMA()};
-							
+									
+									/* before we get the Arrival Date we use the Simple Date Format to Format in mm.MM.yyyy  */
+									dateFormat.format(chunk.getAnreiseDatum()), 
+									
+									/* before we get the Arrival Date we use the Simple Date Format to Format in mm.MM.yyyy  */
+									dateFormat.format(chunk.getAbreiseDatum()), 
+									
+									chunk.getAnzahlTagen(), 
+									chunk.getBetragParking() + " €", chunk.getBuchungsKanal(), 
+									chunk.getBemerkungen(), 
+									chunk.getSchluesselInHaus(), 
+									chunk.getAbkuerzungMA()};
 							
 							/*
 							 * We create one instance DefaultTableModel and we give the value Casting (DefaultTableModel) and we get the defined TableModel for the parkingTable 
@@ -788,6 +797,8 @@ public class DaoParkingImpl  implements DAOParking {
 							dataBaseGUI.parkingTable.getColumnModel().getColumn(TableParkingUtilities.BUCHUNGSNAME).setCellRenderer(new CellTableManager("text"));
 							dataBaseGUI.parkingTable.getColumnModel().getColumn(TableParkingUtilities.AUTOKFZ).setCellRenderer(new CellTableManager("text"));
 							dataBaseGUI.parkingTable.getColumnModel().getColumn(TableParkingUtilities.ANREISEDATUM).setCellRenderer(new CellTableManager("number"));
+							dataBaseGUI.parkingTable.getColumnModel().getColumn(TableParkingUtilities.ABREISEDATUM).setCellRenderer(new CellTableManager("number"));
+							dataBaseGUI.parkingTable.getColumnModel().getColumn(TableParkingUtilities.ANZAHLDESTAGES).setCellRenderer(new CellTableManager("number"));
 							dataBaseGUI.parkingTable.getColumnModel().getColumn(TableParkingUtilities.BETRAG).setCellRenderer(new CellTableManager("number"));
 							dataBaseGUI.parkingTable.getColumnModel().getColumn(TableParkingUtilities.BUCHUNGSKANAL).setCellRenderer(new CellTableManager("text"));
 							dataBaseGUI.parkingTable.getColumnModel().getColumn(TableParkingUtilities.BEMERKUNGENG).setCellRenderer(new CellTableManager("text"));
@@ -993,9 +1004,7 @@ public class DaoParkingImpl  implements DAOParking {
 				//Close the connection.
 				this.preparedStatement.close();
 				DaoParkingImpl.connection.close();
-				DaoParkingImpl.daoFactory.closeConnection(getDerbyURL());
-
-				
+				DaoParkingImpl.daoFactory.closeConnection(getDerbyURL());		
 			}catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -1172,7 +1181,14 @@ public class DaoParkingImpl  implements DAOParking {
 							 * by getBetragParking we add the Euro symbol.
 							 */
 							Object[] row = {chunk.getId(), chunk.getIdParking(), chunk.getBuchungsname(), chunk.getAutoKFZ(),
-									chunk.getAnreiseDatum(), chunk.getAbreiseDatum(), chunk.getAnzahlTagen(), 
+									
+									/* before we get the Arrival Date we use the Simple Date Format to Format in mm.MM.yyyy  */
+									dateFormat.format(chunk.getAnreiseDatum()), 
+									
+									/* before we get the Arrival Date we use the Simple Date Format to Format in mm.MM.yyyy  */
+									dateFormat.format(chunk.getAbreiseDatum()), 
+									
+									chunk.getAnzahlTagen(), 
 									chunk.getBetragParking() + " €", chunk.getBuchungsKanal(), chunk.getBemerkungen(), 
 									chunk.getSchluesselInHaus(), chunk.getAbkuerzungMA()};
 							

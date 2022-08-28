@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -169,7 +170,11 @@ public class LogicModel {
 	//variables to calculate to LocalDates
 	private LocalDate firstDate, secondDate;
 	
+	private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
 	
+	private LocalDate localDateToBeModified = null;
+	
+	private String dateAsStringToBeModified = "";
 	
 	
 	public LogicModel() {
@@ -1047,6 +1052,44 @@ try {
 		
 	}
 
+	
+	
+	/**
+	 * @description Method to check if the Date Format is correct before we save any Data in DataBase any Table .
+	 */
+	public boolean checkDateFormatJTableLostFocus(String dateEnteredByUser) {
+		
+		this.dateEnteredByUser = dateEnteredByUser;
+		
+	
+		
+		//If the date do not matches with the date Expression Regular Format it will be display one JOptionPane with the error message. 
+		if(!Pattern.matches(formatDateRegex, this.dateEnteredByUser)) {
+			
+		
+
+			
+			//We set the dateFormatCorrect to false.
+			//And it will be returned a false value
+			setDateFormatCorrect(false);
+			return false;
+		}else {
+			
+			/*
+			 * It matches with the correct Regex Format then we set dateFormatCorrect to true
+			 * it will be returned a true value.
+			 */
+			setDateFormatCorrect(true);
+			return true;
+		}
+		
+		
+		
+	}
+	
+	
+	
+	
 
 	/**
 	 * @return the componentHadFocus
@@ -1135,6 +1178,57 @@ try {
 		
 	}
 
+
+	/**
+	 * @description Method to get the simpleDateFormat(format is dd.MM.yyyy)
+	 * @return the simpleDateFormat
+	 */
+	public SimpleDateFormat getSimpleDateFormat() {
+		return simpleDateFormat;
+	}
+
+
+	/**
+	 * @description Method to get the LocalDate that we want to use to modify in JTable and TABLE by the Database
+	 * @return the localDateToBeModified
+	 */
+	public LocalDate getLocalDateToBeModified() {
+		return localDateToBeModified;
+	}
+
+
+	/**
+	 * @description Method to set the LocalDate that we want to use to modify in JTable and TABLE by the Database
+	 * @param localDateToBeModified the localDateToBeModified to set
+	 */
+	public void setLocalDateToBeModified(LocalDate localDateToBeModified) {
+		this.localDateToBeModified = localDateToBeModified;
+	}
+
+	
+	
+
+	/**
+	 * @return the dateAsStringToBeModified
+	 */
+	public String getDateAsStringToBeModified() {
+		return dateAsStringToBeModified;
+	}
+
+
+	/**
+	 * @param dateAsStringToBeModified the dateAsStringToBeModified to set
+	 */
+	public void setDateAsStringToBeModified(String dateAsStringToBeModified) {
+		this.dateAsStringToBeModified = dateAsStringToBeModified;
+	}
+	
+	
+	
+
+	
+	
+	
 	
 
 	

@@ -9,6 +9,8 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
@@ -41,7 +43,7 @@ import tech.codepalace.view.frames.Loading;
  * <p>PopupMenuListener for the PopUp Menu.</p>
  */
 public class DataBaseGUIController implements ActionListener, KeyListener, WindowListener, 
-TableModelListener, ItemListener, FocusListener, PopupMenuListener {
+TableModelListener, ItemListener, FocusListener, PopupMenuListener, MouseListener {
 	
 
 	private BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame;
@@ -53,8 +55,9 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener {
 	private TableModel model;
 	
 
-	//Variable to get the value of the selected row in the JTable.
+	//Variables to get the value of the selected row and column in the JTable.
 	private int selectedRow=0;
+	private int selectedColumn=0;
 	
 	public DataBaseGUIController(BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame, 
 			DataBaseGUI dataBaseGUI, LogicModelParking logicModelParking, LogicModelFundSachen logicModelFundSachen) {
@@ -98,10 +101,13 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener {
 		if(this.dataBaseGUI.parkingTable != null) {
 			this.dataBaseGUI.parkingTable.getModel().addTableModelListener(this);
 			this.dataBaseGUI.parkingTable.addKeyListener(this);
+			this.dataBaseGUI.parkingTable.addMouseListener(this);
+			this.dataBaseGUI.parkingTable.addFocusListener(this);
 		}
 		else if(this.dataBaseGUI.fundsachenTable != null) {
 			this.dataBaseGUI.fundsachenTable.getModel().addTableModelListener(this);
 			this.dataBaseGUI.fundsachenTable.addKeyListener(this);
+			this.dataBaseGUI.fundsachenTable.addMouseListener(this);
 
 		}
 		
@@ -380,6 +386,20 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener {
 			
 				
 		}
+		
+			else if(e.getSource()==this.dataBaseGUI.parkingTable) {
+				
+				int selectedRow = dataBaseGUI.parkingTable.getSelectedRow();
+
+
+				if(this.dataBaseGUI.parkingTable.getSelectedColumn()==4) {
+
+					TableModel model = this.dataBaseGUI.parkingTable.getModel();
+					this.logicModelParking.setDateAsStringToBeModified((String)model.getValueAt(selectedRow, 4).toString());
+				}
+				
+
+			}
 
 		
 	}
@@ -434,10 +454,12 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener {
 		if(this.dataBaseGUI.parkingTable != null) {
 			
 			selectedRow = this.dataBaseGUI.parkingTable.getSelectedRow();
+			selectedColumn = this.dataBaseGUI.parkingTable.getSelectedColumn();
 			
 		}else if(this.dataBaseGUI.fundsachenTable != null) {
 			
 			selectedRow = this.dataBaseGUI.fundsachenTable.getSelectedRow();
+			selectedColumn = this.dataBaseGUI.fundsachenTable.getSelectedColumn();
 
 			
 		}
@@ -461,16 +483,17 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener {
 				 * We call the Method updateFundsachen by LogicModelFundsachen. 
 				 * 
 				 * - First Parameter  of this Method is the selected Row
-				 * - Second Parameter the TableModel needed to get all value and generated values for the Instance Fundgegenstand by the Logic Class.
+				 * - Second Parameter the TableModel needed to get all value and generated values for the Instance ParkingReservation by the Logic Class. So we can send to the DAOParking
 				 * - Third Parameter the Object DataBaseGUI to be able to send it in the same way to the DAO object. 
 				 */
 				
 				if(!this.logicModelParking.getDataBaseStatus().equalsIgnoreCase("RELOAD")) {
 					
+					
+					
 					try {
-						this.logicModelParking.updateParking(selectedRow, model, this.dataBaseGUI);
+						this.logicModelParking.updateParking(selectedRow, selectedColumn, model, this.dataBaseGUI);
 					} catch (DaoException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 					
@@ -482,7 +505,7 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener {
 			
 		
 				/*
-				 * We call the Method updateFundsachen by LogicModelFundsachen. 
+				 * If status is not REALOAD. We call the Method updateFundsachen by LogicModelFundsachen. 
 				 * 
 				 * - First Parameter  of this Method is the selected Row
 				 * - Second Parameter the TableModel needed to get all value and generated values for the Instance Fundgegenstand by the Logic Class.
@@ -560,8 +583,7 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener {
 				this.dataBaseGUI.fundsachenTable.getSelectionModel().clearSelection();
 			}
 		}
-		
-		
+
 	}
 
 
@@ -603,6 +625,59 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener {
 
 	@Override
 	public void popupMenuCanceled(PopupMenuEvent e) {}
+
+
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+	}
+
+
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+	if(this.dataBaseGUI.parkingTable!=null) {
+			
+		
+		
+			
+			if(e.getSource()==this.dataBaseGUI.parkingTable) {
+
+
+				if(e.getClickCount()==2 && this.dataBaseGUI.parkingTable.getSelectedRow() !=-1) {
+					TableModel model = this.dataBaseGUI.parkingTable.getModel();
+					
+					int selectedRow = this.dataBaseGUI.parkingTable.getSelectedRow();
+					int selectedColumn = this.dataBaseGUI.parkingTable.getSelectedColumn();
+					
+					if(selectedColumn == 4) {
+						
+						
+						//aqui vamos a guardar de forma provicional el valor de esta coloumn en caso de que halla que volver a devolverlo.
+						this.logicModelParking.setDateAsStringToBeModified(model.getValueAt(selectedRow, selectedColumn).toString());
+						
+						
+					}
+				}
+			}
+		}
+		
+	}
+
+
+
+	@Override
+	public void mouseReleased(MouseEvent e) {}
+
+
+
+	@Override
+	public void mouseEntered(MouseEvent e) {}
+
+
+
+	@Override
+	public void mouseExited(MouseEvent e) {}
 
 
 	
