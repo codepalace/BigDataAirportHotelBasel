@@ -25,6 +25,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -197,6 +198,7 @@ public class LogicModel {
 	//Variables to modify values in JTable
 	private TableModel model;
 	private int selectedColumn;
+	private int columnToBeModified;
 	
 	
 	public LogicModel() {
@@ -1255,16 +1257,37 @@ try {
 	 * @param selectedColumn
 	 * @return
 	 */
-	public String displayRequestLaterDateCorrection(TableModel model, int selectedRow, int selectedColumn, String message) {
+	public String displayRequestLaterDateCorrection(TableModel model, int selectedRow, int selectedColumn, int columnToBeModified, String message, String dialogTitle) {
 		
 		this.model = model;
 		this.selectedRow = selectedRow;
 		this.selectedColumn = selectedColumn;
+		this.columnToBeModified = columnToBeModified;
 		
-//		JOptionPane.showMessageDialog(null, "Time to make a correction by the row: " + this.selectedRow  + " Column: " + this.selectedColumn);
+		JButton saveJButton = new JButton("Änderung speichern");
+		JButton abbrechenJButton = new JButton("Abbrechen");
 		
-		JOptionPane.showMessageDialog(null, message);
+		Object[] options = { saveJButton, abbrechenJButton};
 		
+		JLabel messageLabel = new JLabel(message);
+		
+		JTextField dateTextField = new JTextField(10);
+		
+		JPanel panelRequestBox = new JPanel();
+		
+		panelRequestBox.add(messageLabel);
+		panelRequestBox.add(dateTextField);
+		
+
+		
+		int result = JOptionPane.showOptionDialog(null, panelRequestBox, dialogTitle + selectedColumn, JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, errorImg, options, null);
+
+		
+		if(result == JOptionPane.YES_OPTION) {
+
+			
+			this.model.setValueAt(dateTextField.getText(), this.selectedRow, this.columnToBeModified);
+		}	
 		return this.laterDateCorrection;
 	}
 	
