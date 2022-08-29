@@ -827,6 +827,7 @@ public class DaoParkingImpl  implements DAOParking {
 						
 					
 						dataBaseGUI.setVisible(true);
+						dataBaseGUI.setAlwaysOnTop(true);
 						
 						//If loading object exists we close it.
 						if(loading!=null) {

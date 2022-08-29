@@ -101,7 +101,7 @@ public class LogicModel {
 	private TableModel tableModel;
 	
 	
-	private int selectedRow;
+	private static int selectedRow;
 	private String tableName;
 
 
@@ -196,9 +196,11 @@ public class LogicModel {
 	
 	
 	//Variables to modify values in JTable
-	private TableModel model;
-	private int selectedColumn;
-	private int columnToBeModified;
+	private static TableModel model;
+	private static int selectedColumn;
+	private static int columnToBeModified;
+	
+	private JDialog dialogDateChange = null;
 	
 	
 	public LogicModel() {
@@ -1259,13 +1261,15 @@ try {
 	 */
 	public String displayRequestLaterDateCorrection(TableModel model, int selectedRow, int selectedColumn, int columnToBeModified, String message, String dialogTitle) {
 		
-		this.model = model;
-		this.selectedRow = selectedRow;
-		this.selectedColumn = selectedColumn;
-		this.columnToBeModified = columnToBeModified;
+		LogicModel.model = model;
+		LogicModel.selectedRow = selectedRow;
+		LogicModel.selectedColumn = selectedColumn;
+		LogicModel.columnToBeModified = columnToBeModified;
 		
 		JButton saveJButton = new JButton("Änderung speichern");
 		JButton abbrechenJButton = new JButton("Abbrechen");
+		
+		
 		
 		Object[] options = { saveJButton, abbrechenJButton};
 		
@@ -1278,16 +1282,27 @@ try {
 		panelRequestBox.add(messageLabel);
 		panelRequestBox.add(dateTextField);
 		
+		dialogDateChange  = new JOptionPane(panelRequestBox, JOptionPane.OK_OPTION, JOptionPane.NO_OPTION, 
+													errorImg, options, null).createDialog(dialogTitle);
+		
+		
+		dateTextField.requestFocus();
+		dialogDateChange.setAlwaysOnTop(true);
+		dialogDateChange.setVisible(true);
+		
+		
+		
+		
 
 		
-		int result = JOptionPane.showOptionDialog(null, panelRequestBox, dialogTitle + selectedColumn, JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, errorImg, options, null);
-
-		
-		if(result == JOptionPane.YES_OPTION) {
-
-			
-			this.model.setValueAt(dateTextField.getText(), this.selectedRow, this.columnToBeModified);
-		}	
+//		int result = JOptionPane.showOptionDialog(null, panelRequestBox, dialogTitle + selectedColumn, JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, errorImg, options, null);
+//
+//		
+//		if(result == JOptionPane.YES_OPTION) {
+//
+//			
+//			this.model.setValueAt(dateTextField.getText(), this.selectedRow, this.columnToBeModified);
+//		}	
 		return this.laterDateCorrection;
 	}
 	
