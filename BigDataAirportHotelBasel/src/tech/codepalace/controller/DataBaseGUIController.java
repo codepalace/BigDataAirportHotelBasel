@@ -658,6 +658,12 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener, MouseListene
 						
 						
 					}
+					
+					else if(selectedColumn == 5) {
+						
+						//aqui vamos a guardar de forma provicional el valor de esta coloumn en caso de que halla que volver a devolverlo.
+						this.logicModelParking.setDateAsStringToBeModified(model.getValueAt(selectedRow, selectedColumn).toString());
+					}
 				}
 			}
 		}

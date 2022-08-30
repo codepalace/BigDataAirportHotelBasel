@@ -1315,7 +1315,7 @@ try {
 				LogicModel.message = "Es wurde keine Änderung vorgenommen: ";
 				
 				//Display JOptionPane with the Message.
-				JOptionPane.showMessageDialog(null, LogicModel.message,  "Das vorherige Date Wert wird wieder festgelegt", JOptionPane.OK_OPTION, infoImg);
+				JOptionPane.showMessageDialog(null, LogicModel.message,  "Das vorherige Datum Wert wird wieder festgelegt", JOptionPane.OK_OPTION, infoImg);
 				
 			}
 		});	
@@ -1352,6 +1352,154 @@ try {
 		
 		
 		
+		saveJButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				SwingUtilities.invokeLater(new Runnable() {
+					
+					@Override
+					public void run() {
+						
+						//We check if the value has a correct Date format dd.mm.yyyy.
+						if(!Pattern.matches(formatDateRegex, dateTextFieldRequestLaterDateCorrection.getText())) {
+							
+							//The value is not a correct date format dd.mm.yyyy we display error message taking this time the information saved in the panelErrorDateFormat. 
+							//this panelErrorDateFormat has already the text information that we need. 
+							JOptionPane.showMessageDialog(null, panelErrorDateFormat,  "Kritische Fehler(Datum Wert)", JOptionPane.OK_OPTION, errorImg);
+							
+							//Clear the Text value
+							dateTextFieldRequestLaterDateCorrection.setText("");
+							
+							//Set focus to the JTextField Object.
+							dateTextFieldRequestLaterDateCorrection.requestFocus();
+							
+						}else { //Format dd.mm.yyyy is correct
+							
+							//We set the value for the Date got it from the dateTextFieldRequestLaterDataCorrection to the column should be modified with the new value.
+							LogicModel.model.setValueAt(dateTextFieldRequestLaterDateCorrection.getText(), LogicModel.selectedRow, LogicModel.columnToBeModified);
+							
+							//Close the JDialgo 
+							dialogDateChange.dispose();
+							
+						}
+						
+					}
+				});
+				
+				
+				
+				
+				
+				
+			}
+		});
+		
+		
+		
+		
+		
+		saveJButton.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyTyped(KeyEvent e) {}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				
+				SwingUtilities.invokeLater(new Runnable() {
+					
+					@Override
+					public void run() {
+						
+						//We check if the value has a correct Date format dd.mm.yyyy.
+						if(!Pattern.matches(formatDateRegex, dateTextFieldRequestLaterDateCorrection.getText())) {
+							
+							//The value is not a correct date format dd.mm.yyyy we display error message taking this time the information saved in the panelErrorDateFormat. 
+							//this panelErrorDateFormat has already the text information that we need. 
+							JOptionPane.showMessageDialog(null, panelErrorDateFormat,  "Kritische Fehler(Datum Wert)", JOptionPane.OK_OPTION, errorImg);
+							
+							//Clear the Text value
+							dateTextFieldRequestLaterDateCorrection.setText("");
+							
+							//Set focus to the JTextField Object.
+							dateTextFieldRequestLaterDateCorrection.requestFocus();
+							
+						}else { //Format dd.mm.yyyy is correct
+							
+							//We set the value for the Date got it from the dateTextFieldRequestLaterDataCorrection to the column should be modified with the new value.
+							LogicModel.model.setValueAt(dateTextFieldRequestLaterDateCorrection.getText(), LogicModel.selectedRow, LogicModel.columnToBeModified);
+							
+							//Close the JDialgo 
+							dialogDateChange.dispose();
+							
+						}
+						
+					}
+				});
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {}
+			
+		});
+		
+		
+		
+		
+		dateTextFieldRequestLaterDateCorrection.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyTyped(KeyEvent e) {}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				
+				if(e.getKeyCode()==10) {
+					
+					SwingUtilities.invokeLater(new Runnable() {
+						
+						@Override
+						public void run() {
+							
+							//We check if the value has a correct Date format dd.mm.yyyy.
+							if(!Pattern.matches(formatDateRegex, dateTextFieldRequestLaterDateCorrection.getText())) {
+								
+								//The value is not a correct date format dd.mm.yyyy we display error message taking this time the information saved in the panelErrorDateFormat. 
+								//this panelErrorDateFormat has already the text information that we need. 
+								JOptionPane.showMessageDialog(null, panelErrorDateFormat,  "Kritische Fehler(Datum Wert)", JOptionPane.OK_OPTION, errorImg);
+								
+								//Clear the Text value
+								dateTextFieldRequestLaterDateCorrection.setText("");
+								
+								//Set focus to the JTextField Object.
+								dateTextFieldRequestLaterDateCorrection.requestFocus();
+								
+							}else { //Format dd.mm.yyyy is correct
+								
+								//We set the value for the Date got it from the dateTextFieldRequestLaterDataCorrection to the column should be modified with the new value.
+								LogicModel.model.setValueAt(dateTextFieldRequestLaterDateCorrection.getText(), LogicModel.selectedRow, LogicModel.columnToBeModified);
+								
+								//Close the JDialgo 
+								dialogDateChange.dispose();
+								
+							}
+							
+						}
+					});
+					
+				}
+				
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {}
+			
+			
+		});
+		
+		
 		
 			
 		
@@ -1364,12 +1512,17 @@ try {
 				
 	
 			
-				
+				//Initialize the dialogDateChange Object(JDialog) 
 				dialogDateChange = new JOptionPane(panelRequestBox, JOptionPane.OK_OPTION, JOptionPane.NO_OPTION,
 						errorImg, optionsRequestLaterDateCorrection, null).createDialog(dialogTitle);
 
+				//Set Focus our JTextField Object
 				dateTextFieldRequestLaterDateCorrection.requestFocus();
-				dialogDateChange.setAlwaysOnTop(true);
+				
+				//Set AlwaysOnTop false for in case wrong Date Format(dd.mm.yyyy) We could display another JOptionPane Object with an alert message over the JDialog
+				dialogDateChange.setAlwaysOnTop(false);
+				
+				//Set the JDialog Visible.
 				dialogDateChange.setVisible(true);
 				
 				
