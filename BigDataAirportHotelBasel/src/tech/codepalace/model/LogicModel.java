@@ -202,6 +202,21 @@ public class LogicModel {
 	
 	private JDialog dialogDateChange = null;
 	
+	private JButton saveJButton = new JButton("Änderung speichern");
+	private JButton abbrechenJButton = new JButton("Abbrechen");
+	
+	private Object[] optionsRequestLaterDateCorrection = { saveJButton, abbrechenJButton};
+	
+	private	JLabel messageLabelRequestLaterDateCorrection;
+	
+	private static String message = "";
+	
+	private JTextField dateTextFieldRequestLaterDateCorrection;
+	
+	private JPanel panelRequestBox;
+	
+	private ImageIcon infoImg = new ImageIcon(getClass().getResource("/img/info.png"));
+	
 	
 	public LogicModel() {
 		
@@ -1265,44 +1280,104 @@ try {
 		LogicModel.selectedRow = selectedRow;
 		LogicModel.selectedColumn = selectedColumn;
 		LogicModel.columnToBeModified = columnToBeModified;
-		
-		JButton saveJButton = new JButton("Änderung speichern");
-		JButton abbrechenJButton = new JButton("Abbrechen");
+		LogicModel.message = message;
 		
 		
+		//Initialize the JLable
+		messageLabelRequestLaterDateCorrection = new JLabel(LogicModel.message);
 		
-		Object[] options = { saveJButton, abbrechenJButton};
+		//Initialize the JTextField Object
+		dateTextFieldRequestLaterDateCorrection = new JTextField(10);
 		
-		JLabel messageLabel = new JLabel(message);
+		//Initialize the JPanel
+		panelRequestBox = new JPanel();
 		
-		JTextField dateTextField = new JTextField(10);
-		
-		JPanel panelRequestBox = new JPanel();
-		
-		panelRequestBox.add(messageLabel);
-		panelRequestBox.add(dateTextField);
-		
-		dialogDateChange  = new JOptionPane(panelRequestBox, JOptionPane.OK_OPTION, JOptionPane.NO_OPTION, 
-													errorImg, options, null).createDialog(dialogTitle);
+		//Add the objects to the JPanel
+		panelRequestBox.add(messageLabelRequestLaterDateCorrection);
+		panelRequestBox.add(dateTextFieldRequestLaterDateCorrection);
 		
 		
-		dateTextField.requestFocus();
-		dialogDateChange.setAlwaysOnTop(true);
-		dialogDateChange.setVisible(true);
+		//Add Listeners for the abbrechenJButton.
+		abbrechenJButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				/*
+				 * In case we cancel the edit of new Date we set the Date was before trying to modify.
+				 */
+				LogicModel.model.setValueAt(getDateAsStringToBeModified(), LogicModel.selectedRow, LogicModel.selectedColumn);
+			
+				//Close JDialog
+				dialogDateChange.dispose();
+				
+				//New Message for the User
+				LogicModel.message = "Es wurde keine Änderung vorgenommen: ";
+				
+				//Display JOptionPane with the Message.
+				JOptionPane.showMessageDialog(null, LogicModel.message,  "Das vorherige Date Wert wird wieder festgelegt", JOptionPane.OK_OPTION, infoImg);
+				
+			}
+		});	
 		
 		
-		
-		
+		abbrechenJButton.addKeyListener(new KeyListener() {
 
+			@Override
+			public void keyTyped(KeyEvent e) {}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				
+				if(e.getKeyCode()==10) {
+					LogicModel.model.setValueAt(getDateAsStringToBeModified(), LogicModel.selectedRow, LogicModel.selectedColumn);
+					
+					
+					dialogDateChange.dispose();
+					
+					LogicModel.message = "Es wurde keine Änderung vorgenommen: ";
+					
+					
+					JOptionPane.showMessageDialog(null, LogicModel.message,  "Das vorherige Wert wird wieder festgelegt", JOptionPane.OK_OPTION, infoImg);
+				}
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {}
+			
+		});
 		
-//		int result = JOptionPane.showOptionDialog(null, panelRequestBox, dialogTitle + selectedColumn, JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, errorImg, options, null);
-//
-//		
-//		if(result == JOptionPane.YES_OPTION) {
-//
-//			
-//			this.model.setValueAt(dateTextField.getText(), this.selectedRow, this.columnToBeModified);
-//		}	
+		
+		
+		
+		
+		
+		
+			
+		
+		//invokeLater new Thread for displaying the JDialog.
+		SwingUtilities.invokeLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				
+				
+	
+			
+				
+				dialogDateChange = new JOptionPane(panelRequestBox, JOptionPane.OK_OPTION, JOptionPane.NO_OPTION,
+						errorImg, optionsRequestLaterDateCorrection, null).createDialog(dialogTitle);
+
+				dateTextFieldRequestLaterDateCorrection.requestFocus();
+				dialogDateChange.setAlwaysOnTop(true);
+				dialogDateChange.setVisible(true);
+				
+				
+
+			}
+		});
+		
+	
 		return this.laterDateCorrection;
 	}
 	

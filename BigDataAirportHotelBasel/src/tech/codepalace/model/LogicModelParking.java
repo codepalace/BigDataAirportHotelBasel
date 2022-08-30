@@ -679,6 +679,14 @@ public class LogicModelParking extends LogicModel {
 			 */
 			betragparking = Double.parseDouble(String.valueOf(model.getValueAt(selectedRow, 7)).replaceAll("€", ""));
 			
+			//If anzahltagen(total days are <=3 
+			if(anzahltagen<=3) {
+				betragparking = 30d; //double value 30.00
+			}else {
+				betragparking = (double)anzahltagen * 10; //multiply anzahltagen(total days) * 10 for a result in double 
+			}
+			
+			
 			
 			
 			buchungskanal = (String)model.getValueAt(selectedRow, 8	);
@@ -732,8 +740,11 @@ public class LogicModelParking extends LogicModel {
 			LogicModelParking.dataBaseGUI.parkingTable.changeSelection(selectedRow, 6, false, false);
 			LogicModelParking.dataBaseGUI.parkingTable.requestFocus();
 
-			
+			//We set the value for the column 6 Total Days anzahltagen
 			model.setValueAt(anzahltagen, LogicModelParking.selectedRow, 6);
+			
+			//We set the values for the betragparking Column 7(Cost for parking and adding also Euro Symbol).
+			model.setValueAt(betragparking + " €", LogicModelParking.selectedRow, 7);
 			
 			
 		}
