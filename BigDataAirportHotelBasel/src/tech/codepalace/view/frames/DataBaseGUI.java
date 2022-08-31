@@ -288,7 +288,7 @@ public class DataBaseGUI extends JFrame {
 				
 				
 				//choices array initializes with the values we need 
-				this.choices = new String[] {"Schlüssel in Haus","Ja","Nein"};
+				this.choices = new String[] {"Ja","Nein"};
 				
 				//choices array initializes with the values we need 
 				this.schluesselInHausJComboBox = new JComboBox<String>(choices);
@@ -334,7 +334,7 @@ public class DataBaseGUI extends JFrame {
 				this.fundsachenTable = new FundsachenTable().getJTable();
 				
 				//choices array initializes with the values we need 
-				this.choices = new String[] {"Kistenummer wählen","1-Elektro Artikel","2-Schmuck / Brillen", "3-Kleidung",
+				this.choices = new String[] {"1-Elektro Artikel","2-Schmuck / Brillen", "3-Kleidung",
 						 "4-Kosmetik / Badezimmer", "5-Bücher", "6-Briefe / Karten jegliche Art",
 						 "7-Sonstiges", "8-Kiste ohne Namen / Angaben"};
 
