@@ -21,7 +21,6 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
-import tech.codepalace.dao.DaoException;
 import tech.codepalace.model.LogicModelFundSachen;
 import tech.codepalace.model.LogicModelParking;
 import tech.codepalace.view.frames.BigDataAirportHotelBaselStartFrame;
@@ -103,12 +102,17 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener, MouseListene
 			this.dataBaseGUI.parkingTable.addKeyListener(this);
 			this.dataBaseGUI.parkingTable.addMouseListener(this);
 			this.dataBaseGUI.parkingTable.addFocusListener(this);
+			
+			//Add ItemListener to the schluesselInHausJComboBox
+			this.dataBaseGUI.schluesselInHausJComboBox.addItemListener(this);
 		}
 		else if(this.dataBaseGUI.fundsachenTable != null) {
 			this.dataBaseGUI.fundsachenTable.getModel().addTableModelListener(this);
 			this.dataBaseGUI.fundsachenTable.addKeyListener(this);
 			this.dataBaseGUI.fundsachenTable.addMouseListener(this);
-
+			
+			//Add ItemListener to the kisteNummerJComboBox
+			this.dataBaseGUI.kisteNummerJComboBox.addItemListener(this);
 		}
 		
 		
@@ -491,11 +495,9 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener, MouseListene
 					
 					
 					
-					try {
+					
 						this.logicModelParking.updateParking(selectedRow, selectedColumn, model, this.dataBaseGUI);
-					} catch (DaoException e1) {
-						e1.printStackTrace();
-					}
+				
 					
 				}
 				
@@ -531,8 +533,23 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener, MouseListene
 	@Override
 	public void itemStateChanged(ItemEvent e) {
 		
-		this.dataBaseGUI.searchText.setText("");
-		this.dataBaseGUI.searchText.requestFocus();
+		//searchJComboBox
+		if(e.getSource()== this.dataBaseGUI.searchJComboBox) {
+			this.dataBaseGUI.searchText.setText("");
+			this.dataBaseGUI.searchText.requestFocus();
+		}
+		
+		else if(e.getSource()==this.dataBaseGUI.schluesselInHausJComboBox) {
+			
+				this.logicModelParking.updateParking(selectedRow, selectedColumn, model, dataBaseGUI);
+		
+		}
+		
+		else if(e.getSource()==this.dataBaseGUI.kisteNummerJComboBox) {
+			
+			this.logicModelFundSachen.updateFundsachen(selectedRow, model, dataBaseGUI);
+		}
+		
 
 	}
 

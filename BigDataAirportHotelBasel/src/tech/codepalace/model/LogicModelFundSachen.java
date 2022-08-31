@@ -144,8 +144,7 @@ public class LogicModelFundSachen extends LogicModel {
 		String rueckGabe = "";
 		String abkuerzungMA = "";
 
-		try {
-	
+		if(selectedRow!=-1) { //When it we have a selected row.
 			
 			/*
 			 * - Each variable receive the value Casting first the type of value we want to store in the variable;
@@ -170,56 +169,7 @@ public class LogicModelFundSachen extends LogicModel {
 			rueckGabe = (String)model.getValueAt(selectedRow, 7);
 			abkuerzungMA = (String)model.getValueAt(selectedRow, 8);
 			
-		}catch (ArrayIndexOutOfBoundsException e) {
-			
-			/* We do nothing. I catch ArrayIndexOutOfBoundsException because when i search and after i select a row in JTable and still selected and 
-			pressed to search again with the cursor by Search Text Box i become this Exception. 
-			
-			catching this exception the Program continue working without crash and all functionality are available.
-			*/
-			
-		 
-			/*
-			 * you can uncomment the instruction below. 
-			 * Select a row in the table and enter a data to search and hit enter to see that the message is displayed.
-			 * 
-			 * When you select a row and then go with to the search box and proceed to the search something you become the ArrayIndexOutOfBoundsException.
-			 * 
-			 * That's why we catch the ArrayIndexOutOfBoundsException to avoid Application crash.
-			 * 
-			 * 
-			 */
-			
-//			System.out.print("Row in JTable is still selected");
-			
-			/*
-			 * !!! Very very important: you wont see what i mean if you do not go to the DataBaseGUIController and inside the focusGained Method 
-			 * 
-			 * comment this lines: 
-			 * 
-			 * 
-			 *    else if(e.getSource()==this.dataBaseGUI.searchText) {
-			 *
-			 *      if(this.dataBaseGUI.fundsachenTable!=null) {
-			 *
-			 *	      this.dataBaseGUI.fundsachenTable.getSelectionModel().clearSelection();
-			 *      }
-		     *    }
-		     *    
-		     *    
-		     *    If you comment the instructions above by the DataBaseGUIController focusGained Method and the System.out.print instruction uncomment
-		     *    you will see what i mean. 
-		     *    
-		     *    Any way it is enough with the instruction by focusGained to avoid the bugs i prefer to catch also the ArrayIndexOutOfBoundsException
-			 */
-			
-			
-			
-		}
-		
-		
-		
-	
+
 		
 		//This variable will have the parseInt(String) value over here and below was necessary to avoid Casting error.
 		int kisteNummer = 0;
@@ -260,6 +210,7 @@ public class LogicModelFundSachen extends LogicModel {
 					//We set also the value for the column6
 					model.setValueAt("Elektro Artikel", selectedRow, 6);
 					
+					kisteName = "Elektro Artikel";
 					
 					break;
 					
@@ -271,11 +222,14 @@ public class LogicModelFundSachen extends LogicModel {
 					
 					model.setValueAt(kisteN, selectedRow, 5);
 					model.setValueAt("Schmuck / Brillen", selectedRow, 6);
+					
+					kisteName = "Schmuck / Brillen";
 
 					break;
 					
 				
 				 case "3-Kleidung":
+					 
 					
 					kisteN = "3"; 
 					
@@ -283,6 +237,8 @@ public class LogicModelFundSachen extends LogicModel {
 					
 					model.setValueAt(kisteN, selectedRow, 5);
 					model.setValueAt("Kleidung", selectedRow, 6);
+					
+					kisteName = "Kleidung";
 
 					break;
 					
@@ -295,6 +251,8 @@ public class LogicModelFundSachen extends LogicModel {
 						
 						model.setValueAt(kisteN, selectedRow, 5);
 						model.setValueAt("Kosmetik / Badezimmer", selectedRow, 6);
+						
+						kisteName = "Kosmetik / Badezimmer";
 
 						break;
 						
@@ -307,6 +265,8 @@ public class LogicModelFundSachen extends LogicModel {
 						
 						model.setValueAt(kisteN, selectedRow, 5);
 						model.setValueAt("Bücher", selectedRow, 6);
+						
+						kisteName = "Bücher";
 
 						break;
 						
@@ -319,6 +279,8 @@ public class LogicModelFundSachen extends LogicModel {
 						
 						model.setValueAt(kisteN, selectedRow, 5);
 						model.setValueAt("Briefe / Karten jegliche Art", selectedRow, 6);
+						
+						kisteName = "Briefe / Karten jegliche Art";
 
 						break;
 						
@@ -330,6 +292,8 @@ public class LogicModelFundSachen extends LogicModel {
 						
 						model.setValueAt(kisteN, selectedRow, 5);
 						model.setValueAt("Sonstiges", selectedRow, 6);
+						
+						kisteName = "Sonstiges";
 
 						break;
 						
@@ -341,6 +305,8 @@ public class LogicModelFundSachen extends LogicModel {
 						
 						model.setValueAt(kisteN, selectedRow, 5);
 						model.setValueAt("Kiste ohne Namen / Angaben", selectedRow, 6);
+						
+						kisteName = "Kiste ohne Namen / Angaben";
 
 						break;
 						
@@ -375,6 +341,12 @@ public class LogicModelFundSachen extends LogicModel {
 		} catch (DaoException e) {
 			e.printStackTrace();
 		}
+		}
+		
+	
+	
+			
+		
 		
 
 	}

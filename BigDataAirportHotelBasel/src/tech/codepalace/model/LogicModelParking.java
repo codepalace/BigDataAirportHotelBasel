@@ -87,6 +87,21 @@ public class LogicModelParking extends LogicModel {
 	
 	private LocalDate arrivalLocalDate = null, departureLocalDate = null;
 	
+	
+	//Variables for the ParkingReservation Object
+	private int id = 0;
+	private String idParking = "";
+	private String buchungsname = "";
+	private String autokfz = "";
+	private Date anreisedatum = null;
+	private Date abreisedatum = null;
+	private int anzahltagen = 0;
+	private double betragparking = 0.0;
+	private String buchungskanal = "";
+	private String bemerkungen = "";
+	private String schluesselinhaus = "";
+	private String verkaufer = "";
+	
 
 	
 	
@@ -374,7 +389,8 @@ public class LogicModelParking extends LogicModel {
 	 * @param dataBaseGUI
 	 * @throws DaoException
 	 */
-	public void updateParking(int selectedRow, int selectedColumn, TableModel model, DataBaseGUI dataBaseGUI) throws DaoException {
+	public void updateParking(int selectedRow, int selectedColumn, TableModel model, DataBaseGUI dataBaseGUI) {
+
 		
 		//We set the value of the dataBaseGUI
 		LogicModelParking.dataBaseGUI = dataBaseGUI;
@@ -388,12 +404,34 @@ public class LogicModelParking extends LogicModel {
 		LogicModelParking.selectedColumn = selectedColumn;
 		
 		
-		try {
+		
+		if(LogicModelParking.selectedRow!=-1) {
+			
 			/*
 			 * We evaluate selectedColumn and depending of the value we check if Date format is correct from selected row, column. I mean exact the cell we
 			 * want to modify in the JTable.
 			 */
 			switch (LogicModelParking.selectedColumn) {
+				
+				//In case of the columns number below we apply the instructions inside. 
+				case 1:
+				case 2:
+				case 3:
+				case 8:
+				case 9:
+				case 10:
+					
+					//The arrivalLocalDate value will be set and departureLocalDate
+					setDepartureLocalDate(LocalDate.parse((String)model.getValueAt(selectedRow, 5).toString().replace('.', '/'), getDateTimeFormatterForSavingDataBase()));
+					
+					setArrivalLocalDate(LocalDate.parse((String)model.getValueAt(selectedRow, 4).toString().replace('.', '/'), getDateTimeFormatterForSavingDataBase()));
+				
+
+						//We do not need to calculate Dates also call only the updateAllParkingChanges
+						updateAllParkingChanges(model);
+						
+						break;
+				
 				case 4:
 					
 					/*
@@ -422,9 +460,6 @@ public class LogicModelParking extends LogicModel {
 					
 							checkChronologyOfDates(model);
 						
-						
-						
-//						model.setValueAt(5, LogicModelParking.selectedRow, 6);
 					
 					
 					}
@@ -433,6 +468,7 @@ public class LogicModelParking extends LogicModel {
 					break;
 					
 				case 5: 
+					
 					
 					//The same procedure for Departure
 					
@@ -458,27 +494,9 @@ public class LogicModelParking extends LogicModel {
 					
 
 			}
-		}catch (ArrayIndexOutOfBoundsException e) {
-			// TODO: handle exception
+			
 		}
-		
-		
-		
-		
-	
-		
-		
 
-		
-		
-					
-
-		
-		
-		
-	
-		
-		
 
 		
 	}
@@ -639,19 +657,7 @@ public class LogicModelParking extends LogicModel {
 		}else {
 		
 			
-			//Variables for the ParkingReservation Object
-			int id = 0;
-			String idParking = "";
-			String buchungsname = "";
-			String autokfz = "";
-			Date anreisedatum = null;
-			Date abreisedatum = null;
-			int anzahltagen = 0;
-			double betragparking = 0.0;
-			String buchungskanal = "";
-			String bemerkungen = "";
-			String schluesselinhaus = "";
-			String verkaufer = "";
+			
 			
 			
 			//We set the values Casting the Type calling model and getValueAt(the selected Row and the Column).
@@ -752,6 +758,118 @@ public class LogicModelParking extends LogicModel {
 
 	}
 	
+	
+	
+	
+	/**
+	 * @description Method to update All Parking changes but special without modifying any Dates(Arrival or Departure).
+	 * <p>We do not modify here in this Method the anzahltagen(Total Days).</p>
+	 * <p>And also it will be not calculate the value of betragParking(Price for parking). 
+	 * @param model
+	 */
+	private void updateAllParkingChanges(TableModel model){
+		
+		if(LogicModelParking.selectedRow!=-1) {
+			
+			//We set the values Casting the Type calling model and getValueAt(the selected Row and the Column).
+			id = (int)model.getValueAt(selectedRow, 0);
+			idParking = (String)model.getValueAt(selectedRow, 1);
+			buchungsname = (String)model.getValueAt(selectedRow, 2);
+			autokfz = (String)model.getValueAt(selectedRow, 3);
+			
+			//We set the value for the Date(anreisedatum). Value needed to save in our ParkingReservation object to sending to the DAO object to save in Database with the new value.
+			anreisedatum = Date.valueOf(getArrivalLocalDate());
+			
+			//We set the value for the Date(abreisedatum). Value needed to save in our ParkingReservation object to sending to the DAO object to save in Database with the new value.
+			abreisedatum = Date.valueOf(getDepartureLocalDate());
+			
+			
+			/*
+			 * In this Method we do not need to calculateDatePlus to change the value because the value of the column 6 stay unmodified
+			 */
+			anzahltagen = (int)model.getValueAt(selectedRow, 6);
+
+			
+
+			/*
+			 * In this double object we call the Method parseDouble getting the value of the String in the column 7.
+			 * 
+			 * To this value we call the replaceAll(We replace the € symbol for empty String) so we can get only a double value.
+			 */
+			betragparking = Double.parseDouble(String.valueOf(model.getValueAt(selectedRow, 7)).replaceAll("€", ""));
+			
+			
+			/*
+			 * The comments below is to show you the different between how it works in the checkChronologyOfDates Method and how does it works in
+			 * this Method. 
+			 * 
+			 *  We do not need to calculate Total days and change any value by betragParking(Price of Parking) because this value stay unmodified.
+			 *  
+			 *  We keep this value and send it to DAOParking object to save the same value unmodified in the Database.
+			 */
+			
+			//If anzahltagen(total days are <=3 
+//			if(anzahltagen<=3) {
+//				betragparking = 30d; //double value 30.00
+//			}else {
+//				betragparking = (double)anzahltagen * 10; //multiply anzahltagen(total days) * 10 for a result in double 
+//			}
+//			
+			
+			
+			
+			buchungskanal = (String)model.getValueAt(selectedRow, 8	);
+			bemerkungen = (String)model.getValueAt(selectedRow, 9);
+			schluesselinhaus = (String)model.getValueAt(selectedRow, 10);
+			verkaufer = (String)model.getValueAt(selectedRow, 11);
+			
+			
+			
+			
+			//Initialize the parkingReservation Object.
+			parkingReservation = new ParkingReservation();
+			
+			parkingReservation.setId(id);
+			parkingReservation.setIdParking(idParking);
+			parkingReservation.setBuchungsname(buchungsname);
+			parkingReservation.setAutoKFZ(autokfz);
+			parkingReservation.setAnreiseDatum(anreisedatum);
+			parkingReservation.setAbreiseDatum(abreisedatum);
+			parkingReservation.setAnzahlTagen(anzahltagen);
+			parkingReservation.setBetragParking(betragparking);
+			parkingReservation.setBuchungsKanal(buchungskanal);
+			parkingReservation.setBemerkungen(bemerkungen);
+			parkingReservation.setSchluesselInHaus(schluesselinhaus);
+			parkingReservation.setAbkuerzungMA(verkaufer);
+			
+			
+			
+			//Initialize the DAOParking Object
+			DAOParking daoParking = new DaoParkingImpl(getUserAHB(), LogicModelParking.dataBaseGUI, new Loading(LogicModelParking.dataBaseGUI, true));
+			
+			
+			
+			try {
+				
+										
+				//We call for the updateParkingReservation Method with the parkingReservation argument.
+				daoParking.updateParkingReservation(parkingReservation);
+				
+				
+				
+				
+			}catch (DaoException e) {
+				
+				e.printStackTrace();
+			
+			}
+		}
+		
+		
+		
+		
+	
+	}
 
 
 }

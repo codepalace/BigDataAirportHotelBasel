@@ -114,6 +114,7 @@ public class DataBaseGUI extends JFrame {
 	 * 
 	 */
 	public JComboBox<String> kisteNummerJComboBox;
+	public JComboBox<String> schluesselInHausJComboBox;
 	private String[] choices;
 	
 	
@@ -284,6 +285,23 @@ public class DataBaseGUI extends JFrame {
 				
 				//the instance JTable parkingTable = new ParkingTable and we get for that the JTable with the getJTable() method.
 				this.parkingTable = new ParkingTable().getJTable();
+				
+				
+				//choices array initializes with the values we need 
+				this.choices = new String[] {"Schlüssel in Haus","Ja","Nein"};
+				
+				//choices array initializes with the values we need 
+				this.schluesselInHausJComboBox = new JComboBox<String>(choices);
+				
+				/* Add the new Cell editor.
+				 * 
+				 * . for that we call the getColumnModel Method from the parkingJTable;
+				 * . getColumn Method with the argument the column number where we are going to place the new Cell Editor;
+				 * . setCellEditor Method with the argument new DefaultCellEditor and also for the argument will be passing the JComboBox we are going to use.
+				 */
+				this.parkingTable.getColumnModel().getColumn(10).setCellEditor(new DefaultCellEditor(schluesselInHausJComboBox));
+				
+				
 				
 				
 				//JScrollPane for our parkingTable
