@@ -419,6 +419,9 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener, MouseListene
 	public void windowOpened(WindowEvent e) {
 		
 		this.bigDataAirportHotelBaselStartFrame.dispose();
+		
+		//Bring to front our GUI
+		this.dataBaseGUI.toFront();
 
 	}
 
