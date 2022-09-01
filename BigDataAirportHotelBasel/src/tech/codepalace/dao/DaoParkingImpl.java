@@ -824,8 +824,7 @@ public class DaoParkingImpl  implements DAOParking {
 					protected void done() {
 						
 						//All the Data are loaded then we setVisible the dataBaseGUI Object.
-						
-					
+
 						dataBaseGUI.setVisible(true);
 						
 						//If loading object exists we close it.

@@ -379,7 +379,8 @@ public class NewParking extends JDialog {
 		this.schluesselBox.setFont(new Font("Verdana", Font.BOLD, 14));
 		
 		
-		this.choicesBuchungskanal = new String[] {"Direkt", "Park, Sleep & Fly", "Parken-und-Fliengen.de", "HolidayExtras", "EasyJet", "ParkScanner.de", "Parkandfly.de", "Andere Verkäufer"};
+		this.choicesBuchungskanal = new String[] {"Buchungskanal Wählen", "Direkt", "Park, Sleep & Fly", "Parken-und-Fliengen.de", "HolidayExtras", "EasyJet", 
+				"ParkScanner.de", "Parkandfly.de", "Andere Verkäufer"};
 		this.buchungskanaJComboBox = new JComboBox<String>(choicesBuchungskanal);
 		this.buchungskanaJComboBox.setFont(new Font("Verdana", Font.BOLD, 14));
 		

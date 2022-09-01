@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -16,7 +18,7 @@ import javax.swing.UIManager;
 import tech.codepalace.model.LogicModelNewParking;
 import tech.codepalace.view.frames.NewParking;
 
-public class NewParkingController implements ActionListener, KeyListener, WindowListener, FocusListener, MouseListener{
+public class NewParkingController implements ActionListener, KeyListener, WindowListener, FocusListener, MouseListener, ItemListener{
 	
 	private NewParking newParking;
 	private LogicModelNewParking logicModelNewParking;
@@ -54,6 +56,10 @@ public class NewParkingController implements ActionListener, KeyListener, Window
 		
 		
 		this.newParking.anreiseDatumPlaceHolderTextField.addMouseListener(this);
+		
+		
+		//We add ItemListener to our JComboBox Object
+		this.newParking.buchungskanaJComboBox.addItemListener(this);
 		
 		
 		
@@ -395,6 +401,26 @@ else if(e.getSource()==this.newParking.saveParkingReservation) {
 		this.logicModelNewParking.setReadyToCloseNewParkingReservation(false);
 		
 	 }
+	}
+
+
+
+
+
+	@Override
+	public void itemStateChanged(ItemEvent e) {
+	
+		//If a sale channel was selected we set the sales channel to get this information back needed to store in the ParkingReservation Object.
+		if(e.getSource()==this.newParking.buchungskanaJComboBox) {
+			
+			//We set the buchungskanal String Value.
+			this.logicModelNewParking.setBuchungskanal(this.newParking.buchungskanaJComboBox.getSelectedItem().toString());
+			
+			//And call to set the Total Price
+			this.logicModelNewParking.setBetragTotal();
+
+		}
+		
 	}
 	
 

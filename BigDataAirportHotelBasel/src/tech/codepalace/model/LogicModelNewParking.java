@@ -99,7 +99,7 @@ public class LogicModelNewParking extends LogicModel {
 	protected Date anreisedatum, abreisedatum;
 	protected int anzahltagen;
 	protected double betragparking;
-	protected String buchungskanal, bemerkungen, schluesselinhaus, verkaufer;
+	protected String buchungskanal="", bemerkungen, schluesselinhaus, verkaufer;
 	
 	
 	
@@ -137,7 +137,7 @@ public class LogicModelNewParking extends LogicModel {
 				errorImg, optionButtonErrorDateFormat, null).createDialog("Kritische Fehler(" + inputTextBoxName + ")");
 		
 		
-		
+			
 	
 		//Add ActionListener to the OK Button by the Error Message JDialog.
 		this.okButtonErrorDateFormat.addActionListener(new ActionListener() {
@@ -306,24 +306,25 @@ public void checkAllEntries() {
 			errorDateFormat.dispose();
 		}
 	
-		
-
-		if(newParking.buchunsKanalJTextField.getText().equalsIgnoreCase("") ||
-				newParking.buchunsKanalJTextField.getText().length()<3) {
+		//If user did not select any sale channel 
+		if(newParking.buchungskanaJComboBox.getSelectedItem().toString().equalsIgnoreCase("Buchungskanal Wählen")) {
 			
+			//We display one error Message.
+			JOptionPane.showMessageDialog(null, "Bitte wählen Sie eine Buchungskanal.", "Buchungskanal Wählen", JOptionPane.OK_CANCEL_OPTION, errorImg);
+			
+			//And entryCompleted = false.
 			this.entryCompleted = false;
-			newParking.buchunsKanalJTextField.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
 			
 		}else {
+			
 			this.entryCompleted = true;
 		}
-		
-		
-		
+
+
 		
 		
 		if(this.entryCompleted & isAnreiseOK() & isAbreiseOK()) {
-//			JOptionPane.showMessageDialog(null, "Estamos listos para guardar Parking");
+
 		
 			/*
 			 * Every entries is OK then we call to addNewParkingReservationToDataBase Method.
@@ -649,19 +650,19 @@ public void calculateTotalDays() {
 
 			newParking.tagenGeneratedJLabel.setText(String.valueOf(totalDaysToPay));
 
-			/*
-			 * If the total days are from 1 to 3 it costs 30CHF, if more than 3 days at 10CHF per day.
-			 */
-			if (this.totalDaysToPay <= 3) {
-				this.betragTotal = 30d;
-				newParking.betragGeneratedJLabel.setText(String.valueOf(betragTotal + " CHF"));
-			} else {
-				//Rate per day 10CHF
-				this.betragTotal = this.totalDaysToPay * 10;
-				newParking.betragGeneratedJLabel.setText(String.valueOf(betragTotal + " CHF"));
-			}
-			
-			
+//			/*
+//			 * If the total days are from 1 to 3 it costs 30CHF, if more than 3 days at 10CHF per day.
+//			 */
+//			if (this.totalDaysToPay <= 3) {
+//				this.betragTotal = 30d;
+//				newParking.betragGeneratedJLabel.setText(String.valueOf(betragTotal + " CHF"));
+//			} else {
+//				//Rate per day 10CHF
+//				this.betragTotal = this.totalDaysToPay * 10;
+//				newParking.betragGeneratedJLabel.setText(String.valueOf(betragTotal + " CHF"));
+//			}
+//			
+			setBetragTotal();
 		}
 	
 	
@@ -727,7 +728,7 @@ protected void addNewParkingReservationToDataBase() {
 
 	//We set how was the Parking booked
 
-	this.parkingReservation.setBuchungsKanal(LogicModelNewParking.newParking.buchunsKanalJTextField.getText());
+	this.parkingReservation.setBuchungsKanal(LogicModelNewParking.newParking.buchungskanaJComboBox.getSelectedItem().toString());
 
 
 
@@ -767,6 +768,63 @@ protected void addNewParkingReservationToDataBase() {
     newParking.dispose();
 	
 }
+
+
+
+
+/**
+ * @description Method to get the sales channel.
+ * @return
+ */
+public String getBuchungskanal() {
+	return buchungskanal;
+}
+
+
+
+
+/**
+ * @description Method to get the sales channel.
+ * @param buchungskanal
+ */
+public void setBuchungskanal(String buchungskanal) {
+	this.buchungskanal = buchungskanal;
+}
+
+
+
+
+
+public void setBetragTotal() {
+	
+	//Case Park, Sleep & Fly we do not charge any cost
+	if(this.buchungskanal.equalsIgnoreCase("Park, Sleep & Fly")) {
+		
+		this.betragTotal = 0d;
+		newParking.betragGeneratedJLabel.setText(String.valueOf(betragTotal + " CHF"));
+	}else {
+		
+		/*
+		 * If the total days are from 1 to 3 it costs 30CHF, if more than 3 days at 10CHF per day.
+		 */
+		if (this.totalDaysToPay <= 3) {
+			this.betragTotal = 30d;
+			newParking.betragGeneratedJLabel.setText(String.valueOf(betragTotal + " CHF"));
+		} else {
+			//Rate per day 10CHF
+			this.betragTotal = this.totalDaysToPay * 10;
+			newParking.betragGeneratedJLabel.setText(String.valueOf(betragTotal + " CHF"));
+		}
+	}
+	
+	
+	
+	
+	
+}
+
+
+
 
 
 
