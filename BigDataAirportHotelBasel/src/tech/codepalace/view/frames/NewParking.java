@@ -92,8 +92,8 @@ public class NewParking extends JDialog {
  	public JTextField bemerkungenJTextField;
  	
  	private JLabel schluesselJLabel;
- 	public JComboBox<String> schluesselBox;
- 	private String[] choices;
+ 	public JComboBox<String> schluesselBox, buchungskanaJComboBox;
+ 	private String[] choices, choicesBuchungskanal;
  	
  	public JLabel abkuerzungMAJLabel, abkuerzungMAGeneratedJLabel;
  	
@@ -377,7 +377,11 @@ public class NewParking extends JDialog {
 		
 		this.schluesselBox = new JComboBox<String>(choices);
 		this.schluesselBox.setFont(new Font("Verdana", Font.BOLD, 14));
-
+		
+		
+		this.choicesBuchungskanal = new String[] {"Direkt", "Park, Sleep & Fly", "Parken-und-Fliengen.de", "HolidayExtras", "EasyJet", "ParkScanner.de", "Parkandfly.de", "Andere Verkäufer"};
+		this.buchungskanaJComboBox = new JComboBox<String>(choicesBuchungskanal);
+		this.buchungskanaJComboBox.setFont(new Font("Verdana", Font.BOLD, 14));
 		
 		this.abkuerzungMAJLabel = new JLabel("Kürzel MA:"); //Wird automatisch generiert
 		this.abkuerzungMAJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -488,17 +492,22 @@ public class NewParking extends JDialog {
 		gbl.setConstraints(this.betragGeneratedJLabel, gbc);
 		this.entriesPanel.add(betragGeneratedJLabel);
 
+
 		gbc.gridx = 0;
 		gbc.gridy = 7;
 		gbc.insets = new Insets(10, 0, 0, 0);
 		gbl.setConstraints(this.buchungsKanalJLabel, gbc);
 		this.entriesPanel.add(this.buchungsKanalJLabel);
 
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.weightx = 0.5;
 		gbc.gridx = 1;
 		gbc.gridy = 7;
 		gbc.insets = new Insets(10, 5, 0, 0);
-		gbl.setConstraints(this.buchunsKanalJTextField, gbc);
-		this.entriesPanel.add(this.buchunsKanalJTextField);
+		gbl.setConstraints(buchungskanaJComboBox, gbc);
+		this.entriesPanel.add(buchungskanaJComboBox);
+//		gbl.setConstraints(this.buchunsKanalJTextField, gbc);
+//		this.entriesPanel.add(this.buchunsKanalJTextField);
 
 		gbc.gridx = 0;
 		gbc.gridy = 8;
