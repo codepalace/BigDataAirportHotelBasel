@@ -117,6 +117,13 @@ public class DataBaseGUI extends JFrame {
 	public JComboBox<String> schluesselInHausJComboBox;
 	private String[] choices;
 	
+	//Variables for the Sales Channel. 
+	public JComboBox<String> buchungskanalJComboBox; //Sales Channel JComboBox
+	private String [] choicesBuchungskanal; //Array with the content for the buchungskanalJComboBox
+	
+	
+	
+	
 	
 	//Object to search results in the database
 	//JTextField with rounded Border for the Search Entries
@@ -309,7 +316,17 @@ public class DataBaseGUI extends JFrame {
 				
 				 //We add the scrollpane to the centerPanel and not the parkingTable(is already by the added by the scrollpane).
 				 this.centerPanel.add(scrollPane);
-				
+				 
+				 
+				 //Initialize the choices for the Sales Channel so the user can select to modify the Sales Channel.
+				 this.choicesBuchungskanal = new String[] {"Direkt", "Park, Sleep & Fly", "Parken-und-Fliengen.de", "HolidayExtras", "EasyJet", 
+							"ParkScanner.de", "Parkandfly.de", "Andere Verkäufer"};
+				 
+				 	//Initialize the buchungskanalJComboBox with the choicesBuchungskanal values
+					this.buchungskanalJComboBox = new JComboBox<String>(choicesBuchungskanal);
+					
+					//Now we set the CellEditor
+					this.parkingTable.getColumnModel().getColumn(8).setCellEditor(new DefaultCellEditor(buchungskanalJComboBox));
 				
 				break;
 

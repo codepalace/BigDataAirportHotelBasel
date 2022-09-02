@@ -105,6 +105,7 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener, MouseListene
 			
 			//Add ItemListener to the schluesselInHausJComboBox
 			this.dataBaseGUI.schluesselInHausJComboBox.addItemListener(this);
+			this.dataBaseGUI.buchungskanalJComboBox.addItemListener(this);
 		}
 		else if(this.dataBaseGUI.fundsachenTable != null) {
 			this.dataBaseGUI.fundsachenTable.getModel().addTableModelListener(this);
@@ -546,6 +547,12 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener, MouseListene
 			
 				this.logicModelParking.updateParking(selectedRow, selectedColumn, model, dataBaseGUI);
 		
+		}
+		
+		//In case Parking changing the Sales Channel
+		else if(e.getSource()==this.dataBaseGUI.buchungskanalJComboBox) {
+			
+			this.logicModelParking.updateParking(selectedRow, selectedColumn, model, dataBaseGUI);
 		}
 		
 		else if(e.getSource()==this.dataBaseGUI.kisteNummerJComboBox) {
