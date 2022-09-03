@@ -104,7 +104,6 @@ public class LogicModelParking extends LogicModel {
 	
 
 	
-	
 	public LogicModelParking(DataBaseGUI dataBaseGUI, Loading loading) {
 		
 
@@ -390,7 +389,7 @@ public class LogicModelParking extends LogicModel {
 	 * @throws DaoException
 	 */
 	public void updateParking(int selectedRow, int selectedColumn, TableModel model, DataBaseGUI dataBaseGUI) {
-
+		
 		
 		//We set the value of the dataBaseGUI
 		LogicModelParking.dataBaseGUI = dataBaseGUI;
@@ -403,8 +402,7 @@ public class LogicModelParking extends LogicModel {
 		//We set the value of selectedColumn. 
 		LogicModelParking.selectedColumn = selectedColumn;
 		
-		
-		
+		//If a row was selected
 		if(LogicModelParking.selectedRow!=-1) {
 			
 			/*
@@ -417,7 +415,7 @@ public class LogicModelParking extends LogicModel {
 				case 1:
 				case 2:
 				case 3:
-				case 8:
+				
 				case 9:
 				case 10:
 					
@@ -432,6 +430,56 @@ public class LogicModelParking extends LogicModel {
 						
 						break;
 				
+				case 8: //In case of modification of the Column 8 Sales Channel
+					
+					//Set the value of arrivalLocalDate
+					setArrivalLocalDate(LocalDate.parse((String)model.getValueAt(selectedRow, 4).toString().replace('.', '/'), getDateTimeFormatterForSavingDataBase()));
+					
+					
+					//set the value of departureLocalDate
+					setDepartureLocalDate(LocalDate.parse((String)model.getValueAt(selectedRow, 5).toString().replace('.', '/'), getDateTimeFormatterForSavingDataBase()));
+				
+						//After having the values of Arrival and Departure LocalDate Objects. Now is time to call for checking if Chronology of Dates is ok.
+						checkChronologyOfDates(model);
+				
+								//Variable String to store temporary the value of the column 8 Bucungskanal(Sales Channel).
+								String salesChannel = (String)model.getValueAt(selectedRow, 8);
+
+								//In case of value is Park, Sleep & Fly is free of charge(NO extras because is a package included with the room reservation).
+								if(salesChannel.equalsIgnoreCase("Park, Sleep & Fly")) {
+
+										//Store the value of Column 5 Temporary to evaluate before changing
+										String betragString = (String)model.getValueAt(selectedRow, 7);
+										
+										//We evaluate the value of betragString variable(Cost for Parking) if not yet 0.0 € we set the column with the value "0.0 €" as String.
+										if(!betragString.equalsIgnoreCase("0.0 €")) {
+											model.setValueAt("0.0 €", selectedRow, 7); //setting the value "0.0 €"
+										}
+
+								
+										
+										
+								}else { //In case salesChannel value is not "Park, Sleep & Fly"
+									
+									//Store the total of date calculating the Local Dates variables values + 1 because the same day when costumer Park the Card it count.
+									anzahltagen = (int) calculateDatesPlus(getArrivalLocalDate(), getDepartureLocalDate()) + 1;
+									
+									//If anzahltagen(total days are <=3 
+									if(anzahltagen<=3) {
+										betragparking = 30d; //double value 30.00
+										model.setValueAt(String.valueOf(betragparking) + " €" , selectedRow, 7);
+										
+									}else {
+										betragparking = (double)anzahltagen * 10; //multiply anzahltagen(total days) * 10 for a result in double 
+										model.setValueAt(String.valueOf(betragparking) + " €" , selectedRow, 7);
+									}
+								}
+
+								//call the updateAllParkingChanges to update all modified informations and sending to the DAOParking for saving in the DataBase.
+								updateAllParkingChanges(model);
+					
+					break;						
+						
 				case 4:
 					
 					/*
