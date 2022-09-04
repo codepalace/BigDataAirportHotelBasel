@@ -11,9 +11,13 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
+import javax.swing.SwingUtilities;
+
 import tech.codepalace.model.LogicModelStartFrame;
+import tech.codepalace.model.LogicModelUserManager;
 import tech.codepalace.utility.DataEncryption;
 import tech.codepalace.view.frames.BigDataAirportHotelBaselStartFrame;
+import tech.codepalace.view.frames.UserManager;
 
 /**
  * 
@@ -248,6 +252,28 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 		} 
 		else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.btn_benutzerVerwalten) {
 			System.out.println("you pressed the benutzerVerwalten button");
+			
+			SwingUtilities.invokeLater( new Runnable() {
+				
+				@Override
+				public void run() {
+					
+					//Create and initialize UserManager Object with the argument JFrame in background and true to be blocked the JFrame in Background
+					UserManager userManager = new UserManager(bigDataAirportHotelBaselStartFrame, true);
+					
+					LogicModelUserManager logicModelUserManager = new LogicModelUserManager(bigDataAirportHotelBaselStartFrame, userManager);
+					
+					new UserManagerController(userManager, logicModelUserManager);
+					
+					userManager.setVisible(true);
+					
+				}
+			});
+			
+			
+			
+			
+			
 		} 
 		else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.btn_createDB) {
 			System.out.println("you pressed the create DB button");
