@@ -251,7 +251,7 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 			System.exit(0);
 		} 
 		else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.btn_benutzerVerwalten) {
-			System.out.println("you pressed the benutzerVerwalten button");
+		
 			
 			SwingUtilities.invokeLater( new Runnable() {
 				

@@ -1,6 +1,5 @@
 package tech.codepalace.view.frames;
 
-import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
@@ -63,9 +62,38 @@ public class UserManager extends JDialog {
 	  
 	  setIconImage(new ImageIcon(getClass().getResource("/img/iconoHotel.png")).getImage());
 	  
+	//addComponentListener to center the window again.
+			this.addComponentListener(new java.awt.event.ComponentAdapter() {
+	            public void componentMoved(java.awt.event.ComponentEvent evt) {
+	                formComponentMoved(evt);
+	            }
+	        });
+	  
 	  
   }
  
+  
+  
+  /**
+	 * 
+	 * @param evt
+	 * @description method to re-center the window in case the user tries to drag the window
+	 */
+	private void formComponentMoved(java.awt.event.ComponentEvent evt) {                                    
+	       this.setLocationRelativeTo(null);
+	    }   
+	
+
+	
+	/**
+	 * @description Method to confirm application closure
+	 */
+	public void confirmClose() {
+
+		 this.dispose();
+					
+			
+	}
  
  
  
