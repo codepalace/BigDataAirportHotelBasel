@@ -234,6 +234,35 @@ public class PropertiesReader extends Properties {
 	
 	
 	
+	/**
+	 * @description Method to return Properties. It will be return our config.properties
+	 * @return
+	 */
+	public Properties readPropertiesData() {
+
+		//We proceed to read the configuration file. Configuration file is located in the same directory our Application is running.
+		//We load the properties file into an InputStream
+		try (InputStream input = new FileInputStream(projectDirectoryString + File.separator + "config.properties")) {
+
+			 //Instantiating the Properties class
+             prop = new Properties();
+
+            // load a properties file
+            prop.load(input);
+            
+            
+
+            
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (Exception e) {
+			e.printStackTrace();
+		}
+		return prop;
+
+		
+	}
+	
 	
 
 }
