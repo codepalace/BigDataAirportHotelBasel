@@ -119,4 +119,37 @@ If some smart person gives you the idea of **deleting the configuration file int
 
 <h3>Screenshop Application</h3>
 
+<br/>
+
+<figure>
 <img alt="Big Data Airport Hotel Basel" src="./res/bdahb_gui.png"/>
+
+<figcaption>Main GUI and Login.</figcaption>
+</figure>
+
+
+<figure>
+<img alt="Big Data Airport Hotel Basel" src="./res/parking_gui.png"/>
+
+<figcaption>Parking GUI.</figcaption>
+</figure>
+
+<figure>
+<img alt="Big Data Airport Hotel Basel" src="./res/neue_parking.png"/>
+
+<figcaption>Add New Parking GUI.</figcaption>
+</figure>
+
+
+<figure>
+<img alt="Big Data Airport Hotel Basel" src="./res/fundsachen_gui.png"/>
+
+<figcaption>Lost And Found GUI.</figcaption>
+</figure>
+
+<figure>
+<img alt="Big Data Airport Hotel Basel" src="./res/neue_fundsachen.png"/>
+
+<figcaption>Add new Lost And Found GUI.</figcaption>
+</figure>
+
