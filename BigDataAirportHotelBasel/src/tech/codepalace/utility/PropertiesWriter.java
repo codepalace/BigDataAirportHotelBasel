@@ -95,9 +95,8 @@ if (configurationFile.exists()) {
 
 	            
 
-//	            // set the properties value
+				// set the properties value
 	            prop.setProperty(this.propertyName, this.propertyValue);
-	      ;
 
 	            // save properties to project root folder
 	            prop.store(output, null);

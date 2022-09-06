@@ -23,11 +23,18 @@ public class UserManagerController implements ActionListener, KeyListener, Windo
 		
 		this.userManager.addWindowListener(this);
 		
+		this.userManager.addUserJButton.addActionListener(this);
+		
 	}
 
 
 	@Override
-	public void actionPerformed(ActionEvent e) {}
+	public void actionPerformed(ActionEvent e) {
+		
+		if(e.getSource()==this.userManager.addUserJButton) {
+			this.logicModelUserManager.addNewUser();
+		}
+	}
 
 
 	@Override
@@ -71,9 +78,6 @@ public class UserManagerController implements ActionListener, KeyListener, Windo
 
 
 	@Override
-	public void windowOpened(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void windowOpened(WindowEvent e) {}
 
 }

@@ -69,7 +69,7 @@ public class UserManager extends JDialog {
     private	DataEncryption dataEncryption;
     
     //Instances of JButtons(MyButton)
-    private JButton deleteUserJButton, editUserJButton, addUserJButton;
+    public JButton deleteUserJButton, editUserJButton, addUserJButton;
     
     
 	
