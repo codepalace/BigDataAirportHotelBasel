@@ -122,33 +122,33 @@ If some smart person gives you the idea of **deleting the configuration file int
 <br/>
 
 <figure>
-<img alt="Big Data Airport Hotel Basel" src="./res/bdahb_gui.png"/>
+<img alt="Big Data Airport Hotel Basel" src="./res/bdahb_gui.jpg"/>
 
 <figcaption>Main GUI and Login.</figcaption>
 </figure>
 
 
 <figure>
-<img alt="Big Data Airport Hotel Basel" src="./res/parking_gui.png"/>
+<img alt="Big Data Airport Hotel Basel" src="./res/parking_gui.jpg"/>
 
 <figcaption>Parking GUI.</figcaption>
 </figure>
 
 <figure>
-<img alt="Big Data Airport Hotel Basel" src="./res/neue_parking.png"/>
+<img alt="Big Data Airport Hotel Basel" src="./res/neue_parking.jpg"/>
 
 <figcaption>Add New Parking GUI.</figcaption>
 </figure>
 
 
 <figure>
-<img alt="Big Data Airport Hotel Basel" src="./res/fundsachen_gui.png"/>
+<img alt="Big Data Airport Hotel Basel" src="./res/fundsachen_gui.jpg"/>
 
 <figcaption>Lost And Found GUI.</figcaption>
 </figure>
 
 <figure>
-<img alt="Big Data Airport Hotel Basel" src="./res/neue_fundsachen.png"/>
+<img alt="Big Data Airport Hotel Basel" src="./res/neue_fundsachen.jpg"/>
 
 <figcaption>Add new Lost And Found GUI.</figcaption>
 </figure>
