@@ -5,20 +5,23 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.util.Enumeration;
 import java.util.Properties;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.border.EtchedBorder;
 
 import tech.codepalace.utility.DataEncryption;
 import tech.codepalace.utility.PropertiesReader;
+import tech.codepalace.view.buttons.MyButton;
 import tech.codepalace.view.panels.PanelWithBackgroundOption;
 
 /**
@@ -40,14 +43,14 @@ public class UserManager extends JDialog {
 	
 	private PanelWithBackgroundOption panelWithBackgroundOption;
 	
-	private GridBagLayout mainGBL, gbl;
-	private GridBagConstraints mainGBC, gbc;
 	
-	private JPanel listPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+	private JPanel listPanel, jButtonPanel;
 	
 	private DefaultListModel<String> model = new DefaultListModel<>();
 	
 	private JList<String> list;
+	
+	private JScrollPane listScrollPane;
 	
 	//New Instance PropertiesReader
 	private PropertiesReader propertiesReader;
@@ -64,6 +67,11 @@ public class UserManager extends JDialog {
 	
 	//Instance of DataEncryption to decrypt the data
     private	DataEncryption dataEncryption;
+    
+    //Instances of JButtons(MyButton)
+    private JButton deleteUserJButton, editUserJButton, addUserJButton;
+    
+    
 	
 	
  public UserManager(BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame, boolean modal) {
@@ -82,7 +90,7 @@ public class UserManager extends JDialog {
  
   private void init() {
 	  
-	  setSize(500, 180);
+	  setSize(530, 200);
 	  setTitle("Benutzer Manager");
 	  
 	  setLocationRelativeTo(null);
@@ -91,7 +99,7 @@ public class UserManager extends JDialog {
 	  
 	  this.panelWithBackgroundOption = new PanelWithBackgroundOption();
 	  this.panelWithBackgroundOption.setImage("/img/backgroundframe.jpg");
-	  
+	  this.panelWithBackgroundOption.setLayout(new BorderLayout());
 	  
 	  
 	  setContentPane(panelWithBackgroundOption);
@@ -106,11 +114,24 @@ public class UserManager extends JDialog {
 	        });
 			
 	
+	//Initialize the listPanel
+	this.listPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+	
+	//Initialize the jButtonPanel
+	this.jButtonPanel = new JPanel(new BorderLayout(5, 5));
+	this.jButtonPanel.setOpaque(false);
+	this.jButtonPanel.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
+			
     //Initialize the dataEncryption Object
 	this.dataEncryption = new DataEncryption();
 	
 	//Initialize the JList
 	this.list = new JList<String>(model);
+	
+	//Initialize the JButtons 
+	this.deleteUserJButton = new MyButton("/img/benutzer_loeschen.png");
+	this.addUserJButton = new MyButton("/img/benutzer_hinzufuegen.png");
+	this.editUserJButton = new MyButton("/img/benutzer_bearbeiten.png");
 	
 	//adding all elements to container
 	addElementsToGUI();
@@ -148,13 +169,28 @@ public class UserManager extends JDialog {
 	private void addElementsToGUI() {
 		
 		//We set the properties to the JList
-		this.list.setPreferredSize(new Dimension(400, 100));
-		this.list.setBackground(Color.PINK);
+//		this.list.setPreferredSize(new Dimension(400, 100));
+
+		this.list.setBackground(Color.decode("#e87ee8"));
 		this.list.setFont(new Font("Verdana", Font.BOLD, 14));
 		this.list.setFixedCellHeight(30);
 	
-//		list.setBorder(new EmptyBorder(10,10, 10, 10));
-	
+		//set EmptyBorder
+//		list.setBorder(new EmptyBorder(0,10, 0, 10));
+		
+		//set EtchedBorder for our JList.
+		this.list.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
+		
+		//set visible only 4 elements for the list 
+		this.list.setVisibleRowCount(4);
+		
+		//Initialize the JScrollPane. As argument the component for it.
+		this.listScrollPane = new JScrollPane(list);
+		
+		//Set the Size for the JScrollPane. This will have an impact on the size of our JList Object.
+		this.listScrollPane.setPreferredSize(new Dimension(510, 130));
+		
+		
 
 		//Initialize the instance PropertiesReader
 		this.propertiesReader = new PropertiesReader();
@@ -196,11 +232,22 @@ public class UserManager extends JDialog {
 	  
 	    }
 		
-		//Finally we add the list to the JPanel(listPanel).
-		this.listPanel.add(list);
+	    this.listPanel.setOpaque(false);
+
+	    
+	    //Add the the JScrollPane to the listPanel. It will be added the JList with it.
+		this.listPanel.add(listScrollPane);
+		
+		//Add the JButtons to the jButtonPanel
+		this.jButtonPanel.add(deleteUserJButton, BorderLayout.WEST);
+		this.jButtonPanel.add(this.editUserJButton, BorderLayout.CENTER);
+		this.jButtonPanel.add(this.addUserJButton, BorderLayout.EAST);
+		
+		
 		
 		//And the lisPanel to the panelWithBackgroundOption.
 		this.panelWithBackgroundOption.add(listPanel, BorderLayout.NORTH);
+		this.panelWithBackgroundOption.add(jButtonPanel, BorderLayout.SOUTH);
 	}
  
  
