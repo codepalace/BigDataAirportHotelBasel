@@ -129,9 +129,9 @@ public class UserManager extends JDialog {
 	this.list = new JList<String>(model);
 	
 	//Initialize the JButtons 
-	this.deleteUserJButton = new MyButton("/img/benutzer_loeschen.png");
-	this.addUserJButton = new MyButton("/img/benutzer_hinzufuegen.png");
-	this.editUserJButton = new MyButton("/img/benutzer_bearbeiten.png");
+	this.deleteUserJButton = new MyButton("/img/benutzer_loeschen2.png");
+	this.addUserJButton = new MyButton("/img/benutzer_hinzufuegen2.png");
+	this.editUserJButton = new MyButton("/img/benutzer_bearbeiten2.png");
 	
 	//adding all elements to container
 	addElementsToGUI();
