@@ -52,7 +52,7 @@ public class LogicModelUserManager {
 		NewUser newUser = new NewUser(userManager, true);
 		
 		//New instance the LogicModelNewUser. As argument become LogicModelUserManager.
-		LogicModelNewUser logicModelNewUser = new LogicModelNewUser(this);
+		LogicModelNewUser logicModelNewUser = new LogicModelNewUser(this, newUser);
 		
 		//new instance Controller Class NewUserController
 		new NewUserController(newUser, logicModelNewUser);
