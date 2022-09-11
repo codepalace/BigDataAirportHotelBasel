@@ -8,6 +8,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -32,15 +33,21 @@ public class NewUser extends JDialog {
 	
 	private JPanel mainJPanel, entriesPanel, containerButtonPanel;
 	
-	private JLabel userNameJLabel, passwordJLabel; 
+	private JLabel userNameJLabel, passwordJLabel, benutzerrechten; 
 	
 	//Image for the modal Window
 		private JLabel imgModal;
 		
 		public MyButton btnSave, btnCancelSave;
-		
+	
 		public JTextField newUserJTextField;
 		public JPasswordField passwordField;
+
+		//Object to select the User Rights.
+		public JComboBox<String>benutzerRechtenJComboBox;
+		
+		private String[]choicesBenutzerRechten;
+		
 
 		private GridBagLayout mainGBL, gbl;
 		private GridBagConstraints mainGBC, gbc;
@@ -121,6 +128,19 @@ public class NewUser extends JDialog {
 			this.passwordField = new JPasswordField(20);
 			this.passwordField.setText("");
 			
+			this.benutzerrechten = new JLabel("Benutzerrechten:");
+			this.benutzerrechten.setPreferredSize(new Dimension(110,20));
+			this.benutzerrechten.setHorizontalAlignment(SwingConstants.RIGHT);
+			this.benutzerrechten.setFont(new Font("Verdana", Font.BOLD, 16));
+			
+			
+			this.choicesBenutzerRechten = new String[]{"Benutzerrechte auswählen", "Manager", "Mitarbeiter"};
+			
+			this.benutzerRechtenJComboBox = new JComboBox<String>(choicesBenutzerRechten);
+			this.benutzerRechtenJComboBox.setFont(new Font("Verdana", Font.BOLD, 14));
+			
+			
+			
 			
 			//MyButton and containerButtonPanel
 			this.btnSave = new MyButton("/img/btn_speichern_black.png");
@@ -128,6 +148,8 @@ public class NewUser extends JDialog {
 			
 			this.containerButtonPanel = new JPanel(new BorderLayout());
 			this.containerButtonPanel.setOpaque(false);
+			
+			
 			
 			
 			
@@ -185,6 +207,17 @@ public class NewUser extends JDialog {
 			this.gbc.gridy = 1; 
 			this.gbc.insets = new Insets(5, 5, 0, 0);
 			this.entriesPanel.add(this.passwordField, gbc);
+			
+			this.gbc.gridx = 0; 
+			this.gbc.gridy = 2; 
+			this.gbc.insets = new Insets(5, 0, 0, 0);
+			this.entriesPanel.add(this.benutzerrechten, gbc);
+			
+
+			this.gbc.gridx = 1;
+			this.gbc.gridy = 2; 
+			this.gbc.insets = new Insets(5, 5, 0, 0);
+			this.entriesPanel.add(this.benutzerRechtenJComboBox, gbc);
 			
 
 		
