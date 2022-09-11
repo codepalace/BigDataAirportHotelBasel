@@ -33,14 +33,14 @@ public class NewUser extends JDialog {
 	
 	private JPanel mainJPanel, entriesPanel, containerButtonPanel;
 	
-	private JLabel userNameJLabel, passwordJLabel, benutzerrechten; 
+	private JLabel userNameJLabel, passwordJLabel, benutzerrechten, abkuerzungMAJLabel; 
 	
 	//Image for the modal Window
 		private JLabel imgModal;
 		
 		public MyButton btnSave, btnCancelSave;
 	
-		public JTextField newUserJTextField;
+		public JTextField newUserJTextField, abkuerzungMAJTextField;
 		public JPasswordField passwordField;
 
 		//Object to select the User Rights.
@@ -64,7 +64,7 @@ public class NewUser extends JDialog {
 	
 	private void init() {
 		
-		setSize(530, 200);
+		setSize(530, 280);
 		
 		setLocationRelativeTo(null);
 		
@@ -112,12 +112,12 @@ public class NewUser extends JDialog {
 			this.entriesPanel.setOpaque(false);
 			
 			this.userNameJLabel = new JLabel("Benutzer:");
-			this.userNameJLabel.setPreferredSize(new Dimension(110,20));
+			this.userNameJLabel.setPreferredSize(new Dimension(160,20));
 			this.userNameJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 			this.userNameJLabel.setFont(new Font("Verdana", Font.BOLD, 16));
 			
 			this.passwordJLabel = new JLabel("Password:");
-			this.passwordJLabel.setPreferredSize(new Dimension(110,20));
+			this.passwordJLabel.setPreferredSize(new Dimension(160,20));
 			this.passwordJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 			this.passwordJLabel.setFont(new Font("Verdana", Font.BOLD, 16));
 			
@@ -126,18 +126,35 @@ public class NewUser extends JDialog {
 			this.newUserJTextField.setText("");
 			
 			this.passwordField = new JPasswordField(20);
+
 			this.passwordField.setText("");
 			
+			//Initialize the JLabel for the user rights
 			this.benutzerrechten = new JLabel("Benutzerrechten:");
-			this.benutzerrechten.setPreferredSize(new Dimension(110,20));
+			this.benutzerrechten.setPreferredSize(new Dimension(160,20));
 			this.benutzerrechten.setHorizontalAlignment(SwingConstants.RIGHT);
 			this.benutzerrechten.setFont(new Font("Verdana", Font.BOLD, 16));
 			
-			
+			//Initialize the Array with the choices for the User rights.
 			this.choicesBenutzerRechten = new String[]{"Benutzerrechte auswählen", "Manager", "Mitarbeiter"};
 			
+			
+			//Initialize the JComboBox element for the User Rights. 
 			this.benutzerRechtenJComboBox = new JComboBox<String>(choicesBenutzerRechten);
 			this.benutzerRechtenJComboBox.setFont(new Font("Verdana", Font.BOLD, 14));
+
+			//Initialize the JLabel element for the abbreviation name for the Staff or Administrator user. 
+			this.abkuerzungMAJLabel = new JLabel("Kürzel MA:");
+			this.abkuerzungMAJLabel.setPreferredSize(new Dimension(160,20));
+			this.abkuerzungMAJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+			this.abkuerzungMAJLabel.setFont(new Font("Verdana", Font.BOLD, 14));
+			
+			//Initialize the JText element for the abbreviation name for Staff or Administrator.
+			this.abkuerzungMAJTextField = new JTextField(20);
+			this.abkuerzungMAJTextField.setText("");
+			
+			
+			
 			
 			
 			
@@ -190,19 +207,22 @@ public class NewUser extends JDialog {
 			this.gbc.gridy = 0;
 			this.entriesPanel.add(this.userNameJLabel, gbc);
 			
-
+			this.gbc.fill = GridBagConstraints.HORIZONTAL;
+			this.gbc.weightx = 0.5;
 			this.gbc.gridx = 1;
 			this.gbc.gridy = 0;
 			this.gbc.insets = new Insets(0, 5, 0, 0);
 			this.entriesPanel.add(this.newUserJTextField, gbc);
 			
-			
+
 			this.gbc.gridx = 0; 
 			this.gbc.gridy = 1; 
 			this.gbc.insets = new Insets(5, 0, 0, 0);
 			this.entriesPanel.add(this.passwordJLabel, gbc);
 			
 
+			this.gbc.fill = GridBagConstraints.HORIZONTAL;
+			this.gbc.weightx = 0.5;
 			this.gbc.gridx = 1;
 			this.gbc.gridy = 1; 
 			this.gbc.insets = new Insets(5, 5, 0, 0);
@@ -210,14 +230,27 @@ public class NewUser extends JDialog {
 			
 			this.gbc.gridx = 0; 
 			this.gbc.gridy = 2; 
-			this.gbc.insets = new Insets(5, 0, 0, 0);
+			this.gbc.insets = new Insets(15, 0, 0, 0);
 			this.entriesPanel.add(this.benutzerrechten, gbc);
 			
-
+			this.gbc.fill = GridBagConstraints.HORIZONTAL;
+			this.gbc.weightx = 0.5;
 			this.gbc.gridx = 1;
 			this.gbc.gridy = 2; 
-			this.gbc.insets = new Insets(5, 5, 0, 0);
+			this.gbc.insets = new Insets(15, 5, 0, 0);
 			this.entriesPanel.add(this.benutzerRechtenJComboBox, gbc);
+			
+			this.gbc.gridx = 0; 
+			this.gbc.gridy = 3; 
+			this.gbc.insets = new Insets(15, 0, 0, 0);
+			this.entriesPanel.add(this.abkuerzungMAJLabel, gbc);
+			
+			this.gbc.fill = GridBagConstraints.HORIZONTAL;
+			this.gbc.weightx = 0.5;
+			this.gbc.gridx = 1;
+			this.gbc.gridy = 3; 
+			this.gbc.insets = new Insets(15, 5, 0, 0);
+			this.entriesPanel.add(this.abkuerzungMAJTextField, gbc);
 			
 
 		
@@ -242,7 +275,6 @@ public class NewUser extends JDialog {
 			mainGBC.gridx = 1;
 			mainGBC.gridy = 0;
 			mainGBL.setConstraints(this.entriesPanel, mainGBC);
-			
 			
 			
 			mainGBC.gridx = 0;
