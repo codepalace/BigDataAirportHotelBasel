@@ -249,6 +249,16 @@ public class UserManager extends JDialog {
 		this.panelWithBackgroundOption.add(listPanel, BorderLayout.NORTH);
 		this.panelWithBackgroundOption.add(jButtonPanel, BorderLayout.SOUTH);
 	}
+	
+	
+	
+	/**
+	 * @description Method to add the new user to the model(list)
+	 * @param newUserToList
+	 */
+	public void addNewUserToList(String newUserToList) {
+		this.model.addElement(newUserToList);
+	}
  
  
  

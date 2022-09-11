@@ -11,13 +11,15 @@ public class LogicModelUserManager {
 	private BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame;
 	private UserManager userManager;
 	
-	//Instance PropertiesWriter to write new Properties
-	private PropertiesWriter propertieswriter;
+//	//Instance PropertiesWriter to write new Properties
+//	private PropertiesWriter propertieswriter;
+//	
+//	//Variables for the new user properties
+//	private String userNamePropertieName, userNamePropertieValue, passwordPropertieName, passwordPropertieValue ;
+
+	private NewUser newUser;
 	
-	//Variables for the new user properties
-	private String userNamePropertieName, userNamePropertieValue, passwordPropertieName, passwordPropertieValue ;
-
-
+	private String newUserString;
 	
 	public LogicModelUserManager(BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame, UserManager userManager) {
 		
@@ -35,21 +37,21 @@ public class LogicModelUserManager {
 	public void addNewUser() {
 		
 		
-		//Initialize the PropertiesWriter Instance
-		this.propertieswriter = new PropertiesWriter();
-		
-		//Initialize the variables for the new User Properties. 
-		this.userNamePropertieName = "db.user.";
-		
-		this.userNamePropertieValue = ""; //We have to get the value from a new GUI we are going to create
-		
-		
-		this.passwordPropertieName = "db.password.user." + this.userNamePropertieValue;
-		
-		this.passwordPropertieValue = ""; //We have to get the value from a new GUI we are going to create
+//		//Initialize the PropertiesWriter Instance
+//		this.propertieswriter = new PropertiesWriter();
+//		
+//		//Initialize the variables for the new User Properties. 
+//		this.userNamePropertieName = "db.user.";
+//		
+//		this.userNamePropertieValue = ""; //We have to get the value from a new GUI we are going to create
+//		
+//		
+//		this.passwordPropertieName = "db.password.user." + this.userNamePropertieValue;
+//		
+//		this.passwordPropertieValue = ""; //We have to get the value from a new GUI we are going to create
 		
 		//New instance of NewUser Class extended from JDialog, will be blocked in background the userManager instance with true
-		NewUser newUser = new NewUser(userManager, true);
+		this.newUser = new NewUser(userManager, true);
 		
 		//New instance the LogicModelNewUser. As argument become LogicModelUserManager.
 		LogicModelNewUser logicModelNewUser = new LogicModelNewUser(this, newUser);
@@ -61,6 +63,19 @@ public class LogicModelUserManager {
 		newUser.setVisible(true);
 		
 		
+	}
+	
+	
+	/**
+	 * @description Method to add the new user to the list before we encrypt the value and save in the configuration file
+	 * @param newUserString
+	 */
+	public void addNewUserToTheList(String newUserString) {
+		
+		this.newUserString = newUserString;
+		
+		//We call to add the new user in the GUI list
+		this.userManager.addNewUserToList(this.newUserString);
 	}
 
 }

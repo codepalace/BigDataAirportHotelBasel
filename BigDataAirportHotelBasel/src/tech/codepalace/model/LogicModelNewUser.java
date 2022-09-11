@@ -4,6 +4,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
+import tech.codepalace.utility.DataEncryption;
+import tech.codepalace.utility.PropertiesWriter;
 import tech.codepalace.view.frames.NewUser;
 
 /**
@@ -28,6 +30,18 @@ public class LogicModelNewUser {
 	//Image error JOptionPane
 	public ImageIcon errorImg = new ImageIcon(getClass().getResource("/img/error.png"));
 	
+	
+	//Instance PropertiesWriter to write new Properties
+	private PropertiesWriter propertieswriter;
+	
+	//Instance of DataEncryption to encrypt the data we want to write in the configuration file
+	DataEncryption dataEncryption;
+	
+	
+		
+	//Variables for the new user properties
+	private String userNamePropertieName, userNamePropertieValue, passwordPropertieName, passwordPropertieValue;
+	
 	public LogicModelNewUser(LogicModelUserManager logicModelUserManager, NewUser newUser) {
 		
 		this.logicModelUserManager = logicModelUserManager;
@@ -51,6 +65,55 @@ public class LogicModelNewUser {
 		//We evaluate if the User Entry is correct in the next commit we validate also the password i go for the ordinary Job.
 		if(validateNewUserEntry(this.newUserString) && validatePasswordNewUserEntry(this.passwordNewUserString)) {
 			JOptionPane.showMessageDialog(null, "User is correct");
+			
+			//Hora de guardar el nuevo usuario Propertieswriter archivo de configuracion.
+			//Initialize the PropertiesWriter Instance
+			this.propertieswriter = new PropertiesWriter();
+			
+			//Initialize the variables for the new User Properties. 
+			this.userNamePropertieName = "db.user.";
+			
+			//Set the userNamePropertieValue
+			this.userNamePropertieValue = this.newUserString;
+			
+			//set also the value for passwordPropertieName
+			this.passwordPropertieName = "db.password.user." + this.userNamePropertieValue;
+			
+			//set the value for the passwordPropertieValue
+			this.passwordPropertieValue = this.passwordNewUserString;
+			
+			
+			
+			//Now is time to encrypt the values before calling the propertieswriter instance for writing in the configuration file.
+			
+			//Initialize the PropertiesWriter Instance.
+			this.propertieswriter = new PropertiesWriter();
+			
+			//Initialize the DataEncryption instance.
+			this.dataEncryption = new DataEncryption();
+			
+			//We add the New user to the list calling the addNewUserToTheList Method von logicModelUserManager
+			this.logicModelUserManager.addNewUserToTheList(this.newUserString);
+			
+			//We encrypt the data and store them in the variables
+			try {
+				this.userNamePropertieName = this.dataEncryption.encryptData(this.userNamePropertieName);
+				this.userNamePropertieValue = this.dataEncryption.encryptData(this.userNamePropertieValue);
+				this.passwordPropertieName = this.dataEncryption.encryptData(this.passwordPropertieName);
+				this.passwordPropertieValue = this.dataEncryption.encryptData(this.passwordPropertieValue);
+				
+			
+				//We write the Properties in the configuration file
+				this.propertieswriter.writeProperties(this.userNamePropertieName, this.userNamePropertieValue);
+				this.propertieswriter.writeProperties(this.passwordPropertieName, this.passwordPropertieValue);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			
+			
+			
 		}
 		
 	}
