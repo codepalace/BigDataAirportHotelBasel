@@ -20,12 +20,12 @@ public class LogicModelNewUser {
 	private NewUser newUser;
 	
 	//Variables to store temporarily the information entered by the user(Admin).
-	private String newUserString="", passwordNewUserString="";
+	private String newUserString="", passwordNewUserString="", userRights;
 	
 	//Arrays used to delete the whitespace
 	private char[] userNameArray, passwordArray;
 	
-	private boolean newUserEntryCorrect = false, passwordNewUserCorrect = false;
+	private boolean newUserEntryCorrect = false, passwordNewUserCorrect = false, newUserRightsCorrect = false;
 	
 	//Image error JOptionPane
 	public ImageIcon errorImg = new ImageIcon(getClass().getResource("/img/error.png"));
@@ -58,12 +58,14 @@ public class LogicModelNewUser {
 	 * @param newUserString
 	 * @param passwordNewUserString
 	 */
-	public void saveNewUser(String newUserString, String passwordNewUserString) {
+	public void saveNewUser(String newUserString, String passwordNewUserString, String userRights) {
 		this.newUserString = newUserString;
 		this.passwordNewUserString = passwordNewUserString;
+		this.userRights = userRights;
 		
 		//We evaluate if the User Entry is correct in the next commit we validate also the password i go for the ordinary Job.
-		if(validateNewUserEntry(this.newUserString) && validatePasswordNewUserEntry(this.passwordNewUserString)) {
+		if(validateNewUserEntry(this.newUserString) && validatePasswordNewUserEntry(this.passwordNewUserString)
+				&& validateNewUserRights(this.userRights)) {
 			JOptionPane.showMessageDialog(null, "User is correct");
 			
 			//Hora de guardar el nuevo usuario Propertieswriter archivo de configuracion.
@@ -92,24 +94,25 @@ public class LogicModelNewUser {
 			//Initialize the DataEncryption instance.
 			this.dataEncryption = new DataEncryption();
 			
+			
 			//We add the New user to the list calling the addNewUserToTheList Method von logicModelUserManager
-			this.logicModelUserManager.addNewUserToTheList(this.newUserString);
-			
-			//We encrypt the data and store them in the variables
-			try {
-				this.userNamePropertieName = this.dataEncryption.encryptData(this.userNamePropertieName);
-				this.userNamePropertieValue = this.dataEncryption.encryptData(this.userNamePropertieValue);
-				this.passwordPropertieName = this.dataEncryption.encryptData(this.passwordPropertieName);
-				this.passwordPropertieValue = this.dataEncryption.encryptData(this.passwordPropertieValue);
-				
-			
-				//We write the Properties in the configuration file
-				this.propertieswriter.writeProperties(this.userNamePropertieName, this.userNamePropertieValue);
-				this.propertieswriter.writeProperties(this.passwordPropertieName, this.passwordPropertieValue);
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+//			this.logicModelUserManager.addNewUserToTheList(this.newUserString);
+//			
+//			//We encrypt the data and store them in the variables
+//			try {
+//				this.userNamePropertieName = this.dataEncryption.encryptData(this.userNamePropertieName);
+//				this.userNamePropertieValue = this.dataEncryption.encryptData(this.userNamePropertieValue);
+//				this.passwordPropertieName = this.dataEncryption.encryptData(this.passwordPropertieName);
+//				this.passwordPropertieValue = this.dataEncryption.encryptData(this.passwordPropertieValue);
+//				
+//			
+//				//We write the Properties in the configuration file
+//				this.propertieswriter.writeProperties(this.userNamePropertieName, this.userNamePropertieValue);
+//				this.propertieswriter.writeProperties(this.passwordPropertieName, this.passwordPropertieValue);
+//				
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
 			
 			
 			
@@ -251,6 +254,28 @@ public class LogicModelNewUser {
 		return passwordNewUserCorrect;
 		
 		
+	}
+	
+	
+	
+	/**
+	 * @description Method to validate if the new User Rights was selected to be modified
+	 * @param userRights
+	 * @return
+	 */
+	private boolean validateNewUserRights(String userRights) {
+		
+		if(this.userRights.equalsIgnoreCase("Benutzerrechte auswählen")) {
+			
+			//We invoke a new Thread with the error message.
+			SwingUtilities.invokeLater( () ->  JOptionPane.showMessageDialog(null, "Sie müssen die Rechte des Benutzers konfigurieren"
+					   , "Kritischer Fehler Benutzerrechten", JOptionPane.ERROR_MESSAGE, this.errorImg));
+		
+		}else {
+			this.newUserRightsCorrect = true;
+		}
+		
+		return this.newUserRightsCorrect;
 	}
 
 }
