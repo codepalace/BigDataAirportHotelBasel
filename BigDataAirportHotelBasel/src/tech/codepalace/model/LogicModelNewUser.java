@@ -40,7 +40,8 @@ public class LogicModelNewUser {
 	
 		
 	//Variables for the new user properties
-	private String userNamePropertieName, userNamePropertieValue, passwordPropertieName, passwordPropertieValue;
+	private String userNamePropertieName, userNamePropertieValue, passwordPropertieName, passwordPropertieValue, 
+	privilegePropertieName, privilegePropertieValue, abkuerzungPropertieName, abkuerzungPropertieValue;
 	
 	public LogicModelNewUser(LogicModelUserManager logicModelUserManager, NewUser newUser) {
 		
@@ -61,29 +62,59 @@ public class LogicModelNewUser {
 	public void saveNewUser(String newUserString, String passwordNewUserString, String userRights, String userAbbreviationName) {
 		this.newUserString = newUserString;
 		this.passwordNewUserString = passwordNewUserString;
+		
 		this.userRights = userRights;
+		
+		switch (this.userRights) {
+			case "Manager":
+				
+				this.userRights = "ADMIN";
+
+				break;
+				
+			case "Mitarbeiter":
+				this.userRights = "STAFF";
+
+				break;
+		}
+		
 		this.userAbbreviationName = userAbbreviationName;
 		
 		//We evaluate if the User Entry is correct in the next commit we validate also the password i go for the ordinary Job.
 		if(validateNewUserEntry() && validatePasswordNewUserEntry()
 				&& validateNewUserRights() && validateNewUserAbbreviationName()) {
-			JOptionPane.showMessageDialog(null, "User is correct");
+//			JOptionPane.showMessageDialog(null, "User is correct");
 			
 			//Hora de guardar el nuevo usuario Propertieswriter archivo de configuracion.
 			//Initialize the PropertiesWriter Instance
 			this.propertieswriter = new PropertiesWriter();
 			
 			//Initialize the variables for the new User Properties. 
-			this.userNamePropertieName = "db.user.";
+			this.userNamePropertieName = "db.user." + this.newUserString;
 			
 			//Set the userNamePropertieValue
 			this.userNamePropertieValue = this.newUserString;
 			
 			//set also the value for passwordPropertieName
-			this.passwordPropertieName = "db.password.user." + this.userNamePropertieValue;
+			this.passwordPropertieName = "db.password.user." + this.newUserString;
 			
 			//set the value for the passwordPropertieValue
 			this.passwordPropertieValue = this.passwordNewUserString;
+			
+			//set the value for the privilegePropertieName
+			this.privilegePropertieName = "db.privilege.user." + this.newUserString;
+			
+			//set the value for the privilegePropertieValue(User Rights).
+			this.privilegePropertieValue = this.userRights;
+			
+			//set the abkuerzungPropertieName value
+			this.abkuerzungPropertieName = "db.abkuerzungma.user" + this.newUserString;
+			
+			//set the value of abkuerzungPropertieValue(User Abbreviation Name).
+			this.abkuerzungPropertieValue = this.userAbbreviationName;
+			
+			
+			
 			
 			
 			
@@ -97,25 +128,38 @@ public class LogicModelNewUser {
 			
 			
 			//We add the New user to the list calling the addNewUserToTheList Method von logicModelUserManager
-//			this.logicModelUserManager.addNewUserToTheList(this.newUserString);
-//			
-//			//We encrypt the data and store them in the variables
-//			try {
-//				this.userNamePropertieName = this.dataEncryption.encryptData(this.userNamePropertieName);
-//				this.userNamePropertieValue = this.dataEncryption.encryptData(this.userNamePropertieValue);
-//				this.passwordPropertieName = this.dataEncryption.encryptData(this.passwordPropertieName);
-//				this.passwordPropertieValue = this.dataEncryption.encryptData(this.passwordPropertieValue);
-//				
-//			
-//				//We write the Properties in the configuration file
-//				this.propertieswriter.writeProperties(this.userNamePropertieName, this.userNamePropertieValue);
-//				this.propertieswriter.writeProperties(this.passwordPropertieName, this.passwordPropertieValue);
-//				
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
+			this.logicModelUserManager.addNewUserToTheList(this.newUserString);
+			
+			//We encrypt the data and store them in the variables
+			try {
+				this.userNamePropertieName = this.dataEncryption.encryptData(this.userNamePropertieName);
+				this.userNamePropertieValue = this.dataEncryption.encryptData(this.userNamePropertieValue);
+				
+				this.passwordPropertieName = this.dataEncryption.encryptData(this.passwordPropertieName);
+				this.passwordPropertieValue = this.dataEncryption.encryptData(this.passwordPropertieValue);
+				
+				this.privilegePropertieName = this.dataEncryption.encryptData(this.privilegePropertieName);
+				this.privilegePropertieValue = this.dataEncryption.encryptData(this.privilegePropertieValue);
+				
+				this.abkuerzungPropertieName = this.dataEncryption.encryptData(this.abkuerzungPropertieName);
+				this.abkuerzungPropertieValue = this.dataEncryption.encryptData(this.abkuerzungPropertieValue);
+				
+			
+				//We write the Properties in the configuration file
+				this.propertieswriter.writeProperties(this.userNamePropertieName, this.userNamePropertieValue);
+				this.propertieswriter.writeProperties(this.passwordPropertieName, this.passwordPropertieValue);
+				this.propertieswriter.writeProperties(this.privilegePropertieName, this.privilegePropertieValue);
+				this.propertieswriter.writeProperties(this.abkuerzungPropertieName, this.abkuerzungPropertieValue);
+
+
+				
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			
 			
+			this.newUser.dispose();
 			
 			
 		}

@@ -1,14 +1,12 @@
 package tech.codepalace.model;
 
 import tech.codepalace.controller.NewUserController;
-import tech.codepalace.utility.PropertiesWriter;
-import tech.codepalace.view.frames.BigDataAirportHotelBaselStartFrame;
 import tech.codepalace.view.frames.NewUser;
 import tech.codepalace.view.frames.UserManager;
 
 public class LogicModelUserManager {
 	
-	private BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame;
+
 	private UserManager userManager;
 	
 //	//Instance PropertiesWriter to write new Properties
@@ -21,9 +19,9 @@ public class LogicModelUserManager {
 	
 	private String newUserString;
 	
-	public LogicModelUserManager(BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame, UserManager userManager) {
+	public LogicModelUserManager(UserManager userManager) {
 		
-		this.bigDataAirportHotelBaselStartFrame = bigDataAirportHotelBaselStartFrame;
+
 		this.userManager = userManager;
 		
 		

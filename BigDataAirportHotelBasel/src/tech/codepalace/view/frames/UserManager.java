@@ -60,7 +60,6 @@ public class UserManager extends JDialog {
 	
 	//Variables to store the key and the value of the Properties
 	private String key = "";
-	private String value = "";
 	
 	//Variable to store the users when we iterate with the Properties.
 	private String user = "";
@@ -207,9 +206,6 @@ public class UserManager extends JDialog {
 	    	//set the value of key returning the element.
 	    	this.key = enums.nextElement();
 	    	
-	    	//set the value for the value variable calling properties and Method getProperty(As argument the key).
-	    	this.value = properties.getProperty(key);
-//			System.out.println("key:" +key + " value: " + value );
 		
 		   try {
 			

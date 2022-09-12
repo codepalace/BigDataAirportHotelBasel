@@ -261,7 +261,7 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 					//Create and initialize UserManager Object with the argument JFrame in background and true to be blocked the JFrame in Background
 					UserManager userManager = new UserManager(bigDataAirportHotelBaselStartFrame, true);
 					
-					LogicModelUserManager logicModelUserManager = new LogicModelUserManager(bigDataAirportHotelBaselStartFrame, userManager);
+					LogicModelUserManager logicModelUserManager = new LogicModelUserManager(userManager);
 					
 					new UserManagerController(userManager, logicModelUserManager);
 					
@@ -306,6 +306,13 @@ protected void checkPrivilegeUser() {
 			this.bigDataAirportHotelBaselStartFrame.btn_createDB.setEnabled(true);
 			break;
 
+		case "STAFF":
+			//As Staff we make visible only the JButtons for the Staff
+			this.bigDataAirportHotelBaselStartFrame.btn_benutzerVerwalten.setVisible(false);
+			this.bigDataAirportHotelBaselStartFrame.btn_benutzerVerwalten.setEnabled(false);
+			this.bigDataAirportHotelBaselStartFrame.btn_createDB.setVisible(false);
+			this.bigDataAirportHotelBaselStartFrame.btn_createDB.setEnabled(false);
+			break;
 		default:
 			break;
 		}

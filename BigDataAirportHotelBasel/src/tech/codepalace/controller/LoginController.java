@@ -265,6 +265,14 @@ public class LoginController implements ActionListener, KeyListener, WindowListe
 					this.bigDataAirportHotelBaselStartFrame.btn_createDB.setEnabled(true);
 					break;
 
+				case "STAFF":	
+					//As Staff we make visible only the JButtons for the Staff
+					this.bigDataAirportHotelBaselStartFrame.btn_benutzerVerwalten.setVisible(false);
+					this.bigDataAirportHotelBaselStartFrame.btn_benutzerVerwalten.setEnabled(false);
+					this.bigDataAirportHotelBaselStartFrame.btn_createDB.setVisible(false);
+					this.bigDataAirportHotelBaselStartFrame.btn_createDB.setEnabled(false);
+					break;
+					
 				default:
 					break;
 				}
