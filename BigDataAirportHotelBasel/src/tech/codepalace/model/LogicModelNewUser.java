@@ -20,12 +20,12 @@ public class LogicModelNewUser {
 	private NewUser newUser;
 	
 	//Variables to store temporarily the information entered by the user(Admin).
-	private String newUserString="", passwordNewUserString="", userRights;
+	private String newUserString="", passwordNewUserString="", userRights, userAbbreviationName;
 	
 	//Arrays used to delete the whitespace
-	private char[] userNameArray, passwordArray;
+	private char[] userNameArray, passwordArray, userAbbreviationNameArray;
 	
-	private boolean newUserEntryCorrect = false, passwordNewUserCorrect = false, newUserRightsCorrect = false;
+	private boolean newUserEntryCorrect = false, passwordNewUserCorrect = false, newUserRightsCorrect = false, userAbbreviationNameCorrect;
 	
 	//Image error JOptionPane
 	public ImageIcon errorImg = new ImageIcon(getClass().getResource("/img/error.png"));
@@ -58,14 +58,15 @@ public class LogicModelNewUser {
 	 * @param newUserString
 	 * @param passwordNewUserString
 	 */
-	public void saveNewUser(String newUserString, String passwordNewUserString, String userRights) {
+	public void saveNewUser(String newUserString, String passwordNewUserString, String userRights, String userAbbreviationName) {
 		this.newUserString = newUserString;
 		this.passwordNewUserString = passwordNewUserString;
 		this.userRights = userRights;
+		this.userAbbreviationName = userAbbreviationName;
 		
 		//We evaluate if the User Entry is correct in the next commit we validate also the password i go for the ordinary Job.
-		if(validateNewUserEntry(this.newUserString) && validatePasswordNewUserEntry(this.passwordNewUserString)
-				&& validateNewUserRights(this.userRights)) {
+		if(validateNewUserEntry() && validatePasswordNewUserEntry()
+				&& validateNewUserRights() && validateNewUserAbbreviationName()) {
 			JOptionPane.showMessageDialog(null, "User is correct");
 			
 			//Hora de guardar el nuevo usuario Propertieswriter archivo de configuracion.
@@ -127,7 +128,7 @@ public class LogicModelNewUser {
 	 * @param newUserString
 	 * @return
 	 */
-	private boolean validateNewUserEntry(String newUserString) {
+	private boolean validateNewUserEntry() {
 		
 		//We store the value in one array so we can check for empty space.
 		this.userNameArray = this.newUserString.toCharArray();
@@ -202,7 +203,7 @@ public class LogicModelNewUser {
 	 * @param passwordNewUserString
 	 * @return
 	 */
-	private boolean validatePasswordNewUserEntry(String passwordNewUserString) {
+	private boolean validatePasswordNewUserEntry() {
 		
 		//By this method is the same process as the Method validateNewUserEntry only with the different is for checking the password entered by the user.
 		
@@ -263,7 +264,7 @@ public class LogicModelNewUser {
 	 * @param userRights
 	 * @return
 	 */
-	private boolean validateNewUserRights(String userRights) {
+	private boolean validateNewUserRights() {
 		
 		if(this.userRights.equalsIgnoreCase("Benutzerrechte auswählen")) {
 			
@@ -276,6 +277,65 @@ public class LogicModelNewUser {
 		}
 		
 		return this.newUserRightsCorrect;
+	}
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * @description Method to validate if the new User Abbreviation name was correct entered.
+	 * @param userAbbreviationName
+	 * @return
+	 */
+	private boolean validateNewUserAbbreviationName() {
+		
+		this.userAbbreviationNameArray = this.userAbbreviationName.toCharArray();
+		
+		
+		if(this.userAbbreviationName.equalsIgnoreCase("")) {
+				
+				SwingUtilities.invokeLater( () ->  JOptionPane.showMessageDialog(null, "Bitte geben Sie einen Abkürzungsnamen für den neuen Benutzer ein. das Kürzel MA darf nicht leer sein"
+						   , "Kritischer Fehler Kürzel MA", JOptionPane.ERROR_MESSAGE, this.errorImg));
+				
+				
+				this.newUser.abkuerzungMAJTextField.requestFocus();
+				
+				this.userAbbreviationNameCorrect = false;
+				
+			}else {
+				
+				this.userAbbreviationNameCorrect = true;
+				
+				//we check that no blank spaces are entered
+				for(int i=0; i< this.userAbbreviationNameArray.length; i++) {
+					
+					char currentIndex = this.userAbbreviationNameArray[i];
+
+					if(currentIndex == ' ') {
+
+						this.userAbbreviationNameCorrect = false;
+
+					}
+					
+					if (i == userAbbreviationNameArray.length-1) {
+						
+						if (!this.userAbbreviationNameCorrect) {
+							
+							SwingUtilities.invokeLater( () ->  JOptionPane.showMessageDialog(null, "Leerzeichen sind für das Abkürzungsnamen nicht zulässig\\n\\nVersuchen Sie es erneut mit einem gültigen Abkürzungsnamen "
+									   , "Kritischer Fehler Kürzel MA", JOptionPane.ERROR_MESSAGE, this.errorImg));
+							
+							this.newUser.abkuerzungMAJTextField.requestFocus();
+						}
+							
+						}
+						
+						}
+			}
+		
+		return this.userAbbreviationNameCorrect;
 	}
 
 }
