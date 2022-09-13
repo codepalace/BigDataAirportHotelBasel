@@ -9,12 +9,6 @@ public class LogicModelUserManager {
 
 	private UserManager userManager;
 	
-//	//Instance PropertiesWriter to write new Properties
-//	private PropertiesWriter propertieswriter;
-//	
-//	//Variables for the new user properties
-//	private String userNamePropertieName, userNamePropertieValue, passwordPropertieName, passwordPropertieValue ;
-
 	private NewUser newUser;
 	
 	private String newUserString;
@@ -34,19 +28,6 @@ public class LogicModelUserManager {
 	 */
 	public void addNewUser() {
 		
-		
-//		//Initialize the PropertiesWriter Instance
-//		this.propertieswriter = new PropertiesWriter();
-//		
-//		//Initialize the variables for the new User Properties. 
-//		this.userNamePropertieName = "db.user.";
-//		
-//		this.userNamePropertieValue = ""; //We have to get the value from a new GUI we are going to create
-//		
-//		
-//		this.passwordPropertieName = "db.password.user." + this.userNamePropertieValue;
-//		
-//		this.passwordPropertieValue = ""; //We have to get the value from a new GUI we are going to create
 		
 		//New instance of NewUser Class extended from JDialog, will be blocked in background the userManager instance with true
 		this.newUser = new NewUser(userManager, true);
