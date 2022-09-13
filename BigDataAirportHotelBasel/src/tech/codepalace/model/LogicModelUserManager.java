@@ -1,5 +1,7 @@
 package tech.codepalace.model;
 
+import javax.swing.JOptionPane;
+
 import tech.codepalace.controller.NewUserController;
 import tech.codepalace.view.frames.NewUser;
 import tech.codepalace.view.frames.UserManager;
@@ -55,6 +57,18 @@ public class LogicModelUserManager {
 		
 		//We call to add the new user in the GUI list
 		this.userManager.addNewUserToList(this.newUserString);
+	}
+	
+	
+	
+	/**
+	 * @description Method to call for edit a existing user.
+	 * @param userToEdit
+	 */
+	public void editUser(String userToEdit) {
+		
+		JOptionPane.showMessageDialog(null, "ready to edit the user: " + userToEdit);
+		
 	}
 
 }

@@ -48,7 +48,7 @@ public class UserManager extends JDialog {
 	
 	private DefaultListModel<String> model = new DefaultListModel<>();
 	
-	private JList<String> list;
+	public JList<String> list;
 	
 	private JScrollPane listScrollPane;
 	
