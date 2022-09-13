@@ -110,7 +110,7 @@ private void buildTable() {
 	tableHeadersList.add("Buchungskanal");
 	tableHeadersList.add("Bemerkungen");
 	tableHeadersList.add("Schlüssel?");
-	tableHeadersList.add("Kürsel MA");
+	tableHeadersList.add("Kürzel MA");
 	
 	
 	//columns are assigned to the array to be sent at the time of table construction

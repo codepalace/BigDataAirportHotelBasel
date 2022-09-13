@@ -86,7 +86,7 @@ public class FundsachenTable {
 		tableHeadersList.add("Kiste Nr");
 		tableHeadersList.add("Kiste Name");
 		tableHeadersList.add("Rückgabe");
-		tableHeadersList.add("Kürsel MA");
+		tableHeadersList.add("Kürzel MA");
 		
 		
 		
