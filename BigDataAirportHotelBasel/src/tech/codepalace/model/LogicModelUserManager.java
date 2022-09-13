@@ -1,19 +1,23 @@
 package tech.codepalace.model;
 
-import javax.swing.JOptionPane;
-
+import tech.codepalace.controller.EditUserController;
 import tech.codepalace.controller.NewUserController;
+import tech.codepalace.view.frames.EditUserGUI;
 import tech.codepalace.view.frames.NewUser;
 import tech.codepalace.view.frames.UserManager;
 
 public class LogicModelUserManager {
 	
-
+	//Instance UserManager
 	private UserManager userManager;
 	
+	//Instance NewUser
 	private NewUser newUser;
 	
 	private String newUserString;
+	
+	//intances EditUserGUI
+	private EditUserGUI editUserGUI;
 	
 	public LogicModelUserManager(UserManager userManager) {
 		
@@ -67,7 +71,21 @@ public class LogicModelUserManager {
 	 */
 	public void editUser(String userToEdit) {
 		
-		JOptionPane.showMessageDialog(null, "ready to edit the user: " + userToEdit);
+//		JOptionPane.showMessageDialog(null, "ready to edit the user: " + userToEdit);
+		
+		//New instance of EditUserGUI extended from JDialog. userManager instance will be blocked in background with the argument true. 
+		this.editUserGUI = new EditUserGUI(userManager, true);
+		
+		//New instance of LogicModelEditUser initialized
+		LogicModelEditUser logicModelEditUser = new LogicModelEditUser(this, editUserGUI);
+		
+		//new Instance of EditUserController
+		new EditUserController(editUserGUI, logicModelEditUser);
+		
+		//set visible editUserGUI
+		this.editUserGUI.setVisible(true);
+		
+		
 		
 	}
 
