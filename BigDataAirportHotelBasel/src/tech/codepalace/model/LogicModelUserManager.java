@@ -76,6 +76,8 @@ public class LogicModelUserManager {
 		//New instance of EditUserGUI extended from JDialog. userManager instance will be blocked in background with the argument true. 
 		this.editUserGUI = new EditUserGUI(userManager, true);
 		
+		this.editUserGUI.userJTextField.setText(userToEdit);
+		
 		//New instance of LogicModelEditUser initialized
 		LogicModelEditUser logicModelEditUser = new LogicModelEditUser(this, editUserGUI);
 		

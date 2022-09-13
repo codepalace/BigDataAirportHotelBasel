@@ -9,6 +9,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
+import javax.swing.SwingUtilities;
+
 import tech.codepalace.model.LogicModelEditUser;
 import tech.codepalace.view.frames.EditUserGUI;
 
@@ -96,7 +98,21 @@ public class EditUserController implements ActionListener, KeyListener, WindowLi
 	
 	
 	@Override
-	public void windowOpened(WindowEvent e) {}
+	public void windowOpened(WindowEvent e) {
+		
+		//Store the CaretPosition of the userJTextField that will be displayed with the user name to be edited.
+		 int caretPosition = this.editUserGUI.userJTextField.getCaretPosition();
+		 
+		 //invoke a new Thread 
+		 SwingUtilities.invokeLater(new Runnable() {
+		        @Override
+		        public void run() {
+		        	
+		        	//call setCaretPosition to set the cursor position at the end of the JTextField element.
+		        	editUserGUI.userJTextField.setCaretPosition(caretPosition);
+		        }
+		    });
+	}
 
 	@Override
 	public void windowClosing(WindowEvent e) {
