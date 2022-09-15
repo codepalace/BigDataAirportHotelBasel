@@ -110,6 +110,9 @@ public class EditUserController implements ActionListener, KeyListener, WindowLi
 		        	
 		        	//call setCaretPosition to set the cursor position at the end of the JTextField element.
 		        	editUserGUI.userJTextField.setCaretPosition(caretPosition);
+		        	
+		        	//Call the openUserToEdit Method
+		        	logicModelEditUser.openUserToEdit(editUserGUI.userJTextField.getText());
 		        }
 		    });
 	}

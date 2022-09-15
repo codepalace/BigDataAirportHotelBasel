@@ -2,6 +2,7 @@ package tech.codepalace.utility;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -118,7 +119,7 @@ public class PropertiesReader extends Properties {
 	 * @throws Exception
 	 * 
 	 */
-	private void   checkUserName(String key) throws Exception {
+	private void  checkUserName(String key) throws Exception {
 			
 			
 
@@ -262,6 +263,52 @@ public class PropertiesReader extends Properties {
 
 		
 	}
+	
+	
+	
+	
+	/**
+	 * @description Method to read Properties from user in the configuration files. Will return an userAHB with the data we need.
+	 * @param userAHB
+	 * @return
+	 */
+	public UserAHB readPropertiesUserAHBToEdit(UserAHB userAHB) {
+		
+		//Set the value of the userAHB
+		this.userAHB = userAHB;
+		
+		//Set the value of each properties name
+		this.userNamePropertieName = this.userAHB.getUserName();
+		this.abkuerzungPropertieName = this.userAHB.getAbkuerzungMA();
+		this.privilegePropertieName = this.userAHB.getPrivilege();
+		this.passwordPropertieName = this.userAHB.getPassword();
+		
+		
+		//Now is time to read the configuration file and to get every values we need to set to the userAHB to be returned.
+		try(InputStream input = new FileInputStream(projectDirectoryString + File.separator + "config.properties")) {
+			
+			//Initialize the Properties
+			prop = new Properties();
+			
+			//Load the Properties
+			prop.load(input);
+			
+			//Now we set the new values for the userAHB Instance
+			this.userAHB.setUserName(this.prop.getProperty(this.userNamePropertieName));
+			this.userAHB.setAbkuerzungMA(this.prop.getProperty(this.abkuerzungPropertieName));
+			this.userAHB.setPrivilege(this.prop.getProperty(this.privilegePropertieName));
+			this.userAHB.setPassword(this.prop.getProperty(this.passwordPropertieName));
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return this.userAHB;
+		
+	}
+	
 	
 	
 
