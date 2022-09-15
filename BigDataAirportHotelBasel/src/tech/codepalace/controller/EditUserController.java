@@ -101,7 +101,7 @@ public class EditUserController implements ActionListener, KeyListener, WindowLi
 	public void windowOpened(WindowEvent e) {
 		
 		//Store the CaretPosition of the userJTextField that will be displayed with the user name to be edited.
-		 int caretPosition = this.editUserGUI.userJTextField.getCaretPosition();
+		 int caretPosition = this.editUserGUI.abkuerzungMAJTextField.getCaretPosition();
 		 
 		 //invoke a new Thread 
 		 SwingUtilities.invokeLater(new Runnable() {
@@ -109,10 +109,10 @@ public class EditUserController implements ActionListener, KeyListener, WindowLi
 		        public void run() {
 		        	
 		        	//call setCaretPosition to set the cursor position at the end of the JTextField element.
-		        	editUserGUI.userJTextField.setCaretPosition(caretPosition);
+		        	editUserGUI.abkuerzungMAJTextField.setCaretPosition(caretPosition);
 		        	
 		        	//Call the openUserToEdit Method
-		        	logicModelEditUser.openUserToEdit(editUserGUI.userJTextField.getText());
+		        	logicModelEditUser.openUserToEdit(editUserGUI.userNameToBeDisplayed.getText());
 		        }
 		    });
 	}

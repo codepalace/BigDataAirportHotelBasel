@@ -1,6 +1,7 @@
 package tech.codepalace.view.frames;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -32,13 +33,15 @@ public class EditUserGUI extends JDialog {
 	private JPanel mainJPanel, entriesPanel, containerButtonPanel;
 
 	private JLabel userNameJLabel, benutzerrechten, abkuerzungMAJLabel;
+	
+	public JLabel userNameToBeDisplayed;
 
 	// Image for the modal Window
 	private JLabel imgModal;
 
 	public MyButton btnSave, btnCancelSave, changePassword;
 
-	public JTextField userJTextField, abkuerzungMAJTextField;
+	public JTextField abkuerzungMAJTextField;
 
 	// Object to select the User Rights.
 	public JComboBox<String> benutzerRechtenJComboBox;
@@ -115,8 +118,11 @@ public class EditUserGUI extends JDialog {
 			this.userNameJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 			this.userNameJLabel.setFont(new Font("Verdana", Font.BOLD, 16));
 
-			this.userJTextField = new JTextField(20);
-			this.userJTextField.setText("");
+			
+			this.userNameToBeDisplayed = new JLabel();
+			this.userNameToBeDisplayed.setFont(new Font("Verdana", Font.BOLD, 14));
+			this.userNameToBeDisplayed.setBackground(Color.WHITE);
+			this.userNameToBeDisplayed.setOpaque(true);
 
 			// Initialize the JLabel for the user rights
 			this.benutzerrechten = new JLabel("Benutzerrechten:");
@@ -142,6 +148,7 @@ public class EditUserGUI extends JDialog {
 			// Administrator.
 			this.abkuerzungMAJTextField = new JTextField(20);
 			this.abkuerzungMAJTextField.setText("");
+			this.abkuerzungMAJTextField.setFont(new Font("Verdana", Font.BOLD, 14));
 
 			// MyButton and containerButtonPanel
 			this.btnSave = new MyButton("/img/btn_speichern_black.png");
@@ -198,7 +205,7 @@ public class EditUserGUI extends JDialog {
 		this.gbc.gridx = 1;
 		this.gbc.gridy = 0;
 		this.gbc.insets = new Insets(0, 5, 0, 0);
-		this.entriesPanel.add(this.userJTextField, gbc);
+		this.entriesPanel.add(this.userNameToBeDisplayed, gbc);
 		
 		this.gbc.gridx = 0; 
 		this.gbc.gridy = 1; 
