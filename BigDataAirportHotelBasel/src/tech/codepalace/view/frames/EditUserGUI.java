@@ -120,13 +120,12 @@ public class EditUserGUI extends JDialog {
 
 			
 			this.userNameToBeDisplayed = new JLabel();
-			this.userNameToBeDisplayed.setFont(new Font("Verdana", Font.BOLD, 14));
+			this.userNameToBeDisplayed.setFont(new Font("Verdana", Font.BOLD, 16));
 			this.userNameToBeDisplayed.setBackground(Color.WHITE);
 			this.userNameToBeDisplayed.setOpaque(true);
 
 			// Initialize the JLabel for the user rights
 			this.benutzerrechten = new JLabel("Benutzerrechten:");
-			this.benutzerrechten.setPreferredSize(new Dimension(160, 20));
 			this.benutzerrechten.setHorizontalAlignment(SwingConstants.RIGHT);
 			this.benutzerrechten.setFont(new Font("Verdana", Font.BOLD, 16));
 
@@ -140,7 +139,6 @@ public class EditUserGUI extends JDialog {
 			// Initialize the JLabel element for the abbreviation name for the Staff or
 			// Administrator user.
 			this.abkuerzungMAJLabel = new JLabel("Kürzel MA:");
-			this.abkuerzungMAJLabel.setPreferredSize(new Dimension(160, 20));
 			this.abkuerzungMAJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 			this.abkuerzungMAJLabel.setFont(new Font("Verdana", Font.BOLD, 14));
 
@@ -194,7 +192,8 @@ public class EditUserGUI extends JDialog {
 	private void addElementsToGUI() {
 		
 		//Setting the elements GridBagConstraints and add to entriesPanel with GridBagLayout
-		
+		this.gbc.fill = GridBagConstraints.HORIZONTAL;
+		this.gbc.weightx = 0.5;
 		this.gbc.insets = new Insets(10, 0, 10, 0);
 		this.gbc.gridx = 0;
 		this.gbc.gridy = 0;
@@ -207,6 +206,8 @@ public class EditUserGUI extends JDialog {
 		this.gbc.insets = new Insets(0, 5, 0, 0);
 		this.entriesPanel.add(this.userNameToBeDisplayed, gbc);
 		
+		this.gbc.fill = GridBagConstraints.HORIZONTAL;
+		this.gbc.weightx = 0.5;
 		this.gbc.gridx = 0; 
 		this.gbc.gridy = 1; 
 		this.gbc.insets = new Insets(5, 0, 0, 0);
@@ -220,7 +221,8 @@ public class EditUserGUI extends JDialog {
 		this.gbc.insets = new Insets(5, 5, 0, 0);
 		this.entriesPanel.add(this.abkuerzungMAJTextField, gbc);
 		
-		
+		this.gbc.fill = GridBagConstraints.HORIZONTAL;
+		this.gbc.weightx = 0.5;
 		this.gbc.gridx = 0; 
 		this.gbc.gridy = 2; 
 		this.gbc.insets = new Insets(15, 0, 0, 0);
