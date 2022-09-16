@@ -79,7 +79,7 @@ public class LogicModelUserManager {
 		this.editUserGUI.userNameToBeDisplayed.setText(userToEdit);
 		
 		//New instance of LogicModelEditUser initialized
-		LogicModelEditUser logicModelEditUser = new LogicModelEditUser(this, editUserGUI);
+		LogicModelEditUser logicModelEditUser = new LogicModelEditUser(editUserGUI);
 		
 		//new Instance of EditUserController
 		new EditUserController(editUserGUI, logicModelEditUser);

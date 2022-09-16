@@ -86,11 +86,8 @@ if (configurationFile.exists()) {
 			
 		}else {
 			
-			/*
-			 No existe el archivo de configuración, creamos una nuevo con la primera propiedad 
-			 y el valor que recibe el método.
-			 */
-			
+		
+			//Save the config.properties
 			try (OutputStream output = new FileOutputStream(projectDirectoryString + File.separator + "config.properties")) {
 
 	            
@@ -109,6 +106,62 @@ if (configurationFile.exists()) {
 		}
 
 
+	}
+
+
+
+	/**
+	 * @description Method to modify the Properties in the configuration files.
+	 * @param propertyName
+	 * @param propertyValue
+	 */
+	public void modifyAndWriteProperties(String propertyName, String propertyValue) {
+		
+		this.propertyName = propertyName;
+		this.propertyValue = propertyValue;
+		
+		
+		//We open our configuration File
+		try (InputStream input = new FileInputStream(projectDirectoryString + File.separator + "config.properties")) {
+
+	       
+			
+	        //1. load a properties file
+	        prop.load(input);
+	        
+	        //2. Now instead of calling
+           //prop.setProperty(this.propertyName, this.propertyValue);
+	        
+	       //3. The Properties is loaded by prop.load
+	       //3. We close the InputStream
+	       input.close();
+	       
+	       
+
+	    } catch (IOException ex) {
+	        ex.printStackTrace();
+	    }
+		
+		
+		//4.Now we write down the modification
+		try (OutputStream output = new FileOutputStream(projectDirectoryString + File.separator + "config.properties")) {
+
+            
+
+			//5.set the properties value
+            prop.setProperty(this.propertyName, this.propertyValue);
+
+            //6.save properties to project root folder
+            prop.store(output, null);
+            
+            //7.Close the OutputStream
+            output.close();
+
+
+        } catch (IOException io) {
+            io.printStackTrace();
+        }
+		
 	}
 	
 	

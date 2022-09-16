@@ -2,8 +2,13 @@ package tech.codepalace.model;
 
 import java.awt.HeadlessException;
 
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+
 import tech.codepalace.utility.DataEncryption;
 import tech.codepalace.utility.PropertiesReader;
+import tech.codepalace.utility.PropertiesWriter;
 import tech.codepalace.view.frames.EditUserGUI;
 
 
@@ -14,7 +19,7 @@ import tech.codepalace.view.frames.EditUserGUI;
  */
 public class LogicModelEditUser {
 
-	private LogicModelUserManager logicModelUserManager;
+
 	private EditUserGUI editUserGUI;
 	
 	//Variable to store the value of the user we want to edit.
@@ -26,7 +31,7 @@ public class LogicModelEditUser {
 	//Variable for the DataEncryption
 	private DataEncryption dataEncryption;
 	
-	//Instance Propert
+	//Instance PropertiesReader
 	private PropertiesReader propertiesReader;
 	
 	//Instance UserAHB
@@ -34,9 +39,14 @@ public class LogicModelEditUser {
 	
 	protected String userName, abbkuerzungMA, privilege, password;
 	
-	public LogicModelEditUser(LogicModelUserManager logicModelUserManager, EditUserGUI editUserGUI) {
+	//Instance PropertiesWriter to modify the properties
+	private PropertiesWriter propertiesWriter;
+	
+	//Image error JOptionPane
+	public ImageIcon errorImg = new ImageIcon(getClass().getResource("/img/error.png"));
+	
+	public LogicModelEditUser(EditUserGUI editUserGUI) {
 		
-		this.logicModelUserManager = logicModelUserManager;
 		this.editUserGUI = editUserGUI;
 		
 		this.dataEncryption = new DataEncryption();
@@ -126,6 +136,71 @@ public class LogicModelEditUser {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	
+	
+	/**
+	 * @description Method to save the edited user changes.
+	 * @param userToEdit
+	 */
+	public void saveChangesUser(String userToEdit) {
+		
+//		JOptionPane.showMessageDialog(null, "A guardar cambios usuario:" +this.userToEdit);
+		
+		// Set the value of the properties we want to modify 
+		this.abkuerzungPropertieName = "db.abkuerzungma.user" + this.userToEdit;
+		this.abbkuerzungMA = this.editUserGUI.abkuerzungMAJTextField.getText();
+		
+		this.privilegePropertieName = "db.privilege.user." + this.userToEdit;
+		
+		if(this.editUserGUI.benutzerRechtenJComboBox.getSelectedItem().toString().equalsIgnoreCase("Benutzerrechte auswählen")) {
+			
+			//We invoke a new Thread with the error message.
+			SwingUtilities.invokeLater( () ->  JOptionPane.showMessageDialog(null, "Sie müssen die Rechte des Benutzers konfigurieren"
+					   , "Kritischer Fehler Benutzerrechten", JOptionPane.ERROR_MESSAGE, this.errorImg));
+			
+		}else {
+			
+			//switch block to evaluate the selected item by benutzerRechtenJComboBox(User Rights).
+			switch (this.editUserGUI.benutzerRechtenJComboBox.getSelectedItem().toString()) {
+				
+				case "Mitarbeiter":
+					this.privilege = "STAFF";
+					break;
+
+				case "Manager":
+					
+					 this.privilege = "ADMIN";
+					break;
+			}
+			
+
+			
+			// encrypt the data we need to modify
+			try {
+
+				this.abkuerzungPropertieName = this.dataEncryption.encryptData(this.abkuerzungPropertieName);
+				this.privilegePropertieName = this.dataEncryption.encryptData(this.privilegePropertieName);
+				this.abbkuerzungMA = this.dataEncryption.encryptData(this.abbkuerzungMA);
+				this.privilege = this.dataEncryption.encryptData(this.privilege);
+
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			//Initialize the PropertiesWriter instance
+			this.propertiesWriter = new PropertiesWriter();
+			
+			//write the modification
+			this.propertiesWriter.modifyAndWriteProperties(this.abkuerzungPropertieName, this.abbkuerzungMA);
+			this.propertiesWriter.modifyAndWriteProperties(this.privilegePropertieName, this.privilege);
+			
+			this.editUserGUI.dispose();
+		}
+		
+		
 	}
 
 }

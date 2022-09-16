@@ -58,8 +58,8 @@ public class EditUserController implements ActionListener, KeyListener, WindowLi
 		}
 		
 		else if(e.getSource()==this.editUserGUI.btnSave) {
-			
-			
+			//We call the Method to save the changes
+			this.logicModelEditUser.saveChangesUser(this.editUserGUI.userNameToBeDisplayed.getText());
 		}
 		
 		else if(e.getSource()==this.editUserGUI.changePassword) {
@@ -83,7 +83,8 @@ public class EditUserController implements ActionListener, KeyListener, WindowLi
 		
 		else if(e.getSource()==this.editUserGUI.btnSave && e.getKeyCode()==10) {
 			
-			
+			//We call the Method to save the changes
+			this.logicModelEditUser.saveChangesUser(this.editUserGUI.userNameToBeDisplayed.getText());
 		}
 		
 		else if(e.getSource()==this.editUserGUI.changePassword && e.getKeyCode()==10) {
