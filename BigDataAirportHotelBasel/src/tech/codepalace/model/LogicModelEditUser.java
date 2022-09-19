@@ -6,10 +6,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
+import tech.codepalace.controller.ModifyPasswordUserController;
 import tech.codepalace.utility.DataEncryption;
 import tech.codepalace.utility.PropertiesReader;
 import tech.codepalace.utility.PropertiesWriter;
 import tech.codepalace.view.frames.EditUserGUI;
+import tech.codepalace.view.frames.ModifyPasswordUserGUI;
 
 
 /**
@@ -201,6 +203,30 @@ public class LogicModelEditUser {
 		}
 		
 		
+	}
+	
+	
+	
+	/**
+	 * @description Method to invoke a new Thread to call the ModifyPasswordUserGUI.
+	 */
+	public void modifyPasswordUser() {
+		
+		SwingUtilities.invokeLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				ModifyPasswordUserGUI modifyPasswordUserGUI = new ModifyPasswordUserGUI(editUserGUI, true);
+				
+				LogicModelModifyPasswordUser logicModelModifyPasswordUser = new LogicModelModifyPasswordUser(modifyPasswordUserGUI, userAHB.getPassword());
+				
+				new ModifyPasswordUserController(modifyPasswordUserGUI, logicModelModifyPasswordUser);
+				
+				modifyPasswordUserGUI.setVisible(true);
+				
+			}
+		});
+
 	}
 
 }

@@ -64,6 +64,7 @@ public class EditUserController implements ActionListener, KeyListener, WindowLi
 		
 		else if(e.getSource()==this.editUserGUI.changePassword) {
 			
+			this.logicModelEditUser.modifyPasswordUser();
 			
 		}
 		
@@ -89,6 +90,8 @@ public class EditUserController implements ActionListener, KeyListener, WindowLi
 		
 		else if(e.getSource()==this.editUserGUI.changePassword && e.getKeyCode()==10) {
 			
+			//We call to modify the user Password GUI
+			this.logicModelEditUser.modifyPasswordUser();
 			
 		}
 	}
