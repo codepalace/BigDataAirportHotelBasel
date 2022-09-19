@@ -261,7 +261,7 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 					//Create and initialize UserManager Object with the argument JFrame in background and true to be blocked the JFrame in Background
 					UserManager userManager = new UserManager(bigDataAirportHotelBaselStartFrame, true);
 					
-					LogicModelUserManager logicModelUserManager = new LogicModelUserManager(userManager);
+					LogicModelUserManager logicModelUserManager = new LogicModelUserManager(userManager, logicModelStartFrame.getUserAHB().getPrivilege());
 					
 					new UserManagerController(userManager, logicModelUserManager);
 					

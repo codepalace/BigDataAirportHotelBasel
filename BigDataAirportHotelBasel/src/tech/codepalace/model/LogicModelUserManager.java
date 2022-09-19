@@ -1,5 +1,7 @@
 package tech.codepalace.model;
 
+import javax.swing.SwingUtilities;
+
 import tech.codepalace.controller.EditUserController;
 import tech.codepalace.controller.NewUserController;
 import tech.codepalace.view.frames.EditUserGUI;
@@ -19,10 +21,13 @@ public class LogicModelUserManager {
 	//intances EditUserGUI
 	private EditUserGUI editUserGUI;
 	
-	public LogicModelUserManager(UserManager userManager) {
+	//Variable to store the value of privilege who is call the User Manager
+	protected String privilegeWhoEditUser = "";
+	public LogicModelUserManager(UserManager userManager, String privilegeWhoEditUser) {
 		
 
 		this.userManager = userManager;
+		this.privilegeWhoEditUser = privilegeWhoEditUser;
 		
 		
 	}
@@ -78,14 +83,23 @@ public class LogicModelUserManager {
 		
 		this.editUserGUI.userNameToBeDisplayed.setText(userToEdit);
 		
-		//New instance of LogicModelEditUser initialized
-		LogicModelEditUser logicModelEditUser = new LogicModelEditUser(editUserGUI);
+		SwingUtilities.invokeLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				//New instance of LogicModelEditUser initialized
+				LogicModelEditUser logicModelEditUser = new LogicModelEditUser(editUserGUI, privilegeWhoEditUser);
+				
+				//new Instance of EditUserController
+				new EditUserController(editUserGUI, logicModelEditUser);
+				
+				//set visible editUserGUI
+				editUserGUI.setVisible(true);
+				
+			}
+		});
 		
-		//new Instance of EditUserController
-		new EditUserController(editUserGUI, logicModelEditUser);
 		
-		//set visible editUserGUI
-		this.editUserGUI.setVisible(true);
 		
 		
 		

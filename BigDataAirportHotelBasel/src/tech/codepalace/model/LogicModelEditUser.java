@@ -27,6 +27,9 @@ public class LogicModelEditUser {
 	//Variable to store the value of the user we want to edit.
 	private String userToEdit="";
 	
+	//Variable to store who is open the user to edit encrypted and variable to store the decrypted value.
+	protected String privilegeWhoEditsUser="", privilegeDecrypted="";
+	
 	//Variable to store the PropertieName for the user we want to edit.
 	private String userNamePropertieName="", abkuerzungPropertieName="", privilegePropertieName, passwordPropertieName;
 	
@@ -47,9 +50,12 @@ public class LogicModelEditUser {
 	//Image error JOptionPane
 	public ImageIcon errorImg = new ImageIcon(getClass().getResource("/img/error.png"));
 	
-	public LogicModelEditUser(EditUserGUI editUserGUI) {
+	
+	public LogicModelEditUser(EditUserGUI editUserGUI, String privilegeWhoEditsUser ) {
 		
 		this.editUserGUI = editUserGUI;
+		this.privilegeWhoEditsUser = privilegeWhoEditsUser;
+		
 		
 		this.dataEncryption = new DataEncryption();
 	}
@@ -212,20 +218,51 @@ public class LogicModelEditUser {
 	 */
 	public void modifyPasswordUser() {
 		
-		SwingUtilities.invokeLater(new Runnable() {
-			
-			@Override
-			public void run() {
-				ModifyPasswordUserGUI modifyPasswordUserGUI = new ModifyPasswordUserGUI(editUserGUI, true);
+		try {
+			privilegeDecrypted = dataEncryption.decryptData(privilegeWhoEditsUser);
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+					
 				
-				LogicModelModifyPasswordUser logicModelModifyPasswordUser = new LogicModelModifyPasswordUser(modifyPasswordUserGUI, userAHB.getPassword());
 				
-				new ModifyPasswordUserController(modifyPasswordUserGUI, logicModelModifyPasswordUser);
+				SwingUtilities.invokeLater(new Runnable() {
+					
+					@Override
+					public void run() {
+						ModifyPasswordUserGUI modifyPasswordUserGUI = new ModifyPasswordUserGUI(editUserGUI, true);
+						
+						switch (privilegeDecrypted) {
+							
+							//Depending of the value STAFF or ADMIN it will be visible oldPasswordField or not
+							case "STAFF":
+								modifyPasswordUserGUI.oldPasswordJLabel.setVisible(true);
+								modifyPasswordUserGUI.oldPasswordField.setVisible(true);
+								modifyPasswordUserGUI.setSize(640, 240);
+								break;
+								
+							case "ADMIN":
+
+								modifyPasswordUserGUI.oldPasswordJLabel.setVisible(false);
+								modifyPasswordUserGUI.oldPasswordField.setVisible(false);
+								
+								//Case ADMIN set new Size for the modifyPasswordUserGUI
+								modifyPasswordUserGUI.setSize(640, 200);
+								break;
+							}
+							
+							LogicModelModifyPasswordUser logicModelModifyPasswordUser = 
+									new LogicModelModifyPasswordUser(modifyPasswordUserGUI, userAHB.getPassword(), passwordPropertieName, privilegeWhoEditsUser);
+							
+							new ModifyPasswordUserController(modifyPasswordUserGUI, logicModelModifyPasswordUser);
+							
+							modifyPasswordUserGUI.setVisible(true);
+						
+					}
+				});
 				
-				modifyPasswordUserGUI.setVisible(true);
-				
-			}
-		});
+		
 
 	}
 

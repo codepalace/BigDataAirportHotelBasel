@@ -10,6 +10,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 import tech.codepalace.model.LogicModelModifyPasswordUser;
+import tech.codepalace.utility.DataEncryption;
 import tech.codepalace.view.frames.ModifyPasswordUserGUI;
 
 public class ModifyPasswordUserController implements ActionListener, KeyListener, WindowListener, FocusListener {
@@ -21,11 +22,16 @@ public class ModifyPasswordUserController implements ActionListener, KeyListener
 	
 	private LogicModelModifyPasswordUser logicModelModifyPasswordUser;
 	
+	protected String privilegeWhoEditUser;
+	
+	private DataEncryption dataEncryption;
+	
 	
 	public ModifyPasswordUserController(ModifyPasswordUserGUI modifyPasswordUserGUI, LogicModelModifyPasswordUser logicModelModifyPasswordUser) {
 		
 		this.modifyPasswordUserGUI = modifyPasswordUserGUI;
 		this.logicModelModifyPasswordUser = logicModelModifyPasswordUser;
+		
 		
 		this.modifyPasswordUserGUI.addWindowListener(this);
 		
@@ -38,6 +44,8 @@ public class ModifyPasswordUserController implements ActionListener, KeyListener
 		this.modifyPasswordUserGUI.btnCancelSave.addKeyListener(this);
 		this.modifyPasswordUserGUI.btnCancelSave.addFocusListener(this);
 		
+		this.modifyPasswordUserGUI.newPasswordConfirmationField.addKeyListener(this);
+		
 	}
 	
 	@Override
@@ -47,6 +55,14 @@ public class ModifyPasswordUserController implements ActionListener, KeyListener
 			
 			//call to close the GUI
 			this.modifyPasswordUserGUI.confirmClose();
+		}
+		
+		else if(e.getSource()==this.modifyPasswordUserGUI.btnSave) { //If the btnSave MyButton will be pressed.
+			
+			//We call to modify the password. 
+			modifyPasswordAppropriateUser();
+
+			
 		}
 		
 	}
@@ -65,6 +81,20 @@ public class ModifyPasswordUserController implements ActionListener, KeyListener
 			//call to close the GUI
 			this.modifyPasswordUserGUI.confirmClose();
 		}
+		
+		else if(e.getSource()==this.modifyPasswordUserGUI.btnSave && e.getKeyCode()==10) {
+			
+			//We call to modify the password. 
+			modifyPasswordAppropriateUser();
+		}
+		
+		else if(e.getSource()==this.modifyPasswordUserGUI.newPasswordConfirmationField && e.getKeyCode() == 10) {
+			
+			//We call to modify the password. 
+			modifyPasswordAppropriateUser();
+		}
+		
+		
 	}
 
 	@Override
@@ -147,6 +177,49 @@ public class ModifyPasswordUserController implements ActionListener, KeyListener
 		
 		else if(e.getSource()==this.modifyPasswordUserGUI.btnCancelSave) {
 			this.modifyPasswordUserGUI.btnCancelSave.setOpacity(0.5f);
+		}
+	}
+	
+	
+	
+	/**
+	 * @description Method to call for modifying the user password depending appropriate user who is calling to modify ADMIN or STAFF.
+	 */
+	private void modifyPasswordAppropriateUser() {
+		
+		//Initialize DataEncryption
+		this.dataEncryption = new DataEncryption();
+		
+		//decrypt data
+		try {
+			this.privilegeWhoEditUser = this.dataEncryption.decryptData(logicModelModifyPasswordUser.getPrivilegeWhoEditsUser());
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		
+		
+		//Block switch to evaluate the privilegeWhoEditUser value
+		switch (this.privilegeWhoEditUser) {
+			
+			
+			//Case ADMIN we call the appropriate method to modify the Password 
+			case "ADMIN":
+				
+				
+				this.logicModelModifyPasswordUser.modifyPasswordUser(
+						 new String(this.modifyPasswordUserGUI.newPasswordField.getPassword()),
+						 new String(this.modifyPasswordUserGUI.newPasswordConfirmationField.getPassword()));
+				
+				break;
+
+			//Case STAFF we call the appropriate method to modify the Password 
+			case "STAFF":
+				
+				this.logicModelModifyPasswordUser.modifyPasswordUser(
+						new String(this.modifyPasswordUserGUI.oldPasswordField.getPassword()),
+						new String(this.modifyPasswordUserGUI.newPasswordField.getPassword()),
+						new String(this.modifyPasswordUserGUI.newPasswordConfirmationField.getPassword()));
+				break;
 		}
 	}
 

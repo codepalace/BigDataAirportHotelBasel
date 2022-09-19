@@ -12,7 +12,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
 
 import tech.codepalace.view.buttons.MyButton;
@@ -26,9 +26,10 @@ public class ModifyPasswordUserGUI extends JDialog {
 
 	private JPanel mainJPanel, entriesPanel, containerButtonPanel;
 	
-	private JLabel oldPasswordJLabel, newPasswordJLabel, newPasswordConfirmationJLabel;
+	public JLabel oldPasswordJLabel, newPasswordJLabel, newPasswordConfirmationJLabel;
 	
-	private JTextField oldPasswordJTextField, newPasswordJTextField, newPasswordConfirmationJTextField;
+	
+	public JPasswordField oldPasswordField, newPasswordField, newPasswordConfirmationField;
 	
 	private JLabel imgModal;
 	
@@ -54,7 +55,7 @@ public class ModifyPasswordUserGUI extends JDialog {
 	private void init() {
 		
 		// We set the size according to which the elements fit in the panel  
-		setSize(580, 240);
+		setSize(640, 240);
 		
 		setLocationRelativeTo(null);
 		
@@ -125,21 +126,19 @@ public class ModifyPasswordUserGUI extends JDialog {
 			this.newPasswordJLabel.setFont(new Font("Verdana", Font.BOLD, 16));
 			
 			this.newPasswordConfirmationJLabel = new JLabel("passwort erneut eingeben:");
-			this.newPasswordConfirmationJLabel.setPreferredSize(new Dimension(160, 20));
+			this.newPasswordConfirmationJLabel.setPreferredSize(new Dimension(280, 20));
 			this.newPasswordConfirmationJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 			this.newPasswordConfirmationJLabel.setFont(new Font("Verdana", Font.BOLD, 16));
 			
-			this.oldPasswordJTextField = new JTextField(20);
-			this.oldPasswordJTextField.setText("");
-			this.oldPasswordJTextField.setFont(new Font("Verdana", Font.BOLD, 14));
+			this.oldPasswordField = new JPasswordField(20);
+			this.oldPasswordField.setText("");
 			
-			this.newPasswordJTextField = new JTextField(20);
-			this.newPasswordJTextField.setText("");
-			this.newPasswordJTextField.setFont(new Font("Verdana", Font.BOLD, 14));
+			this.newPasswordField = new JPasswordField(20);
+			this.newPasswordField.setText("");
 			
-			this.newPasswordConfirmationJTextField = new JTextField(20);
-			this.newPasswordConfirmationJTextField.setText("");
-			this.newPasswordConfirmationJTextField.setFont(new Font("Verdana", Font.BOLD, 14));
+			this.newPasswordConfirmationField = new JPasswordField(20);
+			this.newPasswordConfirmationField.setText("");
+;
 			
 			// MyButton and containerButtonPanel
 			this.btnSave = new MyButton("/img/btn_speichern_black.png");
@@ -198,7 +197,7 @@ public class ModifyPasswordUserGUI extends JDialog {
 		this.gbc.gridx = 1;
 		this.gbc.gridy = 0;
 		this.gbc.insets = new Insets(0, 5, 0, 0);
-		this.entriesPanel.add(this.oldPasswordJTextField, gbc);
+		this.entriesPanel.add(this.oldPasswordField, gbc);
 
 		
 		
@@ -214,7 +213,7 @@ public class ModifyPasswordUserGUI extends JDialog {
 		this.gbc.gridx = 1;
 		this.gbc.gridy = 1; 
 		this.gbc.insets = new Insets(5, 5, 0, 0);
-		this.entriesPanel.add(this.newPasswordJTextField, gbc);
+		this.entriesPanel.add(this.newPasswordField, gbc);
 		
 		
 		this.gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -229,7 +228,7 @@ public class ModifyPasswordUserGUI extends JDialog {
 		this.gbc.gridx = 1;
 		this.gbc.gridy = 2; 
 		this.gbc.insets = new Insets(15, 5, 0, 0);
-		this.entriesPanel.add(this.newPasswordConfirmationJTextField, gbc);
+		this.entriesPanel.add(this.newPasswordConfirmationField, gbc);
 		
 		
 		this.mainJPanel.add(this.entriesPanel);
