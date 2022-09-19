@@ -29,10 +29,25 @@ public class ModifyPasswordUserController implements ActionListener, KeyListener
 		
 		this.modifyPasswordUserGUI.addWindowListener(this);
 		
+		//Add Listeners to the JButtons(MyButton)
+		this.modifyPasswordUserGUI.btnSave.addActionListener(this);
+		this.modifyPasswordUserGUI.btnSave.addKeyListener(this);
+		this.modifyPasswordUserGUI.btnSave.addFocusListener(this);
+		
+		this.modifyPasswordUserGUI.btnCancelSave.addActionListener(this);
+		this.modifyPasswordUserGUI.btnCancelSave.addKeyListener(this);
+		this.modifyPasswordUserGUI.btnCancelSave.addFocusListener(this);
+		
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
+		if(e.getSource()==this.modifyPasswordUserGUI.btnCancelSave) {
+			
+			//call to close the GUI
+			this.modifyPasswordUserGUI.confirmClose();
+		}
 		
 	}
 
@@ -45,6 +60,11 @@ public class ModifyPasswordUserController implements ActionListener, KeyListener
 	@Override
 	public void keyPressed(KeyEvent e) {
 		
+		if(e.getSource()==this.modifyPasswordUserGUI.btnCancelSave && e.getKeyCode()==10) {
+			
+			//call to close the GUI
+			this.modifyPasswordUserGUI.confirmClose();
+		}
 	}
 
 	@Override
@@ -54,10 +74,7 @@ public class ModifyPasswordUserController implements ActionListener, KeyListener
 
 
 	@Override
-	public void windowOpened(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void windowOpened(WindowEvent e) {}
 
 
 
@@ -106,6 +123,14 @@ public class ModifyPasswordUserController implements ActionListener, KeyListener
 	@Override
 	public void focusGained(FocusEvent e) {
 		
+		//set the opacity to 1
+		if(e.getSource()==this.modifyPasswordUserGUI.btnSave) {
+			this.modifyPasswordUserGUI.btnSave.setOpacity(1);
+		}
+		
+		else if(e.getSource()==this.modifyPasswordUserGUI.btnCancelSave) {
+			this.modifyPasswordUserGUI.btnCancelSave.setOpacity(1);
+		}
 		
 	}
 
@@ -115,7 +140,14 @@ public class ModifyPasswordUserController implements ActionListener, KeyListener
 	@Override
 	public void focusLost(FocusEvent e) {
 		
+		//set the opacity to 0.5
+		if(e.getSource()==this.modifyPasswordUserGUI.btnSave) {
+			this.modifyPasswordUserGUI.btnSave.setOpacity(0.5f);
+		}
 		
+		else if(e.getSource()==this.modifyPasswordUserGUI.btnCancelSave) {
+			this.modifyPasswordUserGUI.btnCancelSave.setOpacity(0.5f);
+		}
 	}
 
 }

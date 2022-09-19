@@ -32,7 +32,7 @@ public class ModifyPasswordUserGUI extends JDialog {
 	
 	private JLabel imgModal;
 	
-	private MyButton btnSave, btnCancelSave;
+	public MyButton btnSave, btnCancelSave;
 	
 	private GridBagLayout mainGBL, gbl;
 	
