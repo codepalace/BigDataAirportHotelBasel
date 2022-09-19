@@ -1,5 +1,9 @@
 package tech.codepalace.model;
 
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+
 import tech.codepalace.utility.DataEncryption;
 import tech.codepalace.view.frames.ModifyPasswordUserGUI;
 
@@ -11,6 +15,9 @@ public class LogicModelModifyPasswordUser {
 	
 	//Instance DataEncryption
 	private DataEncryption dataEncryption;
+	
+	//Image error JOptionPane
+	private ImageIcon errorImg = new ImageIcon(getClass().getResource("/img/error.png"));
 	
 	public LogicModelModifyPasswordUser(ModifyPasswordUserGUI modifyPasswordUserGUI, String oldPassword, String passwordPropertyName, String privilegeWhoEditsUser) {
 		
@@ -54,6 +61,20 @@ public class LogicModelModifyPasswordUser {
 
 		this.newPassword = newPassword;
 		this.newPasswordConfirmation = newPasswordConfirmation;
+		
+		
+		//Evaluate if the newPassword and newPasswordConfirmation are not identical.
+		if(!this.newPassword.equalsIgnoreCase(this.newPasswordConfirmation)) {
+			
+			//Invoke a new Thread with the error message.
+			SwingUtilities.invokeLater( () ->  JOptionPane.showMessageDialog(null, "die eingegebenen passwörter stimmen nicht überein. bitte versuchen Sie es nochmal"
+					   , "Passwörter stimmen nicht überein", JOptionPane.ERROR_MESSAGE, this.errorImg));
+			
+		}else {
+			
+			//Passwords are identical. We have to save the new value for the properties in Configuration File
+			
+		}
 
 	}
 	
