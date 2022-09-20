@@ -5,6 +5,7 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import tech.codepalace.utility.DataEncryption;
+import tech.codepalace.utility.PropertiesWriter;
 import tech.codepalace.view.frames.EditUserGUI;
 import tech.codepalace.view.frames.ModifyPasswordUserGUI;
 
@@ -38,6 +39,9 @@ public class LogicModelModifyPasswordUser {
 	
 	//Image error JOptionPane
 	private ImageIcon errorImg = new ImageIcon(getClass().getResource("/img/error.png"));
+	
+	//Instance PropertiesWriter to write the modifications properties.
+	private PropertiesWriter propertiesWriter;
 	
 	public LogicModelModifyPasswordUser(ModifyPasswordUserGUI modifyPasswordUserGUI, String oldPassword, String passwordPropertyName,
 											String privilegeWhoEditsUser, EditUserGUI editUserGUI) {
@@ -184,10 +188,14 @@ public class LogicModelModifyPasswordUser {
 				this.newPassword = this.dataEncryption.encryptData(this.newPassword);
 				this.passwordPropertyName = this.dataEncryption.encryptData(this.passwordPropertyName);
 				
-				System.out.println("New Password: " + this.newPassword);
-				System.out.println("Property to be stored: "+ this.passwordPropertyName );
+//				System.out.println("New Password: " + this.newPassword);
+//				System.out.println("Property to be stored: "+ this.passwordPropertyName );
 				
 				//Now we can call to write in the new value in the Properties inside the configuration File
+				//Initialize the PropertiesWriter instance
+				this.propertiesWriter = new PropertiesWriter();
+				
+				this.propertiesWriter.modifyAndWriteProperties(this.passwordPropertyName, this.newPassword);
 				
 				//Close Both GUIs
 				this.modifiyPasswordUserGUI.dispose();
