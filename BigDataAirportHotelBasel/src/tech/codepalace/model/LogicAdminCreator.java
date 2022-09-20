@@ -48,7 +48,7 @@ public JDialog dialogExit;
 	public ImageIcon errorImg = new ImageIcon(getClass().getResource("/img/error.png"));
 	
 	//Variables for the creation of administrator user
-	String userName, password, abkuerzungMA, privilege;
+	private String userName, password, abkuerzungMA, privilege;
 	
 	//Arrays used to delete the whitespace
 	private char[] userNameArray, passwordArray, abkuerzungMAArray;

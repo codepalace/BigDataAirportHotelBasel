@@ -253,7 +253,7 @@ public class LogicModelEditUser {
 							}
 							
 							LogicModelModifyPasswordUser logicModelModifyPasswordUser = 
-									new LogicModelModifyPasswordUser(modifyPasswordUserGUI, userAHB.getPassword(), passwordPropertieName, privilegeWhoEditsUser);
+									new LogicModelModifyPasswordUser(modifyPasswordUserGUI, userAHB.getPassword(), passwordPropertieName, privilegeWhoEditsUser, editUserGUI);
 							
 							new ModifyPasswordUserController(modifyPasswordUserGUI, logicModelModifyPasswordUser);
 							
