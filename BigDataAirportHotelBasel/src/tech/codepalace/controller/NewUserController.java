@@ -40,6 +40,9 @@ public class NewUserController implements ActionListener, KeyListener, WindowLis
 		this.newUser.btnSave.addKeyListener(this);
 		this.newUser.btnSave.addFocusListener(this);
 		
+		//Add the Listener for the abkuerzungMAJTextField
+		this.newUser.abkuerzungMAJTextField.addKeyListener(this);
+		
 		
 		
 	}
@@ -77,6 +80,13 @@ public class NewUserController implements ActionListener, KeyListener, WindowLis
 		
 		//We call the method to save or write the new user information.
 		else if(e.getSource()==this.newUser.btnSave && e.getKeyCode() ==10) {
+			this.logicModelNewUser.saveNewUser(this.newUser.newUserJTextField.getText(), 
+					new String(this.newUser.passwordField.getPassword()), 
+					this.newUser.benutzerRechtenJComboBox.getSelectedItem().toString(), 
+					this.newUser.abkuerzungMAJTextField.getText());
+		}
+		
+		else if(e.getSource()==this.newUser.abkuerzungMAJTextField && e.getKeyCode() == 10) {
 			this.logicModelNewUser.saveNewUser(this.newUser.newUserJTextField.getText(), 
 					new String(this.newUser.passwordField.getPassword()), 
 					this.newUser.benutzerRechtenJComboBox.getSelectedItem().toString(), 
