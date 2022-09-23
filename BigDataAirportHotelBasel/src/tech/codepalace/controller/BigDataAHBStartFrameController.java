@@ -13,10 +13,12 @@ import java.awt.event.WindowListener;
 
 import javax.swing.SwingUtilities;
 
+import tech.codepalace.model.LogicModelModifyPasswordUser;
 import tech.codepalace.model.LogicModelStartFrame;
 import tech.codepalace.model.LogicModelUserManager;
 import tech.codepalace.utility.DataEncryption;
 import tech.codepalace.view.frames.BigDataAirportHotelBaselStartFrame;
+import tech.codepalace.view.frames.ModifyPasswordUserGUI;
 import tech.codepalace.view.frames.UserManager;
 
 /**
@@ -45,7 +47,7 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 	//Create an instance DataEncryption to decrypt the data
 	protected DataEncryption dataEncryption;
 
-	
+	private String passwordPropertieName = "";
 	
 	/**
 	 * @description constructor method with parameters
@@ -245,7 +247,71 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 			this.logicModelStartFrame.logoutApplication();
 		} 
 		else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.btn_kontoVerwalten) {
-			System.out.println("you pressed the kontoverwalten button");
+
+			/*User STAFF wants to modify user(He can only modify the old password. Password reset is not aloud for STAFF user).
+			 * 
+			 * pressing this button even if the user is ADMIN can not reset from this call the Password. 
+			 * 
+			 * If he wants to reset the password he has to press the  btn_benutzerVerwalten
+			 */
+			
+			//Instance of ModifyPasswordUserGUI
+			ModifyPasswordUserGUI modifyPasswordUserGUI = new ModifyPasswordUserGUI(bigDataAirportHotelBaselStartFrame, true);
+//			JOptionPane.showMessageDialog(null, "Privilegio: " + logicModelStartFrame.getUserAHB().getPrivilege());
+			
+			//Decrypt and set the value of privilege
+			try {
+				this.privilegeUser = this.dataEncryption.decryptData(this.logicModelStartFrame.getUserAHB().getPrivilege());
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+			
+			//block switch to evaluate the value of privilegeUser.
+			switch (this.privilegeUser) {
+				
+				//Depending of the value STAFF or ADMIN it will be visible oldPasswordField or not
+				case "STAFF":
+					modifyPasswordUserGUI.oldPasswordJLabel.setVisible(true);
+					modifyPasswordUserGUI.oldPasswordField.setVisible(true);
+					modifyPasswordUserGUI.setSize(640, 240);
+					break;
+					
+				case "ADMIN":
+
+					modifyPasswordUserGUI.oldPasswordJLabel.setVisible(false);
+					modifyPasswordUserGUI.oldPasswordField.setVisible(false);
+					
+					//Case ADMIN set new Size for the modifyPasswordUserGUI
+					modifyPasswordUserGUI.setSize(640, 200);
+					break;
+				}
+		
+			
+				try {
+					
+					//First i store the value passwordPropertieName "db.password.user." + the value of the logged user decrypted.
+					this.passwordPropertieName = "db.password.user." + this.dataEncryption.decryptData(logicModelStartFrame.getUserAHB().getUserName());
+
+					//Now encrypt the complete value
+					this.passwordPropertieName = this.dataEncryption.encryptData(passwordPropertieName);
+				} catch (Exception e1) {
+
+					e1.printStackTrace();
+				}
+			
+			
+			//Initialize the LogicModelModifyPasswordUser Object. This object call the second constructor.
+			LogicModelModifyPasswordUser logicModelModifyPasswordUser = 
+					new LogicModelModifyPasswordUser(modifyPasswordUserGUI, logicModelStartFrame.getUserAHB().getPassword(), 
+													passwordPropertieName, logicModelStartFrame.getUserAHB().getPrivilege());
+		
+			//Initialize the ModifyPasswordUserController
+			new ModifyPasswordUserController(modifyPasswordUserGUI, logicModelModifyPasswordUser);
+			
+			//We make visible the GUI
+			modifyPasswordUserGUI.setVisible(true);
+			
+			
 		} 
 		else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.btn_exit) {
 			System.exit(0);

@@ -40,7 +40,11 @@ public class ModifyPasswordUserGUI extends JDialog {
 	private GridBagConstraints mainGBC, gbc;
 	
 	
-	
+	/**
+	 * @description Constructor to block EditUserGUI in background
+	 * @param editUserGUI
+	 * @param modal
+	 */
 	public ModifyPasswordUserGUI(EditUserGUI editUserGUI, boolean modal) {
 		
 		//Call super with the arguments JFrame should be blocked in Background and modal(true) for blocked
@@ -48,6 +52,20 @@ public class ModifyPasswordUserGUI extends JDialog {
 		
 		init();
 		
+	}
+	
+	
+	/**
+	 * @description Constructor to block BigDataAirportHOtelBaselStartFrame in background
+	 * @param bigDataAirportHotelBaselStartFrame
+	 * @param modal
+	 */
+	public ModifyPasswordUserGUI(BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame, boolean modal) {
+		
+		//Call super with the arguments JFrame should be blocked in Background and modal(true) for blocked
+		super(bigDataAirportHotelBaselStartFrame, modal);
+				
+		init();
 	}
 	
 	

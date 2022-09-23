@@ -187,6 +187,7 @@ public class PropertiesReader extends Properties {
 				this.userAHB.setUserName(this.prop.getProperty(this.userNamePropertieName));
 				this.userAHB.setPrivilege(this.prop.getProperty(this.privilegePropertieName));
 				this.userAHB.setAbkuerzungMA(this.prop.getProperty(this.abkuerzungPropertieName));
+				this.userAHB.setPassword(this.prop.getProperty(this.passwordPropertieName));
 				
 
 				//We set PasswordIsCorrect
