@@ -17,6 +17,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import tech.codepalace.utility.PlaceHolderTextField;
 import tech.codepalace.view.buttons.MyButton;
 import tech.codepalace.view.panels.PanelWithBackgroundOption;
 
@@ -42,6 +43,8 @@ public class NewUser extends JDialog {
 	
 		public JTextField newUserJTextField, abkuerzungMAJTextField;
 		public JPasswordField passwordField;
+		
+		public PlaceHolderTextField abkuerzungMAPlaceHolderTextField;
 
 		//Object to select the User Rights.
 		public JComboBox<String>benutzerRechtenJComboBox;
@@ -149,6 +152,11 @@ public class NewUser extends JDialog {
 			this.abkuerzungMAJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 			this.abkuerzungMAJLabel.setFont(new Font("Verdana", Font.BOLD, 14));
 			
+			//Initialize PlaceHolderTextField object with 20 Column.
+			this.abkuerzungMAPlaceHolderTextField = new PlaceHolderTextField(20);
+			this.abkuerzungMAPlaceHolderTextField.setPlaceholder("Kürzel MA Minimun 3 Bucbstaben");
+			this.abkuerzungMAPlaceHolderTextField.setFont(new Font("Verdana", Font.BOLD, 14));
+			
 			//Initialize the JText element for the abbreviation name for Staff or Administrator.
 			this.abkuerzungMAJTextField = new JTextField(20);
 			this.abkuerzungMAJTextField.setText("");
@@ -250,7 +258,8 @@ public class NewUser extends JDialog {
 			this.gbc.gridx = 1;
 			this.gbc.gridy = 3; 
 			this.gbc.insets = new Insets(15, 5, 0, 0);
-			this.entriesPanel.add(this.abkuerzungMAJTextField, gbc);
+//			this.entriesPanel.add(this.abkuerzungMAJTextField, gbc);
+			this.entriesPanel.add(this.abkuerzungMAPlaceHolderTextField, gbc);
 			
 
 		
