@@ -9,6 +9,10 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+
 import tech.codepalace.model.LogicModelNewUser;
 import tech.codepalace.view.frames.NewUser;
 
@@ -21,6 +25,11 @@ public class NewUserController implements ActionListener, KeyListener, WindowLis
 	
 	private NewUser newUser;
 	private LogicModelNewUser logicModelNewUser;
+	
+	//Image error JOptionPane
+	private ImageIcon infoImg = new ImageIcon(getClass().getResource("/img/info.png"));
+	
+	private String infoMessage = "";
 	
 	public NewUserController(NewUser newUser, LogicModelNewUser logicModelNewUser) {
 		
@@ -98,7 +107,17 @@ public class NewUserController implements ActionListener, KeyListener, WindowLis
 	public void keyReleased(KeyEvent e) {}
 
 	@Override
-	public void windowOpened(WindowEvent e) {}
+	public void windowOpened(WindowEvent e) {
+		
+		this.infoMessage = "bei Kürzel MA. als Rat. Geben Sie das erste "
+				+ "Buchstaben des Vorname und die ersten 2 Buchstaben des Nachnamens ein. "+
+				 "\nz.B. Peter Schneider(PSC).";
+		
+		// Invoke a new Thread with the error message.
+		SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(null,
+					this.infoMessage,
+					"Passwort kann nicht festgelegt werden", JOptionPane.ERROR_MESSAGE, this.infoImg));
+	}
 
 	@Override
 	public void windowClosing(WindowEvent e) {

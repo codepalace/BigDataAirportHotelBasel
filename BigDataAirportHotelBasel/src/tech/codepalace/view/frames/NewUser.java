@@ -67,7 +67,7 @@ public class NewUser extends JDialog {
 	
 	private void init() {
 		
-		setSize(530, 280);
+		setSize(630, 280);
 		
 		setLocationRelativeTo(null);
 		
@@ -154,7 +154,7 @@ public class NewUser extends JDialog {
 			
 			//Initialize PlaceHolderTextField object with 20 Column.
 			this.abkuerzungMAPlaceHolderTextField = new PlaceHolderTextField(20);
-			this.abkuerzungMAPlaceHolderTextField.setPlaceholder("Kürzel MA Minimun 3 Bucbstaben");
+			this.abkuerzungMAPlaceHolderTextField.setPlaceholder("Minimun 3 Bucbstaben eingeben");
 			this.abkuerzungMAPlaceHolderTextField.setFont(new Font("Verdana", Font.BOLD, 14));
 			
 			//Initialize the JText element for the abbreviation name for Staff or Administrator.
