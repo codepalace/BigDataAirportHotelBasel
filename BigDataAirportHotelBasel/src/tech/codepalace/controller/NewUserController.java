@@ -71,7 +71,7 @@ public class NewUserController implements ActionListener, KeyListener, WindowLis
 			this.logicModelNewUser.saveNewUser(this.newUser.newUserJTextField.getText(), 
 					new String(this.newUser.passwordField.getPassword()), 
 					this.newUser.benutzerRechtenJComboBox.getSelectedItem().toString(),
-					this.newUser.abkuerzungMAJTextField.getText());
+					this.newUser.abkuerzungMAPlaceHolderTextField.getText());
 		}
 	}
 
@@ -92,14 +92,14 @@ public class NewUserController implements ActionListener, KeyListener, WindowLis
 			this.logicModelNewUser.saveNewUser(this.newUser.newUserJTextField.getText(), 
 					new String(this.newUser.passwordField.getPassword()), 
 					this.newUser.benutzerRechtenJComboBox.getSelectedItem().toString(), 
-					this.newUser.abkuerzungMAJTextField.getText());
+					this.newUser.abkuerzungMAPlaceHolderTextField.getText());
 		}
 		
 		else if(e.getSource()==this.newUser.abkuerzungMAJTextField && e.getKeyCode() == 10) {
 			this.logicModelNewUser.saveNewUser(this.newUser.newUserJTextField.getText(), 
 					new String(this.newUser.passwordField.getPassword()), 
 					this.newUser.benutzerRechtenJComboBox.getSelectedItem().toString(), 
-					this.newUser.abkuerzungMAJTextField.getText());
+					this.newUser.abkuerzungMAPlaceHolderTextField.getText());
 		}
 	}
 

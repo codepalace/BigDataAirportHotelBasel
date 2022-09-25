@@ -23,12 +23,15 @@ public class LogicModelNewUser {
 	private String newUserString="", passwordNewUserString="", userRights, userAbbreviationName;
 	
 	//Arrays used to delete the whitespace
-	private char[] userNameArray, passwordArray, userAbbreviationNameArray;
+	private char[] userNameArray, passwordArray;
 	
-	private boolean newUserEntryCorrect = false, passwordNewUserCorrect = false, newUserRightsCorrect = false, userAbbreviationNameCorrect;
+	private boolean newUserEntryCorrect = false, passwordNewUserCorrect = false,
+					newUserBlankSpace = false, blankSpacePassword = false;
 	
 	//Image error JOptionPane
 	public ImageIcon errorImg = new ImageIcon(getClass().getResource("/img/error.png"));
+	
+	private String errorMessage="";
 	
 	
 	//Instance PropertiesWriter to write new Properties
@@ -62,8 +65,20 @@ public class LogicModelNewUser {
 	public void saveNewUser(String newUserString, String passwordNewUserString, String userRights, String userAbbreviationName) {
 		this.newUserString = newUserString;
 		this.passwordNewUserString = passwordNewUserString;
+		this.userAbbreviationName = userAbbreviationName;
 		
 		this.userRights = userRights;
+		
+		this.newUserBlankSpace = false;
+		
+		this.userNameArray = this.newUserString.toCharArray();
+		
+		this.passwordArray = this.passwordNewUserString.toCharArray();
+		
+		this.blankSpacePassword = false;
+		
+		this.passwordNewUserCorrect = false;
+		 
 		
 		switch (this.userRights) {
 			case "Manager":
@@ -80,306 +95,359 @@ public class LogicModelNewUser {
 		
 		this.userAbbreviationName = userAbbreviationName;
 		
-		//We evaluate if the User Entry is correct in the next commit we validate also the password i go for the ordinary Job.
-		if(validateNewUserEntry() && validatePasswordNewUserEntry()
-				&& validateNewUserRights() && validateNewUserAbbreviationName()) {
-//			JOptionPane.showMessageDialog(null, "User is correct");
-			
-			//Hora de guardar el nuevo usuario Propertieswriter archivo de configuracion.
-			//Initialize the PropertiesWriter Instance
-			this.propertieswriter = new PropertiesWriter();
-			
-			//Initialize the variables for the new User Properties. 
-			this.userNamePropertieName = "db.user." + this.newUserString;
-			
-			//Set the userNamePropertieValue
-			this.userNamePropertieValue = this.newUserString;
-			
-			//set also the value for passwordPropertieName
-			this.passwordPropertieName = "db.password.user." + this.newUserString;
-			
-			//set the value for the passwordPropertieValue
-			this.passwordPropertieValue = this.passwordNewUserString;
-			
-			//set the value for the privilegePropertieName
-			this.privilegePropertieName = "db.privilege.user." + this.newUserString;
-			
-			//set the value for the privilegePropertieValue(User Rights).
-			this.privilegePropertieValue = this.userRights;
-			
-			//set the abkuerzungPropertieName value
-			this.abkuerzungPropertieName = "db.abkuerzungma.user" + this.newUserString;
-			
-			//set the value of abkuerzungPropertieValue(User Abbreviation Name).
-			this.abkuerzungPropertieValue = this.userAbbreviationName;
-			
-			
-			
-			
-			
-			
-			//Now is time to encrypt the values before calling the propertieswriter instance for writing in the configuration file.
-			
-			//Initialize the PropertiesWriter Instance.
-			this.propertieswriter = new PropertiesWriter();
-			
-			//Initialize the DataEncryption instance.
-			this.dataEncryption = new DataEncryption();
-			
-			
-			//We add the New user to the list calling the addNewUserToTheList Method von logicModelUserManager
-			this.logicModelUserManager.addNewUserToTheList(this.newUserString);
-			
-			//We encrypt the data and store them in the variables
-			try {
-				this.userNamePropertieName = this.dataEncryption.encryptData(this.userNamePropertieName);
-				this.userNamePropertieValue = this.dataEncryption.encryptData(this.userNamePropertieValue);
-				
-				this.passwordPropertieName = this.dataEncryption.encryptData(this.passwordPropertieName);
-				this.passwordPropertieValue = this.dataEncryption.encryptData(this.passwordPropertieValue);
-				
-				this.privilegePropertieName = this.dataEncryption.encryptData(this.privilegePropertieName);
-				this.privilegePropertieValue = this.dataEncryption.encryptData(this.privilegePropertieValue);
-				
-				this.abkuerzungPropertieName = this.dataEncryption.encryptData(this.abkuerzungPropertieName);
-				this.abkuerzungPropertieValue = this.dataEncryption.encryptData(this.abkuerzungPropertieValue);
-				
-			
-				//We write the Properties in the configuration file
-				this.propertieswriter.writeProperties(this.userNamePropertieName, this.userNamePropertieValue);
-				this.propertieswriter.writeProperties(this.passwordPropertieName, this.passwordPropertieValue);
-				this.propertieswriter.writeProperties(this.privilegePropertieName, this.privilegePropertieValue);
-				this.propertieswriter.writeProperties(this.abkuerzungPropertieName, this.abkuerzungPropertieValue);
+		//Check if every entries is OK before call for saving the information.
+		if(checkNewUserEmpty() || checkBlankSpaceNewUser() || checkNewPasswordEmpty() || checkBlankSpacePassword()
+			||	checkUserRightsWasNotSelected() || checkUserAbbreviationEmpty() || checkUserAbbreviationCorrectLength()) {
 
+			// Invoke a new Thread with the error message.
+			SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(null,
+			this.errorMessage,
+			"Passwort kann nicht festgelegt werden", JOptionPane.ERROR_MESSAGE, this.errorImg));
+		
+		
+		}else {
+			
+			//Every entries is OK we proceed to save the new user. 
+			JOptionPane.showMessageDialog(null, "We can save the user!!");
+//			proceedToSaveTheUser();
+		}
+		
+		
+	}
+	
+	
+	/**
+	 * @description Method to check if the user entered is empty or not.
+	 * @return
+	 */
+	private boolean checkNewUserEmpty() {
+		
+		//if newwUserString is empty
+		if(this.newUserString.equals("")) {
+			
+			//set the value for the errorMessage
+			this.errorMessage = "der neue Benutzer darf nicht leer sein.";
+			
+			//return the focus to newUsesrJTextField.
+			this.newUser.newUserJTextField.requestFocus();
+			
+			return true;
+			
+		}else {
+			
+			return false;
+		}
+		
+	}
+	
+	
+	
+	/**
+	 * @description Method to check if the new user contains blank spaces.
+	 * @return
+	 */
+	private boolean checkBlankSpaceNewUser() {
+		
+		//we check that no blank spaces are entered
+		for(int i=0; i< this.userNameArray.length; i++) {
+			
+			//currentIndex has the value from i actual position iterated by the Array.
+			char currentIndex = this.userNameArray[i];
 
+			//If we find a blank space
+			if(currentIndex == ' ') {
+
+				//Value is false
+				this.newUserBlankSpace = true;
+
+			}
+			
+			//Arrive to the end the Array
+			if (i == userNameArray.length-1) {
 				
+				//If newUserEntryCorrect is not correct
+				if (this.newUserBlankSpace) {
+					
+		
+					this.newUserEntryCorrect = false;
+					
+					//We give back the focus.
+//					this.newUser.newUserJTextField.requestFocus();
+				}else {
+					
+					this.newUserEntryCorrect = true;
+				}
+					
+				}
 				
-			} catch (Exception e) {
-				e.printStackTrace();
+				}
+		
+		
+		
+				/*
+				 * We found blank space also the neUserEntryCorrect is false
+				 */
+				if(!this.newUserEntryCorrect) {
+					
+					//Set the value for the error message.
+					this.errorMessage = "Leerzeichen sind für Benutzer nicht erlaubt";
+					
+					//Reset the value for the newUserJTextField
+					this.newUser.newUserJTextField.setText("");
+					
+					//return the focus for the newUserJTextField
+					this.newUser.newUserJTextField.requestFocus();
+					
+					return true;
+
+				}else {
+					return false;
+				}
+				
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * @description Method to check if the  Password is empty or not.
+	 * @return
+	 */
+	private boolean checkNewPasswordEmpty() {
+		
+		//If new password is empty
+		if(this.passwordNewUserString.equals("")) {
+			
+			//Set the value for the errorMessage
+			this.errorMessage = "Das Passwort darf nicht leer sein.";
+			
+			//return focus newPasswordField
+			this.newUser.passwordField.requestFocus();
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	
+	
+	 /**
+	   * @description Method to check if exists blank space by the new entered password.
+	   * @return
+	   */
+	  private boolean checkBlankSpacePassword() {
+		  
+		//iterate the char Array to check if we have empty spaces by the newPassword. 
+			for(int i=0; i< this.passwordArray.length; i++) {
+				
+				//Variable char store the current iterated index.
+				char currentIndex = this.passwordArray[i];
+				
+				//if currentIdex is empty(space)
+				if(currentIndex == ' ') {
+					
+					//We set the values
+					this.blankSpacePassword = true;
+		
+					
+				}
+				
+				//We arrive to the End the newPasswordCharArray
+				if((i == passwordArray.length-1)) {
+					
+					//Evaluate if blankSpaceNewPassword = true 
+					if(this.blankSpacePassword) {
+						
+						
+					//set value password is not correct
+					this.passwordNewUserCorrect = false;
+					
+					}else {
+						//set value password is correct
+						this.passwordNewUserCorrect = true;
+					}
+					
+					
+				}
+				
 			}
 			
 			
-			this.newUser.dispose();
 			
-			
-		}
-		
-	}
-	
-	
-	/**
-	 * @description Method to validate the new User Entry. Return true or false depending of correct or not.
-	 * @param newUserString
-	 * @return
-	 */
-	private boolean validateNewUserEntry() {
-		
-		//We store the value in one array so we can check for empty space.
-		this.userNameArray = this.newUserString.toCharArray();
-		
-		//If the user do not enter any username.
-		if(this.newUserString.equalsIgnoreCase("")) {
-			
-			
-			//Invoke a new Thread with the error message.
-			SwingUtilities.invokeLater( () ->  JOptionPane.showMessageDialog(null, "Bitte geben Sie einen Benutzernamen ein"
-					   , "Kritischer Fehler Benutzername", JOptionPane.ERROR_MESSAGE, this.errorImg));
-			
-			
-			//We set the Focus back to the newUserJTextField.
-			this.newUser.newUserJTextField.requestFocus();
-			
-			//Set the value as false.
-			this.newUserEntryCorrect = false;
-			
-		}else {  //Otherwise
-			
-			//For the moment newUserEntryCorrect value = true.
-			this.newUserEntryCorrect = true;
-			
-			//we check that no blank spaces are entered
-			for(int i=0; i< this.userNameArray.length; i++) {
+			//If the password is not correct 
+			if(!this.passwordNewUserCorrect) {
+				//set the value for the errorMessage
+				this.errorMessage = "Leerzeichen sind für das Passwort nicht erlaubt";
 				
-				//currentIndex has the value from i actual position iterated by the Array.
-				char currentIndex = this.userNameArray[i];
-
-				//If we find a blank space
-				if(currentIndex == ' ') {
-
-					//Value is false
-					this.newUserEntryCorrect = false;
-
-				}
-				
-				//Arrive to the end the Array
-				if (i == userNameArray.length-1) {
-					
-					//If newUserEntryCorrect is not correct
-					if (!this.newUserEntryCorrect) {
-						
-						
-						//We invoke a new Thread with the error message.
-						SwingUtilities.invokeLater( () ->  JOptionPane.showMessageDialog(null, "Leerzeichen sind für den Benutzernamen nicht zulässig\n\nVersuchen Sie es erneut mit einem gültigen Benutzernamen "
-								   , "Kritischer Fehler Benutzername", JOptionPane.ERROR_MESSAGE, this.errorImg));
-						
-						//We give back the focus.
-						this.newUser.newUserJTextField.requestFocus();
-					}
-						
-					}
-					
-					}
-		}
-		
-		//returning the value.
-		return newUserEntryCorrect;
-		
-	}
-	
-	
-	
-	
-	
-	
-	
-	/**
-	 * @description 
-	 * @param passwordNewUserString
-	 * @return
-	 */
-	private boolean validatePasswordNewUserEntry() {
-		
-		//By this method is the same process as the Method validateNewUserEntry only with the different is for checking the password entered by the user.
-		
-		this.passwordArray = this.passwordNewUserString.toCharArray();
-		
-		
-	if(this.passwordNewUserString.equalsIgnoreCase("")) {
-			
-			SwingUtilities.invokeLater( () ->  JOptionPane.showMessageDialog(null, "Bite geben Sie ein Passwort für den Administrator ein. das Passwortfeld darf nicht leer sein"
-					   , "Kritischer Fehler Passwort", JOptionPane.ERROR_MESSAGE, this.errorImg));
-			
-			
-			this.newUser.passwordField.requestFocus();
-			
-			this.passwordNewUserCorrect = false;
-			
-		}else {
-			
-			this.passwordNewUserCorrect = true;
-			
-			//we check that no blank spaces are entered
-			for(int i=0; i< this.passwordArray.length; i++) {
-				
-				char currentIndex = this.passwordArray[i];
-
-				if(currentIndex == ' ') {
-
-					this.passwordNewUserCorrect = false;
-
-				}
-				
-				if (i == passwordArray.length-1) {
-					
-					if (!this.passwordNewUserCorrect) {
-						
-						SwingUtilities.invokeLater( () ->  JOptionPane.showMessageDialog(null, "Leerzeichen sind für das Passwort nicht zulässig\\n\\nVersuchen Sie es erneut mit einem gültigen Passwort "
-								   , "Kritischer Fehler Passwort", JOptionPane.ERROR_MESSAGE, this.errorImg));
-						
-						this.newUser.passwordField.requestFocus();
-					}
-						
-					}
-					
-					}
-		}
-		
-		
-		
-		return passwordNewUserCorrect;
-		
-		
-	}
-	
-	
-	
-	/**
-	 * @description Method to validate if the new User Rights was selected to be modified
-	 * @param userRights
-	 * @return
-	 */
-	private boolean validateNewUserRights() {
-		
-		if(this.userRights.equalsIgnoreCase("Benutzerrechte auswählen")) {
-			
-			//We invoke a new Thread with the error message.
-			SwingUtilities.invokeLater( () ->  JOptionPane.showMessageDialog(null, "Sie müssen die Rechte des Benutzers konfigurieren"
-					   , "Kritischer Fehler Benutzerrechten", JOptionPane.ERROR_MESSAGE, this.errorImg));
-		
-		}else {
-			this.newUserRightsCorrect = true;
-		}
-		
-		return this.newUserRightsCorrect;
-	}
-	
-	
-	
-	
-	
-	
-	
-	/**
-	 * @description Method to validate if the new User Abbreviation name was correct entered.
-	 * @param userAbbreviationName
-	 * @return
-	 */
-	private boolean validateNewUserAbbreviationName() {
-		
-		this.userAbbreviationNameArray = this.userAbbreviationName.toCharArray();
-		
-		
-		if(this.userAbbreviationName.equalsIgnoreCase("")) {
-				
-				SwingUtilities.invokeLater( () ->  JOptionPane.showMessageDialog(null, "Bitte geben Sie einen Abkürzungsnamen für den neuen Benutzer ein. das Kürzel MA darf nicht leer sein"
-						   , "Kritischer Fehler Kürzel MA", JOptionPane.ERROR_MESSAGE, this.errorImg));
+				//Reset the value for the PasswordFields.
+				this.newUser.passwordField.setText("");
 				
 				
-				this.newUser.abkuerzungMAJTextField.requestFocus();
+				//Return the focus to newPasswordField
+				this.newUser.passwordField.requestFocus();
+				return true;
+			}else {
+				return false;
+			}
+	  }
+	
+	
+	  
+	  
+	  /**
+	   * @description Method to check the User rights if it was selected or not
+	   */
+	  private boolean checkUserRightsWasNotSelected() {
+		  
+		  if(this.userRights.equalsIgnoreCase("Benutzerrechte auswählen")) {
+			  
+			  this.errorMessage = "Sie müssen die Rechte des Benutzers konfigurieren";
+			  return true;
+			  
+		  }else {
+			  return false;
+		  }
+	  }
+	  
+	  
+	  
+	  
+	  /**
+		 * @description Method to check if the  Password is empty or not.
+		 * @return
+		 */
+		private boolean checkUserAbbreviationEmpty() {
+			
+			if(this.userAbbreviationName.equalsIgnoreCase("")) {
 				
-				this.userAbbreviationNameCorrect = false;
+				this.errorMessage = "Bitte geben Sie einen Abkürzungsnamen für den neuen Benutzer ein. das Kürzel MA darf nicht leer sein";
+				
+				this.newUser.abkuerzungMAPlaceHolderTextField.requestFocus();
+				
+				return true;
 				
 			}else {
 				
-				this.userAbbreviationNameCorrect = true;
-				
-				//we check that no blank spaces are entered
-				for(int i=0; i< this.userAbbreviationNameArray.length; i++) {
-					
-					char currentIndex = this.userAbbreviationNameArray[i];
-
-					if(currentIndex == ' ') {
-
-						this.userAbbreviationNameCorrect = false;
-
-					}
-					
-					if (i == userAbbreviationNameArray.length-1) {
-						
-						if (!this.userAbbreviationNameCorrect) {
-							
-							SwingUtilities.invokeLater( () ->  JOptionPane.showMessageDialog(null, "Leerzeichen sind für das Abkürzungsnamen nicht zulässig\\n\\nVersuchen Sie es erneut mit einem gültigen Abkürzungsnamen "
-									   , "Kritischer Fehler Kürzel MA", JOptionPane.ERROR_MESSAGE, this.errorImg));
-							
-							this.newUser.abkuerzungMAJTextField.requestFocus();
-						}
-							
-						}
-						
-						}
+				return false;
 			}
+			
+			
+		}
+	
 		
-		return this.userAbbreviationNameCorrect;
+		
+		/**
+		 * @description Method to check if the user abbreviation name is at least 3 letters Length.
+		 * @return
+		 */
+		private boolean checkUserAbbreviationCorrectLength() {
+			
+			if(this.userAbbreviationName.length()<3) {
+				
+				this.errorMessage = "Bitte geben Sie einen Abkürzungsname ein, der mindestens 3 Buchstaben lang ist.";
+				
+				this.newUser.abkuerzungMAPlaceHolderTextField.requestFocus();
+				
+				return true;
+			
+			}else {
+				
+				return false;
+			}
+			
+		}
+	
+	
+/**
+ * @description Method to write in the configuration File the new User when everything is OK by entering the information required. 
+ */
+private void proceedToSaveTheUser() {	
+	//Hora de guardar el nuevo usuario Propertieswriter archivo de configuracion.
+	//Initialize the PropertiesWriter Instance
+	this.propertieswriter = new PropertiesWriter();
+	
+	//Initialize the variables for the new User Properties. 
+	this.userNamePropertieName = "db.user." + this.newUserString;
+	
+	//Set the userNamePropertieValue
+	this.userNamePropertieValue = this.newUserString;
+	
+	//set also the value for passwordPropertieName
+	this.passwordPropertieName = "db.password.user." + this.newUserString;
+	
+	//set the value for the passwordPropertieValue
+	this.passwordPropertieValue = this.passwordNewUserString;
+	
+	//set the value for the privilegePropertieName
+	this.privilegePropertieName = "db.privilege.user." + this.newUserString;
+	
+	//set the value for the privilegePropertieValue(User Rights).
+	this.privilegePropertieValue = this.userRights;
+	
+	//set the abkuerzungPropertieName value
+	this.abkuerzungPropertieName = "db.abkuerzungma.user" + this.newUserString;
+	
+	//set the value of abkuerzungPropertieValue(User Abbreviation Name).
+	this.abkuerzungPropertieValue = this.userAbbreviationName;
+	
+	
+	
+	
+	
+	
+	//Now is time to encrypt the values before calling the propertieswriter instance for writing in the configuration file.
+	
+	//Initialize the PropertiesWriter Instance.
+	this.propertieswriter = new PropertiesWriter();
+	
+	//Initialize the DataEncryption instance.
+	this.dataEncryption = new DataEncryption();
+	
+	
+	//We add the New user to the list calling the addNewUserToTheList Method von logicModelUserManager
+	this.logicModelUserManager.addNewUserToTheList(this.newUserString);
+	
+	//We encrypt the data and store them in the variables
+	try {
+		this.userNamePropertieName = this.dataEncryption.encryptData(this.userNamePropertieName);
+		this.userNamePropertieValue = this.dataEncryption.encryptData(this.userNamePropertieValue);
+		
+		this.passwordPropertieName = this.dataEncryption.encryptData(this.passwordPropertieName);
+		this.passwordPropertieValue = this.dataEncryption.encryptData(this.passwordPropertieValue);
+		
+		this.privilegePropertieName = this.dataEncryption.encryptData(this.privilegePropertieName);
+		this.privilegePropertieValue = this.dataEncryption.encryptData(this.privilegePropertieValue);
+		
+		this.abkuerzungPropertieName = this.dataEncryption.encryptData(this.abkuerzungPropertieName);
+		this.abkuerzungPropertieValue = this.dataEncryption.encryptData(this.abkuerzungPropertieValue);
+		
+	
+		//We write the Properties in the configuration file
+		this.propertieswriter.writeProperties(this.userNamePropertieName, this.userNamePropertieValue);
+		this.propertieswriter.writeProperties(this.passwordPropertieName, this.passwordPropertieValue);
+		this.propertieswriter.writeProperties(this.privilegePropertieName, this.privilegePropertieValue);
+		this.propertieswriter.writeProperties(this.abkuerzungPropertieName, this.abkuerzungPropertieValue);
+
+
+		
+		
+	} catch (Exception e) {
+		e.printStackTrace();
 	}
+	
+	
+	this.newUser.dispose();
+	
+	
+}
+	
+	
+
+	
+	
+	
+
 
 }
