@@ -23,10 +23,10 @@ public class LogicModelNewUser {
 	private String newUserString="", passwordNewUserString="", userRights, userAbbreviationName;
 	
 	//Arrays used to delete the whitespace
-	private char[] userNameArray, passwordArray;
+	private char[] userNameArray, passwordArray, abbreviationNameArray;
 	
-	private boolean newUserEntryCorrect = false, passwordNewUserCorrect = false,
-					newUserBlankSpace = false, blankSpacePassword = false;
+	private boolean newUserEntryCorrect = false, passwordNewUserCorrect = false, abbreviationNameCorrect = false,
+					newUserBlankSpace = false, blankSpacePassword = false, blankSpaceAbbreviationName = false;
 	
 	//Image error JOptionPane
 	public ImageIcon errorImg = new ImageIcon(getClass().getResource("/img/error.png"));
@@ -78,6 +78,12 @@ public class LogicModelNewUser {
 		this.blankSpacePassword = false;
 		
 		this.passwordNewUserCorrect = false;
+		
+		this.blankSpaceAbbreviationName = false;
+		
+		this.abbreviationNameCorrect = false;
+		
+		this.abbreviationNameArray = this.userAbbreviationName.toCharArray();
 		 
 		
 		switch (this.userRights) {
@@ -97,7 +103,8 @@ public class LogicModelNewUser {
 		
 		//Check if every entries is OK before call for saving the information.
 		if(checkNewUserEmpty() || checkBlankSpaceNewUser() || checkNewPasswordEmpty() || checkBlankSpacePassword()
-			||	checkUserRightsWasNotSelected() || checkUserAbbreviationEmpty() || checkUserAbbreviationCorrectLength()) {
+			||	checkUserRightsWasNotSelected() || checkUserAbbreviationEmpty() || checkUserAbbreviationCorrectLength()
+			|| checkBlankSpaceAbbreviationName()) {
 
 			// Invoke a new Thread with the error message.
 			SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(null,
@@ -234,7 +241,7 @@ public class LogicModelNewUser {
 	
 	
 	 /**
-	   * @description Method to check if exists blank space by the new entered password.
+	   * @description Method to check if exists blank space by the password entered by the user.
 	   * @return
 	   */
 	  private boolean checkBlankSpacePassword() {
@@ -358,6 +365,71 @@ public class LogicModelNewUser {
 			}
 			
 		}
+		
+		
+	
+		 /**
+		   * @description Method to check if exists blank space by the abbreviation name entered by the user.
+		   * @return
+		   */
+		  private boolean checkBlankSpaceAbbreviationName() {
+			  
+			//iterate the char Array to check if we have empty spaces by the newPassword. 
+				for(int i=0; i< this.abbreviationNameArray.length; i++) {
+					
+					//Variable char store the current iterated index.
+					char currentIndex = this.abbreviationNameArray[i];
+					
+					//if currentIdex is empty(space)
+					if(currentIndex == ' ') {
+						
+						//We set the values
+						this.blankSpaceAbbreviationName = true;
+			
+						
+					}
+					
+					//We arrive to the End the newPasswordCharArray
+					if((i == abbreviationNameArray.length-1)) {
+						
+						//Evaluate if blankSpaceNewPassword = true 
+						if(this.blankSpaceAbbreviationName) {
+							
+							
+						//set value password is not correct
+						this.abbreviationNameCorrect = false;
+						
+						}else {
+							//set value password is correct
+							this.abbreviationNameCorrect = true;
+						}
+						
+						
+					}
+					
+				}
+				
+				
+				
+				//If the user abbreviation name is not correct 
+				if(!this.abbreviationNameCorrect) {
+					//set the value for the errorMessage
+					this.errorMessage = "Leerzeichen sind für den Kürzel MA nicht zulässig";
+					
+					//Reset the value for the PasswordFields.
+					this.newUser.abkuerzungMAPlaceHolderTextField.setText("");
+					
+					
+					//Return the focus to newPasswordField
+					this.newUser.abkuerzungMAPlaceHolderTextField.requestFocus();
+					return true;
+				}else {
+					return false;
+				}
+		  }
+		
+		
+		
 	
 	
 /**
