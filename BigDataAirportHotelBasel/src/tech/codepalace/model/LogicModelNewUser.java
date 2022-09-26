@@ -115,8 +115,7 @@ public class LogicModelNewUser {
 		}else {
 			
 			//Every entries is OK we proceed to save the new user. 
-			JOptionPane.showMessageDialog(null, "We can save the user!!");
-//			proceedToSaveTheUser();
+			proceedToSaveTheUser();
 		}
 		
 		
@@ -436,7 +435,7 @@ public class LogicModelNewUser {
  * @description Method to write in the configuration File the new User when everything is OK by entering the information required. 
  */
 private void proceedToSaveTheUser() {	
-	//Hora de guardar el nuevo usuario Propertieswriter archivo de configuracion.
+
 	//Initialize the PropertiesWriter Instance
 	this.propertieswriter = new PropertiesWriter();
 	

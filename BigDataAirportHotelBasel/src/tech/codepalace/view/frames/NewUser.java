@@ -41,7 +41,7 @@ public class NewUser extends JDialog {
 		
 		public MyButton btnSave, btnCancelSave;
 	
-		public JTextField newUserJTextField, abkuerzungMAJTextField;
+		public JTextField newUserJTextField;
 		public JPasswordField passwordField;
 		
 		public PlaceHolderTextField abkuerzungMAPlaceHolderTextField;
@@ -156,14 +156,6 @@ public class NewUser extends JDialog {
 			this.abkuerzungMAPlaceHolderTextField = new PlaceHolderTextField(20);
 			this.abkuerzungMAPlaceHolderTextField.setPlaceholder("Minimun 3 Bucbstaben eingeben");
 			this.abkuerzungMAPlaceHolderTextField.setFont(new Font("Verdana", Font.BOLD, 14));
-			
-			//Initialize the JText element for the abbreviation name for Staff or Administrator.
-			this.abkuerzungMAJTextField = new JTextField(20);
-			this.abkuerzungMAJTextField.setText("");
-			
-			
-			
-			
 			
 			
 			
