@@ -16,8 +16,11 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.DocumentFilter;
 
 import tech.codepalace.utility.PlaceHolderTextField;
+import tech.codepalace.utility.UppercaseDocumentFilter;
 import tech.codepalace.view.buttons.MyButton;
 import tech.codepalace.view.panels.PanelWithBackgroundOption;
 
@@ -50,6 +53,10 @@ public class NewUser extends JDialog {
 		public JComboBox<String>benutzerRechtenJComboBox;
 		
 		private String[]choicesBenutzerRechten;
+		
+		//Instance DocumentFilter and AbstractDocument to help us accept only Upper Case by the abkuerzungMAPlaceHolderTextField.
+		private DocumentFilter documentFilter;
+		private AbstractDocument abkuerzungMAbstractDocument;
 		
 
 		private GridBagLayout mainGBL, gbl;
@@ -156,6 +163,18 @@ public class NewUser extends JDialog {
 			this.abkuerzungMAPlaceHolderTextField = new PlaceHolderTextField(20);
 			this.abkuerzungMAPlaceHolderTextField.setPlaceholder("Minimun 3 Bucbstaben eingeben");
 			this.abkuerzungMAPlaceHolderTextField.setFont(new Font("Verdana", Font.BOLD, 14));
+			
+			//Initialize the documentFilter by giving a new UppercaseDocumentFilter as value
+			this.documentFilter = new UppercaseDocumentFilter();
+			
+			//abkuerzungMAbstractDocument value receives AbstractDocumen we get the Document(Fetch the model associated with the editor..
+			this.abkuerzungMAbstractDocument = (AbstractDocument)this.abkuerzungMAPlaceHolderTextField.getDocument();
+			
+			//set document filter(our documentFilter instance how call the UppercaseDocumentFilter class to transform the text what we type in Upper case format).
+			this.abkuerzungMAbstractDocument.setDocumentFilter(documentFilter);
+			
+			
+			
 			
 			
 			
