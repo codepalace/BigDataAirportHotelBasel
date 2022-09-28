@@ -419,6 +419,8 @@ public class LogicModelParking extends LogicModel {
 				case 9:
 				case 10:
 					
+					try {
+					
 					//The arrivalLocalDate value will be set and departureLocalDate
 					setDepartureLocalDate(LocalDate.parse((String)model.getValueAt(selectedRow, 5).toString().replace('.', '/'), getDateTimeFormatterForSavingDataBase()));
 					
@@ -427,56 +429,66 @@ public class LogicModelParking extends LogicModel {
 
 						//We do not need to calculate Dates also call only the updateAllParkingChanges
 						updateAllParkingChanges(model);
-						
+					}catch (ArrayIndexOutOfBoundsException e) {
+						JOptionPane.showMessageDialog(null, "error 9  10");
+					}
 						break;
+						
 				
 				case 8: //In case of modification of the Column 8 Sales Channel
 					
-					//Set the value of arrivalLocalDate
-					setArrivalLocalDate(LocalDate.parse((String)model.getValueAt(selectedRow, 4).toString().replace('.', '/'), getDateTimeFormatterForSavingDataBase()));
+					try {
+						
+						//Set the value of arrivalLocalDate
+						setArrivalLocalDate(LocalDate.parse((String)model.getValueAt(selectedRow, 4).toString().replace('.', '/'), getDateTimeFormatterForSavingDataBase()));
+						
+						
+						//set the value of departureLocalDate
+						setDepartureLocalDate(LocalDate.parse((String)model.getValueAt(selectedRow, 5).toString().replace('.', '/'), getDateTimeFormatterForSavingDataBase()));
 					
+							//After having the values of Arrival and Departure LocalDate Objects. Now is time to call for checking if Chronology of Dates is ok.
+							checkChronologyOfDates(model);
 					
-					//set the value of departureLocalDate
-					setDepartureLocalDate(LocalDate.parse((String)model.getValueAt(selectedRow, 5).toString().replace('.', '/'), getDateTimeFormatterForSavingDataBase()));
-				
-						//After having the values of Arrival and Departure LocalDate Objects. Now is time to call for checking if Chronology of Dates is ok.
-						checkChronologyOfDates(model);
-				
-								//Variable String to store temporary the value of the column 8 Bucungskanal(Sales Channel).
-								String salesChannel = (String)model.getValueAt(selectedRow, 8);
+									//Variable String to store temporary the value of the column 8 Bucungskanal(Sales Channel).
+									String salesChannel = (String)model.getValueAt(selectedRow, 8);
 
-								//In case of value is Park, Sleep & Fly is free of charge(NO extras because is a package included with the room reservation).
-								if(salesChannel.equalsIgnoreCase("Park, Sleep & Fly")) {
+									//In case of value is Park, Sleep & Fly is free of charge(NO extras because is a package included with the room reservation).
+									if(salesChannel.equalsIgnoreCase("Park, Sleep & Fly")) {
 
-										//Store the value of Column 5 Temporary to evaluate before changing
-										String betragString = (String)model.getValueAt(selectedRow, 7);
+											//Store the value of Column 5 Temporary to evaluate before changing
+											String betragString = (String)model.getValueAt(selectedRow, 7);
+											
+											//We evaluate the value of betragString variable(Cost for Parking) if not yet 0.0 € we set the column with the value "0.0 €" as String.
+											if(!betragString.equalsIgnoreCase("0.0 €")) {
+												model.setValueAt("0.0 €", selectedRow, 7); //setting the value "0.0 €"
+											}
+
+									
+											
+											
+									}else { //In case salesChannel value is not "Park, Sleep & Fly"
 										
-										//We evaluate the value of betragString variable(Cost for Parking) if not yet 0.0 € we set the column with the value "0.0 €" as String.
-										if(!betragString.equalsIgnoreCase("0.0 €")) {
-											model.setValueAt("0.0 €", selectedRow, 7); //setting the value "0.0 €"
+										//Store the total of date calculating the Local Dates variables values + 1 because the same day when costumer Park the Card it count.
+										anzahltagen = (int) calculateDatesPlus(getArrivalLocalDate(), getDepartureLocalDate()) + 1;
+										
+										//If anzahltagen(total days are <=3 
+										if(anzahltagen<=3) {
+											betragparking = 30d; //double value 30.00
+											model.setValueAt(String.valueOf(betragparking) + " €" , selectedRow, 7);
+											
+										}else {
+											betragparking = (double)anzahltagen * 10; //multiply anzahltagen(total days) * 10 for a result in double 
+											model.setValueAt(String.valueOf(betragparking) + " €" , selectedRow, 7);
 										}
-
-								
-										
-										
-								}else { //In case salesChannel value is not "Park, Sleep & Fly"
-									
-									//Store the total of date calculating the Local Dates variables values + 1 because the same day when costumer Park the Card it count.
-									anzahltagen = (int) calculateDatesPlus(getArrivalLocalDate(), getDepartureLocalDate()) + 1;
-									
-									//If anzahltagen(total days are <=3 
-									if(anzahltagen<=3) {
-										betragparking = 30d; //double value 30.00
-										model.setValueAt(String.valueOf(betragparking) + " €" , selectedRow, 7);
-										
-									}else {
-										betragparking = (double)anzahltagen * 10; //multiply anzahltagen(total days) * 10 for a result in double 
-										model.setValueAt(String.valueOf(betragparking) + " €" , selectedRow, 7);
 									}
-								}
 
-								//call the updateAllParkingChanges to update all modified informations and sending to the DAOParking for saving in the DataBase.
-								updateAllParkingChanges(model);
+									//call the updateAllParkingChanges to update all modified informations and sending to the DAOParking for saving in the DataBase.
+									updateAllParkingChanges(model);
+					
+					}catch (ArrayIndexOutOfBoundsException e) {
+						JOptionPane.showMessageDialog(null, "error 8");
+					}
+					
 					
 					break;						
 						
