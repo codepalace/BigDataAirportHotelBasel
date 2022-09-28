@@ -430,7 +430,7 @@ public class LogicModelParking extends LogicModel {
 						//We do not need to calculate Dates also call only the updateAllParkingChanges
 						updateAllParkingChanges(model);
 					}catch (ArrayIndexOutOfBoundsException e) {
-						JOptionPane.showMessageDialog(null, "error 9  10");
+					
 					}
 						break;
 						
@@ -486,7 +486,7 @@ public class LogicModelParking extends LogicModel {
 									updateAllParkingChanges(model);
 					
 					}catch (ArrayIndexOutOfBoundsException e) {
-						JOptionPane.showMessageDialog(null, "error 8");
+						
 					}
 					
 					
@@ -507,6 +507,8 @@ public class LogicModelParking extends LogicModel {
 					
 					if(checkDateFormatBeforeSaveData((String)model.getValueAt(selectedRow, 4).toString(), "Anreisedatum", "Anreisedatum Parking")) { 
 						
+						try {
+						
 						//if checkDAteFormatBeforeSaveData return true. Date Format Regex(Expression language for date is correct). 
 						
 						//We set the LocalDate value to be modified getting the value from the selected row and the selecting cell. Replacing character(.) to (/). 
@@ -521,6 +523,10 @@ public class LogicModelParking extends LogicModel {
 							checkChronologyOfDates(model);
 						
 					
+						}catch (ArrayIndexOutOfBoundsException e) {
+							
+						}		
+							
 					
 					}
 			
@@ -538,6 +544,7 @@ public class LogicModelParking extends LogicModel {
 						
 						//We set the LocalDate value to be modified getting the value from the selected row and the selecting cell. Replacing character(.) to (/). 
 						
+							try {
 						
 							//We set the value of departureLocalDate
 							setDepartureLocalDate(LocalDate.parse((String)model.getValueAt(selectedRow, 5).toString().replace('.', '/'), getDateTimeFormatterForSavingDataBase()));
@@ -547,6 +554,9 @@ public class LogicModelParking extends LogicModel {
 						
 							
 								checkChronologyOfDates(model);
+							}catch (ArrayIndexOutOfBoundsException e) {
+								
+							}		
 					
 					
 					}
