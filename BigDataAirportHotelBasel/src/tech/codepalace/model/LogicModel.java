@@ -33,6 +33,7 @@ import javax.swing.table.TableModel;
 
 import tech.codepalace.controller.BigDataAHBStartFrameController;
 import tech.codepalace.controller.DataBaseGUIController;
+import tech.codepalace.controller.DateChronologyCorrectionController;
 import tech.codepalace.dao.DAOFundsachen;
 import tech.codepalace.dao.DAOParking;
 import tech.codepalace.dao.DaoException;
@@ -44,6 +45,7 @@ import tech.codepalace.utility.OperatingSystemCheck;
 import tech.codepalace.utility.SetIconOperatingSystem;
 import tech.codepalace.view.frames.BigDataAirportHotelBaselStartFrame;
 import tech.codepalace.view.frames.DataBaseGUI;
+import tech.codepalace.view.frames.DateChronologyCorrection;
 import tech.codepalace.view.frames.Loading;
 
 /**
@@ -1253,6 +1255,7 @@ try {
 	 * @return the dateAsStringToBeModified
 	 */
 	public String getDateAsStringToBeModified() {
+		JOptionPane.showMessageDialog(null, dateAsStringToBeModified + " getDataAsStringToBemodified logicModel");
 		return dateAsStringToBeModified;
 	}
 
@@ -1512,18 +1515,26 @@ try {
 				
 	
 			
-				//Initialize the dialogDateChange Object(JDialog) 
-				dialogDateChange = new JOptionPane(panelRequestBox, JOptionPane.OK_OPTION, JOptionPane.NO_OPTION,
-						errorImg, optionsRequestLaterDateCorrection, null).createDialog(dialogTitle);
-
-				//Set Focus our JTextField Object
-				dateTextFieldRequestLaterDateCorrection.requestFocus();
+//				//Initialize the dialogDateChange Object(JDialog) 
+//				dialogDateChange = new JOptionPane(panelRequestBox, JOptionPane.OK_OPTION, JOptionPane.NO_OPTION,
+//						errorImg, optionsRequestLaterDateCorrection, null).createDialog(dialogTitle);
+//
+//				//Set Focus our JTextField Object
+//				dateTextFieldRequestLaterDateCorrection.requestFocus();
+//				
+//				//Set AlwaysOnTop false for in case wrong Date Format(dd.mm.yyyy) We could display another JOptionPane Object with an alert message over the JDialog
+//				dialogDateChange.setAlwaysOnTop(false);
+//				
+//				//Set the JDialog Visible.
+//				dialogDateChange.setVisible(true);
 				
-				//Set AlwaysOnTop false for in case wrong Date Format(dd.mm.yyyy) We could display another JOptionPane Object with an alert message over the JDialog
-				dialogDateChange.setAlwaysOnTop(false);
+				DateChronologyCorrection dateChronologyCorrection = new DateChronologyCorrection(dialogTitle, message, dataBaseGUI, true);
 				
-				//Set the JDialog Visible.
-				dialogDateChange.setVisible(true);
+				LogicModelDateChronologyCorrection logicModelDateChronologyCorrection = new LogicModelDateChronologyCorrection(dataBaseGUI);
+				
+				new DateChronologyCorrectionController(dateChronologyCorrection, logicModelDateChronologyCorrection);
+				
+				dateChronologyCorrection.setVisible(true);
 				
 				
 

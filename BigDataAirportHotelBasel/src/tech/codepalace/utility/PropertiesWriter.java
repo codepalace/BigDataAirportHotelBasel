@@ -98,7 +98,6 @@ if (configurationFile.exists()) {
 	            // save properties to project root folder
 	            prop.store(output, null);
 
-	            System.out.println("A new propertie was saved to the File: " + this.propertyName);
 
 	        } catch (IOException io) {
 	            io.printStackTrace();
