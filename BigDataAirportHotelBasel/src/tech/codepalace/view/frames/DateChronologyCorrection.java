@@ -1,6 +1,7 @@
 package tech.codepalace.view.frames;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -23,15 +24,18 @@ public class DateChronologyCorrection extends JDialog {
 	
 	private PanelWithBackgroundOption panelWithBackgroundOption;
 	
-	private JPanel mainJPanel, entriesPanel, containerButtonPanel;
+	private JPanel mainJPanel, entriesPanel, topPanel, containerButtonPanel;
 	
 	private JLabel messageJLabel, imgModal; 
+	
 	
 	private String title, message;
 	
 	private JTextField dateJTextField;
 	
 	public MyButton btn_abbrechen, btn_save_changes;
+	
+	
 	
 	private GridBagLayout mainGBL, gbl;
 	private GridBagConstraints mainGBC, gbc;
@@ -54,7 +58,7 @@ public class DateChronologyCorrection extends JDialog {
 	
 	private void init() {
 		
-		setSize(960, 350);
+		setSize(700, 140);
 		
 		setLocationRelativeTo(null);
 		
@@ -77,6 +81,12 @@ public class DateChronologyCorrection extends JDialog {
 		 setContentPane(panelWithBackgroundOption);
 		  
 		  setIconImage(new ImageIcon(getClass().getResource("/img/iconoHotel.png")).getImage());
+		  
+		  this.topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		  this.topPanel.setOpaque(false);
+		  
+		 
+		  
 		  
 
 		  this.mainJPanel = new JPanel();
@@ -105,13 +115,14 @@ public class DateChronologyCorrection extends JDialog {
 			this.messageJLabel = new JLabel(this.message);
 			this.messageJLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 			this.messageJLabel.setFont(new Font("Verdana", Font.BOLD, 14));
+
 			
 			this.dateJTextField = new JTextField(10);
 			
 			this.btn_save_changes =  new MyButton("/img/aenderung_speichern.png");
 			this.btn_abbrechen = new MyButton("/img/abbrechen_login_gui.png");
 			
-			this.containerButtonPanel = new JPanel(new BorderLayout());
+			this.containerButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10,10));
 			this.containerButtonPanel.setOpaque(false);
 			
 			
@@ -168,8 +179,9 @@ public class DateChronologyCorrection extends JDialog {
 		this.mainJPanel.add(this.entriesPanel);
 		
 		//Add the Buttons to the containerButtonPanel
-		this.containerButtonPanel.add(this.btn_save_changes, BorderLayout.EAST);
-		this.containerButtonPanel.add(this.btn_abbrechen, BorderLayout.WEST);
+		this.containerButtonPanel.add(this.btn_abbrechen);
+		this.containerButtonPanel.add(this.btn_save_changes);
+		
 		
 		
 		//Setting the elements GridBagConstraints and add to mainJPanel with GridBagLayout
@@ -192,7 +204,15 @@ public class DateChronologyCorrection extends JDialog {
 		//We add the JButton s to the mainJPanel
 		this.mainJPanel.add(containerButtonPanel);
 		
-		this.panelWithBackgroundOption.add(this.mainJPanel, BorderLayout.NORTH);
+	
+		this.topPanel.add(this.imgModal);
+		this.topPanel.add(this.messageJLabel);
+		this.topPanel.add(this.dateJTextField);
+		
+		
+		
+		this.panelWithBackgroundOption.add(this.topPanel, BorderLayout.NORTH);
+		this.panelWithBackgroundOption.add(this.containerButtonPanel, BorderLayout.CENTER);
 		
 		
 		
