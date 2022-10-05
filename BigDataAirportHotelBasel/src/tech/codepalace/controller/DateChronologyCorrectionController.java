@@ -188,6 +188,17 @@ public class DateChronologyCorrectionController implements ActionListener, KeyLi
 	@Override
 	public void focusLost(FocusEvent e) {
 		
+		//if btn_abbrechen
+		if(e.getSource()==this.dateChronologyCorrection.btn_abbrechen) {
+					
+		}
+				
+			else
+					
+		//if btn_save_changes
+		if(e.getSource()==this.dateChronologyCorrection.btn_save_changes) {
+						
+		}
 		
 	}
 
