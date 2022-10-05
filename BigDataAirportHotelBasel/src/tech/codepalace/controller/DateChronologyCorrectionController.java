@@ -22,6 +22,11 @@ public class DateChronologyCorrectionController implements ActionListener, KeyLi
 		
 		this.dateChronologyCorrection = dateChronologyCorrection;
 		this.logicDateChronologyCorrection = logicModelDateChronologyCorrection;
+		
+		//Add WindowListener to the dateChronologyCorrection GUI
+		this.dateChronologyCorrection.addWindowListener(this);
+	
+		
 	}
 
 	
@@ -63,7 +68,8 @@ public class DateChronologyCorrectionController implements ActionListener, KeyLi
 
 	@Override
 	public void windowClosing(WindowEvent e) {
-		
+		//by pressing the close Window call confirmClose Method by dateChronologyCorrection GUI.
+		this.dateChronologyCorrection.confirmClose();
 	}
 
 
