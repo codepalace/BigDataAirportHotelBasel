@@ -25,6 +25,22 @@ public class DateChronologyCorrectionController implements ActionListener, KeyLi
 		
 		//Add WindowListener to the dateChronologyCorrection GUI
 		this.dateChronologyCorrection.addWindowListener(this);
+		
+		//Add KeyListener to the MyButtons
+		this.dateChronologyCorrection.btn_abbrechen.addKeyListener(this);
+		this.dateChronologyCorrection.btn_save_changes.addKeyListener(this);
+		
+		//Add ActionListener to the MyButtons
+		this.dateChronologyCorrection.btn_abbrechen.addActionListener(this);
+		this.dateChronologyCorrection.btn_save_changes.addActionListener(this);
+		
+		//Add FocusListener to the MyButtons
+		this.dateChronologyCorrection.btn_abbrechen.addFocusListener(this);
+		this.dateChronologyCorrection.btn_save_changes.addFocusListener(this);
+		
+		
+		
+		
 	
 		
 	}
@@ -34,6 +50,27 @@ public class DateChronologyCorrectionController implements ActionListener, KeyLi
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
+		// btn_abbrechen(Cancel and Close the GUI)
+		if(e.getSource()==this.dateChronologyCorrection.btn_abbrechen) {
+		 
+			//We need to return back the value we had before calling dateChronologyCorrection GUI
+			
+		}
+		
+		else
+			//if btn_save_changes
+			if(e.getSource()==this.dateChronologyCorrection.btn_save_changes) {
+				
+				/* We have to call to check if the new Date for the Departure is correct after the arrival date. 
+				 * 
+				 * if this is not the case we return back the value we had before calling the dateChronologCorrection GUI by 
+				 * arrival and departure. We also display one message nothing has change and we can opt to ask for a new value or
+				 * we just close dateChronologyCorrection and apply the old values so that the user has access again to the 
+				 * JTable and click to modify again. 
+				 */
+				
+			}
 		
 	}
 
@@ -49,6 +86,29 @@ public class DateChronologyCorrectionController implements ActionListener, KeyLi
 	@Override
 	public void keyPressed(KeyEvent e) {
 		
+		//if btn_abbrechen(Cancel and Close the GUI)
+		if(e.getSource()==this.dateChronologyCorrection.btn_abbrechen && e.getKeyCode()==10) {
+			
+			//We need to return back the value we had before calling dateChronologyCorrection GUI
+			
+		}
+		
+		else
+			//if btn_save_changes
+			if(e.getSource()==this.dateChronologyCorrection.btn_save_changes && e.getKeyCode() == 10) {
+				
+				/* We have to call to check if the new Date for the Departure is correct after the arrival date. 
+				 * 
+				 * if this is not the case we return back the value we had before calling the dateChronologCorrection GUI by 
+				 * arrival and departure. We also display one message nothing has change and we can opt to ask for a new value or
+				 * we just close dateChronologyCorrection and apply the old values so that the user has access again to the 
+				 * JTable and click to modify again. 
+				 * 
+				 * 
+				 */
+				
+				
+			}
 	}
 
 
@@ -108,6 +168,17 @@ public class DateChronologyCorrectionController implements ActionListener, KeyLi
 	@Override
 	public void focusGained(FocusEvent e) {
 		
+		//if btn_abbrechen
+		if(e.getSource()==this.dateChronologyCorrection.btn_abbrechen) {
+			
+		}
+		
+		else
+			
+			//if btn_save_changes
+			if(e.getSource()==this.dateChronologyCorrection.btn_save_changes) {
+				
+			}
 		
 	}
 
