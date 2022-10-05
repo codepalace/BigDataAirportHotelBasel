@@ -171,12 +171,17 @@ public class DateChronologyCorrectionController implements ActionListener, KeyLi
 		//if btn_abbrechen
 		if(e.getSource()==this.dateChronologyCorrection.btn_abbrechen) {
 			
+			//Set the Opacity to 1
+			this.dateChronologyCorrection.btn_abbrechen.setOpacity(1);
 		}
 		
 		else
 			
 			//if btn_save_changes
 			if(e.getSource()==this.dateChronologyCorrection.btn_save_changes) {
+				
+				//Set the Opacity to 1
+				this.dateChronologyCorrection.btn_save_changes.setOpacity(1);
 				
 			}
 		
@@ -190,13 +195,19 @@ public class DateChronologyCorrectionController implements ActionListener, KeyLi
 		
 		//if btn_abbrechen
 		if(e.getSource()==this.dateChronologyCorrection.btn_abbrechen) {
-					
+			
+			//Set the Opacity back to 0.5 
+			this.dateChronologyCorrection.btn_abbrechen.setOpacity(0.5f);
+			
 		}
 				
 			else
 					
 		//if btn_save_changes
 		if(e.getSource()==this.dateChronologyCorrection.btn_save_changes) {
+			
+			//Set the Opacity back to 0.5 
+			this.dateChronologyCorrection.btn_save_changes.setOpacity(0.5f);
 						
 		}
 		
