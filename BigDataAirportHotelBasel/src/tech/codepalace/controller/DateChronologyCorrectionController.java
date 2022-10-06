@@ -54,8 +54,11 @@ public class DateChronologyCorrectionController implements ActionListener, KeyLi
 		// btn_abbrechen(Cancel and Close the GUI)
 		if(e.getSource()==this.dateChronologyCorrection.btn_abbrechen) {
 		 
-			//We need to return back the value we had before calling dateChronologyCorrection GUI
+			//User cancel the Dates modifications we reset the Dates back
+			this.logicDateChronologyCorrection.resetDates();
 			
+			//Dispose the GUI
+			this.dateChronologyCorrection.dispose();
 		}
 		
 		else
@@ -89,7 +92,11 @@ public class DateChronologyCorrectionController implements ActionListener, KeyLi
 		//if btn_abbrechen(Cancel and Close the GUI)
 		if(e.getSource()==this.dateChronologyCorrection.btn_abbrechen && e.getKeyCode()==10) {
 			
-			//We need to return back the value we had before calling dateChronologyCorrection GUI
+			//User cancel the Dates modifications we reset the Dates back
+			this.logicDateChronologyCorrection.resetDates();
+			
+			//Dispose the GUI
+			this.dateChronologyCorrection.dispose();
 			
 		}
 		
