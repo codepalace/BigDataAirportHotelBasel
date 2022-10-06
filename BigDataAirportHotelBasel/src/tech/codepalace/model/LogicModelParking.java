@@ -621,9 +621,10 @@ public class LogicModelParking extends LogicModel {
 							switch (getComponentHadFocus()) {
 								case "Anreisedatum Parking":
 									
-									// If Date format is not correct we set back the value for the Column 5 (Arrival)
 									
-									LogicModelParking.dataBaseGUI.parkingTable.getModel().setValueAt(getDateAsStringToBeModified(), LogicModelParking.selectedRow, 4);
+									// If Date format is not correct we set back the value for the Column 4 (Arrival)
+									
+									LogicModelParking.dataBaseGUI.parkingTable.getModel().setValueAt(getDateAsStringToBeModified()[0], LogicModelParking.selectedRow, 4);
 									break;
 									
 								case "Abreisedatum Parking": 
@@ -631,7 +632,7 @@ public class LogicModelParking extends LogicModel {
 									
 									 // If Date format is not correct we set back the value for the Column 5 (Departure)
 									 
-									LogicModelParking.dataBaseGUI.parkingTable.getModel().setValueAt(getDateAsStringToBeModified(), LogicModelParking.selectedRow, 5);
+									LogicModelParking.dataBaseGUI.parkingTable.getModel().setValueAt(getDateAsStringToBeModified()[1], LogicModelParking.selectedRow, 5);
 									break;
 
 							}
