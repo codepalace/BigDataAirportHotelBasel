@@ -130,6 +130,8 @@ public class DateChronologyCorrectionController implements ActionListener, KeyLi
 	public void windowClosing(WindowEvent e) {
 		//by pressing the close Window call confirmClose Method by dateChronologyCorrection GUI.
 		this.dateChronologyCorrection.confirmClose();
+		this.logicDateChronologyCorrection.resetDates();
+		
 	}
 
 

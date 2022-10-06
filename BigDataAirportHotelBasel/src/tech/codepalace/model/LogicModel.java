@@ -177,7 +177,7 @@ public class LogicModel {
 	
 	private LocalDate localDateToBeModified = null;
 	
-	private String dateAsStringToBeModified = "";
+	private String [] dateAsStringToBeModified = {"",""};
 	
 	
 	/*
@@ -195,6 +195,8 @@ public class LogicModel {
 	 *  In case by Fitness we have a modification and the date Chronology is also not good we need to store the value for the End Date and call the method to display one input box by JOptionPane and give the possibility to the user to modificate the value.
 	 */
 	private String laterDateCorrection = "";
+	
+	private String dateCorrection = "";
 	
 	
 	//Variables to modify values in JTable
@@ -1254,8 +1256,7 @@ try {
 	/**
 	 * @return the dateAsStringToBeModified
 	 */
-	public String getDateAsStringToBeModified() {
-		JOptionPane.showMessageDialog(null, dateAsStringToBeModified + " getDataAsStringToBemodified logicModel");
+	public String [] getDateAsStringToBeModified() {
 		return dateAsStringToBeModified;
 	}
 
@@ -1263,9 +1264,101 @@ try {
 	/**
 	 * @param dateAsStringToBeModified the dateAsStringToBeModified to set
 	 */
-	public void setDateAsStringToBeModified(String dateAsStringToBeModified) {
+	public void setDateAsStringToBeModified(String[] dateAsStringToBeModified) {
+		
 		this.dateAsStringToBeModified = dateAsStringToBeModified;
+		
 	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * @description Method to request the user to modify one of the Dates when he is trying to apply some Date changes or Chronology in a JTable Data.
+	 * @param model
+	 * @param selectedRow
+	 * @param selectedColumn
+	 * @param columnToBeModified
+	 * @param message
+	 * @param dialogTitle
+	 * @return
+	 */
+	public String displayRequestDateCorrection(TableModel model, int selectedRow, int selectedColumn, int columnToBeModified, String message, String dialogTitle) {
+		
+		LogicModel.model = model;
+		LogicModel.selectedRow = selectedRow;
+		LogicModel.selectedColumn = selectedColumn;
+		LogicModel.columnToBeModified = columnToBeModified;
+		LogicModel.message = message;
+		
+		
+		//Initialize the JLable
+		messageLabelRequestLaterDateCorrection = new JLabel(LogicModel.message);
+		
+		// Initialize the JTextField Object
+		dateTextFieldRequestLaterDateCorrection = new JTextField(10);
+
+		// Initialize the JPanel
+		panelRequestBox = new JPanel();
+
+		// Add the objects to the JPanel
+		panelRequestBox.add(messageLabelRequestLaterDateCorrection);
+		panelRequestBox.add(dateTextFieldRequestLaterDateCorrection);
+		
+		
+		//invokeLater new Thread for displaying the JDialog DateChronologyCorrection dateChronologyCorrection GUI.
+				SwingUtilities.invokeLater(new Runnable() {
+					
+					@Override
+					public void run() {
+						
+						/* Create and initialize the DateChronologyCorrection instance
+						 * 
+						 * Argument 1= The title for the JDialog GUI
+						 * Argument 2 = Message we want to display by the GUI JDialog
+						 * Argument 3 = Instance DataBaseGUI so we can access to this and modify elements by the JTable or dispose also to block in Background. 
+						 * Argument 4 = boolean value as true to block the dataBaseGUI instance in background until the user take a decision.
+						 */
+						DateChronologyCorrection dateChronologyCorrection = new DateChronologyCorrection(dialogTitle, message, dataBaseGUI, true);
+						
+						
+						/*
+						 * Create and initialize the LogicModelDateChronologyCorrection Instance
+						 * 
+						 * Argument 1 = dataBaseGUI instance
+						 * Argument 2 = String the first Date
+						 * Argument 3 = the Second Date
+						 * Argument 4 = the selected row
+						 * Argument 5 = the selected column
+						 */
+						LogicModelDateChronologyCorrection logicModelDateChronologyCorrection = 
+								new LogicModelDateChronologyCorrection(dataBaseGUI, getDateAsStringToBeModified()[0], 
+										getDateAsStringToBeModified()[1], LogicModel.selectedRow, LogicModel.selectedColumn);
+						
+						
+						/*
+						 * new Instance DateChronologyCorrectionController with the arguments dateChronologyCorrection, logicModelDateChronologyCorrection
+						 */
+						new DateChronologyCorrectionController(dateChronologyCorrection, logicModelDateChronologyCorrection);
+						
+						//set visible the GUI(extended JDialog)
+						dateChronologyCorrection.setVisible(true);
+						
+						
+
+					}
+				});
+		
+		
+		return this.dateCorrection;
+	}
+	
+	
+	
+	
+	
 	
 	
 	
@@ -1279,6 +1372,7 @@ try {
 	 */
 	public String displayRequestLaterDateCorrection(TableModel model, int selectedRow, int selectedColumn, int columnToBeModified, String message, String dialogTitle) {
 		
+		JOptionPane.showMessageDialog(null, "llamando al medoto de correcoion");	
 		LogicModel.model = model;
 		LogicModel.selectedRow = selectedRow;
 		LogicModel.selectedColumn = selectedColumn;
@@ -1530,7 +1624,9 @@ try {
 				
 				DateChronologyCorrection dateChronologyCorrection = new DateChronologyCorrection(dialogTitle, message, dataBaseGUI, true);
 				
-				LogicModelDateChronologyCorrection logicModelDateChronologyCorrection = new LogicModelDateChronologyCorrection(dataBaseGUI);
+				LogicModelDateChronologyCorrection logicModelDateChronologyCorrection = 
+						new LogicModelDateChronologyCorrection(dataBaseGUI, getDateAsStringToBeModified()[0], 
+								getDateAsStringToBeModified()[1], LogicModel.selectedRow, LogicModel.selectedColumn);
 				
 				new DateChronologyCorrectionController(dateChronologyCorrection, logicModelDateChronologyCorrection);
 				

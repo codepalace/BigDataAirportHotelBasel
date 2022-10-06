@@ -58,6 +58,8 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener, MouseListene
 	private int selectedRow=0;
 	private int selectedColumn=0;
 	
+	private String[]dates;
+	
 	public DataBaseGUIController(BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame, 
 			DataBaseGUI dataBaseGUI, LogicModelParking logicModelParking, LogicModelFundSachen logicModelFundSachen) {
 		
@@ -400,7 +402,17 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener, MouseListene
 				if(this.dataBaseGUI.parkingTable.getSelectedColumn()==4) {
 
 					TableModel model = this.dataBaseGUI.parkingTable.getModel();
-					this.logicModelParking.setDateAsStringToBeModified((String)model.getValueAt(selectedRow, 4).toString());
+//					this.logicModelParking.setDateAsStringToBeModified((String)model.getValueAt(selectedRow, 4).toString());
+//				
+//				
+					dates = new String[] {model.getValueAt(selectedRow, 4).toString(), model.getValueAt(selectedRow, 5).toString()};
+					
+					
+					/*
+					 * gurdamos en un array las fechas de llegada y salida para poder acceder a ellas en caso de 
+					 * error y devolverlas a la tabla como estaban.
+					 */
+					this.logicModelParking.setDateAsStringToBeModified(dates);
 				}
 				
 
@@ -681,7 +693,16 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener, MouseListene
 						
 						
 						//aqui vamos a guardar de forma provicional el valor de esta coloumn en caso de que halla que volver a devolverlo.
-						this.logicModelParking.setDateAsStringToBeModified(model.getValueAt(selectedRow, selectedColumn).toString());
+//						this.logicModelParking.setDateAsStringToBeModified(model.getValueAt(selectedRow, selectedColumn).toString());
+//						
+						dates = new String[] {model.getValueAt(selectedRow, 4).toString(), model.getValueAt(selectedRow, 5).toString()};
+						
+						
+						/*
+						 * gurdamos en un array las fechas de llegada y salida para poder acceder a ellas en caso de 
+						 * error y devolverlas a la tabla como estaban.
+						 */
+						this.logicModelParking.setDateAsStringToBeModified(dates);
 						
 						
 					}
@@ -689,7 +710,11 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener, MouseListene
 					else if(selectedColumn == 5) {
 						
 						//aqui vamos a guardar de forma provicional el valor de esta coloumn en caso de que halla que volver a devolverlo.
-						this.logicModelParking.setDateAsStringToBeModified(model.getValueAt(selectedRow, selectedColumn).toString());
+//						this.logicModelParking.setDateAsStringToBeModified(model.getValueAt(selectedRow, selectedColumn).toString());
+					
+						dates = new String[] {model.getValueAt(selectedRow, 4).toString(), model.getValueAt(selectedRow, 5).toString()};
+						this.logicModelParking.setDateAsStringToBeModified(dates);
+						
 					}
 				}
 			}
