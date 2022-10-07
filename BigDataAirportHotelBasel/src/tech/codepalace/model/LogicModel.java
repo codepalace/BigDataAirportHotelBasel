@@ -179,38 +179,12 @@ public class LogicModel {
 	
 	private String [] dateAsStringToBeModified = {"",""};
 	
-	
-	/*
-	 * Variable to store the value as String for a Later Date we have to make a correction. 
-	 * 
-	 *  For example if we have a Arrival Date and a Departure Date in Parking Application GUI JTable and the user has modified The Arrival Date and this arrival Date modified is later than the Departure Date. This is not applicable. 
-	 *  
-	 *  It doesn't make sense with the Chronology. We become one error of calculation the Chronology between one Date and the other. For this reason we store the value the user have to modify again for the departure so that 
-	 *  departure is later than arrival. 
-	 *  
-	 *  This value from the laterDateCorrection variable it will be obtained from displayRequestLaterDateCorrection Method. Depending if the user make a modification and accept will be modified in the JTable or we return the Date we had before by both dates. 
-	 *  
-	 *  We have create this variable in this LogicModel Super Class so we can access from ParkingReservation and from Fitness Registration Contract. In this future Fitness Table we are going to have also the Start Date and the End Date of the contract. 
-	 *  
-	 *  In case by Fitness we have a modification and the date Chronology is also not good we need to store the value for the End Date and call the method to display one input box by JOptionPane and give the possibility to the user to modificate the value.
-	 */
-	private String laterDateCorrection = "";
-	
 	private String dateCorrection = "";
 	
 	
 	//Variables to modify values in JTable
-	private static TableModel model;
 	private static int selectedColumn;
-	private static int columnToBeModified;
-	
-	private JDialog dialogDateChange = null;
-	
-	private JButton saveJButton = new JButton("Änderung speichern");
-	private JButton abbrechenJButton = new JButton("Abbrechen");
-	
-	private Object[] optionsRequestLaterDateCorrection = { saveJButton, abbrechenJButton};
-	
+
 	private	JLabel messageLabelRequestLaterDateCorrection;
 	
 	private static String message = "";
@@ -218,10 +192,7 @@ public class LogicModel {
 	private JTextField dateTextFieldRequestLaterDateCorrection;
 	
 	private JPanel panelRequestBox;
-	
-	private ImageIcon infoImg = new ImageIcon(getClass().getResource("/img/info.png"));
-	
-	
+
 	public LogicModel() {
 		
 		init();
@@ -791,11 +762,11 @@ try {
 	public void deleteRowDataBase(int selectedRow, String tableName, TableModel tableModel) {
 		
 		//We set the values of our variables
-		this.selectedRow = selectedRow;
+		LogicModel.selectedRow = selectedRow;
 		this.tableName = tableName;
 		this.tableModel = tableModel;
 	
-		int id = (int)this.tableModel.getValueAt(this.selectedRow, 0);
+		int id = (int)this.tableModel.getValueAt(LogicModel.selectedRow, 0);
 		
 		
 		
@@ -1285,12 +1256,10 @@ try {
 	 * @param dialogTitle
 	 * @return
 	 */
-	public String displayRequestDateCorrection(TableModel model, int selectedRow, int selectedColumn, int columnToBeModified, String message, String dialogTitle) {
+	public String displayRequestDateCorrection(int selectedRow, int selectedColumn, String message, String dialogTitle) {
 		
-		LogicModel.model = model;
 		LogicModel.selectedRow = selectedRow;
 		LogicModel.selectedColumn = selectedColumn;
-		LogicModel.columnToBeModified = columnToBeModified;
 		LogicModel.message = message;
 		
 		
@@ -1335,7 +1304,7 @@ try {
 						 */
 						LogicModelDateChronologyCorrection logicModelDateChronologyCorrection = 
 								new LogicModelDateChronologyCorrection(dataBaseGUI, getDateAsStringToBeModified()[0], 
-										getDateAsStringToBeModified()[1], LogicModel.selectedRow, LogicModel.selectedColumn);
+										getDateAsStringToBeModified()[1], LogicModel.selectedRow, LogicModel.selectedColumn, dateChronologyCorrection);
 						
 						
 						/*
@@ -1354,298 +1323,6 @@ try {
 		
 		return this.dateCorrection;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/**
-	 * @description Method to request with the Help from JOptionPane input Dialog to the User to enter a modification of the second Date. The later Date in case we have to Dates to compare the Chronology.
-	 * @param model
-	 * @param selectedRow
-	 * @param selectedColumn
-	 * @return
-	 */
-	public String displayRequestLaterDateCorrection(TableModel model, int selectedRow, int selectedColumn, int columnToBeModified, String message, String dialogTitle) {
-		
-		JOptionPane.showMessageDialog(null, "llamando al medoto de correcoion");	
-		LogicModel.model = model;
-		LogicModel.selectedRow = selectedRow;
-		LogicModel.selectedColumn = selectedColumn;
-		LogicModel.columnToBeModified = columnToBeModified;
-		LogicModel.message = message;
-		
-		
-		//Initialize the JLable
-		messageLabelRequestLaterDateCorrection = new JLabel(LogicModel.message);
-		
-		//Initialize the JTextField Object
-		dateTextFieldRequestLaterDateCorrection = new JTextField(10);
-		
-		//Initialize the JPanel
-		panelRequestBox = new JPanel();
-		
-		//Add the objects to the JPanel
-		panelRequestBox.add(messageLabelRequestLaterDateCorrection);
-		panelRequestBox.add(dateTextFieldRequestLaterDateCorrection);
-		
-		
-		//Add Listeners for the abbrechenJButton.
-		abbrechenJButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				/*
-				 * In case we cancel the edit of new Date we set the Date was before trying to modify.
-				 */
-				LogicModel.model.setValueAt(getDateAsStringToBeModified(), LogicModel.selectedRow, LogicModel.selectedColumn);
-			
-				//Close JDialog
-				dialogDateChange.dispose();
-				
-				//New Message for the User
-				LogicModel.message = "Es wurde keine Änderung vorgenommen: ";
-				
-				//Display JOptionPane with the Message.
-				JOptionPane.showMessageDialog(null, LogicModel.message,  "Das vorherige Datum Wert wird wieder festgelegt", JOptionPane.OK_OPTION, infoImg);
-				
-			}
-		});	
-		
-		
-		abbrechenJButton.addKeyListener(new KeyListener() {
-
-			@Override
-			public void keyTyped(KeyEvent e) {}
-
-			@Override
-			public void keyPressed(KeyEvent e) {
-				
-				if(e.getKeyCode()==10) {
-					LogicModel.model.setValueAt(getDateAsStringToBeModified(), LogicModel.selectedRow, LogicModel.selectedColumn);
-					
-					
-					dialogDateChange.dispose();
-					
-					LogicModel.message = "Es wurde keine Änderung vorgenommen: ";
-					
-					
-					JOptionPane.showMessageDialog(null, LogicModel.message,  "Das vorherige Wert wird wieder festgelegt", JOptionPane.OK_OPTION, infoImg);
-				}
-			}
-
-			@Override
-			public void keyReleased(KeyEvent e) {}
-			
-		});
-		
-		
-		
-		
-		
-		
-		saveJButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				SwingUtilities.invokeLater(new Runnable() {
-					
-					@Override
-					public void run() {
-						
-						//We check if the value has a correct Date format dd.mm.yyyy.
-						if(!Pattern.matches(formatDateRegex, dateTextFieldRequestLaterDateCorrection.getText())) {
-							
-							//The value is not a correct date format dd.mm.yyyy we display error message taking this time the information saved in the panelErrorDateFormat. 
-							//this panelErrorDateFormat has already the text information that we need. 
-							JOptionPane.showMessageDialog(null, panelErrorDateFormat,  "Kritische Fehler(Datum Wert)", JOptionPane.OK_OPTION, errorImg);
-							
-							//Clear the Text value
-							dateTextFieldRequestLaterDateCorrection.setText("");
-							
-							//Set focus to the JTextField Object.
-							dateTextFieldRequestLaterDateCorrection.requestFocus();
-							
-						}else { //Format dd.mm.yyyy is correct
-							
-							//We set the value for the Date got it from the dateTextFieldRequestLaterDataCorrection to the column should be modified with the new value.
-							LogicModel.model.setValueAt(dateTextFieldRequestLaterDateCorrection.getText(), LogicModel.selectedRow, LogicModel.columnToBeModified);
-							
-							//Close the JDialgo 
-							dialogDateChange.dispose();
-							
-						}
-						
-					}
-				});
-				
-				
-				
-				
-				
-				
-			}
-		});
-		
-		
-		
-		
-		
-		saveJButton.addKeyListener(new KeyListener() {
-
-			@Override
-			public void keyTyped(KeyEvent e) {}
-
-			@Override
-			public void keyPressed(KeyEvent e) {
-				
-				SwingUtilities.invokeLater(new Runnable() {
-					
-					@Override
-					public void run() {
-						
-						//We check if the value has a correct Date format dd.mm.yyyy.
-						if(!Pattern.matches(formatDateRegex, dateTextFieldRequestLaterDateCorrection.getText())) {
-							
-							//The value is not a correct date format dd.mm.yyyy we display error message taking this time the information saved in the panelErrorDateFormat. 
-							//this panelErrorDateFormat has already the text information that we need. 
-							JOptionPane.showMessageDialog(null, panelErrorDateFormat,  "Kritische Fehler(Datum Wert)", JOptionPane.OK_OPTION, errorImg);
-							
-							//Clear the Text value
-							dateTextFieldRequestLaterDateCorrection.setText("");
-							
-							//Set focus to the JTextField Object.
-							dateTextFieldRequestLaterDateCorrection.requestFocus();
-							
-						}else { //Format dd.mm.yyyy is correct
-							
-							//We set the value for the Date got it from the dateTextFieldRequestLaterDataCorrection to the column should be modified with the new value.
-							LogicModel.model.setValueAt(dateTextFieldRequestLaterDateCorrection.getText(), LogicModel.selectedRow, LogicModel.columnToBeModified);
-							
-							//Close the JDialgo 
-							dialogDateChange.dispose();
-							
-						}
-						
-					}
-				});
-			}
-
-			@Override
-			public void keyReleased(KeyEvent e) {}
-			
-		});
-		
-		
-		
-		
-		dateTextFieldRequestLaterDateCorrection.addKeyListener(new KeyListener() {
-
-			@Override
-			public void keyTyped(KeyEvent e) {}
-
-			@Override
-			public void keyPressed(KeyEvent e) {
-				
-				if(e.getKeyCode()==10) {
-					
-					SwingUtilities.invokeLater(new Runnable() {
-						
-						@Override
-						public void run() {
-							
-							//We check if the value has a correct Date format dd.mm.yyyy.
-							if(!Pattern.matches(formatDateRegex, dateTextFieldRequestLaterDateCorrection.getText())) {
-								
-								//The value is not a correct date format dd.mm.yyyy we display error message taking this time the information saved in the panelErrorDateFormat. 
-								//this panelErrorDateFormat has already the text information that we need. 
-								JOptionPane.showMessageDialog(null, panelErrorDateFormat,  "Kritische Fehler(Datum Wert)", JOptionPane.OK_OPTION, errorImg);
-								
-								//Clear the Text value
-								dateTextFieldRequestLaterDateCorrection.setText("");
-								
-								//Set focus to the JTextField Object.
-								dateTextFieldRequestLaterDateCorrection.requestFocus();
-								
-							}else { //Format dd.mm.yyyy is correct
-								
-								//We set the value for the Date got it from the dateTextFieldRequestLaterDataCorrection to the column should be modified with the new value.
-								LogicModel.model.setValueAt(dateTextFieldRequestLaterDateCorrection.getText(), LogicModel.selectedRow, LogicModel.columnToBeModified);
-								
-								//Close the JDialgo 
-								dialogDateChange.dispose();
-								
-							}
-							
-						}
-					});
-					
-				}
-				
-			}
-
-			@Override
-			public void keyReleased(KeyEvent e) {}
-			
-			
-		});
-		
-		
-		
-			
-		
-		//invokeLater new Thread for displaying the JDialog.
-		SwingUtilities.invokeLater(new Runnable() {
-			
-			@Override
-			public void run() {
-				
-				
-	
-			
-//				//Initialize the dialogDateChange Object(JDialog) 
-//				dialogDateChange = new JOptionPane(panelRequestBox, JOptionPane.OK_OPTION, JOptionPane.NO_OPTION,
-//						errorImg, optionsRequestLaterDateCorrection, null).createDialog(dialogTitle);
-//
-//				//Set Focus our JTextField Object
-//				dateTextFieldRequestLaterDateCorrection.requestFocus();
-//				
-//				//Set AlwaysOnTop false for in case wrong Date Format(dd.mm.yyyy) We could display another JOptionPane Object with an alert message over the JDialog
-//				dialogDateChange.setAlwaysOnTop(false);
-//				
-//				//Set the JDialog Visible.
-//				dialogDateChange.setVisible(true);
-				
-				DateChronologyCorrection dateChronologyCorrection = new DateChronologyCorrection(dialogTitle, message, dataBaseGUI, true);
-				
-				LogicModelDateChronologyCorrection logicModelDateChronologyCorrection = 
-						new LogicModelDateChronologyCorrection(dataBaseGUI, getDateAsStringToBeModified()[0], 
-								getDateAsStringToBeModified()[1], LogicModel.selectedRow, LogicModel.selectedColumn);
-				
-				new DateChronologyCorrectionController(dateChronologyCorrection, logicModelDateChronologyCorrection);
-				
-				dateChronologyCorrection.setVisible(true);
-				
-				
-
-			}
-		});
-		
-	
-		return this.laterDateCorrection;
-	}
-	
-	
-	
-
-	
-	
 	
 	
 

@@ -31,7 +31,7 @@ public class DateChronologyCorrection extends JDialog {
 	
 	private String title, message;
 	
-	private JTextField dateJTextField;
+	public JTextField dateJTextField;
 	
 	public MyButton btn_abbrechen, btn_save_changes;
 	

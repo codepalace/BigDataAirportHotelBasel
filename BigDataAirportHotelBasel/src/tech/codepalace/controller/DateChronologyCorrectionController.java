@@ -38,6 +38,9 @@ public class DateChronologyCorrectionController implements ActionListener, KeyLi
 		this.dateChronologyCorrection.btn_abbrechen.addFocusListener(this);
 		this.dateChronologyCorrection.btn_save_changes.addFocusListener(this);
 		
+		//Add KeyListener to the dateJTextField
+		this.dateChronologyCorrection.dateJTextField.addKeyListener(this);
+		
 		
 		
 		
@@ -65,13 +68,28 @@ public class DateChronologyCorrectionController implements ActionListener, KeyLi
 			//if btn_save_changes
 			if(e.getSource()==this.dateChronologyCorrection.btn_save_changes) {
 				
-				/* We have to call to check if the new Date for the Departure is correct after the arrival date. 
-				 * 
-				 * if this is not the case we return back the value we had before calling the dateChronologCorrection GUI by 
-				 * arrival and departure. We also display one message nothing has change and we can opt to ask for a new value or
-				 * we just close dateChronologyCorrection and apply the old values so that the user has access again to the 
-				 * JTable and click to modify again. 
-				 */
+				
+			  /*
+			   * If checkDateFormatBeforeSaveDate return false Departure Date has a correct format dd.mm.yyyy. 
+			   * If not the case we return the focus to the dateJTextField and set the text to ""
+			   * 
+			   * One error message will be displayed.
+			   */
+			  if(!this.logicDateChronologyCorrection.checkDateFormatBeforeSaveData(this.dateChronologyCorrection.dateJTextField.getText()
+					  , "Abreisedatum", "")) {
+				  
+				  //Set dateJTextField text value to ""
+				  this.dateChronologyCorrection.dateJTextField.setText("");
+				  
+				  //We return back the focus
+				  this.dateChronologyCorrection.dateJTextField.requestFocus();
+				  
+			  }
+			  //Date format is correct
+			  else {
+				  
+				  this.logicDateChronologyCorrection.setDepartureDate(this.dateChronologyCorrection.dateJTextField.getText());
+			  }
 				
 			}
 		
@@ -104,18 +122,56 @@ public class DateChronologyCorrectionController implements ActionListener, KeyLi
 			//if btn_save_changes
 			if(e.getSource()==this.dateChronologyCorrection.btn_save_changes && e.getKeyCode() == 10) {
 				
-				/* We have to call to check if the new Date for the Departure is correct after the arrival date. 
-				 * 
-				 * if this is not the case we return back the value we had before calling the dateChronologCorrection GUI by 
-				 * arrival and departure. We also display one message nothing has change and we can opt to ask for a new value or
-				 * we just close dateChronologyCorrection and apply the old values so that the user has access again to the 
-				 * JTable and click to modify again. 
-				 * 
-				 * 
-				 */
+				 /*
+				   * If checkDateFormatBeforeSaveDate return false Departure Date has a correct format dd.mm.yyyy. 
+				   * If not the case we return the focus to the dateJTextField and set the text to ""
+				   * 
+				   * One error message will be displayed.
+				   */
+				  if(!this.logicDateChronologyCorrection.checkDateFormatBeforeSaveData(this.dateChronologyCorrection.dateJTextField.getText()
+						  , "Abreisedatum", "")) {
+					  
+					  //Set dateJTextField text value to ""
+					  this.dateChronologyCorrection.dateJTextField.setText("");
+					  
+					  //We return back the focus
+					  this.dateChronologyCorrection.dateJTextField.requestFocus();
+					  
+				  }
+				  //Date format is correct
+				  else {
+					  
+					  this.logicDateChronologyCorrection.setDepartureDate(this.dateChronologyCorrection.dateJTextField.getText());
+				  }
 				
 				
 			}
+		
+			else
+				if(e.getSource()==this.dateChronologyCorrection.dateJTextField && e.getKeyCode() == 10) {
+					
+					 /*
+					   * If checkDateFormatBeforeSaveDate return false Departure Date has a correct format dd.mm.yyyy. 
+					   * If not the case we return the focus to the dateJTextField and set the text to ""
+					   * 
+					   * One error message will be displayed.
+					   */
+					  if(!this.logicDateChronologyCorrection.checkDateFormatBeforeSaveData(this.dateChronologyCorrection.dateJTextField.getText()
+							  , "Abreisedatum", "")) {
+						  
+						  //Set dateJTextField text value to ""
+						  this.dateChronologyCorrection.dateJTextField.setText("");
+						  
+						  //We return back the focus
+						  this.dateChronologyCorrection.dateJTextField.requestFocus();
+						  
+					  }
+					  //Date format is correct
+					  else {
+						  
+						  this.logicDateChronologyCorrection.setDepartureDate(this.dateChronologyCorrection.dateJTextField.getText());
+					  }
+				}
 	}
 
 

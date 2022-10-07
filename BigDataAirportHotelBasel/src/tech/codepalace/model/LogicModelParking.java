@@ -708,26 +708,18 @@ public class LogicModelParking extends LogicModel {
 	 */
 	private void checkChronologyOfDates(TableModel model) {
 
-		
+		//In case Arrival date is after than Departure date
 		if(getArrivalLocalDate().isAfter(getDepartureLocalDate())) {
-			
-//			System.out.println("the arrival date must not be later than the departure date");
-
-			//We could display one input box to give the option to the user to enter a later departure date or we let the value unchanged
-
-//			reloadParkingDataBase(dataBaseGUI, new Loading(dataBaseGUI, true));
-			
+	
 			//We store the message we want to display for the user.
 			String message = "<html>Das Abreisedatum darf nicht vor dem Anreisedatum sein. <br/>Bitte ändern Sie das Abreisedatum: </html>";
 			
-			//Call the displayRequestLaterDateCorrection Method so the user could modify the Departure Date.
-//			displayRequestLaterDateCorrection(model, selectedRow, selectedColumn, 5, message, "Abreisedatum ändern");
-			
-			displayRequestDateCorrection(model, selectedRow, selectedColumn, 5, message, "Abreisedatum ändern");
+			//We display the error JDialog to request the user to enter a new departure date
+			displayRequestDateCorrection(selectedRow, selectedColumn, message, "Abreisedatum ändern");
 			
 			
 			
-		}else {
+		}else { //else Dates Chronology is OK.
 		
 			
 			

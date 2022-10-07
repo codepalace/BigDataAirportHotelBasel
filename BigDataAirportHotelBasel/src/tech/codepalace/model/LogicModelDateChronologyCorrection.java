@@ -1,22 +1,27 @@
 package tech.codepalace.model;
 
 import tech.codepalace.view.frames.DataBaseGUI;
+import tech.codepalace.view.frames.DateChronologyCorrection;
 
-public class LogicModelDateChronologyCorrection {
+public class LogicModelDateChronologyCorrection extends LogicModel {
+	
 	
 	private DataBaseGUI dataBaseGUI;
 	
 	private String firstDate, secondDate; 
 	private int selectedRow, selectedColumn;
 	
+	private DateChronologyCorrection dateChronologyCorrection;
+
 	public LogicModelDateChronologyCorrection(DataBaseGUI dataBaseGUI, String firstDate, String secondDate, 
-			int selectedRow, int selectedColumn) {
+			int selectedRow, int selectedColumn, DateChronologyCorrection dateChronologyCorrection) {
 		
 		this.dataBaseGUI = dataBaseGUI;
 		this.firstDate = firstDate;
 		this.secondDate = secondDate;
 		this.selectedRow = selectedRow;
 		this.selectedColumn = selectedColumn;
+		this.dateChronologyCorrection = dateChronologyCorrection;
 		
 	}
 	
@@ -48,5 +53,12 @@ public class LogicModelDateChronologyCorrection {
 	}
 	
 	
+	
+	public void setDepartureDate(String departureDate) {
+		
+		this.dataBaseGUI.parkingTable.setValueAt(departureDate, selectedRow, 5);
+		this.dateChronologyCorrection.dispose();
+		
+	}
 
 }
