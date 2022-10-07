@@ -742,6 +742,8 @@ public class LogicModelParking extends LogicModel {
 			anzahltagen = (int) calculateDatesPlus(getArrivalLocalDate(), getDepartureLocalDate()) + 1;
 
 			
+			buchungskanal = (String)model.getValueAt(selectedRow, 8	);
+			
 
 			/*
 			 * In this double object we call the Method parseDouble getting the value of the String in the column 7.
@@ -750,17 +752,27 @@ public class LogicModelParking extends LogicModel {
 			 */
 			betragparking = Double.parseDouble(String.valueOf(model.getValueAt(selectedRow, 7)).replaceAll("€", ""));
 			
-			//If anzahltagen(total days are <=3 
-			if(anzahltagen<=3) {
-				betragparking = 30d; //double value 30.00
+			//We evaluate if buchuskanal = Park, Sleep & Fly
+			if(this.buchungskanal.equals("Park, Sleep & Fly")) {
+				
+				//Then we set the value to 0.0
+				betragparking = 0d;
 			}else {
-				betragparking = (double)anzahltagen * 10; //multiply anzahltagen(total days) * 10 for a result in double 
+				
+				//If anzahltagen(total days are <=3 
+				if(anzahltagen<=3) {
+					betragparking = 30d; //double value 30.00
+				}else {
+					betragparking = (double)anzahltagen * 10; //multiply anzahltagen(total days) * 10 for a result in double 
+				}
 			}
 			
 			
 			
 			
-			buchungskanal = (String)model.getValueAt(selectedRow, 8	);
+			
+			
+			
 			bemerkungen = (String)model.getValueAt(selectedRow, 9);
 			schluesselinhaus = (String)model.getValueAt(selectedRow, 10);
 			verkaufer = (String)model.getValueAt(selectedRow, 11);
