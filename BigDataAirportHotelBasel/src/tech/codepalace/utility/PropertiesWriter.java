@@ -165,6 +165,40 @@ if (configurationFile.exists()) {
 	
 	
 	
+	/**
+	 * @description Method to remove Properties from configuration File.
+	 * @param propertyName
+	 */
+	public void removeProperties(String propertyName) {
 	
+		//Set value of propertyName. This is the Properties we want to remove.
+		this.propertyName = propertyName;
+	
+		// We open our configuration File
+		try (InputStream input = new FileInputStream(projectDirectoryString + File.separator + "config.properties")) {
+
+			// 1. load a properties file
+			prop.load(input);
+
+			//2. remove the properties
+			prop.remove(this.propertyName);
+			
+			//save the modification by the config.properties where some Properties was deleted.
+			prop.store(new FileOutputStream(projectDirectoryString + File.separator + "config.properties"), propertyName);
+			
+			//Close the input
+			input.close();
+
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+	
+		
+	
+		 
+		
+		
+	}
+
 
 }
