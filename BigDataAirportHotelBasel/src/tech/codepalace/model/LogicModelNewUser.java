@@ -458,7 +458,7 @@ private void proceedToSaveTheUser() {
 	this.privilegePropertieValue = this.userRights;
 	
 	//set the abkuerzungPropertieName value
-	this.abkuerzungPropertieName = "db.abkuerzungma.user" + this.newUserString;
+	this.abkuerzungPropertieName = "db.abkuerzungma.user." + this.newUserString;
 	
 	//set the value of abkuerzungPropertieValue(User Abbreviation Name).
 	this.abkuerzungPropertieValue = this.userAbbreviationName;

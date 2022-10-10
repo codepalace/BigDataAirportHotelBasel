@@ -72,7 +72,7 @@ public class LogicModelEditUser {
 		
 		//Set the value of the properties.
 		this.userNamePropertieName = "db.user." + this.userToEdit;
-		this.abkuerzungPropertieName = "db.abkuerzungma.user" + this.userToEdit;
+		this.abkuerzungPropertieName = "db.abkuerzungma.user." + this.userToEdit;
 		this.privilegePropertieName = "db.privilege.user." + this.userToEdit;
 		this.passwordPropertieName = "db.password.user." + this.userToEdit;
 		
@@ -157,7 +157,7 @@ public class LogicModelEditUser {
 //		JOptionPane.showMessageDialog(null, "A guardar cambios usuario:" +this.userToEdit);
 		
 		// Set the value of the properties we want to modify 
-		this.abkuerzungPropertieName = "db.abkuerzungma.user" + this.userToEdit;
+		this.abkuerzungPropertieName = "db.abkuerzungma.user." + this.userToEdit;
 		this.abbkuerzungMA = this.editUserGUI.abkuerzungMAJTextField.getText();
 		
 		this.privilegePropertieName = "db.privilege.user." + this.userToEdit;

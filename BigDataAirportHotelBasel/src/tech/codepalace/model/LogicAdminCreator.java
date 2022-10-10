@@ -383,7 +383,7 @@ public JDialog dialogExit;
 			this.passwordPropertieValue = this.password;
 			this.privilegePropertieName = "db.privilege.user." + this.userName;
 			this.privilegePropertieValue = userPrivilege;
-			this.abkuerzungPropertieName = "db.abkuerzungma.user" + this.userName;
+			this.abkuerzungPropertieName = "db.abkuerzungma.user." + this.userName;
 			this.abkuerzungPropertieValue = this.abkuerzungMA;
 			
 			

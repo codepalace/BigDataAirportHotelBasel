@@ -106,7 +106,7 @@ public class LogicModelLogin extends LogicModel {
 			this.urlPropertieName = "db.url";
 			this.urlDataBaseBackupPropertieName = "db.url.backup";
 			this.privilegePropertieName = "db.privilege.user." + this.userName;
-			this.abkuerzungPropertieName = "db.abkuerzungma.user" + this.userName;
+			this.abkuerzungPropertieName = "db.abkuerzungma.user." + this.userName;
 			
 			this.userNamePropertieName = "db.user." + this.userName;
 			this.passwordPropertieName = "db.password.user." + this.userName;

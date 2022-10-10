@@ -38,22 +38,6 @@ public class LogicModelFundSachen extends LogicModel {
 	
 
 	
-//	//Variables for error Message by Wrong Date Format
-//	public JDialog errorDateFormatJDialog;
-//	
-//	private JLabel messageErrorDateFormat;
-//
-//	private JButton okButtonErrorDateFormat = new JButton("OK");
-//	
-//	private JPanel panelErrorDateFormat;
-//	
-//	private Object[] optionButtonErrorDateFormat = {this.okButtonErrorDateFormat};
-//	
-//	private ImageIcon errorImg = new ImageIcon(getClass().getResource("/img/error.png"));
-	
-	
-	
-	
 	
 	public LogicModelFundSachen(DataBaseGUI dataBaseGUI, Loading loading) {
 		LogicModelFundSachen.dataBaseGUI = dataBaseGUI;

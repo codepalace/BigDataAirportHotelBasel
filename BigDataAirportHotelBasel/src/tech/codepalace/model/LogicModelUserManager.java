@@ -148,7 +148,7 @@ public class LogicModelUserManager {
 		this.userNamePropertieName = "db.user." + this.selectedUser;
 		this.passwordPropertieName = "db.password.user." + this.selectedUser;
 		this.privilegePropertieName = "db.privilege.user." + this.selectedUser;
-		this.abkuerzungPropertieName = "db.abkuerzungma.user" + this.selectedUser;
+		this.abkuerzungPropertieName = "db.abkuerzungma.user." + this.selectedUser;
 		
 		//Initialize the DataEncryption instance.
 		this.dataEncryption = new DataEncryption();
