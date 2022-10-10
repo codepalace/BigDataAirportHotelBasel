@@ -2538,7 +2538,13 @@ public class DaoParkingImpl  implements DAOParking {
 									 * by getBetragParking we add the Euro symbol.
 									 */
 									Object[] row = {chunk.getId(), chunk.getIdParking(), chunk.getBuchungsname(), chunk.getAutoKFZ(),
-											chunk.getAnreiseDatum(), chunk.getAbreiseDatum(), chunk.getAnzahlTagen(), 
+											/* before we get the Arrival Date we use the Simple Date Format to Format in mm.MM.yyyy  */
+											dateFormat.format(chunk.getAnreiseDatum()), 
+											
+											/* before we get the Arrival Date we use the Simple Date Format to Format in mm.MM.yyyy  */
+											dateFormat.format(chunk.getAbreiseDatum()), 
+											
+											chunk.getAnzahlTagen(), 
 											chunk.getBetragParking() + " €", chunk.getBuchungsKanal(), chunk.getBemerkungen(), 
 											chunk.getSchluesselInHaus(), chunk.getAbkuerzungMA()};
 									
