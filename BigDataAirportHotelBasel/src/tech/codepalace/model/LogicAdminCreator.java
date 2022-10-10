@@ -342,13 +342,8 @@ public JDialog dialogExit;
 						}else {
 							
 							
+							checkManagerAbbreviationCorrectLength();
 							
-							/*
-							 * All three validations are done. 
-							 * All the data entered is as expected. N
-							 * Now we proceed with the encryption process and save the data in our configuration file
-							 */
-							encryptDataUser(this.privilege);
 							
 						}
 			        }
@@ -359,6 +354,21 @@ public JDialog dialogExit;
 		}
 		
 		
+		private void checkManagerAbbreviationCorrectLength() {
+			
+			if(this.adminCreator.abkuerzungJTextField.getText().length()<3) {
+				SwingUtilities.invokeLater( () ->  JOptionPane.showMessageDialog(null, "Bitte geben Sie einen Abkürzungsname ein, der mindestens 3 Buchstaben lang ist. "
+						   , "Kritischer Fehler Abkürzung", JOptionPane.ERROR_MESSAGE, this.errorImg));	
+			}else {
+				
+				/*
+				 * All three validations are done. 
+				 * All the data entered is as expected. N
+				 * Now we proceed with the encryption process and save the data in our configuration file
+				 */
+				encryptDataUser(this.privilege);
+			}
+		}
 		
 		
 		
