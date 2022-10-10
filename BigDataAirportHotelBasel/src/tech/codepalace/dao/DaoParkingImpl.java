@@ -62,10 +62,7 @@ public class DaoParkingImpl  implements DAOParking {
  	
  	//Variable for the Table name. in this case Parking.
  	protected String table_name = "Parking";
- 	
- 	//selected id required for working with our DataBase Data.
- 	private int id;
- 	
+
  	//Variable ResultSet required for working with our DataBase Data.
 	private static ResultSet resultSet = null;
 
