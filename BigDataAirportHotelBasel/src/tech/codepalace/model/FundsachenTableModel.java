@@ -6,7 +6,7 @@ import tech.codepalace.utility.TableFundsachenUtilities;
 
 /**
  * 
- * @author tonimacaroni
+ * @author Antonio Estevez Gonzalez
  * @description class to build the model Fundsachen table
  *
  */
@@ -21,8 +21,8 @@ String [] tableHeaders;
 	
 	/**
 	 * Determines the model with which the table is to be built
-	 * @param datos
-	 * @param titulos
+	 * @param data
+	 * @param tableHeaders
 	 */
 	
 	
@@ -51,9 +51,7 @@ String [] tableHeaders;
 				
 				
 				/*
-				 If columns are different from, BUCHUNGSNAME, AUTOKFZ, and ANREISEDATUM etc within the conditional hey cannot be editable 
-				 if they are the ones we have chosen within the conditional if they are editable and we can modify them.
-				 
+			
 				The Constants have the value of each column where they are inside the table
 				 */
 				if(column!=TableFundsachenUtilities.FUNDSACHEN && column!=TableFundsachenUtilities.FUNDORT && column!=TableFundsachenUtilities.INHABER
