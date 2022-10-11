@@ -706,7 +706,7 @@ protected void addNewParkingReservationToDataBase() {
 
 	this.parkingReservation.setBuchungsname(LogicModelNewParking.newParking.buchungsNameJTextField.getText());
 	
-	this.parkingReservation.setAutoKFZ(LogicModelNewParking.newParking.autoKFZJTextField.getText());
+	this.parkingReservation.setAutoKFZ(LogicModelNewParking.newParking.autoKFZJTextField.getText().replace(" ", ""));
 	
 	this.parkingReservation.setAnreiseDatum(anreisedatum);
 
