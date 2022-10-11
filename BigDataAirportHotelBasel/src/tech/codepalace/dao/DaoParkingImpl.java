@@ -607,7 +607,7 @@ public class DaoParkingImpl  implements DAOParking {
 		daoFactory.connect(); //agregado ultimo
 		
 		//Local variable to select all items in the Parking Table order by idparking ASC | DESC.
-		String sqlString = "SELECT * from PARKING ORDER BY idparking ASC";
+		String sqlString = "SELECT * from PARKING ORDER BY anreisedatum ASC";
 		
 		
 		try {
