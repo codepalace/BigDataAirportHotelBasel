@@ -1034,7 +1034,7 @@ public class DaoParkingImpl  implements DAOParking {
 		
 		/*SQL Sentence to select all from the FUNDSACHEN table in our Database.
 		 */
-		String sql = "SELECT * from PARKING ORDER BY idparking ASC";
+		String sql = "SELECT * from PARKING ORDER BY anreisedatum ASC";
 		
 		
 		try {
