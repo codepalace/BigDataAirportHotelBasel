@@ -45,6 +45,7 @@ public class FitnessAboTable {
 	
 	
 	
+	@SuppressWarnings("serial")
 	private void init() {
 		
 		//Initialize our fitnessAboJTable

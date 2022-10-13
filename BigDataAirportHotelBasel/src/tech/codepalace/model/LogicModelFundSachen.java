@@ -130,28 +130,37 @@ public class LogicModelFundSachen extends LogicModel {
 
 		if(selectedRow!=-1) { //When it we have a selected row.
 			
-			/*
-			 * - Each variable receive the value Casting first the type of value we want to store in the variable;
-			 * - Then we call the method getValueAt using the variable TableModel(model);
-			 * - As first argument we pass the selectedRow(Argument for the rowIndex and for the second argument the Table Column(columnIndex);
-			 * - The columnIndex has a type value stored in dataBase. 
-			 */
-			id = (int)model.getValueAt(selectedRow, 0);
-			dateItemsWasFound = (Date)model.getValueAt(selectedRow, 1);
-			foundItems = (String)model.getValueAt(selectedRow, 2);
-			fundort = (String)model.getValueAt(selectedRow, 3);
-			inhaber = (String)model.getValueAt(selectedRow, 4);
+			//We catch the ArrayIndexOutOfBoundsException 
+			try {
+				
+
+				/*
+				 * - Each variable receive the value Casting first the type of value we want to store in the variable;
+				 * - Then we call the method getValueAt using the variable TableModel(model);
+				 * - As first argument we pass the selectedRow(Argument for the rowIndex and for the second argument the Table Column(columnIndex);
+				 * - The columnIndex has a type value stored in dataBase. 
+				 */
+				id = (int)model.getValueAt(selectedRow, 0);
+				dateItemsWasFound = (Date)model.getValueAt(selectedRow, 1);
+				foundItems = (String)model.getValueAt(selectedRow, 2);
+				fundort = (String)model.getValueAt(selectedRow, 3);
+				inhaber = (String)model.getValueAt(selectedRow, 4);
+				
+				
+				/*
+				 * kisteN(String) store the value of kisteNummer as String
+				 */
+				kisteN = String.valueOf(model.getValueAt(selectedRow, 5));
+				
+				
+				kisteName = (String)model.getValueAt(selectedRow, 6);
+				rueckGabe = (String)model.getValueAt(selectedRow, 7);
+				abkuerzungMA = (String)model.getValueAt(selectedRow, 8);
 			
+			}catch (ArrayIndexOutOfBoundsException e) {
+				//Do nothing
+			}
 			
-			/*
-			 * kisteN(String) store the value of kisteNummer as String
-			 */
-			kisteN = String.valueOf(model.getValueAt(selectedRow, 5));
-			
-			
-			kisteName = (String)model.getValueAt(selectedRow, 6);
-			rueckGabe = (String)model.getValueAt(selectedRow, 7);
-			abkuerzungMA = (String)model.getValueAt(selectedRow, 8);
 			
 
 		
