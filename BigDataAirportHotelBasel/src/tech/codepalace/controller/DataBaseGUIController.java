@@ -152,6 +152,10 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener, MouseListene
 		this.dataBaseGUI.btnFundsachen.addActionListener(this);
 		this.dataBaseGUI.btnFundsachen.addFocusListener(this);
 		
+		this.dataBaseGUI.btnFitness.addActionListener(this);
+		this.dataBaseGUI.btnFitness.addKeyListener(this);
+		
+		
 	}
 	
 	
@@ -176,7 +180,7 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener, MouseListene
 		
 		else if(e.getSource()==this.dataBaseGUI.btnParking) {
 		
-			this.logicModelFundSachen.displayParking(bigDataAirportHotelBaselStartFrame);
+			this.logicModelParking.displayParking(bigDataAirportHotelBaselStartFrame);
 		}
 		
 		else if(e.getSource()==this.dataBaseGUI.btnLogout) {
@@ -260,7 +264,13 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener, MouseListene
 		
 		
 		else if(e.getSource()==this.dataBaseGUI.btnFundsachen) {
-			this.logicModelParking.displayFundSachen(bigDataAirportHotelBaselStartFrame);
+			this.logicModelFundSachen.displayFundSachen(bigDataAirportHotelBaselStartFrame);
+		}
+		
+		else if(e.getSource()==this.dataBaseGUI.btnFitness) {
+			
+			//We have to call to display fitness subscription
+			
 		}
 		 
 		
