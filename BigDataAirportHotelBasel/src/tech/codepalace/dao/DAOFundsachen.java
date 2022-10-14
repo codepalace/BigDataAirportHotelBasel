@@ -40,7 +40,7 @@ public interface DAOFundsachen {
 	 * @description Method to display a list of the Lost and found articles.
 	 * @throws DaoException
 	 */
-	void displayListFundsachen() throws DaoException;
+	void displayListFundsachen(String monthToShow) throws DaoException;
 	
 	
 	/**

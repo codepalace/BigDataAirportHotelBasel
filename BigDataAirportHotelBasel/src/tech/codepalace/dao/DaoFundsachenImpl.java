@@ -108,7 +108,11 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 	private Object[]optionSearchDatabase = {okButtonSearchDataBase};
 	private ImageIcon imgSearchDataBase = new ImageIcon(getClass().getResource("/img/dialogo.png"));
 	
+	//Variable to evaluate the Moth we want to display Data
+	private static String monthToShow="ALL";
 	
+	//Variable to search in database by Date (date items was found).
+	private Date dateItemsWasFound;
 
 	
 	
@@ -186,7 +190,12 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 //							System.out.println("FUNDSACHEN table exists");
 							//Table FUNDSACHEN exists
 							//Then we call displayListFundsachen() Method.
-							displayListFundsachen();
+							
+							/*
+							 * We call the method below to display List of Lost and found depending with month we are now. 
+							 */
+							displayListfundsachenByMonth();
+					
 							
 							
 						} 
@@ -373,7 +382,11 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 					
 					DaoFundsachenImpl.connection = daoFactory.connect();
 					
-					displayListFundsachen();
+					/*
+					 * We call the method below to display List of Lost and found depending with month we are now. 
+					 */
+					displayListfundsachenByMonth();
+					
 					
 					
 				}catch (SQLException e) {
@@ -390,7 +403,9 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 	
 	
 	@Override
-	public void displayListFundsachen() throws DaoException {
+	public void displayListFundsachen(String  monthToShow) throws DaoException {
+		
+		DaoFundsachenImpl.monthToShow = monthToShow;
 		
 		
 		setURLToConnectCurrentDataBase();
@@ -398,6 +413,121 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 		daoFactory.connect();
 		//ORDER BY date_field ASC | DESC;
 		String sqlString = "SELECT * From FUNDSACHEN ORDER BY dateItemsWasFound ASC";
+		
+		switch(DaoFundsachenImpl.monthToShow) {
+			
+			case "January":
+				
+				sqlString = "SELECT * From FUNDSACHEN where (dateItemsWasFound Between '" + DaoFundsachenImpl.now.getYear() + "-01-01'" +
+						 " And '" + DaoFundsachenImpl.now.getYear() + "-01-31') ORDER BY dateItemsWasFound ASC";
+				
+				break;
+			
+			case "February":
+		
+				
+				//We evaluate if the Year is LeapYear and depending of the results we set the value for the sqlString for the Request 
+				if(now.toLocalDate().isLeapYear()) {
+					sqlString = "SELECT * From FUNDSACHEN where (dateItemsWasFound Between '" + DaoFundsachenImpl.now.getYear() + "-02-01'" +
+							 " And '" + DaoFundsachenImpl.now.getYear() + "-02-29') ORDER BY dateItemsWasFound ASC";
+				}else {
+					sqlString = "SELECT * From FUNDSACHEN where (dateItemsWasFound Between '" + DaoFundsachenImpl.now.getYear() + "-02-01'" +
+							 " And '" + DaoFundsachenImpl.now.getYear() + "-02-28') ORDER BY dateItemsWasFound ASC";
+				}
+				
+				break;
+				
+			case "March":
+				
+				sqlString = "SELECT * From FUNDSACHEN where (dateItemsWasFound Between '" + DaoFundsachenImpl.now.getYear() + "-03-01'" +
+						 " And '" + DaoFundsachenImpl.now.getYear() + "-03-31') ORDER BY dateItemsWasFound ASC";
+				
+				
+				
+				break;
+				
+			case "April":
+				
+				sqlString = "SELECT * From FUNDSACHEN where (dateItemsWasFound Between '" + DaoFundsachenImpl.now.getYear() + "-04-01'" +
+						 " And '" + DaoFundsachenImpl.now.getYear() + "-01-30') ORDER BY dateItemsWasFound ASC";
+				
+				
+				break;
+				
+			case "May":
+				
+				sqlString = "SELECT * From FUNDSACHEN where (dateItemsWasFound Between '" + DaoFundsachenImpl.now.getYear() + "-05-01'" +
+						 " And '" + DaoFundsachenImpl.now.getYear() + "-01-31') ORDER BY dateItemsWasFound ASC";
+				
+				
+				break;
+				
+			case "June":
+				
+				sqlString = "SELECT * From FUNDSACHEN where (dateItemsWasFound Between '" + DaoFundsachenImpl.now.getYear() + "-06-01'" +
+						 " And '" + DaoFundsachenImpl.now.getYear() + "-06-30') ORDER BY dateItemsWasFound ASC";
+				
+				
+				break;
+				
+			case "July":
+				
+				sqlString = "SELECT * From FUNDSACHEN where (dateItemsWasFound Between '" + DaoFundsachenImpl.now.getYear() + "-07-01'" +
+						 " And '" + DaoFundsachenImpl.now.getYear() + "-07-31') ORDER BY dateItemsWasFound ASC";
+				
+				
+				break;
+				
+			case "August":
+				
+				sqlString = "SELECT * From FUNDSACHEN where (dateItemsWasFound Between '" + DaoFundsachenImpl.now.getYear() + "-08-01'" +
+						 " And '" + DaoFundsachenImpl.now.getYear() + "-08-31') ORDER BY dateItemsWasFound ASC";
+				
+				
+				break;
+				
+			case "September":
+				
+				sqlString = "SELECT * From FUNDSACHEN where (dateItemsWasFound Between '" + DaoFundsachenImpl.now.getYear() + "-09-01'" +
+						 " And '" + DaoFundsachenImpl.now.getYear() + "-0-30') ORDER BY dateItemsWasFound ASC";
+				
+				
+				break;
+				
+			case "October":
+				sqlString = "SELECT * From FUNDSACHEN where (dateItemsWasFound Between '" + DaoFundsachenImpl.now.getYear() + "-10-01'" +
+						 " And '" + DaoFundsachenImpl.now.getYear() + "-10-31') ORDER BY dateItemsWasFound ASC";
+				
+				break;
+				
+			case "November":
+				
+				sqlString = "SELECT * From FUNDSACHEN where (dateItemsWasFound Between '" + DaoFundsachenImpl.now.getYear() + "-11-01'" +
+						 " And '" + DaoFundsachenImpl.now.getYear() + "-11-30') ORDER BY dateItemsWasFound ASC";
+				
+				
+				break;
+				
+			case "December":
+				
+				sqlString = "SELECT * From FUNDSACHEN where (dateItemsWasFound Between '" + DaoFundsachenImpl.now.getYear() + "-12-01'" +
+						 " And '" + DaoFundsachenImpl.now.getYear() + "-12-31') ORDER BY dateItemsWasFound ASC";
+				
+				
+				break;
+				
+			
+			case "DateToFind":
+				
+				
+				sqlString = "SELECT * from FUNDSACHEN WHERE dateItemsWasFound = '" + dateItemsWasFound + "'";
+			
+				
+				break;
+				
+			
+		}
+		
 			
 		try {
 			
@@ -405,7 +535,23 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 			
 			resultSet = statement.executeQuery(sqlString);
 			
+			//If we do not have any results
 			if(resultSet.next()== false) {
+
+				//First we evaluate the value of monthToShow 
+				switch (DaoFundsachenImpl.monthToShow) {
+					
+					//In case we was requesting for a Date to display the value but do not exists.
+					case "DateToFind":
+						
+						//We invoke a new Thread with the error message.
+						SwingUtilities.invokeLater( () ->  JOptionPane.showMessageDialog(null, "Mit dem eingegebenen Datum wurde kein Ergebnis gefunden"
+								   , "Kein Ergebnis gefunden", JOptionPane.ERROR_MESSAGE, this.imgSearchDataBase));
+						
+						break;
+
+				
+				}
 				
 				this.dataBaseGUI.setVisible(true);
 			
@@ -634,6 +780,46 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 	
 	
 	
+	private void displayListfundsachenByMonth() {
+		
+		try {
+		switch (DaoFundsachenImpl.now.getMonthValue()) {
+			case 1:
+				
+					displayListFundsachen("January");
+				
+				break;
+			case 2:
+				displayListFundsachen("February");
+				break;
+			case 3: displayListFundsachen("March");
+				break;
+			case 4: displayListFundsachen("April");
+				break;
+			case 5: displayListFundsachen("May");
+				break;
+			case 6: displayListFundsachen("June");
+				break;
+			case 7: displayListFundsachen("July");
+				break;
+			case 8: displayListFundsachen("August");
+				break;
+			case 9: displayListFundsachen("September");
+				break;
+			case 10: displayListFundsachen("October");
+				break;
+			case 11: displayListFundsachen("November");
+				break;
+			case 12: displayListFundsachen("December");
+				break;
+		}
+		
+		} catch (DaoException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 	
 	
 	
@@ -744,321 +930,21 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 	@Override
 	public void searchByDateFundsachen(Date dateItemsWasFound) throws DaoException {
 		
+		this.dateItemsWasFound = dateItemsWasFound;
+		
 		//We create a new DefaultTableModel Casting DefaultTableModel our instance dataBaseGUI.fundsachenTable.getModel to get the Table model.
 		DefaultTableModel model = (DefaultTableModel) dataBaseGUI.fundsachenTable.getModel();
 		
 		//We set the RowCount to 0 for deleting all the content from the JTable.
 		model.setRowCount(0);
 		
-
-		try {
-			//Set new value to the urlDB variable.
-			DaoFundsachenImpl.urlDB = DaoFundsachenImpl.dataEncryption.decryptData(this.userAHB.getUrlDataBase()) + File.separator + getDBName();
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
+		//Now we call for a Connection
+		DaoFundsachenImpl.connection = daoFactory.connect();
 		
-
-		// We set the URL to connect to the Database.
-		setURLToConnectCurrentDataBase();
-
-
-		/*SQL Sentence to select all from the FUNDSACHEN table in our Database only where the dateItemsWasFound(Column in Table) = dateItemsWasFound value
-		 */
-		String sql = "SELECT * from FUNDSACHEN WHERE dateItemsWasFound = '" + dateItemsWasFound + "'";
+		//Call the Method dispalyListFundsachen with the argument the Date we want to display in the JTable.
+		displayListFundsachen("DateToFind");
 		
-		
-		try {
-			
-			//Initialize daoFactory Object with the DerbyURL value as argument.
-			daoFactory = new DaoFactory(getDerbyURL());
-			
-			//Initialize the connection object calling the daoFactory Object an connect Method to Connect to the URL where the database is located.
-			connection = DaoFundsachenImpl.daoFactory.connect();
-			
-			//statement createStatement
-			DaoFundsachenImpl.statement = DaoFundsachenImpl.connection.createStatement();
-			
-			//resultSet receive value statement.executeQuerey and the SQL sentence
-			resultSet = statement.executeQuery(sql);
-			
-			
-			//Now first we check if resultSet has any results if == false is empty
-			if(resultSet.next()==false) {
-
-				
-				//Time to display Entries not found.
-				this.messageLabelSearchDataBase = new JLabel("Mit dem eingegebenen Datum wurde kein Ergebnis gefunden");
-				
-				this.messagePanelSearchDataBase = new JPanel(new BorderLayout());
-				
-				this.messagePanelSearchDataBase.add(this.messageLabelSearchDataBase, BorderLayout.CENTER);
-				
-				this.okButtonSearchDataBase.addActionListener(new ActionListener() {
-					
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						
-						try {
-							dialogSearchDatabase.dispose();
-							displayListFundsachen();
-						} catch (DaoException e1) {
-							e1.printStackTrace();
-						}
-						
-					}
-				});
-				
-				this.okButtonSearchDataBase.addKeyListener(new KeyListener() {
-
-					@Override
-					public void keyTyped(KeyEvent e) {}
-
-					@Override
-					public void keyPressed(KeyEvent e) {
-
-						dialogSearchDatabase.dispose();
-						try {
-							displayListFundsachen();
-						} catch (DaoException e1) {
-							e1.printStackTrace();
-						}
-					}
-
-					@Override
-					public void keyReleased(KeyEvent e) {}
-					
-				});
-				
-				
-				dialogSearchDatabase = new JOptionPane(messagePanelSearchDataBase, JOptionPane.OK_OPTION, JOptionPane.NO_OPTION, imgSearchDataBase,
-						optionSearchDatabase, null).createDialog("Kein Ergebnis gefunden");
-				
-				
-				dialogSearchDatabase.setAlwaysOnTop(true);
-				dialogSearchDatabase.setVisible(true);
-				
-				dialogSearchDatabase.dispose();
-				
-				
-				
-			} else { //we have results so we show it.
-				
-				
-				
-				if(loading !=null) {
-					 
-					 
-					  SwingUtilities.invokeLater(new Runnable() {
-			 				
-			 				@Override
-			 				public void run() {
-			 					DaoFundsachenImpl.loading.setVisible(true);
-			 			
-			 				}
-			 			});
-				  }
-				
-				
-				//After that resultSet execute now the Query select * from FUNDSACHEN WHERE dateItemsWasFound. Value of the sql variable
-				resultSet = statement.executeQuery("SELECT count(*) from FUNDSACHEN WHERE dateItemsWasFound = '" + dateItemsWasFound + "'");
-				
-				
-				//We move the cursor
-				resultSet.next();
-				
-				//numberOfRowsDatabase receive the counted rows
-				numberOfRowsDataBase = resultSet.getInt(1);
-				
-				resultSet = statement.executeQuery(sql);
-				
-				 if(loading !=null) {
-						loading.progressBar.setMaximum(numberOfRowsDataBase);
-				}
-				
-				 
-				 
-				//We create a SwingWorker instruction for the new Thread in background
-				 SwingWorker<Void, Fundgegenstand> worker = new SwingWorker<Void, Fundgegenstand>(){
-
-					
-
-					@Override
-					protected Void doInBackground() throws Exception {
-
-						/*
-						 * we create an ArrayList type Fundgegenstand to add each Fundgegenstand object  that we find inside the table fundsachenTable in our DataBase
-						 */
-						List<Fundgegenstand> fundgegenstands = new ArrayList<Fundgegenstand>();
-						
-						int progress = 0;
-						
-						//as long as there are entries in the table
-						while (resultSet.next()) {
-							
-							
-							/*We create the necessary variables of the type we need according to the data stored in the database
-							 * 
-							 * The values are retrieved from each result found in the table and of course from the corresponding column in the table FUNDSACHEN.
-							 */
-							
-							int id = resultSet.getInt("ID");
-							Date dateItemWasFound = resultSet.getDate("dateItemsWasFound");
-							String foundItem = resultSet.getString("foundItem");
-							String foundPlace = resultSet.getString("foundPlace");
-							String inhaber = resultSet.getString("inhaber");
-							int kisteNummer = resultSet.getInt("kisteNummer");
-							String kisteName = resultSet.getString("kisteName");
-							String rueckGabe = resultSet.getString("rueckGabe");
-							String verkaufer = resultSet.getString("verkaufer");
-							
-							//We create an object type Fundgegenstand
-							Fundgegenstand fundgegenstand = new Fundgegenstand();
-							
-							//We set the values of this Object type Fundgegenstand
-							fundgegenstand.setId(id);
-							fundgegenstand.setDateItemsWasFound(dateItemWasFound);
-							fundgegenstand.setFoundItems(foundItem);
-							fundgegenstand.setFundort(foundPlace);
-							fundgegenstand.setInhaber(inhaber);
-							fundgegenstand.setKisteNummer(kisteNummer);
-							fundgegenstand.setKisteName(kisteName);
-							fundgegenstand.setRueckGabe(rueckGabe);
-							fundgegenstand.setAbkuerzungMA(verkaufer);
-							
-							fundgegenstands.add(fundgegenstand);
-							
-							//We send to publish every Object that we are getting by  the interaction inside the while
-							publish(fundgegenstand);
-							
-						
-							
-							//We add 1 to the progress variable. 
-							progress +=1;
-							/*
-							 * you can execute a sleep statement to see the progress bar working.
-							 */
-//							Thread.sleep(500); 
-							
-							if(loading !=null) {
-								loading.progressBar.setValue(progress);
-							}
-						    
-
-						}
-						
-					
-				
-						return null;
-					}
-					
-					
-					
-					
-					@Override
-					protected void process(List<Fundgegenstand> chunks) {
-
-						
-						//forEach loop to loop through the list Tip Fundgegenstand named chunks in the process Method as parameter.
-						for(Fundgegenstand chunk: chunks) {
-
-						
-							/*
-							 * we create an Object array and pass the data contained in our FUNDSACHEN table in the Database.
-							 * 
-							 * 
-							 */
-							Object[] row = {chunk.getId(), chunk.getDateItemsWasFound(), chunk.getFoundItems(), chunk.getFundort(),
-									chunk.getInhaber(), chunk.getKisteNummer(), chunk.getKisteName(), 
-									chunk.getRueckGabe(), chunk.getAbkuerzungMA()};
-							
-							
-							/*
-							 * We create one instance DefaultTableModel and we give the value Casting (DefaultTableModel) and we get the defined TableModel for the FUNDSACHEN 
-							 *
-							 */
-							
-							DefaultTableModel model = (DefaultTableModel)dataBaseGUI.fundsachenTable.getModel();
-						
-							
-							/*
-							 * for the fundsachenTable we retrieve the column where we want to write the data, using getColumnModel and getColumn for the Column and we also call the TableFundsachenUtilities
-							 * to get the correct Column using the corresponding constant where is defined the column number where it belongs.
-							 * 
-							 * for each column we also call setCellRenderer Method and as argument we pass a new CellTableManager and we specify the type of value that the cell is going to have.
-							 * 
-							 * If the cell is type number then it will have a different font color. 
-							 */
-							
-							dataBaseGUI.fundsachenTable.getColumnModel().getColumn(TableFundsachenUtilities.ID).setCellRenderer(new CellTableManager("number"));
-							dataBaseGUI.fundsachenTable.getColumnModel().getColumn(TableFundsachenUtilities.DATUM).setCellRenderer(new CellTableManager("number"));
-							dataBaseGUI.fundsachenTable.getColumnModel().getColumn(TableFundsachenUtilities.FUNDSACHEN).setCellRenderer(new CellTableManager("text"));
-							dataBaseGUI.fundsachenTable.getColumnModel().getColumn(TableFundsachenUtilities.FUNDORT).setCellRenderer(new CellTableManager("text"));
-							dataBaseGUI.fundsachenTable.getColumnModel().getColumn(TableFundsachenUtilities.INHABER).setCellRenderer(new CellTableManager("text"));
-							dataBaseGUI.fundsachenTable.getColumnModel().getColumn(TableFundsachenUtilities.KISTNUMMER).setCellRenderer(new CellTableManager("number"));
-							dataBaseGUI.fundsachenTable.getColumnModel().getColumn(TableFundsachenUtilities.KISTENAME).setCellRenderer(new CellTableManager("text"));
-							dataBaseGUI.fundsachenTable.getColumnModel().getColumn(TableFundsachenUtilities.RUECKGABE).setCellRenderer(new CellTableManager("important"));
-
-							dataBaseGUI.fundsachenTable.getColumnModel().getColumn(TableFundsachenUtilities.KUERSELMA).setCellRenderer(new CellTableManager("text"));
-							
-							model.addRow(row);
-							
-							
-							
-						
-							
-							
-							
-						}
-						
-					
-					}
-					
-					
-					
-					
-					@Override
-					protected void done() {
-
-						
-						//If loading object exists we close it.
-						if(loading!=null) {
-							loading.dispose();
-						}
-						
-
-						
-						try {
-
-							statement.close();
-							resultSet.close();
-							daoFactory.closeConnection(getDerbyURL());
-							connection.close();
-							
-
-							
-						} catch (SQLException e) {
-							e.printStackTrace();
-						}
-						
-					}
-					
-					
-					
-				 };worker.execute();
-				
-			}
-			
 	
-			
-			
-			
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		
 		
 	}
 
@@ -1130,7 +1016,7 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 								
 								try {
 									dialogSearchDatabase.dispose();
-									displayListFundsachen();
+									displayListFundsachen("byLostAndFound");
 								} catch (DaoException e1) {
 									e1.printStackTrace();
 								}
@@ -1148,7 +1034,7 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 
 								dialogSearchDatabase.dispose();
 								try {
-									displayListFundsachen();
+									displayListFundsachen("byLostAndFound");
 								} catch (DaoException e1) {
 									e1.printStackTrace();
 								}
@@ -1452,12 +1338,8 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 									@Override
 									public void actionPerformed(ActionEvent e) {
 										
-										try {
-											dialogSearchDatabase.dispose();
-											displayListFundsachen();
-										} catch (DaoException e1) {
-											e1.printStackTrace();
-										}
+										dialogSearchDatabase.dispose();
+										displayListfundsachenByMonth();
 										
 									}
 								});
@@ -1471,11 +1353,7 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 									public void keyPressed(KeyEvent e) {
 
 										dialogSearchDatabase.dispose();
-										try {
-											displayListFundsachen();
-										} catch (DaoException e1) {
-											e1.printStackTrace();
-										}
+										displayListfundsachenByMonth();
 									}
 
 									@Override
@@ -1780,12 +1658,8 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 							@Override
 							public void actionPerformed(ActionEvent e) {
 								
-								try {
-									dialogSearchDatabase.dispose();
-									displayListFundsachen();
-								} catch (DaoException e1) {
-									e1.printStackTrace();
-								}
+								dialogSearchDatabase.dispose();
+								displayListfundsachenByMonth();
 								
 							}
 						});
@@ -1799,11 +1673,7 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 							public void keyPressed(KeyEvent e) {
 
 								dialogSearchDatabase.dispose();
-								try {
-									displayListFundsachen();
-								} catch (DaoException e1) {
-									e1.printStackTrace();
-								}
+								displayListfundsachenByMonth();
 							}
 
 							@Override
@@ -2052,257 +1922,14 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 						
 				//We set the RowCount to 0 for deleting all the content from the JTable.
 				model.setRowCount(0);
-						
 
-						try {
-							//Set new value to the urlDB variable.
-							DaoFundsachenImpl.urlDB = DaoFundsachenImpl.dataEncryption.decryptData(this.userAHB.getUrlDataBase()) + File.separator + getDBName();
-						} catch (Exception e1) {
-							e1.printStackTrace();
-						}
-						
+				//Now we call for a Connection
+				DaoFundsachenImpl.connection = daoFactory.connect();
 
-						// We set the URL to connect to the Database.
-						setURLToConnectCurrentDataBase();
+				//Now we call the Method below to display the results from the Data Base. It will be displayed only the current Month.	
+				displayListfundsachenByMonth();
+				
 
-						
-		
-
-						/*SQL Sentence to select all from the FUNDSACHEN table in our Database.
-						 */
-						String sql = "SELECT * from FUNDSACHEN ORDER BY dateItemsWasFound ASC";
-						
-						
-						try {
-							
-							//Initialize daoFactory Object with the DerbyURL value as argument.
-							daoFactory = new DaoFactory(getDerbyURL());
-							
-							//Initialize the connection object calling the daoFactory Object an connect Method to Connect to the URL where the database is located.
-							connection = DaoFundsachenImpl.daoFactory.connect();
-							
-							//statement createStatement
-							DaoFundsachenImpl.statement = DaoFundsachenImpl.connection.createStatement();
-							
-							//resultSet receive value statement.executeQuerey and the SQL sentence
-							resultSet = statement.executeQuery(sql);
-							
-							
-						
-								
-								
-								
-								
-									 
-									 
-									  SwingUtilities.invokeLater(new Runnable() {
-							 				
-							 				@Override
-							 				public void run() {
-							 					DaoFundsachenImpl.loading.setVisible(true);
-							 			
-							 				}
-							 			});
-								
-								
-								
-								//After that resultSet execute now the Query select * from FUNDSACHEN
-								resultSet = statement.executeQuery("SELECT count(*) from FUNDSACHEN");
-								
-								
-								//We move the cursor
-								resultSet.next();
-								
-								//numberOfRowsDatabase receive the counted rows
-								numberOfRowsDataBase = resultSet.getInt(1);
-								
-								resultSet = statement.executeQuery(sql);
-								
-								 if(loading !=null) {
-										loading.progressBar.setMaximum(numberOfRowsDataBase);
-								}
-								
-								 
-								 
-								//We create a SwingWorker instruction for the new Thread in background
-								 SwingWorker<Void, Fundgegenstand> worker = new SwingWorker<Void, Fundgegenstand>(){
-
-									
-
-									@Override
-									protected Void doInBackground() throws Exception {
-
-										/*
-										 * we create an ArrayList type Fundgegenstand to add each Fundgegenstand object  that we find inside the table FUNDSACHEN in our DataBase
-										 */
-										List<Fundgegenstand> fundgegenstands = new ArrayList<Fundgegenstand>();
-										
-										int progress = 0;
-										
-										//as long as there are entries in the table
-										while (resultSet.next()) {
-											
-											
-											/*We create the necessary variables of the type we need according to the data stored in the database
-											 * 
-											 * The values are retrieved from each result found in the table and of course from the corresponding column in the table FUNDSACHEN.
-											 */
-											
-											int id = resultSet.getInt("ID");
-											Date dateItemWasFound = resultSet.getDate("dateItemsWasFound");
-											String foundItem = resultSet.getString("foundItem");
-											String foundPlace = resultSet.getString("foundPlace");
-											String inhaber = resultSet.getString("inhaber");
-											int kisteNummer = resultSet.getInt("kisteNummer");
-											String kisteName = resultSet.getString("kisteName");
-											String rueckGabe = resultSet.getString("rueckGabe");
-											String verkaufer = resultSet.getString("verkaufer");
-											
-											//We create an object type Fundgegenstand
-											Fundgegenstand fundgegenstand = new Fundgegenstand();
-											
-											//We set the values of this Object type Fundgegenstand
-											fundgegenstand.setId(id);
-											fundgegenstand.setDateItemsWasFound(dateItemWasFound);
-											fundgegenstand.setFoundItems(foundItem);
-											fundgegenstand.setFundort(foundPlace);
-											fundgegenstand.setInhaber(inhaber);
-											fundgegenstand.setKisteNummer(kisteNummer);
-											fundgegenstand.setKisteName(kisteName);
-											fundgegenstand.setRueckGabe(rueckGabe);
-											fundgegenstand.setAbkuerzungMA(verkaufer);
-											
-											fundgegenstands.add(fundgegenstand);
-											
-											//We send to publish every Object that we are getting by  the interaction inside the while
-											publish(fundgegenstand);
-											
-										
-											
-											//We add 1 to the progress variable. 
-											progress +=1;
-											/*
-											 * you can execute a sleep statement to see the progress bar working.
-											 */
-//											Thread.sleep(500); 
-											
-											if(loading !=null) {
-												loading.progressBar.setValue(progress);
-											}
-										    
-
-										}
-										
-									
-								
-										return null;
-									}
-									
-									
-									
-									
-									@Override
-									protected void process(List<Fundgegenstand> chunks) {
-
-										
-										//forEach loop to loop through the list Tip Fundgegenstand named chunks in the process Method as parameter.
-										for(Fundgegenstand chunk: chunks) {
-
-										
-											/*
-											 * we create an Object array and pass the data contained in our FUNDSACHEN table in the Database.
-											 * 
-											 * 
-											 */
-											Object[] row = {chunk.getId(), chunk.getDateItemsWasFound(), chunk.getFoundItems(), chunk.getFundort(),
-													chunk.getInhaber(), chunk.getKisteNummer(), chunk.getKisteName(), 
-													chunk.getRueckGabe(), chunk.getAbkuerzungMA()};
-											
-											
-											/*
-											 * We create one instance DefaultTableModel and we give the value Casting (DefaultTableModel) and we get the defined TableModel for the FUNDSACHEN 
-											 *
-											 */
-											
-											DefaultTableModel model = (DefaultTableModel)dataBaseGUI.fundsachenTable.getModel();
-										
-											
-											/*
-											 * for the fundsachenTable we retrieve the column where we want to write the data, using getColumnModel and getColumn for the Column and we also call the TableFundsachenUtilities
-											 * to get the correct Column using the corresponding constant where is defined the column number where it belongs.
-											 * 
-											 * for each column we also call setCellRenderer Method and as argument we pass a new CellTableManager and we specify the type of value that the cell is going to have.
-											 * 
-											 * If the cell is type number then it will have a different font color. 
-											 */
-											
-											dataBaseGUI.fundsachenTable.getColumnModel().getColumn(TableFundsachenUtilities.ID).setCellRenderer(new CellTableManager("number"));
-											dataBaseGUI.fundsachenTable.getColumnModel().getColumn(TableFundsachenUtilities.DATUM).setCellRenderer(new CellTableManager("number"));
-											dataBaseGUI.fundsachenTable.getColumnModel().getColumn(TableFundsachenUtilities.FUNDSACHEN).setCellRenderer(new CellTableManager("text"));
-											dataBaseGUI.fundsachenTable.getColumnModel().getColumn(TableFundsachenUtilities.FUNDORT).setCellRenderer(new CellTableManager("text"));
-											dataBaseGUI.fundsachenTable.getColumnModel().getColumn(TableFundsachenUtilities.INHABER).setCellRenderer(new CellTableManager("text"));
-											dataBaseGUI.fundsachenTable.getColumnModel().getColumn(TableFundsachenUtilities.KISTNUMMER).setCellRenderer(new CellTableManager("number"));
-											dataBaseGUI.fundsachenTable.getColumnModel().getColumn(TableFundsachenUtilities.KISTENAME).setCellRenderer(new CellTableManager("text"));
-											dataBaseGUI.fundsachenTable.getColumnModel().getColumn(TableFundsachenUtilities.RUECKGABE).setCellRenderer(new CellTableManager("important"));
-
-											dataBaseGUI.fundsachenTable.getColumnModel().getColumn(TableFundsachenUtilities.KUERSELMA).setCellRenderer(new CellTableManager("text"));
-											
-											model.addRow(row);
-											
-											
-											
-										
-											
-											
-											
-										}
-										
-									
-									}
-									
-									
-									
-									
-									@Override
-									protected void done() {
-
-										
-										//If loading object exists we close it.
-										if(loading!=null) {
-											loading.dispose();
-										}
-										
-
-										
-										try {
-
-											statement.close();
-											resultSet.close();
-											daoFactory.closeConnection(getDerbyURL());
-											connection.close();
-											
-
-											
-										} catch (SQLException e) {
-											e.printStackTrace();
-										}
-										
-									}
-									
-									
-									
-								 };worker.execute();
-								
-							
-							
-					
-							
-							
-							
-							
-						} catch (SQLException e) {
-							e.printStackTrace();
-						}
 	}
 
 

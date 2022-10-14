@@ -180,7 +180,7 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener, MouseListene
 		
 		else if(e.getSource()==this.dataBaseGUI.btnParking) {
 		
-			this.logicModelParking.displayParking(bigDataAirportHotelBaselStartFrame);
+			this.logicModelFundSachen.displayParking(bigDataAirportHotelBaselStartFrame);
 		}
 		
 		else if(e.getSource()==this.dataBaseGUI.btnLogout) {
