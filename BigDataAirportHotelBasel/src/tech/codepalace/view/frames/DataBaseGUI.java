@@ -340,9 +340,16 @@ public class DataBaseGUI extends JFrame {
 				this.choicesSearchFundsachen = new String[] {"Suchen nach Datum", "Suchen nach Fundsachen", 
 													"Suchen nach Namen", "Suchen nach Fundort"};
 				
+				//choices to display selected month
+				this.choicesSelectMonthToBeDisplayed = new String[] {"Zeingen Nach Monat", "Januar", "Februar", "März", "April", "Mai", "Juni",
+																	 "Juli", "August", "September", "Oktober", "November", 
+																	 "Dezember", "Alle"};
+				
 				
 				//Initialize the JComboBox for the Search options.
 				this.searchJComboBox = new JComboBox<String>(choicesSearchFundsachen);
+				
+				this.displayMothLostAndFoundJComboBox = new JComboBox<String>(this.choicesSelectMonthToBeDisplayed);
 //				
 				this.topPanelFundSachen = new TopPanelFundSachen(this.btnHome, this.btnParking, this.btnFitness, this.btnPhonebook, this.btnLogout, this.btnNewFundsachen,
 						this.searchText, this.searchJComboBox, this.reloadDdJButton, this.displayMothLostAndFoundJComboBox);
@@ -356,16 +363,15 @@ public class DataBaseGUI extends JFrame {
 						 "4-Kosmetik / Badezimmer", "5-Bücher", "6-Briefe / Karten jegliche Art",
 						 "7-Sonstiges", "8-Kiste ohne Namen / Angaben"};
 				
-				//choices to display selected month
-				this.choicesSelectMonthToBeDisplayed = new String[] {"Januar", "Februar", "März", "April", "Mai", "Juni",
-																	 "Juli", "August", "September", "Oktober", "November", 
-																	 "Dezember", "Alle"};
+				
 
 				//JComboBox initializes taking the choices values.
 				this.kisteNummerJComboBox = new JComboBox<String>(choices);
 				
 				//Initialize the displayMonthLostAndFoundJComboBox
 				this.displayMothLostAndFoundJComboBox = new JComboBox<String>(choicesSelectMonthToBeDisplayed);
+				
+				this.loginPanel.add(this.topPanelFundSachen.containerMonthSelect);
 				
 				/* Add the new Cell editor.
 				 * 
@@ -381,7 +387,6 @@ public class DataBaseGUI extends JFrame {
 				this.scrollPane = new JScrollPane(this.fundsachenTable);
 				
 				this.centerPanel.add(scrollPane);
-				//@ToDo create the fundSachenTable to import in the DataBaseGUI, scrollPane receive the fundaschenTable and we center to the GUI Panel.
 				
 				
 				break;

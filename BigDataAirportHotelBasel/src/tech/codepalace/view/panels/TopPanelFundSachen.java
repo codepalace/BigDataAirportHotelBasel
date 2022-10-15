@@ -22,6 +22,7 @@ import tech.codepalace.utility.SimpleRoundBorder;
 public class TopPanelFundSachen extends JPanel {
 	
 	private JPanel  centerPanelButtons, containerPanelButton, containerSearchSelect;
+	public JPanel containerMonthSelect;
 	
 	//Border for the centerPanelButtons
 	private Border etchedBorder;
@@ -60,6 +61,8 @@ public class TopPanelFundSachen extends JPanel {
 		this.searchJComboBox = searchJComboBox;
 		
 		this.reloadDdJButton = reloadDdJButton;
+		
+		this.displayMothLostAndFoundJComboBox = displayMothLostAndFoundJComboBox;
 		
 		init();
 	}
@@ -110,6 +113,9 @@ public class TopPanelFundSachen extends JPanel {
 		this.containerSearchSelect = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		this.containerSearchSelect.setOpaque(false);
 		
+		this.containerMonthSelect = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		this.containerMonthSelect.setOpaque(false);
+		
 		//Set Empty Border to push the searchText in the position what we want.
 		this.containerSearch.setBorder(BorderFactory.createEmptyBorder(4, 32, 0, 0));
 		this.containerSearch.setOpaque(false);
@@ -120,26 +126,39 @@ public class TopPanelFundSachen extends JPanel {
 		//And add the containerSearch to the containerSearchSelect
 		this.containerSearchSelect.add(containerSearch);
 		
+		this.containerMonthSelect.add(displayMothLostAndFoundJComboBox);
+		
 		//And add the containerSearchSelect to the containerPanelButton position Center.
 		this.containerPanelButton.add(containerSearchSelect, BorderLayout.CENTER);
+		this.containerPanelButton.add(containerMonthSelect, BorderLayout.SOUTH);
 		
 		
 		this.searchJComboBox.setFont(new Font("Verdana", Font.BOLD, 16));
-//		this.displayMothLostAndFoundJComboBox.setFont(new Font("Verdana", Font.BOLD, 16));
+		this.displayMothLostAndFoundJComboBox.setFont(new Font("Verdana", Font.BOLD, 16));
 		
 		
 		//We make setUI for a Custom JComboBox
 		this.searchJComboBox.setUI(SelectCustomJComboBox.createUI(this, "down_black_arrow.png", "pink_arrow_right.png"));
 		
+		this.displayMothLostAndFoundJComboBox.setUI(SelectCustomJComboBox.createUI(this, "calendar_icon.png", "pink_arrow_right.png"));
+		
 		this.searchJComboBox.setPreferredSize(new Dimension(350, 40));
+		
+		this.displayMothLostAndFoundJComboBox.setPreferredSize(new Dimension(350,40));
 	
 		
 		//Background for the JComboBox
 		this.searchJComboBox.setBackground(Color.LIGHT_GRAY);
 		
+		this.displayMothLostAndFoundJComboBox.setBackground(Color.LIGHT_GRAY);
+		
 	
 		//We set Round Border to the JComboBox
 		this.searchJComboBox.setBorder(new SimpleRoundBorder());
+		
+		this.displayMothLostAndFoundJComboBox.setBorder(new SimpleRoundBorder());
+		
+		
 		
 
 		//Add JComboBox to our GUI
@@ -151,6 +170,8 @@ public class TopPanelFundSachen extends JPanel {
 		
 		this.add(this.fundsachenImage, BorderLayout.WEST);
 		this.add(containerPanelButton, BorderLayout.CENTER);
+		
+		
 		
 		
 				
