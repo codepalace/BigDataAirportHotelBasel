@@ -129,10 +129,11 @@ public class DataBaseGUI extends JFrame {
 	//JTextField with rounded Border for the Search Entries
 	public RoundJTextField searchText;
 	
-	//JComboBox to select how we search the result
-	public JComboBox<String> searchJComboBox;
-	//String Array for the JComboBox 
-	private String[] choicesSearchFundsachen, choicesSearchParking;
+	//JComboBox to select how we search the result and JComboBox to display in JTable by selected Month
+	public JComboBox<String> searchJComboBox, displayMothLostAndFoundJComboBox;
+	
+	//String Array for the JComboBox
+	private String[] choicesSearchFundsachen, choicesSearchParking, choicesSelectMonthToBeDisplayed;
 	
 	
 	//JButton for reload DataBase
@@ -344,7 +345,7 @@ public class DataBaseGUI extends JFrame {
 				this.searchJComboBox = new JComboBox<String>(choicesSearchFundsachen);
 //				
 				this.topPanelFundSachen = new TopPanelFundSachen(this.btnHome, this.btnParking, this.btnFitness, this.btnPhonebook, this.btnLogout, this.btnNewFundsachen,
-						this.searchText, this.searchJComboBox, this.reloadDdJButton);
+						this.searchText, this.searchJComboBox, this.reloadDdJButton, this.displayMothLostAndFoundJComboBox);
 				
 				this.topPanel.add(this.topPanelFundSachen, BorderLayout.NORTH);
 				
@@ -354,9 +355,17 @@ public class DataBaseGUI extends JFrame {
 				this.choices = new String[] {"1-Elektro Artikel","2-Schmuck / Brillen", "3-Kleidung",
 						 "4-Kosmetik / Badezimmer", "5-Bücher", "6-Briefe / Karten jegliche Art",
 						 "7-Sonstiges", "8-Kiste ohne Namen / Angaben"};
+				
+				//choices to display selected month
+				this.choicesSelectMonthToBeDisplayed = new String[] {"Januar", "Februar", "März", "April", "Mai", "Juni",
+																	 "Juli", "August", "September", "Oktober", "November", 
+																	 "Dezember", "Alle"};
 
 				//JComboBox initializes taking the choices values.
 				this.kisteNummerJComboBox = new JComboBox<String>(choices);
+				
+				//Initialize the displayMonthLostAndFoundJComboBox
+				this.displayMothLostAndFoundJComboBox = new JComboBox<String>(choicesSelectMonthToBeDisplayed);
 				
 				/* Add the new Cell editor.
 				 * 

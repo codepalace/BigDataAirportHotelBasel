@@ -23,8 +23,15 @@ public class SelectCustomJComboBox extends BasicComboBoxUI{
 	
 	Color color = Color.GRAY;
 	
+	private static String imageArrow, itemIcon;
+	
+	
+	
 	//Very important method to visualize the JComboBox
-	public static ComboBoxUI createUI(JComponent jComponent) {
+	public static ComboBoxUI createUI(JComponent jComponent, String imageArrow, String itemIcon) {
+		
+		SelectCustomJComboBox.imageArrow = imageArrow;
+		SelectCustomJComboBox.itemIcon = itemIcon;
 		
 		return new SelectCustomJComboBox();
 		
@@ -41,7 +48,7 @@ public class SelectCustomJComboBox extends BasicComboBoxUI{
 		JButton dropDownJButton = new JButton();
 		
 		//We use one image for the JButton
-		dropDownJButton.setIcon(new ImageIcon(getClass().getResource("/img/down_black_arrow.png")));
+		dropDownJButton.setIcon(new ImageIcon(getClass().getResource("/img/" + imageArrow)));
 		
 		//Set a LineBorder to let space to the JButton image
 		dropDownJButton.setBorder(BorderFactory.createLineBorder(color, 3));
@@ -77,7 +84,7 @@ public class SelectCustomJComboBox extends BasicComboBoxUI{
 //				if(index !=-1) {
 				
 					//We set one image to the items
-					setIcon(new ImageIcon(getClass().getResource("/img/pink_arrow_right.png")));
+					setIcon(new ImageIcon(getClass().getResource("/img/" + itemIcon)));
 //				}
 				return this;
 			}

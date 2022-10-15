@@ -139,7 +139,7 @@ public class TopPanelParking extends JPanel {
 				
 				
 				//We make setUI for a Custom JComboBox
-				this.searchJComboBox.setUI(SelectCustomJComboBox.createUI(this));
+				this.searchJComboBox.setUI(SelectCustomJComboBox.createUI(this, "down_black_arrow.png", "pink_arrow_right.png"));
 				
 				this.searchJComboBox.setPreferredSize(new Dimension(350, 40));
 			

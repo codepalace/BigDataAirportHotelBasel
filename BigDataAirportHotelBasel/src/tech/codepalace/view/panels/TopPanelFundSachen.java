@@ -39,11 +39,15 @@ public class TopPanelFundSachen extends JPanel {
 	
 	//JComboBox to select how we search the result
 	public JComboBox<String> searchJComboBox;
+	
+	//JComboBox to select which month would the user see displayed
+	public JComboBox<String> displayMothLostAndFoundJComboBox;
 
 	
 	public TopPanelFundSachen(JButton btnHome, JButton btnParking, JButton btnFitness,
 			JButton btnPhonebook, JButton btnLogout, JButton btnNewFundsachen, 
-			RoundJTextField searchText, JComboBox<String> searchJComboBox, JButton reloadDdJButton) {
+			RoundJTextField searchText, JComboBox<String> searchJComboBox, JButton reloadDdJButton, 
+			JComboBox<String> displayMothLostAndFoundJComboBox) {
 		
 		this.btnHome = btnHome;
 		this.btnParking = btnParking;
@@ -121,10 +125,11 @@ public class TopPanelFundSachen extends JPanel {
 		
 		
 		this.searchJComboBox.setFont(new Font("Verdana", Font.BOLD, 16));
+//		this.displayMothLostAndFoundJComboBox.setFont(new Font("Verdana", Font.BOLD, 16));
 		
 		
 		//We make setUI for a Custom JComboBox
-		this.searchJComboBox.setUI(SelectCustomJComboBox.createUI(this));
+		this.searchJComboBox.setUI(SelectCustomJComboBox.createUI(this, "down_black_arrow.png", "pink_arrow_right.png"));
 		
 		this.searchJComboBox.setPreferredSize(new Dimension(350, 40));
 	
