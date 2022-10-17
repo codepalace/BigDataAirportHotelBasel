@@ -10,6 +10,7 @@ import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -23,8 +24,11 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.border.EtchedBorder;
 
 import tech.codepalace.utility.RoundJTextField;
+import tech.codepalace.utility.SelectCustomJComboBox;
+import tech.codepalace.utility.SimpleRoundBorder;
 import tech.codepalace.view.buttons.MyButton;
 import tech.codepalace.view.panels.PanelWithBackgroundOption;
 import tech.codepalace.view.panels.TopPanelFundSachen;
@@ -350,16 +354,33 @@ public class DataBaseGUI extends JFrame {
 				
 				//Initialize the JComboBox for the Search options.
 				this.searchJComboBox = new JComboBox<String>(choicesSearchFundsachen);
+
+				
+				
+				
+				this.containerMonthSelect = new JPanel();
+				this.containerMonthSelect.setOpaque(false);
+				this.containerMonthSelect.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
+
+
 				
 				this.displayMothLostAndFoundJComboBox = new JComboBox<String>(this.choicesSelectMonthToBeDisplayed);
 				
-				this.containerMonthSelect = new JPanel(new FlowLayout(FlowLayout.LEFT));
-				this.containerMonthSelect.setOpaque(false);
+				this.displayMothLostAndFoundJComboBox.setPreferredSize(new Dimension(350, 40));
+				
+				this.displayMothLostAndFoundJComboBox.setFont(new Font("Verdana", Font.BOLD, 16));
+				
+				this.displayMothLostAndFoundJComboBox.setUI(SelectCustomJComboBox.createUI(this.containerMonthSelect, "calendar_icon.png", "pink_arrow_right.png"));
+				
+				this.displayMothLostAndFoundJComboBox.setBackground(Color.LIGHT_GRAY);
+				
+				this.displayMothLostAndFoundJComboBox.setBorder(new SimpleRoundBorder());
+				
 				
 				this.containerMonthSelect.add(this.displayMothLostAndFoundJComboBox);
 				
 				this.topPanelFundSachen = new TopPanelFundSachen(this.btnHome, this.btnParking, this.btnFitness, this.btnPhonebook, this.btnLogout, this.btnNewFundsachen,
-						this.searchText, this.searchJComboBox, this.reloadDdJButton, this.displayMothLostAndFoundJComboBox, this.containerMonthSelect);
+						this.searchText, this.searchJComboBox, this.reloadDdJButton);
 				
 				this.topPanel.add(this.topPanelFundSachen, BorderLayout.NORTH);
 				
@@ -375,8 +396,6 @@ public class DataBaseGUI extends JFrame {
 				//JComboBox initializes taking the choices values.
 				this.kisteNummerJComboBox = new JComboBox<String>(choices);
 				
-				//Initialize the displayMonthLostAndFoundJComboBox
-				this.displayMothLostAndFoundJComboBox = new JComboBox<String>(choicesSelectMonthToBeDisplayed);
 				
 				this.loginPanel.add(this.containerMonthSelect);
 				

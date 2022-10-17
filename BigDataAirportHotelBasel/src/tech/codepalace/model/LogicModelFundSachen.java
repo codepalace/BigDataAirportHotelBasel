@@ -36,7 +36,8 @@ public class LogicModelFundSachen extends LogicModel {
 	//Variable for the Lost and Found
 	private Fundgegenstand fundgegenstand;
 	
-
+	//Variable to store the value of the selected month from JComboBox. 
+	private String monthSelected;
 	
 	
 	public LogicModelFundSachen(DataBaseGUI dataBaseGUI, Loading loading) {
@@ -502,6 +503,18 @@ public class LogicModelFundSachen extends LogicModel {
 				} catch (DaoException e1) {
 					e1.printStackTrace();
 				}
+	}
+	
+	
+	
+	/**
+	 * @description Method to display in Lost And Found JTable selected Month results or All Results found in DataBase. 
+	 * @param monthSelected
+	 */
+	public void displayMonthSelected(String monthSelected) {
+		
+		this.monthSelected = monthSelected;
+		//Now we can call the DAO Object to display the selected Month in the JTable.
 	}
 	
 	

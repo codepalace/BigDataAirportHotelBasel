@@ -116,6 +116,9 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener, MouseListene
 			
 			//Add ItemListener to the kisteNummerJComboBox
 			this.dataBaseGUI.kisteNummerJComboBox.addItemListener(this);
+			
+			this.dataBaseGUI.displayMothLostAndFoundJComboBox.addItemListener(this);
+			
 		}
 		
 		
@@ -155,7 +158,7 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener, MouseListene
 		this.dataBaseGUI.btnFitness.addActionListener(this);
 		this.dataBaseGUI.btnFitness.addKeyListener(this);
 		
-		this.dataBaseGUI.displayMothLostAndFoundJComboBox.addItemListener(this);
+		
 		
 		
 	}
@@ -587,7 +590,11 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener, MouseListene
 		
 		else if(e.getSource()==this.dataBaseGUI.displayMothLostAndFoundJComboBox) {
 		
-		
+			if(e.getStateChange() == ItemEvent.SELECTED) {
+				this.logicModelFundSachen.displayMonthSelected(dataBaseGUI.displayMothLostAndFoundJComboBox.getSelectedItem().toString());
+			}
+			
+			
 		}
 		
 

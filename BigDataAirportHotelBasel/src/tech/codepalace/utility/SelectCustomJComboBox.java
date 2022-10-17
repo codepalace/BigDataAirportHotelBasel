@@ -78,7 +78,7 @@ public class SelectCustomJComboBox extends BasicComboBoxUI{
 				super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 				
 				//Background Color for the Selected Item 
-				list.setSelectionBackground(Color.GRAY);
+				list.setSelectionBackground(Color.DARK_GRAY);
 				
 				//If you want to avoid to put one image to the first element you can uncomment the if instruction.
 //				if(index !=-1) {
