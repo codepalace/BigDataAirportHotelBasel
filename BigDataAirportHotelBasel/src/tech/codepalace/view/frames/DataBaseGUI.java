@@ -132,6 +132,8 @@ public class DataBaseGUI extends JFrame {
 	//JComboBox to select how we search the result and JComboBox to display in JTable by selected Month
 	public JComboBox<String> searchJComboBox, displayMothLostAndFoundJComboBox;
 	
+	public JPanel containerMonthSelect;
+	
 	//String Array for the JComboBox
 	private String[] choicesSearchFundsachen, choicesSearchParking, choicesSelectMonthToBeDisplayed;
 	
@@ -350,9 +352,14 @@ public class DataBaseGUI extends JFrame {
 				this.searchJComboBox = new JComboBox<String>(choicesSearchFundsachen);
 				
 				this.displayMothLostAndFoundJComboBox = new JComboBox<String>(this.choicesSelectMonthToBeDisplayed);
-//				
+				
+				this.containerMonthSelect = new JPanel(new FlowLayout(FlowLayout.LEFT));
+				this.containerMonthSelect.setOpaque(false);
+				
+				this.containerMonthSelect.add(this.displayMothLostAndFoundJComboBox);
+				
 				this.topPanelFundSachen = new TopPanelFundSachen(this.btnHome, this.btnParking, this.btnFitness, this.btnPhonebook, this.btnLogout, this.btnNewFundsachen,
-						this.searchText, this.searchJComboBox, this.reloadDdJButton, this.displayMothLostAndFoundJComboBox);
+						this.searchText, this.searchJComboBox, this.reloadDdJButton, this.displayMothLostAndFoundJComboBox, this.containerMonthSelect);
 				
 				this.topPanel.add(this.topPanelFundSachen, BorderLayout.NORTH);
 				
@@ -371,7 +378,7 @@ public class DataBaseGUI extends JFrame {
 				//Initialize the displayMonthLostAndFoundJComboBox
 				this.displayMothLostAndFoundJComboBox = new JComboBox<String>(choicesSelectMonthToBeDisplayed);
 				
-				this.loginPanel.add(this.topPanelFundSachen.containerMonthSelect);
+				this.loginPanel.add(this.containerMonthSelect);
 				
 				/* Add the new Cell editor.
 				 * 

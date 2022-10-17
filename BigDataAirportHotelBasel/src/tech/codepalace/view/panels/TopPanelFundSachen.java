@@ -48,7 +48,7 @@ public class TopPanelFundSachen extends JPanel {
 	public TopPanelFundSachen(JButton btnHome, JButton btnParking, JButton btnFitness,
 			JButton btnPhonebook, JButton btnLogout, JButton btnNewFundsachen, 
 			RoundJTextField searchText, JComboBox<String> searchJComboBox, JButton reloadDdJButton, 
-			JComboBox<String> displayMothLostAndFoundJComboBox) {
+			JComboBox<String> displayMothLostAndFoundJComboBox, JPanel containerMonthSelect) {
 		
 		this.btnHome = btnHome;
 		this.btnParking = btnParking;
@@ -63,6 +63,8 @@ public class TopPanelFundSachen extends JPanel {
 		this.reloadDdJButton = reloadDdJButton;
 		
 		this.displayMothLostAndFoundJComboBox = displayMothLostAndFoundJComboBox;
+		
+		this.containerMonthSelect = containerMonthSelect;
 		
 		init();
 	}

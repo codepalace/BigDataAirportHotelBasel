@@ -155,6 +155,8 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener, MouseListene
 		this.dataBaseGUI.btnFitness.addActionListener(this);
 		this.dataBaseGUI.btnFitness.addKeyListener(this);
 		
+		this.dataBaseGUI.displayMothLostAndFoundJComboBox.addItemListener(this);
+		
 		
 	}
 	
@@ -580,6 +582,12 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener, MouseListene
 		else if(e.getSource()==this.dataBaseGUI.kisteNummerJComboBox) {
 			
 			this.logicModelFundSachen.updateFundsachen(selectedRow, model, dataBaseGUI);
+		}
+		
+		
+		else if(e.getSource()==this.dataBaseGUI.displayMothLostAndFoundJComboBox) {
+		
+		
 		}
 		
 
