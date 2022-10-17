@@ -590,6 +590,7 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener, MouseListene
 		
 		else if(e.getSource()==this.dataBaseGUI.displayMothLostAndFoundJComboBox) {
 		
+			//Only if item was selected. displayMonthSelected. We avoid with this to call twice the Method 
 			if(e.getStateChange() == ItemEvent.SELECTED) {
 				this.logicModelFundSachen.displayMonthSelected(dataBaseGUI.displayMothLostAndFoundJComboBox.getSelectedItem().toString());
 			}
