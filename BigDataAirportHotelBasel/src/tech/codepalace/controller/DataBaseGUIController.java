@@ -116,9 +116,6 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener, MouseListene
 			
 			//Add ItemListener to the kisteNummerJComboBox
 			this.dataBaseGUI.kisteNummerJComboBox.addItemListener(this);
-			
-			this.dataBaseGUI.displayMothLostAndFoundJComboBox.addItemListener(this);
-			
 		}
 		
 		
@@ -158,7 +155,7 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener, MouseListene
 		this.dataBaseGUI.btnFitness.addActionListener(this);
 		this.dataBaseGUI.btnFitness.addKeyListener(this);
 		
-		
+		this.dataBaseGUI.displayMothLostAndFoundJComboBox.addItemListener(this);
 		
 		
 	}
@@ -590,12 +587,7 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener, MouseListene
 		
 		else if(e.getSource()==this.dataBaseGUI.displayMothLostAndFoundJComboBox) {
 		
-			//Only if item was selected. displayMonthSelected. We avoid with this to call twice the Method 
-			if(e.getStateChange() == ItemEvent.SELECTED) {
-				this.logicModelFundSachen.displayMonthSelected(dataBaseGUI.displayMothLostAndFoundJComboBox.getSelectedItem().toString());
-			}
-			
-			
+		
 		}
 		
 
