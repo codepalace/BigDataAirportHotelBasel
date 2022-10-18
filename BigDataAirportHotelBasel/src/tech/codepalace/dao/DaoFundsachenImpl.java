@@ -416,14 +416,14 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 		
 		switch(DaoFundsachenImpl.monthToShow) {
 			
-			case "January":
+			case "Januar":
 				
 				sqlString = "SELECT * From FUNDSACHEN where (dateItemsWasFound Between '" + DaoFundsachenImpl.now.getYear() + "-01-01'" +
 						 " And '" + DaoFundsachenImpl.now.getYear() + "-01-31') ORDER BY dateItemsWasFound ASC";
 				
 				break;
 			
-			case "February":
+			case "Februar":
 		
 				
 				//We evaluate if the Year is LeapYear and depending of the results we set the value for the sqlString for the Request 
@@ -437,7 +437,7 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 				
 				break;
 				
-			case "March":
+			case "März":
 				
 				sqlString = "SELECT * From FUNDSACHEN where (dateItemsWasFound Between '" + DaoFundsachenImpl.now.getYear() + "-03-01'" +
 						 " And '" + DaoFundsachenImpl.now.getYear() + "-03-31') ORDER BY dateItemsWasFound ASC";
@@ -454,7 +454,7 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 				
 				break;
 				
-			case "May":
+			case "Mai":
 				
 				sqlString = "SELECT * From FUNDSACHEN where (dateItemsWasFound Between '" + DaoFundsachenImpl.now.getYear() + "-05-01'" +
 						 " And '" + DaoFundsachenImpl.now.getYear() + "-01-31') ORDER BY dateItemsWasFound ASC";
@@ -462,7 +462,7 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 				
 				break;
 				
-			case "June":
+			case "Juni":
 				
 				sqlString = "SELECT * From FUNDSACHEN where (dateItemsWasFound Between '" + DaoFundsachenImpl.now.getYear() + "-06-01'" +
 						 " And '" + DaoFundsachenImpl.now.getYear() + "-06-30') ORDER BY dateItemsWasFound ASC";
@@ -470,7 +470,7 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 				
 				break;
 				
-			case "July":
+			case "Juli":
 				
 				sqlString = "SELECT * From FUNDSACHEN where (dateItemsWasFound Between '" + DaoFundsachenImpl.now.getYear() + "-07-01'" +
 						 " And '" + DaoFundsachenImpl.now.getYear() + "-07-31') ORDER BY dateItemsWasFound ASC";
@@ -494,7 +494,7 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 				
 				break;
 				
-			case "October":
+			case "Oktober":
 				sqlString = "SELECT * From FUNDSACHEN where (dateItemsWasFound Between '" + DaoFundsachenImpl.now.getYear() + "-10-01'" +
 						 " And '" + DaoFundsachenImpl.now.getYear() + "-10-31') ORDER BY dateItemsWasFound ASC";
 				
@@ -508,7 +508,7 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 				
 				break;
 				
-			case "December":
+			case "Dezember":
 				
 				sqlString = "SELECT * From FUNDSACHEN where (dateItemsWasFound Between '" + DaoFundsachenImpl.now.getYear() + "-12-01'" +
 						 " And '" + DaoFundsachenImpl.now.getYear() + "-12-31') ORDER BY dateItemsWasFound ASC";
@@ -786,31 +786,31 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 		switch (DaoFundsachenImpl.now.getMonthValue()) {
 			case 1:
 				
-					displayListFundsachen("January");
+					displayListFundsachen("Januar");
 				
 				break;
 			case 2:
-				displayListFundsachen("February");
+				displayListFundsachen("Februar");
 				break;
-			case 3: displayListFundsachen("March");
+			case 3: displayListFundsachen("März");
 				break;
 			case 4: displayListFundsachen("April");
 				break;
-			case 5: displayListFundsachen("May");
+			case 5: displayListFundsachen("Mai");
 				break;
-			case 6: displayListFundsachen("June");
+			case 6: displayListFundsachen("Juni");
 				break;
-			case 7: displayListFundsachen("July");
+			case 7: displayListFundsachen("Juli");
 				break;
 			case 8: displayListFundsachen("August");
 				break;
 			case 9: displayListFundsachen("September");
 				break;
-			case 10: displayListFundsachen("October");
+			case 10: displayListFundsachen("Oktober");
 				break;
 			case 11: displayListFundsachen("November");
 				break;
-			case 12: displayListFundsachen("December");
+			case 12: displayListFundsachen("Dezember");
 				break;
 		}
 		
