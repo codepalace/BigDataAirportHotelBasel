@@ -487,9 +487,9 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 				break;
 				
 			case "September":
-				
+
 				sqlString = "SELECT * From FUNDSACHEN where (dateItemsWasFound Between '" + DaoFundsachenImpl.now.getYear() + "-09-01'" +
-						 " And '" + DaoFundsachenImpl.now.getYear() + "-0-30') ORDER BY dateItemsWasFound ASC";
+						 " And '" + DaoFundsachenImpl.now.getYear() + "-09-30') ORDER BY dateItemsWasFound ASC";
 				
 				
 				break;
@@ -525,9 +525,13 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 				
 				break;
 				
+			default: 
+				//If not one of the over cases we set default to display all results from Table FUNDSACHEN from Database.
+				sqlString = "SELECT * From FUNDSACHEN ORDER BY dateItemsWasFound ASC";
 			
 		}
 		
+	
 			
 		try {
 			
@@ -550,6 +554,14 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 						
 						break;
 
+					//In case we want to display per selected Month but we do not have any Entries we display also one alert
+					default: 
+						
+						//We invoke a new Thread with the error message.
+						SwingUtilities.invokeLater( () ->  JOptionPane.showMessageDialog(null, "Für den gewählten Monat wurden keine Ergebnisse gefunden"
+								   , "Kein Ergebnis gefunden", JOptionPane.ERROR_MESSAGE, this.imgSearchDataBase));
+						
+						
 				
 				}
 				
@@ -1931,12 +1943,35 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 				
 
 	}
+	
+	
+	
 
 
 
 	
 	
 	
+
+	@Override
+	public void displaySelectedMonth(String monthToShow) throws DaoException {
+		
+		DaoFundsachenImpl.monthToShow = monthToShow;
+		
+		//We create a new DefaultTableModel Casting DefaultTableModel our instance dataBaseGUI.fundsachenTable.getModel to get the Table model.
+		DefaultTableModel model = (DefaultTableModel) dataBaseGUI.fundsachenTable.getModel();
+				
+		//We set the RowCount to 0 for deleting all the content from the JTable.
+		model.setRowCount(0);
+
+		//Now we call for a Connection
+		DaoFundsachenImpl.connection = daoFactory.connect();
+		
+		displayListFundsachen(DaoFundsachenImpl.monthToShow);
+	}
+
+
+
 
 	@Override
 	public void deleteDatabaseEntry(String tableName, int id) {

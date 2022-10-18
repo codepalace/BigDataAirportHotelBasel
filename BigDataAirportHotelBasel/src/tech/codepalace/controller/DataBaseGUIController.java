@@ -587,7 +587,21 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener, MouseListene
 		
 		else if(e.getSource()==this.dataBaseGUI.displayMothLostAndFoundJComboBox) {
 		
-		
+			 //if item was selected
+			 if(e.getStateChange() == ItemEvent.SELECTED) {
+			
+			 //set the value String of monthSelected
+			 String monthSelected = this.dataBaseGUI.displayMothLostAndFoundJComboBox.getSelectedItem().toString();
+			 
+			//Evaluate monthSelected is not "Zeigen Nach Monat"
+			if(!monthSelected.equals("Zeigen Nach Monat")) {
+				  //We call the logicModelFundSachen.displayMonthSelected Method.
+				this.logicModelFundSachen.displayMonthSelected(monthSelected, dataBaseGUI, new Loading(dataBaseGUI, false));
+	             }
+			}
+			
+		  
+
 		}
 		
 

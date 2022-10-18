@@ -44,6 +44,14 @@ public interface DAOFundsachen {
 	
 	
 	/**
+	 * @description Method to display the selected Month from DataBase
+	 * @param monthToShow
+	 * @throws DaoException
+	 */
+	void displaySelectedMonth(String monthToShow) throws DaoException;
+	
+	
+	/**
 	 * @description Method to update the modified data in a selected row inside the JTable 
 	 * @param fundgegenstand
 	 * @throws DaoException

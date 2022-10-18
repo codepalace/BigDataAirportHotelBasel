@@ -347,7 +347,7 @@ public class DataBaseGUI extends JFrame {
 													"Suchen nach Namen", "Suchen nach Fundort"};
 				
 				//choices to display selected month
-				this.choicesSelectMonthToBeDisplayed = new String[] {"Zeingen Nach Monat", "Januar", "Februar", "März", "April", "Mai", "Juni",
+				this.choicesSelectMonthToBeDisplayed = new String[] {"Zeigen Nach Monat", "Januar", "Februar", "März", "April", "Mai", "Juni",
 																	 "Juli", "August", "September", "Oktober", "November", 
 																	 "Dezember", "Alle"};
 				

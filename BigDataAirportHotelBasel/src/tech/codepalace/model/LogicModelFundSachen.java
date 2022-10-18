@@ -511,10 +511,23 @@ public class LogicModelFundSachen extends LogicModel {
 	 * @description Method to display in Lost And Found JTable selected Month results or All Results found in DataBase. 
 	 * @param monthSelected
 	 */
-	public void displayMonthSelected(String monthSelected) {
+	public void displayMonthSelected(String monthSelected, DataBaseGUI dataBaseGUI, Loading loading) {
+		
+		LogicModelFundSachen.dataBaseGUI = dataBaseGUI;
+		this.loading = loading;
 		
 		this.monthSelected = monthSelected;
-		//Now we can call the DAO Object to display the selected Month in the JTable.
+		
+		// Instance of DAOFunsachen
+		DAOFundsachen daoFundsachen = new DaoFundsachenImpl(getUserAHB(), LogicModelFundSachen.dataBaseGUI, loading,
+				this);
+
+		try {
+			// Now we are ready to call realoadFundsachenData Method by the DAO Object.
+			daoFundsachen.displaySelectedMonth(this.monthSelected);
+		} catch (DaoException e1) {
+			e1.printStackTrace();
+		}
 	}
 	
 	
