@@ -1,6 +1,5 @@
 package tech.codepalace.controller;
 
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -14,9 +13,6 @@ import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
-import javax.swing.SwingUtilities;
-import javax.swing.event.PopupMenuEvent;
-import javax.swing.event.PopupMenuListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
@@ -42,7 +38,7 @@ import tech.codepalace.view.frames.Loading;
  * <p>PopupMenuListener for the PopUp Menu.</p>
  */
 public class DataBaseGUIController implements ActionListener, KeyListener, WindowListener, 
-TableModelListener, ItemListener, FocusListener, PopupMenuListener, MouseListener {
+TableModelListener, ItemListener, FocusListener, MouseListener {
 	
 
 	private BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame;
@@ -138,12 +134,7 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener, MouseListene
 		this.dataBaseGUI.searchJComboBox.addFocusListener(this);
 		
 		this.dataBaseGUI.btnHome.requestFocus();
-		
-		
-		this.dataBaseGUI.deleteItem.addActionListener(this);
-		
-		this.dataBaseGUI.popupMenu.addPopupMenuListener(this);
-		
+
 		this.dataBaseGUI.btnParking.addActionListener(this);
 		
 		this.dataBaseGUI.btnLogout.addActionListener(this);
@@ -237,31 +228,6 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener, MouseListene
 		}
 		 
 		 
-		}
-		
-		else if(e.getSource()==this.dataBaseGUI.deleteItem) {
-//			 JOptionPane.showMessageDialog(null, "Right-click performed on table and choose DELETE");
-	        
-			/*
-			 * we evaluate which is the table that currently exists within our GUI dataBaseGUI.
-			 * 
-			 * depending on the table that exists we call the delete method.
-			 */
-	         if(this.dataBaseGUI.fundsachenTable!=null) {
-	        	 
-	        	 //We set the value of selectedRow calling the getSelectedRow Method of the fundsachenTable !=null in this case.
-	        	 this.selectedRow = this.dataBaseGUI.fundsachenTable.getSelectedRow();
-	        	 
-	        	 //We get the TableModel of the JTable
-	        	 this.model = this.dataBaseGUI.fundsachenTable.getModel();
-	        	 
-	        	 //We call the deleteRowDataBase Method with the arguments selectedRow and the name of the table we are going to try to delete.
-	        	 this.logicModelFundSachen.deleteRowDataBase(this.selectedRow, "FUNDSACHEN", this.model);
-	         
-	         }
-	         
-	         
-		
 		}
 		
 		
@@ -661,42 +627,6 @@ TableModelListener, ItemListener, FocusListener, PopupMenuListener, MouseListene
 
 	@Override
 	public void focusLost(FocusEvent e) {}
-
-
-
-	@Override
-	public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
-
-		/*
-		 * if the JTable active is fundsachenTable by click right PopupMenu will be active and marking the selecting row to give the option to delete.
-		 */
-		if(this.dataBaseGUI.dataBaseApplication.equalsIgnoreCase("FUNDSACHEN")) {
-			SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    int rowAtPoint = dataBaseGUI.fundsachenTable.rowAtPoint(SwingUtilities.convertPoint(dataBaseGUI.popupMenu, new Point(0, 0), dataBaseGUI.fundsachenTable));
-                    if (rowAtPoint > -1) {
-                    	dataBaseGUI.fundsachenTable.setRowSelectionInterval(rowAtPoint, rowAtPoint);
-                    }
-                }
-            });
-		
-		
-		}
-		
-
-	}
-
-
-
-	@Override
-	public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {}
-
-
-
-	@Override
-	public void popupMenuCanceled(PopupMenuEvent e) {}
-
 
 
 	@Override

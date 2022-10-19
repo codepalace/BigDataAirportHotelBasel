@@ -18,10 +18,8 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EtchedBorder;
@@ -145,13 +143,6 @@ public class DataBaseGUI extends JFrame {
 	//JButton for reload DataBase
 	public JButton reloadDdJButton;
 	
-
-	public JPopupMenu popupMenu;
-	
-	public JMenuItem deleteItem = new JMenuItem("Ausgewählten Eintrag löschen");
-	
-	
-	
 	
 	public DataBaseGUI(String dataBaseApplication) {
 		
@@ -267,13 +258,6 @@ public class DataBaseGUI extends JFrame {
 			
 			this.btnExitDBGUI = new JButton("Ja");
 			this.btnNoExitDBGUI = new JButton("Nein");
-			
-			
-			
-			this.popupMenu = new JPopupMenu();
-			
-			
-	        popupMenu.add(deleteItem);
 
 		
 		//We evaluate the dataBAseApplication to know which elements we have to create for adding to the DataBaseGUI Class.
@@ -407,8 +391,6 @@ public class DataBaseGUI extends JFrame {
 				 */
 				this.fundsachenTable.getColumnModel().getColumn(5).setCellEditor(new DefaultCellEditor(kisteNummerJComboBox));
 				
-				//We set the PopUpMenu to our fundsacheTable object.
-				this.fundsachenTable.setComponentPopupMenu(popupMenu);
 				
 				this.scrollPane = new JScrollPane(this.fundsachenTable);
 				
