@@ -112,6 +112,8 @@ TableModelListener, ItemListener, FocusListener, MouseListener {
 			
 			//Add ItemListener to the kisteNummerJComboBox
 			this.dataBaseGUI.kisteNummerJComboBox.addItemListener(this);
+			
+			this.dataBaseGUI.displayMothLostAndFoundJComboBox.addItemListener(this);
 		}
 		
 		
@@ -146,7 +148,7 @@ TableModelListener, ItemListener, FocusListener, MouseListener {
 		this.dataBaseGUI.btnFitness.addActionListener(this);
 		this.dataBaseGUI.btnFitness.addKeyListener(this);
 		
-		this.dataBaseGUI.displayMothLostAndFoundJComboBox.addItemListener(this);
+
 		
 		
 	}
