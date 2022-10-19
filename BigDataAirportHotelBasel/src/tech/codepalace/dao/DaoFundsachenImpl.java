@@ -1941,6 +1941,9 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 				//Now we call the Method below to display the results from the Data Base. It will be displayed only the current Month.	
 				displayListfundsachenByMonth();
 				
+				//Set the index 0 to the JComboBox where we can select the month we want to display.
+				this.dataBaseGUI.displayMothLostAndFoundJComboBox.setSelectedIndex(0);
+				
 
 	}
 	
