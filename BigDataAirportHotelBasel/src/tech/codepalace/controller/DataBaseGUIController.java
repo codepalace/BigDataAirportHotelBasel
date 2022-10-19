@@ -17,6 +17,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
+import tech.codepalace.model.LogicModelFitnessAbo;
 import tech.codepalace.model.LogicModelFundSachen;
 import tech.codepalace.model.LogicModelParking;
 import tech.codepalace.view.frames.BigDataAirportHotelBaselStartFrame;
@@ -45,6 +46,7 @@ TableModelListener, ItemListener, FocusListener, MouseListener {
 	private DataBaseGUI dataBaseGUI;
 	private LogicModelParking logicModelParking;
 	private LogicModelFundSachen logicModelFundSachen;
+	private LogicModelFitnessAbo logicModelFitnessAbo;
 	
 	
 	private TableModel model;
@@ -57,13 +59,15 @@ TableModelListener, ItemListener, FocusListener, MouseListener {
 	private String[]dates;
 	
 	public DataBaseGUIController(BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame, 
-			DataBaseGUI dataBaseGUI, LogicModelParking logicModelParking, LogicModelFundSachen logicModelFundSachen) {
+			DataBaseGUI dataBaseGUI, LogicModelParking logicModelParking, LogicModelFundSachen logicModelFundSachen, 
+			LogicModelFitnessAbo logicModelFitnessAbo) {
 		
 		//We set the values to the Objects
 		this.bigDataAirportHotelBaselStartFrame = bigDataAirportHotelBaselStartFrame;
 		this.dataBaseGUI = dataBaseGUI;
 		this.logicModelParking = logicModelParking;
 		this.logicModelFundSachen = logicModelFundSachen;
+		this.logicModelFitnessAbo = logicModelFitnessAbo;
 
 		
 		

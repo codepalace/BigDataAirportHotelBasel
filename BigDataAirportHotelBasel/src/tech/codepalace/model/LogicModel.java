@@ -78,8 +78,11 @@ public class LogicModel {
 	//Object LogicModelParking declared as static because we need to call it inside some SwingUtilities blocks.
 	private static LogicModelParking logicModelParking;
 	
-	//Opject LogicModelFundSachen
+	//Object LogicModelFundSachen
 	private static LogicModelFundSachen logicModelFundSachen;
+	
+	//Object LogicModelFitnessAbo
+	private static LogicModelFitnessAbo logicModelFitnessAbo;
 	
 	
 	protected DataEncryption dataEncryption = new DataEncryption();
@@ -192,6 +195,9 @@ public class LogicModel {
 	private JTextField dateTextFieldRequestLaterDateCorrection;
 	
 	private JPanel panelRequestBox;
+	
+	
+	
 
 	public LogicModel() {
 		
@@ -442,7 +448,7 @@ try {
 				
 				 //New Instance of DataBAseGUIController we the arguments we need to pass so we can access from this Object
 				new DataBaseGUIController(LogicModel.bigDataAirportHotelBaselStartFrame, dataBaseGUI, LogicModel.logicModelParking, 
-						LogicModel.logicModelFundSachen);
+						LogicModel.logicModelFundSachen, LogicModel.logicModelFitnessAbo);
 				
 				
 				try {
@@ -513,6 +519,8 @@ try {
 						 //We set the UserAHB value
 						 LogicModel.logicModelFundSachen.setUserAHB(getUserAHB());
 						 
+						 
+						 
 						 //
 						 LogicModel.logicModelStartFrame = new LogicModelStartFrame(LogicModel.bigDataAirportHotelBaselStartFrame);
 						 LogicModel.logicModelStartFrame.setUserAHB(getUserAHB());
@@ -520,7 +528,7 @@ try {
 						
 						 //New Instance of DataBAseGUIController we the arguments we need to pass so we can access from this Object
 						new DataBaseGUIController(LogicModel.bigDataAirportHotelBaselStartFrame, dataBaseGUI, LogicModel.logicModelParking, 
-								LogicModel.logicModelFundSachen);
+								LogicModel.logicModelFundSachen, LogicModel.logicModelFitnessAbo);
 						
 						
 						try {
@@ -553,9 +561,86 @@ try {
 	 * @description Method to display FitnessAbo JFrame
 	 * @param fitnessAboToVisible
 	 */
-	public  void displayFitnessAbo(JFrame fitnessAboToVisible, JFrame JframeToClose) {
+	public  void displayFitnessAbo(BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame) {
+		
+		LogicModel.bigDataAirportHotelBaselStartFrame = bigDataAirportHotelBaselStartFrame;
+		
+		/*
+		 * Before we call to open the dataBaseGUI to display inside the JTable the Data from Table Parking located in DataBase we check if 
+		 * bigDataAirportHotelBaselStartFrame is not null and isVisible to dispose this GUI Class so we avoid the user could game with the JButtons.
+		 */
+		if(LogicModel.bigDataAirportHotelBaselStartFrame !=null && LogicModel.bigDataAirportHotelBaselStartFrame.isVisible()) {
+			LogicModel.bigDataAirportHotelBaselStartFrame.dispose();
+		}
+		
+		
+		/*
+		 * Before we call to open the dataBaseGUI to display inside the JTable the Data from Table Parking located in DataBase we check if 
+		 * bigDataAirportHotelBaselStartFrame is not null and isVisible to dispose this GUI Class so we avoid the user could game with the JButtons.
+		 */
+		if(LogicModel.bigDataAirportHotelBaselStartFrame !=null && LogicModel.bigDataAirportHotelBaselStartFrame.isVisible()) {
+			LogicModel.bigDataAirportHotelBaselStartFrame.dispose();
+		}
+		
+		//invoke a new Thread 
+				SwingUtilities.invokeLater(new Runnable() {
+
+					@Override
+					public void run() {
+						
+						if(LogicModel.dataBaseGUI !=null && LogicModel.dataBaseGUI.isVisible()) {
+							LogicModel.dataBaseGUI.dispose();
+						}
+						
+				         //This Logical Model need the String argument to Know which kind of Application we are calling.
+						 LogicModel.dataBaseGUI = new DataBaseGUI("FITNESSABO");
+						 
+						 //This Logical Model need the String argument to Know which kind of Application we are calling.
+						 //The second argument used to know from which GUI we are calling
+						 LogicModel.logicModelDataBaseGUI = new LogicModelDataBaseGUI("FITNESSABO");
+						 
+						 
+						 //We set the UserAHB value
+						 LogicModel.logicModelDataBaseGUI.setUserAHB(getUserAHB());
+						 
+						 LogicModel.logicModelFitnessAbo = new LogicModelFitnessAbo();
+						 
+						 //We set the UserAHB value
+						 LogicModel.logicModelFitnessAbo.setUserAHB(getUserAHB());
+						 
+						 //
+						 LogicModel.logicModelStartFrame = new LogicModelStartFrame(LogicModel.bigDataAirportHotelBaselStartFrame);
+						 LogicModel.logicModelStartFrame.setUserAHB(getUserAHB());
+						
+						
+						 //New Instance of DataBAseGUIController we the arguments we need to pass so we can access from this Object
+						new DataBaseGUIController(LogicModel.bigDataAirportHotelBaselStartFrame, dataBaseGUI, LogicModel.logicModelParking, 
+								LogicModel.logicModelFundSachen, LogicModel.logicModelFitnessAbo);
+						
+						
+						try {
+							//We set the value of the loginUserLabel GUI using the dataEncryption instance and calling the decryptData method.
+							dataBaseGUI.loginUserLabel.setText("Benutzer: " + dataEncryption.decryptData(logicModelDataBaseGUI.getUserAHB().getUserName()));
+							
+					} catch (Exception e1) {
+							e1.printStackTrace();
+				}
+						
+						//We checkDatabase
+						logicModelDataBaseGUI.checkDataBase(logicModelDataBaseGUI.getAppCalled());
+						
+
+						
+					}
+				});
+				
+				
 		
 	}
+	
+	
+	
+	
 	
 	
 	/**
@@ -671,22 +756,36 @@ try {
 					
 				case "FUNDSACHEN": 
 					
-					//We create a new DAOFundsachen Object passing the DaoFundsachenImpl class with the parameters.
-					DAOFundsachen daoFundsachen = new DaoFundsachenImpl(getUserAHB(), dataBaseGUI, loading, logicModelFundSachen);
 					
-					
-					
-					try {
+					SwingUtilities.invokeLater(new Runnable() {
 						
-						//now call to check if the Table exists.
-						daoFundsachen.checkTableFundsachen();
-						
-					} catch (DaoException  e) {
-						
-						e.printStackTrace();
-					}
+						@Override
+						public void run() {
+							
 
-				default:
+
+							//We create a new DAOFundsachen Object passing the DaoFundsachenImpl class with the parameters.
+							DAOFundsachen daoFundsachen = new DaoFundsachenImpl(getUserAHB(), dataBaseGUI, loading, logicModelFundSachen);
+							
+							try {
+								//now call to check if the Table exists.
+								daoFundsachen.checkTableFundsachen();
+							} catch (DaoException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							
+						}
+					});
+
+					break;
+					
+					
+				case "FITNESSABO": 
+					
+					//Time to Display FITNESSABODATABASE DAO Object should be called
+					JOptionPane.showMessageDialog(null, "FitnessAbo has to be displayed");
+					
 					break;
 			}
 			

@@ -13,6 +13,8 @@ public class LogicModelFitnessAbo extends LogicModel {
 	private static DataBaseGUI dataBaseGUI;
 	
 	
+ public LogicModelFitnessAbo() {}
+	
  public LogicModelFitnessAbo(DataBaseGUI dataBaseGUI) {
 	 
 	 

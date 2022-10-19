@@ -228,8 +228,11 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 			logicModelStartFrame.displayFundSachen(this.bigDataAirportHotelBaselStartFrame);
 		} 
 		else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.fitnessButton) {
-			System.out.println("you pressed the fitness button");
+			
+			logicModelStartFrame.displayFitnessAbo(this.bigDataAirportHotelBaselStartFrame);
+			
 		} 
+		
 		else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.uebergabeButton) {
 			System.out.println("you pressed the uebergabe button");
 		} 
