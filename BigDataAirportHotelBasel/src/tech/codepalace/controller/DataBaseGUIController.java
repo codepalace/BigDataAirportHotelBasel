@@ -179,7 +179,13 @@ TableModelListener, ItemListener, FocusListener, MouseListener {
 		
 		else if(e.getSource()==this.dataBaseGUI.btnParking) {
 		
-			this.logicModelFundSachen.displayParking(bigDataAirportHotelBaselStartFrame);
+			if(this.dataBaseGUI.fundsachenTable!=null) {
+				this.logicModelFundSachen.displayParking(bigDataAirportHotelBaselStartFrame);
+			}
+			else if(this.dataBaseGUI.fitnessAboTable!=null) {
+				this.logicModelFitnessAbo.displayParking(bigDataAirportHotelBaselStartFrame);
+			}
+			
 		}
 		
 		else if(e.getSource()==this.dataBaseGUI.btnLogout) {
@@ -238,12 +244,28 @@ TableModelListener, ItemListener, FocusListener, MouseListener {
 		
 		
 		else if(e.getSource()==this.dataBaseGUI.btnFundsachen) {
-			this.logicModelFundSachen.displayFundSachen(bigDataAirportHotelBaselStartFrame);
+			
+			if(this.dataBaseGUI.parkingTable!=null) {
+				this.logicModelParking.displayFundSachen(bigDataAirportHotelBaselStartFrame);
+			}
+			
+			else if(this.dataBaseGUI.fitnessAboTable!=null) {
+				this.logicModelFitnessAbo.displayFundSachen(bigDataAirportHotelBaselStartFrame);
+			}
+			
+			
 		}
 		
 		else if(e.getSource()==this.dataBaseGUI.btnFitness) {
 			
 			//We have to call to display fitness subscription
+			if(this.dataBaseGUI.parkingTable!=null) {
+				this.logicModelParking.displayFitnessAbo(bigDataAirportHotelBaselStartFrame);
+			}
+			
+			else if(this.dataBaseGUI.fundsachenTable!=null) {
+				this.logicModelFundSachen.displayFitnessAbo(bigDataAirportHotelBaselStartFrame);
+			}
 			
 		}
 		 
@@ -286,6 +308,26 @@ TableModelListener, ItemListener, FocusListener, MouseListener {
 		
 				this.logicModelFundSachen.displayParking(bigDataAirportHotelBaselStartFrame);
 	}
+		
+		
+			else if(e.getSource()==this.dataBaseGUI.btnHome && e.getKeyCode()== 115
+					||e.getSource()==this.dataBaseGUI.searchJComboBox && e.getKeyCode() == 115
+					||e.getSource()==this.dataBaseGUI.searchText && e.getKeyCode() == 115 
+					||e.getSource()==this.dataBaseGUI.fundsachenTable && e.getKeyCode() ==115
+					||e.getSource()==this.dataBaseGUI.parkingTable && e.getKeyCode() ==115)
+				
+			{
+				
+				if(this.dataBaseGUI.parkingTable!=null) {
+					this.logicModelParking.displayFitnessAbo(bigDataAirportHotelBaselStartFrame);
+				
+				}else if(this.dataBaseGUI.fundsachenTable!=null) {
+					this.logicModelFundSachen.displayFitnessAbo(bigDataAirportHotelBaselStartFrame);
+				}
+				
+				
+			}
+		
 		
 			else
 				
