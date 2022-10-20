@@ -784,7 +784,10 @@ try {
 				case "FITNESSABO": 
 					
 					//Time to Display FITNESSABODATABASE DAO Object should be called
-					JOptionPane.showMessageDialog(null, "FitnessAbo has to be displayed");
+			
+					
+					dataBaseGUI.setVisible(true);//Just for the moment to display the GUI and test how to see.
+					
 					
 					break;
 			}

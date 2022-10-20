@@ -99,6 +99,7 @@ public class FitnessAboTable {
 		
 		tableHeadersList.add("ID");
 		tableHeadersList.add("Fitness ID");
+		tableHeadersList.add("Name");
 		tableHeadersList.add("Eintrittsdatum");
 		tableHeadersList.add("Austrittsdatum");
 		tableHeadersList.add("Betrag");

@@ -29,8 +29,10 @@ import tech.codepalace.utility.SelectCustomJComboBox;
 import tech.codepalace.utility.SimpleRoundBorder;
 import tech.codepalace.view.buttons.MyButton;
 import tech.codepalace.view.panels.PanelWithBackgroundOption;
+import tech.codepalace.view.panels.TopPanelFitnessAbo;
 import tech.codepalace.view.panels.TopPanelFundSachen;
 import tech.codepalace.view.panels.TopPanelParking;
+import tech.codepalace.view.tables.FitnessAboTable;
 import tech.codepalace.view.tables.FundsachenTable;
 import tech.codepalace.view.tables.ParkingTable;
 
@@ -51,17 +53,13 @@ public class DataBaseGUI extends JFrame {
 	//Variable in case FundSachen will be displayed in the GUI Table. 
 	private TopPanelFundSachen topPanelFundSachen;
 	
-//	private TopPanelFundSachen topPanelFundSachen;
+
+	private TopPanelFitnessAbo topPanelFitnessAbo;
 	
 	//Variable to get the Display Size
 	private Dimension screenSize;
 	
 	private JPanel topPanel, centerPanel, southPanel;
-
-	
-	
-	//JPanels for the Menu Buttons
-//	private JPanel centerPanelButtons, containerPanelButton;
 	
 	 //Menu JButtons
 	 public JButton btnHome, btnFundsachen, btnFitness, btnPhonebook, btnLogout, btnNewParking, btnParking,
@@ -80,6 +78,8 @@ public class DataBaseGUI extends JFrame {
 	public JTable parkingTable;
 	
 	public JTable fundsachenTable;
+	
+	public JTable fitnessAboTable;
 		
 	private JScrollPane scrollPane;
 		
@@ -398,7 +398,39 @@ public class DataBaseGUI extends JFrame {
 				
 				
 				break;
-			default:
+			case "FITNESSABO":
+				
+				this.setTitle("Fitness Abonnement - Airport Hotel Basel");
+				
+				//Initialize the choices for the JComboBox
+				this.choicesSearchParking = new String[] {"Suchen nach bla bla", "Suchen nach bla, bla 2", 
+													"Suchen nach bla, bla 3", "Suchen nach bla bla 4"};
+				
+				
+				//Initialize the JComboBox for the Search options.
+				this.searchJComboBox = new JComboBox<String>(choicesSearchParking);
+				
+				this.topPanelFitnessAbo = new TopPanelFitnessAbo(this.btnHome, this.btnFundsachen, this.btnParking, this.btnPhonebook, this.btnLogout, 
+						this.searchText, this.searchJComboBox, this.reloadDdJButton);
+				
+				this.topPanel.add(this.topPanelFitnessAbo, BorderLayout.NORTH);
+				
+				//the instance JTable parkingTable = new ParkingTable and we get for that the JTable with the getJTable() method.
+				this.fitnessAboTable = new FitnessAboTable().getJTable();
+			
+				
+				
+				
+				
+				//JScrollPane for our parkingTable
+				this.scrollPane = new JScrollPane(this.fitnessAboTable);
+				
+				 //We add the scrollpane to the centerPanel and not the parkingTable(is already by the added by the scrollpane).
+				 this.centerPanel.add(scrollPane);
+				 
+				
+				
+				
 				break;
 		}
 		

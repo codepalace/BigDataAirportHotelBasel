@@ -21,7 +21,7 @@ import tech.codepalace.utility.SimpleRoundBorder;
 
 /**
  * 
- * @author tonimacaroni
+ * @author Antonio Estevez Gonzalez
  *
  *@description Class that only imports the JPanel to the DataBaseGUI class corresponding to the parking application.
  *
