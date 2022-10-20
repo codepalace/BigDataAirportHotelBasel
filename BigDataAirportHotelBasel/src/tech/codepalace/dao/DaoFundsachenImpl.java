@@ -561,6 +561,8 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 						SwingUtilities.invokeLater( () ->  JOptionPane.showMessageDialog(null, "Für den gewählten Monat wurden keine Ergebnisse gefunden"
 								   , "Kein Ergebnis gefunden", JOptionPane.ERROR_MESSAGE, this.imgSearchDataBase));
 						
+						//We call to realod the DataBase
+						reloadFundsachenData();
 						
 				
 				}
