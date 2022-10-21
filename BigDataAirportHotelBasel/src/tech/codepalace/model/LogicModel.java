@@ -91,10 +91,7 @@ public class LogicModel {
 	
 	//Variable where should be stored the URL or Directory where our database is located
 	protected String urlDataBase;
-	
-	//Variable used to generate the current DataBase name.
-	protected LocalDateTime now = LocalDateTime.now(ZoneId.ofOffset("UTC", ZoneOffset.ofHours(+2)));
-	
+
 	//Variable to store the Database Name
 	protected String dbName;
 	
@@ -680,7 +677,7 @@ try {
 			this.urlDataBase = this.dataEncryption.decryptData(getUserAHB().getUrlDataBase()); 
 			
 			//Name of the dataBase for this year. Each year we are going to have a new DataBase, to keep it from getting too big over time.
-			this.dbName = "BigDataAHBaselDB" + now.getYear();
+			this.dbName = "BigDataAHBaselDB";
 			
 			//We get the Path ulrDataBase + the dbName and put the value inside a File variable for after checking the existence of the DataBase
 			this.urlDataBaseFile = new File(this.urlDataBase + File.separator + dbName); 

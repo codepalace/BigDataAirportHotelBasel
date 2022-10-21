@@ -139,8 +139,6 @@ public class DAOFitnessImpl implements DAOFitnessAbo {
 							DAOFitnessImpl.loading.progressBar.setIndeterminate(false);
 							DAOFitnessImpl.loading.progressBar.repaint();
 							
-						
-							System.out.println("Fitnessabo table exists");
 							//Table FITNESSABO exists
 							//Then we call displayListFitnessAbo() Method.
 							
