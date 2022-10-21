@@ -34,6 +34,8 @@ import javax.swing.table.TableModel;
 import tech.codepalace.controller.BigDataAHBStartFrameController;
 import tech.codepalace.controller.DataBaseGUIController;
 import tech.codepalace.controller.DateChronologyCorrectionController;
+import tech.codepalace.dao.DAOFitnessAbo;
+import tech.codepalace.dao.DAOFitnessImpl;
 import tech.codepalace.dao.DAOFundsachen;
 import tech.codepalace.dao.DAOParking;
 import tech.codepalace.dao.DaoException;
@@ -771,7 +773,6 @@ try {
 								//now call to check if the Table exists.
 								daoFundsachen.checkTableFundsachen();
 							} catch (DaoException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 							
@@ -784,10 +785,15 @@ try {
 				case "FITNESSABO": 
 					
 					//Time to Display FITNESSABODATABASE DAO Object should be called
-			
 					
-					dataBaseGUI.setVisible(true);//Just for the moment to display the GUI and test how to see.
+					//Create a new DAOFitness Object
+					DAOFitnessAbo daoFitnessAbo = new DAOFitnessImpl(getUserAHB(), dataBaseGUI, loading, logicModelFitnessAbo);
 					
+					try {
+						daoFitnessAbo.checkTableFitnessAbo();
+					} catch (DaoException e) {
+						e.printStackTrace();
+					}
 					
 					break;
 			}

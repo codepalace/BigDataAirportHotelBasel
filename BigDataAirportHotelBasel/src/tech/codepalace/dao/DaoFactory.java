@@ -395,7 +395,24 @@ public class DaoFactory {
 				
 				  break;
 
-			default:
+			case "FITNESSABO":
+
+				//we proceed to create the table FUNDSACHEN
+				  sql = "CREATE TABLE " + tableName + "( "
+						 
+						 + "ID INT NOT NULL GENERATED ALWAYS AS IDENTITY,"
+						 + "fitnessID VARCHAR(12) NOT NULL,"
+						 + "name VARCHAR(62) NOT NULL,"
+						 + "eintrittsDatum DATE NOT NULL,"
+						 + "austrittsDatum DATE NOT NULL,"
+						 + "betrag decimal(6,2) NOT NULL,"
+						 + "firma VARCHAR(40) NOT NULL,"
+						 + "bemerkungen VARCHAR(255) NOT NULL,"
+						 + "kontoStatus VARCHAR(12),"
+						 + "verkaufer VARCHAR(5) NOT NULL,"
+						 + "PRIMARY KEY (ID)"
+						 + ")";
+				  
 				break;
 		}
 	  

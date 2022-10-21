@@ -42,7 +42,7 @@ import tech.codepalace.view.frames.Loading;
 
 /**
  * @description DAO Pattern class
- * @author tonimacaroni
+ * @author Antonio Estevez Gonazele
  *
  */
 public class DaoFundsachenImpl implements DAOFundsachen {
@@ -200,9 +200,7 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 							
 						} 
 						else { //otherwise table FUNDSACHEN do not exists
-							
-							System.out.println("FUNDSACHEN table do not exists");
-							
+
 							
 							//We call daoFactory to createTable Parking passing the table name(PARKING)
 							DaoFundsachenImpl.daoFactory.createTable("FUNDSACHEN");
