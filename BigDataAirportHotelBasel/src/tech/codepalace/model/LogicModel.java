@@ -436,6 +436,17 @@ try {
 				 //We set the UserAHB value
 				 LogicModel.logicModelFundSachen.setUserAHB(getUserAHB());
 				 
+				 
+				 LogicModel.logicModelParking = new LogicModelParking(dataBaseGUI, loading);
+				 
+				 //We set the UserAHB value
+				 LogicModel.logicModelParking.setUserAHB(getUserAHB());
+				 
+				 LogicModel.logicModelFitnessAbo = new LogicModelFitnessAbo();
+				 
+				 //We set the UserAHB value
+				 LogicModel.logicModelFitnessAbo.setUserAHB(getUserAHB());
+				 
 				
 				 //
 				 LogicModel.logicModelStartFrame = new LogicModelStartFrame(LogicModel.bigDataAirportHotelBaselStartFrame);
@@ -482,7 +493,7 @@ try {
 		LogicModel.bigDataAirportHotelBaselStartFrame = bigDataAirportHotelBaselStartFrame;
 		
 		/*
-		 * Before we call to open the dataBaseGUI to display inside the JTable the Data from Table Parking located in DataBase we check if 
+		 * Before we call to open the dataBaseGUI to display inside the JTable the Data from Table fundsachenTable located in DataBase we check if 
 		 * bigDataAirportHotelBaselStartFrame is not null and isVisible to dispose this GUI Class so we avoid the user could game with the JButtons.
 		 */
 		if(LogicModel.bigDataAirportHotelBaselStartFrame !=null && LogicModel.bigDataAirportHotelBaselStartFrame.isVisible()) {
@@ -516,6 +527,16 @@ try {
 						 LogicModel.logicModelFundSachen.setUserAHB(getUserAHB());
 						 
 						 
+						 LogicModel.logicModelParking = new LogicModelParking(dataBaseGUI, loading);
+						 
+						 //We set the UserAHB value
+						 LogicModel.logicModelParking.setUserAHB(getUserAHB());
+						 
+						 LogicModel.logicModelFitnessAbo = new LogicModelFitnessAbo();
+						 
+						 //We set the UserAHB value
+						 LogicModel.logicModelFitnessAbo.setUserAHB(getUserAHB());
+					
 						 
 						 //
 						 LogicModel.logicModelStartFrame = new LogicModelStartFrame(LogicModel.bigDataAirportHotelBaselStartFrame);
@@ -562,22 +583,14 @@ try {
 		LogicModel.bigDataAirportHotelBaselStartFrame = bigDataAirportHotelBaselStartFrame;
 		
 		/*
-		 * Before we call to open the dataBaseGUI to display inside the JTable the Data from Table Parking located in DataBase we check if 
+		 * Before we call to open the dataBaseGUI to display inside the JTable the Data from Table fitnessAboTable located in DataBase we check if 
 		 * bigDataAirportHotelBaselStartFrame is not null and isVisible to dispose this GUI Class so we avoid the user could game with the JButtons.
 		 */
 		if(LogicModel.bigDataAirportHotelBaselStartFrame !=null && LogicModel.bigDataAirportHotelBaselStartFrame.isVisible()) {
 			LogicModel.bigDataAirportHotelBaselStartFrame.dispose();
 		}
 		
-		
-		/*
-		 * Before we call to open the dataBaseGUI to display inside the JTable the Data from Table Parking located in DataBase we check if 
-		 * bigDataAirportHotelBaselStartFrame is not null and isVisible to dispose this GUI Class so we avoid the user could game with the JButtons.
-		 */
-		if(LogicModel.bigDataAirportHotelBaselStartFrame !=null && LogicModel.bigDataAirportHotelBaselStartFrame.isVisible()) {
-			LogicModel.bigDataAirportHotelBaselStartFrame.dispose();
-		}
-		
+
 		//invoke a new Thread 
 				SwingUtilities.invokeLater(new Runnable() {
 
@@ -587,6 +600,12 @@ try {
 						if(LogicModel.dataBaseGUI !=null && LogicModel.dataBaseGUI.isVisible()) {
 							LogicModel.dataBaseGUI.dispose();
 						}
+						
+						/*
+						 * 
+				   		new DataBaseGUIController(LogicModel.bigDataAirportHotelBaselStartFrame, dataBaseGUI, LogicModel.logicModelParking, 
+								LogicModel.logicModelFundSachen, LogicModel.logicModelFitnessAbo);
+						 */
 						
 				         //This Logical Model need the String argument to Know which kind of Application we are calling.
 						 LogicModel.dataBaseGUI = new DataBaseGUI("FITNESSABO");
@@ -780,6 +799,11 @@ try {
 					
 					//Time to Display FITNESSABODATABASE DAO Object should be called
 					
+					SwingUtilities.invokeLater(new Runnable() {
+					
+						@Override
+						public void run() {
+							
 					//Create a new DAOFitness Object
 					DAOFitnessAbo daoFitnessAbo = new DAOFitnessImpl(getUserAHB(), dataBaseGUI, loading, logicModelFitnessAbo);
 					
@@ -788,6 +812,10 @@ try {
 					} catch (DaoException e) {
 						e.printStackTrace();
 					}
+					
+						}
+					});
+
 					
 					break;
 			}
