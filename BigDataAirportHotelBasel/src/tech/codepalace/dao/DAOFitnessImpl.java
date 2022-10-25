@@ -16,6 +16,7 @@ import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
@@ -96,6 +97,7 @@ public class DAOFitnessImpl implements DAOFitnessAbo {
 		this.dataBaseGUI = dataBaseGUI;
 		DAOFitnessImpl.loading = loading;
 		DAOFitnessImpl.dataEncryption = new DataEncryption();
+		DAOFitnessImpl.logicModelFitnessAbo = logicModelFitnessAbo;
 		
 		
 	}
@@ -201,6 +203,8 @@ public class DAOFitnessImpl implements DAOFitnessAbo {
  			
  			//We set the URL value for connecting to the Database
 			urlDB = DAOFitnessImpl.dataEncryption.decryptData(userAHB.getUrlDataBase()) + File.separator + getDBName();
+			
+//			JOptionPane.showMessageDialog(null, urlDB);
 
 		} catch (Exception e1) {
 			e1.printStackTrace();
@@ -224,7 +228,7 @@ public class DAOFitnessImpl implements DAOFitnessAbo {
  	private static String getDBName() {
  		
  		//We have a DataBase only for the Fitness ABO
- 		dbName = "BigDataAHBaselDB" + now.getYear();
+ 		dbName = "BigDataAHBaselDB";
  		
  		return dbName;
  	}

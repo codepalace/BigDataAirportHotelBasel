@@ -413,6 +413,10 @@ public class DataBaseGUI extends JFrame {
 				this.topPanelFitnessAbo = new TopPanelFitnessAbo(this.btnHome, this.btnFundsachen, this.btnParking, this.btnPhonebook, this.btnLogout, 
 						this.searchText, this.searchJComboBox, this.reloadDdJButton);
 				
+//				this.topPanelParking = new TopPanelParking(this.btnHome, this.btnFundsachen, this.btnFitness, this.btnPhonebook, this.btnLogout, 
+//						this.btnNewParking, this.searchText, this.searchJComboBox, this.reloadDdJButton);
+				
+				
 				this.topPanel.add(this.topPanelFitnessAbo, BorderLayout.NORTH);
 				
 				//the instance JTable parkingTable = new ParkingTable and we get for that the JTable with the getJTable() method.
@@ -435,7 +439,7 @@ public class DataBaseGUI extends JFrame {
 		}
 		
 		
-		 closeParking();
+		 closeParking(); 
 		
 	}
 	
