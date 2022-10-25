@@ -393,16 +393,7 @@ public class LogicModel {
 		if(LogicModel.bigDataAirportHotelBaselStartFrame !=null && LogicModel.bigDataAirportHotelBaselStartFrame.isVisible()) {
 			LogicModel.bigDataAirportHotelBaselStartFrame.dispose();
 		}
-
-		
-		
-try {
 	
-			
-	} catch (Exception e1) {
-			e1.printStackTrace();
-}
-		
 		
 		//invoke a new Thread 
 		SwingUtilities.invokeLater(new Runnable() {
@@ -597,16 +588,11 @@ try {
 					@Override
 					public void run() {
 						
+						
 						if(LogicModel.dataBaseGUI !=null && LogicModel.dataBaseGUI.isVisible()) {
 							LogicModel.dataBaseGUI.dispose();
 						}
-						
-						/*
-						 * 
-				   		new DataBaseGUIController(LogicModel.bigDataAirportHotelBaselStartFrame, dataBaseGUI, LogicModel.logicModelParking, 
-								LogicModel.logicModelFundSachen, LogicModel.logicModelFitnessAbo);
-						 */
-						
+
 				         //This Logical Model need the String argument to Know which kind of Application we are calling.
 						 LogicModel.dataBaseGUI = new DataBaseGUI("FITNESSABO");
 						 
@@ -623,14 +609,23 @@ try {
 						 //We set the UserAHB value
 						 LogicModel.logicModelFitnessAbo.setUserAHB(getUserAHB());
 						 
+						 LogicModel.logicModelFundSachen = new LogicModelFundSachen();
+						 
+						 LogicModel.logicModelFundSachen.setUserAHB(getUserAHB());
+						 
+						 LogicModel.logicModelParking = new LogicModelParking(dataBaseGUI, loading);
+						 
+						 LogicModel.logicModelParking.setUserAHB(getUserAHB());
+						 
 						 //
 						 LogicModel.logicModelStartFrame = new LogicModelStartFrame(LogicModel.bigDataAirportHotelBaselStartFrame);
 						 LogicModel.logicModelStartFrame.setUserAHB(getUserAHB());
 						
 						
 						 //New Instance of DataBAseGUIController we the arguments we need to pass so we can access from this Object
-						new DataBaseGUIController(LogicModel.bigDataAirportHotelBaselStartFrame, dataBaseGUI, LogicModel.logicModelParking, 
-								LogicModel.logicModelFundSachen, LogicModel.logicModelFitnessAbo);
+						new DataBaseGUIController(LogicModel.bigDataAirportHotelBaselStartFrame, 
+								 dataBaseGUI,  logicModelParking,  logicModelFundSachen, 
+								 logicModelFitnessAbo);
 						
 						
 						try {
@@ -644,7 +639,6 @@ try {
 						//We checkDatabase
 						logicModelDataBaseGUI.checkDataBase(logicModelDataBaseGUI.getAppCalled());
 						
-
 						
 					}
 				});
@@ -691,6 +685,7 @@ try {
 			
 			//We get the the path where the database should be stored
 			this.urlDataBase = this.dataEncryption.decryptData(getUserAHB().getUrlDataBase()); 
+			
 			
 			//Name of the dataBase for this year. Each year we are going to have a new DataBase, to keep it from getting too big over time.
 			this.dbName = "BigDataAHBaselDB";
@@ -806,6 +801,16 @@ try {
 							
 					//Create a new DAOFitness Object
 					DAOFitnessAbo daoFitnessAbo = new DAOFitnessImpl(getUserAHB(), dataBaseGUI, loading, logicModelFitnessAbo);
+					
+					try {
+						JOptionPane.showMessageDialog(null, "url: " + dataEncryption.decryptData(getUserAHB().getUrlDataBase()));
+					} catch (HeadlessException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					
 					try {
 						daoFitnessAbo.checkTableFitnessAbo();

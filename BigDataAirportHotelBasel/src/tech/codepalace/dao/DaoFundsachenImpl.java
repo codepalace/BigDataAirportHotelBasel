@@ -841,7 +841,7 @@ public class DaoFundsachenImpl implements DAOFundsachen {
  	 */
  	private static String getDBName() {
  		
- 		dbName = "BigDataAHBaselDB" + now.getYear();
+ 		dbName = "BigDataAHBaselDB";
  		
  		return dbName;
  	}

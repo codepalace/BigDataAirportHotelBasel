@@ -92,10 +92,6 @@ public class DaoParkingImpl  implements DAOParking {
 
  	//Variable for the Connection
  	private static Connection connection;
-
-
- 	//LocalDateTime with the Todays Date and the Hours Zone +2
- 	private static LocalDateTime now = LocalDateTime.now(ZoneId.ofOffset("UTC", ZoneOffset.ofHours(+2)));
  	
  	protected String backupDirectory = "";
  	
@@ -183,7 +179,7 @@ public class DaoParkingImpl  implements DAOParking {
 						
 						@Override
 						public void run() {
-							// TODO Auto-generated method stub
+							
 							DaoParkingImpl.loading.setVisible(true);
 						}
 					});
@@ -393,7 +389,7 @@ public class DaoParkingImpl  implements DAOParking {
  	 */
  	private static String getDBName() {
  		
- 		dbName = "BigDataAHBaselDB" + now.getYear();
+ 		dbName = "BigDataAHBaselDB";
  		
  		return dbName;
  	}
