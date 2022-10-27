@@ -103,7 +103,7 @@ public class LogicModel {
 	
 	
 	private static int selectedRow;
-	private String tableName;
+	private static String tableName;
 
 
 	private String dataBaseStatus="";
@@ -136,6 +136,8 @@ public class LogicModel {
 	private Object[] optionButtonErrorDateFormat = { this.okButtonErrorDateFormat };
 
 	private ImageIcon errorImg = new ImageIcon(getClass().getResource("/img/error.png"));
+	
+	private ImageIcon preventionImage = new ImageIcon(getClass().getResource("/img/prevention.png"));
 	
 	
 	//Variables in case Date to search format is correct
@@ -880,7 +882,7 @@ public class LogicModel {
 	 * 
 	 * <h2>Condition required to be able to delete</h2>
 	 * 
-	 * <p>- Only admin users can delete entries from the database.</p>
+	 * <p>- Only ADMIN users can delete entries from the database.</p>
 	 * 
 	 * <p>With this we avoid the bad manipulation of the data saved in the database by unauthorized persons.</p>
 	 * @param selectedRow
@@ -891,7 +893,7 @@ public class LogicModel {
 		
 		//We set the values of our variables
 		LogicModel.selectedRow = selectedRow;
-		this.tableName = tableName;
+		LogicModel.tableName = tableName;
 		this.tableModel = tableModel;
 	
 		int id = (int)this.tableModel.getValueAt(LogicModel.selectedRow, 0);
@@ -918,38 +920,57 @@ public class LogicModel {
 		 *We evaluate what privileges the user has to authorize or not the deletion of the entry.
 		 *
 		 * if(privilege = ADMIN we can then we can proceed to create the DAO object to call the deleteEntryDataBase.
-		 int id = (int)model.getValueAt(selectedRow, 0);
 		 */
 		
 		if(privilege.equals("ADMIN")) {
 			
-			switch(this.tableName) {
+			SwingUtilities.invokeLater(new Runnable() {
 				
-				case "FUNDSACHEN":
+				@Override
+				public void run() {
 					
-					//We create a new DAOFundsachen Object passing the DaoFundsachenImpl class with the parameters.
-					DAOFundsachen daoFundsachen = new DaoFundsachenImpl(getUserAHB(), dataBaseGUI, loading, logicModelFundSachen);
+					//Variable below int get the value depending what the user decide to do, if press Yes or No to delete.
+					int selectedOption = JOptionPane.showConfirmDialog(null, "Möchten Sie den Eintrag wirklich löschen?",
+							"Eintrag aus Datenbank löschen", JOptionPane.YES_NO_OPTION, JOptionPane.YES_NO_OPTION, preventionImage);
 					
-					//We call the Method to deleteDatabaseEntry inside the selected TABLE by the Database(tableName, (id) selected to be deleted).
-					try {
-						daoFundsachen.deleteDatabaseEntry(this.tableName, id);
-					} catch (DaoException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					//if the user is sure he wants to delete the entry. He has pressed Button Yes. 
+					if (selectedOption == JOptionPane.YES_OPTION) {
+						
+							//Evaluate tableName
+							switch(LogicModel.tableName) {
+								
+								//Case Lost And Found
+								case "FUNDSACHEN":
+									
+									//We create a new DAOFundsachen Object passing the DaoFundsachenImpl class with the parameters.
+									DAOFundsachen daoFundsachen = new DaoFundsachenImpl(getUserAHB(), dataBaseGUI, loading, logicModelFundSachen);
+									
+									//We call the Method to deleteDatabaseEntry inside the selected TABLE by the Database(tableName, (id) selected to be deleted).
+									try {
+										//We call to delete the DataBase Entry. It will be deleted the selected row by the User.
+										daoFundsachen.deleteDatabaseEntry(LogicModel.tableName, id);
+									} catch (DaoException e) {
+										e.printStackTrace();
+									}
+									
+								break;
+								
+									
+							}
+							
+						}
 					
-				break;
-				
-					
-			}
+				}
+			});
 			
 			
 			
 			
 			
-		}else {
 			
-			//Other users cannot delete from Database
+			
+			
+			
 		}
 		
 	}
@@ -1451,8 +1472,6 @@ public class LogicModel {
 		
 		return this.dateCorrection;
 	}
-	
-	
 
 	
 	

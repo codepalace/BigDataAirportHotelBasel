@@ -18,8 +18,10 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EtchedBorder;
@@ -143,6 +145,12 @@ public class DataBaseGUI extends JFrame {
 	//JButton for reload DataBase
 	public JButton reloadDdJButton;
 	
+	//Variable para el popup fo Admin to delete entries from JTable and dataBase Lost and Found.
+	public JPopupMenu popupMenu;
+	
+	//Menu Item for the popup to delete.
+	public JMenuItem deleteItem = new JMenuItem("Ausgewählten Eintrag löschen");
+	
 	
 	public DataBaseGUI(String dataBaseApplication) {
 		
@@ -258,7 +266,7 @@ public class DataBaseGUI extends JFrame {
 			
 			this.btnExitDBGUI = new JButton("Ja");
 			this.btnNoExitDBGUI = new JButton("Nein");
-
+			
 		
 		//We evaluate the dataBAseApplication to know which elements we have to create for adding to the DataBaseGUI Class.
 		//We also need to know that to display the correct database Table and correct data.
@@ -390,6 +398,16 @@ public class DataBaseGUI extends JFrame {
 				 * . setCellEditor Method with the argument new DefaultCellEditor and also for the argument will be passing the JComboBox we are going to use.
 				 */
 				this.fundsachenTable.getColumnModel().getColumn(5).setCellEditor(new DefaultCellEditor(kisteNummerJComboBox));
+				
+				//Initialize the JPopUpMenu
+				this.popupMenu = new JPopupMenu();
+				
+				//add the MenuItem. 
+				popupMenu.add(deleteItem);
+				
+				
+				//We set the PopUpMenu to our fundsacheTable object.
+//				this.fundsachenTable.setComponentPopupMenu(popupMenu);	
 				
 				
 				this.scrollPane = new JScrollPane(this.fundsachenTable);
