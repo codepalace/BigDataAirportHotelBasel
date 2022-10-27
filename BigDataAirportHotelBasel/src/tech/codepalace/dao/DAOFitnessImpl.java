@@ -99,7 +99,9 @@ public class DAOFitnessImpl implements DAOFitnessAbo {
 		DAOFitnessImpl.dataEncryption = new DataEncryption();
 		DAOFitnessImpl.logicModelFitnessAbo = logicModelFitnessAbo;
 		
+		connection = null;
 		
+		DAOFitnessImpl.tableChecked = false;
 	}
 
 	
@@ -203,8 +205,7 @@ public class DAOFitnessImpl implements DAOFitnessAbo {
  			
  			//We set the URL value for connecting to the Database
 			urlDB = DAOFitnessImpl.dataEncryption.decryptData(userAHB.getUrlDataBase()) + File.separator + getDBName();
-			
-//			JOptionPane.showMessageDialog(null, urlDB);
+
 
 		} catch (Exception e1) {
 			e1.printStackTrace();

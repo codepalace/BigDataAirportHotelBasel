@@ -15,6 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
@@ -194,7 +195,7 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 							/*
 							 * We call the method below to display List of Lost and found depending with month we are now. 
 							 */
-							displayListfundsachenByMonth();
+							displayListfundsachenByMonth("CurrentMonth");
 					
 							
 							
@@ -383,7 +384,7 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 					/*
 					 * We call the method below to display List of Lost and found depending with month we are now. 
 					 */
-					displayListfundsachenByMonth();
+					displayListfundsachenByMonth("CurrentMonth");
 					
 					
 					
@@ -412,6 +413,7 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 		//ORDER BY date_field ASC | DESC;
 		String sqlString = "SELECT * From FUNDSACHEN ORDER BY dateItemsWasFound ASC";
 		
+		//Evaluate the value of monthToShow. Depending of the Month SQL Select statement demand one interval of dates. 
 		switch(DaoFundsachenImpl.monthToShow) {
 			
 			case "Januar":
@@ -522,10 +524,30 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 			
 				
 				break;
+			
+				//In case CurrentMonth value
+			case "CurrentMonth":
+	
+			    //Initialize one instance YearMonth to get how many days has the current Month
+				YearMonth month = YearMonth.of(now.getYear(), now.getMonthValue());
 				
+			    /*
+			     * The SQL statement interval Dates = Between this Year-ThisMonth-FirstDayOfThisMonth and ThisYear-ThisMonth-month.lengthOfMonth.
+			     * 
+			     * We order by dateItmesWasFound ASC.
+			     */
+				sqlString = "SELECT * From FUNDSACHEN where (dateItemsWasFound Between '" + DaoFundsachenImpl.now.getYear() + "-" +
+						 DaoFundsachenImpl.now.getMonthValue() +"-01'" +
+						 " And '" + DaoFundsachenImpl.now.getYear() +  "-" +  DaoFundsachenImpl.now.getMonthValue() 
+						  + "-" + month.lengthOfMonth() +  "') ORDER BY dateItemsWasFound ASC";
+				
+				break;
+			    
 			default: 
 				//If not one of the over cases we set default to display all results from Table FUNDSACHEN from Database.
 				sqlString = "SELECT * From FUNDSACHEN ORDER BY dateItemsWasFound ASC";
+				
+				break;
 			
 		}
 		
@@ -551,6 +573,14 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 								   , "Kein Ergebnis gefunden", JOptionPane.ERROR_MESSAGE, this.imgSearchDataBase));
 						
 						break;
+						
+					case "CurrentMonth":
+						
+						//We invoke a new Thread with the error message.
+						SwingUtilities.invokeLater( () ->  JOptionPane.showMessageDialog(null, "für den aktuellen Monat haben wir noch keine Daten in der Datenbank gespeichert"
+								   , "Kein Ergebnis gefunden", JOptionPane.ERROR_MESSAGE, this.imgSearchDataBase));
+						
+						break;
 
 					//In case we want to display per selected Month but we do not have any Entries we display also one alert
 					default: 
@@ -560,9 +590,9 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 								   , "Kein Ergebnis gefunden", JOptionPane.ERROR_MESSAGE, this.imgSearchDataBase));
 						
 						//We call to realod the DataBase
-						reloadFundsachenData();
+//						reloadFundsachenData();  Aqui esta el error de mensaje repetido.
 						
-				
+						break;
 				}
 				
 				this.dataBaseGUI.setVisible(true);
@@ -792,39 +822,50 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 	
 	
 	
-	private void displayListfundsachenByMonth() {
+	private void displayListfundsachenByMonth(String monthToShow) {
+		
+		DaoFundsachenImpl.monthToShow = monthToShow;
 		
 		try {
-		switch (DaoFundsachenImpl.now.getMonthValue()) {
-			case 1:
-				
-					displayListFundsachen("Januar");
-				
-				break;
-			case 2:
-				displayListFundsachen("Februar");
-				break;
-			case 3: displayListFundsachen("März");
-				break;
-			case 4: displayListFundsachen("April");
-				break;
-			case 5: displayListFundsachen("Mai");
-				break;
-			case 6: displayListFundsachen("Juni");
-				break;
-			case 7: displayListFundsachen("Juli");
-				break;
-			case 8: displayListFundsachen("August");
-				break;
-			case 9: displayListFundsachen("September");
-				break;
-			case 10: displayListFundsachen("Oktober");
-				break;
-			case 11: displayListFundsachen("November");
-				break;
-			case 12: displayListFundsachen("Dezember");
-				break;
+		if(DaoFundsachenImpl.monthToShow.equalsIgnoreCase("CurrentMonth")) {
+			
+			displayListFundsachen("CurrentMonth");
+
+		}else {
+			
+			switch (DaoFundsachenImpl.now.getMonthValue()) {
+				case 1:
+					
+						displayListFundsachen("Januar");
+					
+					break;
+				case 2:
+					displayListFundsachen("Februar");
+					break;
+				case 3: displayListFundsachen("März");
+					break;
+				case 4: displayListFundsachen("April");
+					break;
+				case 5: displayListFundsachen("Mai");
+					break;
+				case 6: displayListFundsachen("Juni");
+					break;
+				case 7: displayListFundsachen("Juli");
+					break;
+				case 8: displayListFundsachen("August");
+					break;
+				case 9: displayListFundsachen("September");
+					break;
+				case 10: displayListFundsachen("Oktober");
+					break;
+				case 11: displayListFundsachen("November");
+					break;
+				case 12: displayListFundsachen("Dezember");
+					break;
+			}
 		}
+		
+		
 		
 		} catch (DaoException e) {
 			e.printStackTrace();
@@ -1351,7 +1392,7 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 									public void actionPerformed(ActionEvent e) {
 										
 										dialogSearchDatabase.dispose();
-										displayListfundsachenByMonth();
+										displayListfundsachenByMonth("CurrentMonth");
 										
 									}
 								});
@@ -1365,7 +1406,7 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 									public void keyPressed(KeyEvent e) {
 
 										dialogSearchDatabase.dispose();
-										displayListfundsachenByMonth();
+										displayListfundsachenByMonth("CurrentMonth");
 									}
 
 									@Override
@@ -1671,7 +1712,7 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 							public void actionPerformed(ActionEvent e) {
 								
 								dialogSearchDatabase.dispose();
-								displayListfundsachenByMonth();
+								displayListfundsachenByMonth("CurrentMonth");
 								
 							}
 						});
@@ -1685,7 +1726,7 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 							public void keyPressed(KeyEvent e) {
 
 								dialogSearchDatabase.dispose();
-								displayListfundsachenByMonth();
+								displayListfundsachenByMonth("CurrentMonth");
 							}
 
 							@Override
@@ -1939,7 +1980,7 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 				DaoFundsachenImpl.connection = daoFactory.connect();
 
 				//Now we call the Method below to display the results from the Data Base. It will be displayed only the current Month.	
-				displayListfundsachenByMonth();
+				displayListfundsachenByMonth("CurrentMonth");
 				
 				//Set the index 0 to the JComboBox where we can select the month we want to display.
 				this.dataBaseGUI.displayMothLostAndFoundJComboBox.setSelectedIndex(0);

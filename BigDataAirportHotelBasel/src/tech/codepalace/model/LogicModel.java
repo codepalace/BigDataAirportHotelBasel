@@ -765,8 +765,8 @@ public class LogicModel {
 					
 					
 				case "FUNDSACHEN": 
-					
-					
+
+
 					SwingUtilities.invokeLater(new Runnable() {
 						
 						@Override
@@ -802,21 +802,14 @@ public class LogicModel {
 					//Create a new DAOFitness Object
 					DAOFitnessAbo daoFitnessAbo = new DAOFitnessImpl(getUserAHB(), dataBaseGUI, loading, logicModelFitnessAbo);
 					
-					try {
-						JOptionPane.showMessageDialog(null, "url: " + dataEncryption.decryptData(getUserAHB().getUrlDataBase()));
-					} catch (HeadlessException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (Exception e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
 					
-					try {
-						daoFitnessAbo.checkTableFitnessAbo();
-					} catch (DaoException e) {
-						e.printStackTrace();
-					}
+					
+						try {
+							daoFitnessAbo.checkTableFitnessAbo();
+						} catch (DaoException e) {
+							e.printStackTrace();
+						}
+					
 					
 						}
 					});
