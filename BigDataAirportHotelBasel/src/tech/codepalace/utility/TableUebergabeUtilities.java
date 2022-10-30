@@ -8,5 +8,13 @@ package tech.codepalace.utility;
  *
  */
 public class TableUebergabeUtilities {
+	
+	//The value of each constants represents each of the columns in my table. 
+	public static final int ID=0;
+	public static final int DATUM=1;
+	public static final int KUERSELMA=2;
+	public static final int INFORMATION=3;
+	
+	public static int selectedrow;
 
 }
