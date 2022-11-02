@@ -139,7 +139,8 @@ public class DataBaseGUI extends JFrame {
 	public JPanel containerMonthSelect;
 	
 	//String Array for the JComboBox
-	private String[] choicesSearchFundsachen, choicesSearchParking, choicesSelectMonthToBeDisplayed;
+	private String[] choicesSearchFundsachen, choicesSearchParking, choicesSelectMonthToBeDisplayed, choicesSearchFitnessAbo, 
+					 choicesSearchUebergabe;
 	
 	
 	//JButton for reload DataBase
@@ -338,6 +339,7 @@ public class DataBaseGUI extends JFrame {
 				this.choicesSearchFundsachen = new String[] {"Suchen nach Datum", "Suchen nach Fundsachen", 
 													"Suchen nach Namen", "Suchen nach Fundort"};
 				
+				
 				//choices to display selected month
 				this.choicesSelectMonthToBeDisplayed = new String[] {"Zeigen Nach Monat", "Januar", "Februar", "März", "April", "Mai", "Juni",
 																	 "Juli", "August", "September", "Oktober", "November", 
@@ -419,20 +421,16 @@ public class DataBaseGUI extends JFrame {
 			case "FITNESSABO":
 				
 				this.setTitle("Fitness Abonnement - Airport Hotel Basel");
+			
 				
 				//Initialize the choices for the JComboBox
-				this.choicesSearchParking = new String[] {"Suchen nach bla bla", "Suchen nach bla, bla 2", 
-													"Suchen nach bla, bla 3", "Suchen nach bla bla 4"};
-				
+				choicesSearchFitnessAbo = new String[] {"suchen nach bla1", "suchen nach bla bla2", "suchen nach bla bla 3 lol"};
 				
 				//Initialize the JComboBox for the Search options.
-				this.searchJComboBox = new JComboBox<String>(choicesSearchParking);
+				this.searchJComboBox = new JComboBox<String>(choicesSearchFitnessAbo);
 				
 				this.topPanelFitnessAbo = new TopPanelFitnessAbo(this.btnHome, this.btnFundsachen, this.btnParking, this.btnPhonebook, this.btnLogout, 
 						this.searchText, this.searchJComboBox, this.reloadDdJButton);
-				
-//				this.topPanelParking = new TopPanelParking(this.btnHome, this.btnFundsachen, this.btnFitness, this.btnPhonebook, this.btnLogout, 
-//						this.btnNewParking, this.searchText, this.searchJComboBox, this.reloadDdJButton);
 				
 				
 				this.topPanel.add(this.topPanelFitnessAbo, BorderLayout.NORTH);
@@ -454,6 +452,23 @@ public class DataBaseGUI extends JFrame {
 				
 				
 				break;
+				
+				
+			case "UEBERGABE":
+				
+				this.setTitle("Übergabe - Airport Hotel Basel");
+				
+				//Initialize the choices for the JComboBox
+				this.choicesSearchUebergabe = new String[] {"Suchen nach bla bla uebergabe", "Suchen nach bla, bla 2 uebergaber", 
+													"Suchen nach bla, bla 3", "Suchen nach bla bla 4"};
+				
+				
+				//Initialize the JComboBox for the Search options.
+				this.searchJComboBox = new JComboBox<String>(choicesSearchUebergabe);
+				
+				
+				break;
+				
 		}
 		
 		
