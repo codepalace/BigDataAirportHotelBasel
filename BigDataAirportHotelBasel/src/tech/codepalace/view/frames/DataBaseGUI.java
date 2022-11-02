@@ -34,9 +34,11 @@ import tech.codepalace.view.panels.PanelWithBackgroundOption;
 import tech.codepalace.view.panels.TopPanelFitnessAbo;
 import tech.codepalace.view.panels.TopPanelFundSachen;
 import tech.codepalace.view.panels.TopPanelParking;
+import tech.codepalace.view.panels.TopPanelUebergabe;
 import tech.codepalace.view.tables.FitnessAboTable;
 import tech.codepalace.view.tables.FundsachenTable;
 import tech.codepalace.view.tables.ParkingTable;
+import tech.codepalace.view.tables.UebergabeTable;
 
 
 /**
@@ -57,6 +59,9 @@ public class DataBaseGUI extends JFrame {
 	
 
 	private TopPanelFitnessAbo topPanelFitnessAbo;
+	
+	private TopPanelUebergabe topPanelUebergabe;
+	
 	
 	//Variable to get the Display Size
 	private Dimension screenSize;
@@ -82,6 +87,8 @@ public class DataBaseGUI extends JFrame {
 	public JTable fundsachenTable;
 	
 	public JTable fitnessAboTable;
+	
+	public JTable uebergabeTable;
 		
 	private JScrollPane scrollPane;
 		
@@ -435,14 +442,14 @@ public class DataBaseGUI extends JFrame {
 				
 				this.topPanel.add(this.topPanelFitnessAbo, BorderLayout.NORTH);
 				
-				//the instance JTable parkingTable = new ParkingTable and we get for that the JTable with the getJTable() method.
+				//the instance JTable fitnessAboTable = new FitnessAboTable and we get for that the JTable with the getJTable() method.
 				this.fitnessAboTable = new FitnessAboTable().getJTable();
 			
 				
 				
 				
 				
-				//JScrollPane for our parkingTable
+				//JScrollPane for our fitnessAboTable
 				this.scrollPane = new JScrollPane(this.fitnessAboTable);
 				
 				 //We add the scrollpane to the centerPanel and not the parkingTable(is already by the added by the scrollpane).
@@ -465,6 +472,20 @@ public class DataBaseGUI extends JFrame {
 				
 				//Initialize the JComboBox for the Search options.
 				this.searchJComboBox = new JComboBox<String>(choicesSearchUebergabe);
+				
+				
+				//Initialize the TopPanelUebergabe Instance
+				this.topPanelUebergabe = new TopPanelUebergabe(this.btnHome, this.btnParking, this.btnFundsachen, this.btnFitness, 
+																this.btnPhonebook, this.btnLogout, this.searchText, this.searchJComboBox,
+																this.reloadDdJButton);
+				
+				this.topPanel.add(this.topPanelUebergabe, BorderLayout.NORTH);
+				
+				//Initialize the JTable calling the instance and getJTable to the our JTable.
+				this.uebergabeTable = new UebergabeTable().getJTable();
+				
+				this.scrollPane = new JScrollPane(this.uebergabeTable);
+				
 				
 				
 				break;

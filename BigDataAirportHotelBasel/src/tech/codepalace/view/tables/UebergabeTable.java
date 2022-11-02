@@ -198,7 +198,7 @@ private void buildTable(String[] tableHeaders, Object[][] data) {
 	uebergabeJTable.getColumnModel().getColumn(TableUebergabeUtilities.ID).setCellRenderer(new CellTableManager("number"));
 	uebergabeJTable.getColumnModel().getColumn(TableUebergabeUtilities.DATUM).setCellRenderer(new CellTableManager("number"));
 	uebergabeJTable.getColumnModel().getColumn(TableUebergabeUtilities.INFORMATION).setCellRenderer(new CellTableManager("text"));
-	uebergabeJTable.getColumnModel().getColumn(TableFundsachenUtilities.KUERSELMA).setCellRenderer(new CellTableManager("text"));
+	uebergabeJTable.getColumnModel().getColumn(TableUebergabeUtilities.KUERZELMA).setCellRenderer(new CellTableManager("text"));
 
 	
 	uebergabeJTable.getTableHeader().setReorderingAllowed(false);
