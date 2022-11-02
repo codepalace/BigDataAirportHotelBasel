@@ -120,14 +120,14 @@ public class FundsachenTable {
 	
 	private Object[][] getDataArray(ArrayList<String> tableHeadersList) {
 		
-		/*the array is created where the rows are dynamic as it corresponds to all parking reservations, while the columns are static corresponding to the columns defined by default
+		/*the array is created where the rows are dynamic as it corresponds to all Fundgegenstand, while the columns are static corresponding to the columns defined by default
 		 */
 		
 		/*
 	
 		What this method does is go through all the information and it will start assigning it to each position in the table.
 		
-		 we create an information array [listaPersonas.size][listParkingReservations.size] 
+		 we create an information array [listFundsachen.size][tableHeadersList.size] 
 		 
 		 
 		 */
@@ -139,7 +139,7 @@ public class FundsachenTable {
 			
 			/*
 			 *I know that the columns don't change, but the information that is displayed changes, so let's just say that the data that 
-			 they will be presented change only by the x, but always keep the same column (title). That's why the TableParkingUtilities class is important, 
+			 they will be presented change only by the x, but always keep the same column (title). That's why the TableFundsachenUtilities class is important, 
 			 where the data corresponds to the column where it has to be displayed.
 			 
 			
@@ -147,9 +147,9 @@ public class FundsachenTable {
 		
 			 
 			 In a Row.
-			 [0][0] i'll have the DATUM
-			 [0][1] i'll have the FUNDSACHE
-			 [0][2] i'll have the FUNDORT
+			 [0][0] i'll have the ID
+			 [0][1] i'll have the DATUN
+			 [0][2] i'll have the FUNDSACHEN
 			 etc.
 			 
 			 etc so on with the rest of the information that is being filled in the array with which that information is going to be displayed.
