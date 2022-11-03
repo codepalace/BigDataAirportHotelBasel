@@ -35,6 +35,8 @@ import tech.codepalace.dao.DAOFitnessAbo;
 import tech.codepalace.dao.DAOFitnessImpl;
 import tech.codepalace.dao.DAOFundsachen;
 import tech.codepalace.dao.DAOParking;
+import tech.codepalace.dao.DAOUebergabe;
+import tech.codepalace.dao.DAOUebergabeImpl;
 import tech.codepalace.dao.DaoException;
 import tech.codepalace.dao.DaoFactory;
 import tech.codepalace.dao.DaoFundsachenImpl;
@@ -925,7 +927,23 @@ public class LogicModel {
 				case "UEBERGABE":
 					
 					//Time to display UEBERGABE DAO Object should be called. 
-					JOptionPane.showMessageDialog(null, "Time to display Uebergabe / HandOver Shift transper informations");
+					
+					SwingUtilities.invokeLater(new Runnable() {
+						
+						@Override
+						public void run() {
+							
+							DAOUebergabe daoUebergabe = new DAOUebergabeImpl(getUserAHB(), dataBaseGUI, loading, logicModelUebergabe);
+							
+							
+							try {
+								daoUebergabe.checkTableUebergabe();
+							} catch (DaoException e) {
+								e.printStackTrace();
+							}
+						}
+					});
+					
 					
 			}
 			

@@ -11,7 +11,6 @@ import javax.swing.table.JTableHeader;
 import tech.codepalace.model.Uebergabe;
 import tech.codepalace.model.UebergabeTableModel;
 import tech.codepalace.utility.CellTableManager;
-import tech.codepalace.utility.TableFundsachenUtilities;
 import tech.codepalace.utility.TableHeaderManager;
 import tech.codepalace.utility.TableUebergabeUtilities;
 
