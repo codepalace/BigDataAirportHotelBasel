@@ -414,6 +414,21 @@ public class DaoFactory {
 						 + ")";
 				  
 				break;
+				
+			case "UEBERGABE":
+				
+				sql = "CREATE TABLE " + tableName +"( "
+					
+						+ "ID INT NOT NULL GENERATED ALWAYS AS IDENTITY,"
+						+ "datum DATE NOT NULL,"
+						+ "kuerzelma VARCHAR(5) NOT NULL,"
+						+ "information VARCHAR(600) NOT NULL,"
+						+ "PRIMARY KEY (ID)"
+						+ ")";
+						
+						
+				break;
+				
 		}
 	  
 				

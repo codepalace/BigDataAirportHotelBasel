@@ -203,7 +203,7 @@ public class DaoFundsachenImpl implements DAOFundsachen {
 						else { //otherwise table FUNDSACHEN do not exists
 
 							
-							//We call daoFactory to createTable Parking passing the table name(PARKING)
+							//We call daoFactory to createTable Parking passing the table name(FUNDSACHEN)
 							DaoFundsachenImpl.daoFactory.createTable("FUNDSACHEN");
 							
 							DaoFundsachenImpl.tableChecked = true;

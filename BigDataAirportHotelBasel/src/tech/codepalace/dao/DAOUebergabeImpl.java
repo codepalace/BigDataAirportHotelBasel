@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 
-import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
@@ -150,8 +149,14 @@ public class DAOUebergabeImpl implements DAOUebergabe{
 			 			}else { //otherwise table UEBERGABE do not exists.
 			 				
 			 				//Time to create Table by DAO Factory Object
-			 				JOptionPane.showMessageDialog(null, "Time to create Table by DAO Factory Object");
-			 			
+			 				//We call daoFactory to createTable Parking passing the table name(UEBERGABE)
+			 				DAOUebergabeImpl.daoFactory.createTable("UEBERGABE");
+			 				
+			 				//table was checked
+			 				DAOUebergabeImpl.tableChecked = true;
+			 				
+			 				loading.dispose();
+			 				dataBaseGUI.setVisible(true);
 			 			
 			 			
 			 			
@@ -243,6 +248,10 @@ public class DAOUebergabeImpl implements DAOUebergabe{
 
 	@Override
 	public void displayUebergabe() throws DaoException {
+		
+		
+		
+		
 		
 	}
 
