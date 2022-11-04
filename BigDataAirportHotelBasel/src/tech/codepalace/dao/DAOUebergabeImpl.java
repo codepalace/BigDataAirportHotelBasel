@@ -88,7 +88,7 @@ public class DAOUebergabeImpl implements DAOUebergabe{
 	// SimpleDateFormat to format the Date output in format dd.MM.yyyy
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
 	
-	private ImageIcon imgSearchDataBase = new ImageIcon(getClass().getResource("/img/dialog.png"));
+	private ImageIcon imgSearchDataBase = new ImageIcon(getClass().getResource("/img/dialogo.png"));
 	
 	private static String monthToShow;
 	
