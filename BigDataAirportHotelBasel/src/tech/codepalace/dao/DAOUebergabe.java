@@ -1,5 +1,6 @@
 package tech.codepalace.dao;
 
+import java.sql.Date;
 
 /**
  * 
@@ -19,6 +20,17 @@ public interface DAOUebergabe {
 	 * @description Method to display the Uebergabe(HandOver - shift informations transfer). 
 	 * @throws DaoException
 	 */
-	void displayUebergabe() throws DaoException;
+	void displayUebergabe(String monthToShow) throws DaoException;
+	
+	
+	/**
+	 * @description Method to display the selected Month to show from DataBase.
+	 * @param monthToShow
+	 * @throws DaoException
+	 */
+	void displaySelectedMonth(String monthToShow) throws DaoException;
+	
+	
+	void searchByDateUebergabe(Date datumUebergabe) throws DaoException;
 
 }
