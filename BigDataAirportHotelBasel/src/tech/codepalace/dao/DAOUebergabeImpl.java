@@ -166,8 +166,6 @@ public class DAOUebergabeImpl implements DAOUebergabe{
 			 				
 			 				//Table UEBERGABE exists
 			 				//then we call displayListUebergabeByMonth() Method to display the current month results or selected month.
-			 				
-			 				
 			 				displayListUebergabeByMonth("CurrentMonth");
 			 			
 			 			}else { //otherwise table UEBERGABE do not exists.
@@ -272,6 +270,10 @@ public class DAOUebergabeImpl implements DAOUebergabe{
 	@Override
 	public void displayUebergabe(String monthToShow) throws DaoException {
 		
+		DAOUebergabeImpl.monthToShow = monthToShow;
+		
+		setURLToConnectCurrentDataBase();
+		
 		daoFactory.connect();
 		//ORDER BY date_field ASC | DESC;
 		String sqlString = "SELECT * From UEBERGABE ORDER BY datum DESC";
@@ -369,7 +371,7 @@ public class DAOUebergabeImpl implements DAOUebergabe{
 				sqlString = "SELECT * From UEBERGABE where (datum Between '" + DAOUebergabeImpl.now.getYear() + "-11-01'" +
 						 " And '" + DAOUebergabeImpl.now.getYear() + "-11-30') ORDER BY datum DESC";
 				
-				
+				JOptionPane.showMessageDialog(null, "Display November");
 				break;
 				
 			case "Dezember":
@@ -686,11 +688,11 @@ public class DAOUebergabeImpl implements DAOUebergabe{
 	 */
 	private void displayListUebergabeByMonth(String monthToShow) {
 		
+		DAOUebergabeImpl.monthToShow = monthToShow;
 		
 		try {
 		if(DAOUebergabeImpl.monthToShow.equalsIgnoreCase("CurrentMonth")) {
-			
-			
+
 			
 				displayUebergabe("CurrentMonth");
 			

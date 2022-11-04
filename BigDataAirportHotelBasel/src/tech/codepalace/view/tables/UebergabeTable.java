@@ -39,6 +39,7 @@ public class UebergabeTable {
 	}
 	
 	
+	@SuppressWarnings("serial")
 	private void init() {
 		
 		this.uebergabeJTable = new JTable() {
@@ -87,8 +88,9 @@ public class UebergabeTable {
 		
 		tableHeadersList.add("ID");
 		tableHeadersList.add("Datum");
-		tableHeadersList.add("Info");
 		tableHeadersList.add("Kürzel MA");
+		tableHeadersList.add("Info");
+		
 		
 		//columns are assigned to the array to be sent at the time of table construction
 				/*
@@ -160,8 +162,9 @@ private Object[][] getDataArray(ArrayList<String> tableHeadersList) {
 			
 			information[x][TableUebergabeUtilities.ID] = listUebergabe.get(x).getId()+ "";
 			information[x][TableUebergabeUtilities.DATUM] = listUebergabe.get(x).getDatumUebergabe()+ "";
-			information[x][TableUebergabeUtilities.INFORMATION] = listUebergabe.get(x).getInformation()+ "";
 			information[x][TableUebergabeUtilities.KUERZELMA] = listUebergabe.get(x).getAbkuerzungMA()+ "";
+			information[x][TableUebergabeUtilities.INFORMATION] = listUebergabe.get(x).getInformation()+ "";
+			
 			
 			
 			
@@ -196,18 +199,19 @@ private void buildTable(String[] tableHeaders, Object[][] data) {
 	//the type of data that will have the cells of each column defined respectively is assigned to validate its customization
 	uebergabeJTable.getColumnModel().getColumn(TableUebergabeUtilities.ID).setCellRenderer(new CellTableManager("number"));
 	uebergabeJTable.getColumnModel().getColumn(TableUebergabeUtilities.DATUM).setCellRenderer(new CellTableManager("number"));
-	uebergabeJTable.getColumnModel().getColumn(TableUebergabeUtilities.INFORMATION).setCellRenderer(new CellTableManager("text"));
 	uebergabeJTable.getColumnModel().getColumn(TableUebergabeUtilities.KUERZELMA).setCellRenderer(new CellTableManager("text"));
+	uebergabeJTable.getColumnModel().getColumn(TableUebergabeUtilities.INFORMATION).setCellRenderer(new CellTableManager("text"));
 
 	
 	uebergabeJTable.getTableHeader().setReorderingAllowed(false);
 	uebergabeJTable.setRowHeight(25);//cell size
 	uebergabeJTable.setGridColor(new java.awt.Color(0, 0, 0)); 
 	//Define the length size for each column and its contents
-	uebergabeJTable.getColumnModel().getColumn(TableUebergabeUtilities.ID).setPreferredWidth(10);
-	uebergabeJTable.getColumnModel().getColumn(TableUebergabeUtilities.DATUM).setPreferredWidth(70);
+	uebergabeJTable.getColumnModel().getColumn(TableUebergabeUtilities.ID).setPreferredWidth(0);
+	uebergabeJTable.getColumnModel().getColumn(TableUebergabeUtilities.DATUM).setPreferredWidth(150);
+	uebergabeJTable.getColumnModel().getColumn(TableUebergabeUtilities.KUERZELMA).setPreferredWidth(150);
 	uebergabeJTable.getColumnModel().getColumn(TableUebergabeUtilities.INFORMATION).setPreferredWidth(200);
-	uebergabeJTable.getColumnModel().getColumn(TableUebergabeUtilities.KUERZELMA).setPreferredWidth(40);
+
 
 	
 	//We set the ID Column width so it will be not visible but we can still having access to 
@@ -215,6 +219,15 @@ private void buildTable(String[] tableHeaders, Object[][] data) {
 	uebergabeJTable.getColumnModel().getColumn(0).setMinWidth(0);
 	uebergabeJTable.getColumnModel().getColumn(0).setMaxWidth(0);
 	uebergabeJTable.getColumnModel().getColumn(0).setWidth(0);
+	
+	uebergabeJTable.getColumnModel().getColumn(1).setMinWidth(150); 
+	uebergabeJTable.getColumnModel().getColumn(1).setMaxWidth(150);
+	uebergabeJTable.getColumnModel().getColumn(1).setWidth(150);
+	
+	uebergabeJTable.getColumnModel().getColumn(2).setMinWidth(150); 
+	uebergabeJTable.getColumnModel().getColumn(2).setMaxWidth(150);
+	uebergabeJTable.getColumnModel().getColumn(2).setWidth(150);
+	
 	
 	//customize the header
 	JTableHeader jtableHeader = uebergabeJTable.getTableHeader();

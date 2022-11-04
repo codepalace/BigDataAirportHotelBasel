@@ -35,8 +35,6 @@ String [] tableHeaders;
 	}
 	
 	
-	public UebergabeTableModel(){}
-	
 	/* We overwrite the isCellEditable method
 	  Method that receives the row and column where the user is at the moment.
 

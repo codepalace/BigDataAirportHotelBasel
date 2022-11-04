@@ -452,7 +452,7 @@ public class DataBaseGUI extends JFrame {
 				//JScrollPane for our fitnessAboTable
 				this.scrollPane = new JScrollPane(this.fitnessAboTable);
 				
-				 //We add the scrollpane to the centerPanel and not the parkingTable(is already by the added by the scrollpane).
+				 //We add the scrollpane to the centerPanel and not the fitnessAboTable(is already by the added by the scrollpane).
 				 this.centerPanel.add(scrollPane);
 				 
 				
@@ -486,7 +486,7 @@ public class DataBaseGUI extends JFrame {
 				
 				this.scrollPane = new JScrollPane(this.uebergabeTable);
 				
-				
+				this.centerPanel.add(scrollPane);
 				
 				break;
 				
