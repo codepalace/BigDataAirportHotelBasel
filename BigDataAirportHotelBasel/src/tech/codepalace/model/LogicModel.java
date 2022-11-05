@@ -88,6 +88,10 @@ public class LogicModel {
 	//Object LogicModelUebergabe
 	private static LogicModelUebergabe logicModelUebergabe;
 	
+	//Object LogicModelTelefonbuch
+	private static LogicModelTelefonbuch logicModelTelefonbuch;
+	
+	
 	
 	protected DataEncryption dataEncryption = new DataEncryption();
 	
@@ -453,6 +457,14 @@ public class LogicModel {
 				 LogicModel.logicModelUebergabe.setUserAHB(getUserAHB());
 				 
 				 
+				 //Instance and initialize the LogicModelTelefonbuch
+				 LogicModel.logicModelTelefonbuch = new LogicModelTelefonbuch();
+				 
+				 
+				 //set the UserAHB value
+				 LogicModel.logicModelTelefonbuch.setUserAHB(getUserAHB());
+				 
+				 
 				 
 				
 				 //
@@ -462,7 +474,7 @@ public class LogicModel {
 				
 				 //New Instance of DataBAseGUIController we the arguments we need to pass so we can access from this Object
 				new DataBaseGUIController(LogicModel.bigDataAirportHotelBaselStartFrame, dataBaseGUI, LogicModel.logicModelParking, 
-						LogicModel.logicModelFundSachen, LogicModel.logicModelFitnessAbo, LogicModel.logicModelUebergabe);
+						LogicModel.logicModelFundSachen, LogicModel.logicModelFitnessAbo, LogicModel.logicModelUebergabe, LogicModel.logicModelTelefonbuch);
 				
 				
 				try {
@@ -551,6 +563,14 @@ public class LogicModel {
 						 //set the UserAHB value
 						 LogicModel.logicModelUebergabe.setUserAHB(getUserAHB());
 						 
+						 
+						 //Instance and initialize the LogicModelTelefonbuch
+						 LogicModel.logicModelTelefonbuch = new LogicModelTelefonbuch();
+						 
+						 
+						 //set the UserAHB value
+						 LogicModel.logicModelTelefonbuch.setUserAHB(getUserAHB());
+						 
 						 //
 						 LogicModel.logicModelStartFrame = new LogicModelStartFrame(LogicModel.bigDataAirportHotelBaselStartFrame);
 						 LogicModel.logicModelStartFrame.setUserAHB(getUserAHB());
@@ -558,7 +578,7 @@ public class LogicModel {
 						
 						 //New Instance of DataBAseGUIController we the arguments we need to pass so we can access from this Object
 						new DataBaseGUIController(LogicModel.bigDataAirportHotelBaselStartFrame, dataBaseGUI, LogicModel.logicModelParking, 
-								LogicModel.logicModelFundSachen, LogicModel.logicModelFitnessAbo, LogicModel.logicModelUebergabe);
+								LogicModel.logicModelFundSachen, LogicModel.logicModelFitnessAbo, LogicModel.logicModelUebergabe, LogicModel.logicModelTelefonbuch);
 						
 						
 						try {
@@ -649,11 +669,19 @@ public class LogicModel {
 						 
 						 //set the UserAHB value
 						 LogicModel.logicModelUebergabe.setUserAHB(getUserAHB());
+						 
+						 //Instance and initialize the LogicModelTelefonbuch
+						 LogicModel.logicModelTelefonbuch = new LogicModelTelefonbuch();
+						 
+						 
+						 //set the UserAHB value
+						 LogicModel.logicModelTelefonbuch.setUserAHB(getUserAHB());
+						 
 						
 						 //New Instance of DataBAseGUIController we the arguments we need to pass so we can access from this Object
 						new DataBaseGUIController(LogicModel.bigDataAirportHotelBaselStartFrame, 
-								 dataBaseGUI,  logicModelParking,  logicModelFundSachen, 
-								 logicModelFitnessAbo, logicModelUebergabe);
+								LogicModel.dataBaseGUI,  LogicModel.logicModelParking,  LogicModel.logicModelFundSachen, 
+								LogicModel.logicModelFitnessAbo, LogicModel.logicModelUebergabe, LogicModel.logicModelTelefonbuch);
 						
 						
 						try {
@@ -745,8 +773,8 @@ public class LogicModel {
 						
 						 //New Instance of DataBAseGUIController we the arguments we need to pass so we can access from this Object
 						new DataBaseGUIController(LogicModel.bigDataAirportHotelBaselStartFrame, 
-								 dataBaseGUI,  logicModelParking,  logicModelFundSachen, 
-								 logicModelFitnessAbo, logicModelUebergabe);
+								LogicModel.dataBaseGUI,  LogicModel.logicModelParking,  LogicModel.logicModelFundSachen, 
+								LogicModel.logicModelFitnessAbo, LogicModel.logicModelUebergabe, LogicModel.logicModelTelefonbuch);
 						
 						
 						try {
@@ -767,13 +795,106 @@ public class LogicModel {
 	}
 	
 	
+	
+	
+	
+	
+	
 	/**
 	 * Method to display PhoneBook JFrame
 	 * @param phoneBookToVisible
 	 */
 	public  void displayPhoneBook(JFrame phoneBookToVisible, JFrame JframeToClose) {
+		LogicModel.bigDataAirportHotelBaselStartFrame = bigDataAirportHotelBaselStartFrame;
 		
+		/*
+		 * Before we call to open the dataBaseGUI to display inside the JTable the Data from Table fitnessAboTable located in DataBase we check if 
+		 * bigDataAirportHotelBaselStartFrame is not null and isVisible to dispose this GUI Class so we avoid the user could game with the JButtons.
+		 */
+		if(LogicModel.bigDataAirportHotelBaselStartFrame !=null && LogicModel.bigDataAirportHotelBaselStartFrame.isVisible()) {
+			LogicModel.bigDataAirportHotelBaselStartFrame.dispose();
+		}
+		
+
+		//invoke a new Thread 
+				SwingUtilities.invokeLater(new Runnable() {
+
+					@Override
+					public void run() {
+						
+						
+						if(LogicModel.dataBaseGUI !=null && LogicModel.dataBaseGUI.isVisible()) {
+							LogicModel.dataBaseGUI.dispose();
+						}
+
+				         //This Logical Model need the String argument to Know which kind of Application we are calling.
+						 LogicModel.dataBaseGUI = new DataBaseGUI("UEBERGABE");
+						 
+						 //This Logical Model need the String argument to Know which kind of Application we are calling.
+						 //The second argument used to know from which GUI we are calling
+						 LogicModel.logicModelDataBaseGUI = new LogicModelDataBaseGUI("UEBERGABE");
+						 
+						 
+						 //We set the UserAHB value
+						 LogicModel.logicModelDataBaseGUI.setUserAHB(getUserAHB());
+						 
+						 LogicModel.logicModelFitnessAbo = new LogicModelFitnessAbo();
+						 
+						 //We set the UserAHB value
+						 LogicModel.logicModelFitnessAbo.setUserAHB(getUserAHB());
+						 
+						 LogicModel.logicModelFundSachen = new LogicModelFundSachen();
+						 
+						 LogicModel.logicModelFundSachen.setUserAHB(getUserAHB());
+						 
+						 LogicModel.logicModelParking = new LogicModelParking(dataBaseGUI, loading);
+						 
+						 LogicModel.logicModelParking.setUserAHB(getUserAHB());
+						 
+						 //
+						 LogicModel.logicModelStartFrame = new LogicModelStartFrame(LogicModel.bigDataAirportHotelBaselStartFrame);
+						 LogicModel.logicModelStartFrame.setUserAHB(getUserAHB());
+						
+						 //Instance and initialize the logicModelUebergabe
+						 LogicModel.logicModelUebergabe = new LogicModelUebergabe();
+						 
+						 
+						 //set the UserAHB value
+						 LogicModel.logicModelUebergabe.setUserAHB(getUserAHB());
+						 
+						 
+						 //Instance and initialize the LogicModelTelefonbuch
+						 LogicModel.logicModelTelefonbuch = new LogicModelTelefonbuch();
+						 
+						 
+						 //set the UserAHB value
+						 LogicModel.logicModelTelefonbuch.setUserAHB(getUserAHB());
+						
+						 //New Instance of DataBAseGUIController we the arguments we need to pass so we can access from this Object
+						new DataBaseGUIController(LogicModel.bigDataAirportHotelBaselStartFrame, 
+								LogicModel.dataBaseGUI,  LogicModel.logicModelParking,  LogicModel.logicModelFundSachen, 
+								LogicModel.logicModelFitnessAbo, LogicModel.logicModelUebergabe, LogicModel.logicModelTelefonbuch);
+						
+						
+						try {
+							//We set the value of the loginUserLabel GUI using the dataEncryption instance and calling the decryptData method.
+							dataBaseGUI.loginUserLabel.setText("Benutzer: " + dataEncryption.decryptData(logicModelDataBaseGUI.getUserAHB().getUserName()));
+							
+					} catch (Exception e1) {
+							e1.printStackTrace();
+				}
+						
+						//We checkDatabase
+						logicModelDataBaseGUI.checkDataBase(logicModelDataBaseGUI.getAppCalled());
+						
+						
+					}
+				});
 	}
+	
+	
+	
+	
 	
 
 	

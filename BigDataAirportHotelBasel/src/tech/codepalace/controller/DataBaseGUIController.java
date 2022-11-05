@@ -26,6 +26,7 @@ import javax.swing.table.TableModel;
 import tech.codepalace.model.LogicModelFitnessAbo;
 import tech.codepalace.model.LogicModelFundSachen;
 import tech.codepalace.model.LogicModelParking;
+import tech.codepalace.model.LogicModelTelefonbuch;
 import tech.codepalace.model.LogicModelUebergabe;
 import tech.codepalace.utility.DataEncryption;
 import tech.codepalace.view.frames.BigDataAirportHotelBaselStartFrame;
@@ -56,6 +57,7 @@ TableModelListener, ItemListener, FocusListener, MouseListener, PopupMenuListene
 	private LogicModelFundSachen logicModelFundSachen;
 	private LogicModelFitnessAbo logicModelFitnessAbo;
 	private LogicModelUebergabe logicModelUebergabe;
+	private LogicModelTelefonbuch logicModelTelefonbuch;
 	
 	
 	private TableModel model;
@@ -75,7 +77,7 @@ TableModelListener, ItemListener, FocusListener, MouseListener, PopupMenuListene
 	
 	public DataBaseGUIController(BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame, 
 			DataBaseGUI dataBaseGUI, LogicModelParking logicModelParking, LogicModelFundSachen logicModelFundSachen, 
-			LogicModelFitnessAbo logicModelFitnessAbo, LogicModelUebergabe logicModelUebergabe) {
+			LogicModelFitnessAbo logicModelFitnessAbo, LogicModelUebergabe logicModelUebergabe, LogicModelTelefonbuch logicModelTelefonbuch) {
 		
 		//We set the values to the Objects
 		this.bigDataAirportHotelBaselStartFrame = bigDataAirportHotelBaselStartFrame;
@@ -84,6 +86,7 @@ TableModelListener, ItemListener, FocusListener, MouseListener, PopupMenuListene
 		this.logicModelFundSachen = logicModelFundSachen;
 		this.logicModelFitnessAbo = logicModelFitnessAbo;
 		this.logicModelUebergabe = logicModelUebergabe;
+		this.logicModelTelefonbuch = logicModelTelefonbuch;
 		
 		this.dataEncryption = new DataEncryption();
 
