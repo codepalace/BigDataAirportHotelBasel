@@ -189,7 +189,9 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 			logicModelStartFrame.displayUebergabe(bigDataAirportHotelBaselStartFrame);
 			
 		}else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.parkingButton &&  e.getKeyCode()==118) {
-			System.out.println("Opening the database Telefonbuch!");
+			
+			logicModelStartFrame.displayPhoneBook(this.bigDataAirportHotelBaselStartFrame);
+			
 		}else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.parkingButton &&  e.getKeyCode()==119) {
 			//We call logoutApplication Method by logicModelStartFrame
 			
@@ -244,7 +246,9 @@ public class BigDataAHBStartFrameController implements ActionListener, KeyListen
 		} 
 		
 		else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.phonebookButton) {
-			System.out.println("you pressed the phonebook button");
+			
+			logicModelStartFrame.displayPhoneBook(this.bigDataAirportHotelBaselStartFrame);
+			
 		} 
 		else if (e.getSource()==this.bigDataAirportHotelBaselStartFrame.logoutButton) {
 			//We call logoutApplication Method by logicModelStartFrame

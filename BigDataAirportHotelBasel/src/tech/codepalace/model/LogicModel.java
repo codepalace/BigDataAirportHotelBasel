@@ -804,7 +804,7 @@ public class LogicModel {
 	 * Method to display PhoneBook JFrame
 	 * @param phoneBookToVisible
 	 */
-	public  void displayPhoneBook(JFrame phoneBookToVisible, JFrame JframeToClose) {
+	public  void displayPhoneBook(BigDataAirportHotelBaselStartFrame bigDataAirportHotelBaselStartFrame) {
 		LogicModel.bigDataAirportHotelBaselStartFrame = bigDataAirportHotelBaselStartFrame;
 		
 		/*
@@ -828,11 +828,11 @@ public class LogicModel {
 						}
 
 				         //This Logical Model need the String argument to Know which kind of Application we are calling.
-						 LogicModel.dataBaseGUI = new DataBaseGUI("UEBERGABE");
+						 LogicModel.dataBaseGUI = new DataBaseGUI("TELEFONBUCH");
 						 
 						 //This Logical Model need the String argument to Know which kind of Application we are calling.
 						 //The second argument used to know from which GUI we are calling
-						 LogicModel.logicModelDataBaseGUI = new LogicModelDataBaseGUI("UEBERGABE");
+						 LogicModel.logicModelDataBaseGUI = new LogicModelDataBaseGUI("TELEFONBUCH");
 						 
 						 
 						 //We set the UserAHB value

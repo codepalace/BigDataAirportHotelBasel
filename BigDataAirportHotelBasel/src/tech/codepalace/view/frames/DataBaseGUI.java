@@ -490,6 +490,14 @@ public class DataBaseGUI extends JFrame {
 				
 				break;
 				
+				
+				
+			case "TELEFONBUCH":
+				
+				JOptionPane.showMessageDialog(null, "Time to display Phone Book");
+				
+				break;
+				
 		}
 		
 		
