@@ -178,7 +178,7 @@ public class DataBaseGUI extends JFrame {
 		this.btnFundsachen = new MyButton("/img/btn_fundsachen2.png");
 		this.btnFitness = new MyButton("/img/btn_fitness_abo2.png");
 		this.btnUerbergabe = new MyButton("/img/btn_uebergabe2.png");
-		this.btnPhonebook = new MyButton("/img/btn_telefonbuch.png");
+		this.btnPhonebook = new MyButton("/img/btn_telefonbuch2.png");
 		this.btnLogout = new MyButton("/img/btn_logout_125x70.png");
 		this.btnNewFundsachen = new MyButton("/img/btn_funsachenplus.png");
 		
