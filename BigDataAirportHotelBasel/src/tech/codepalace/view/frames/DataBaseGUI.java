@@ -34,6 +34,7 @@ import tech.codepalace.view.panels.PanelWithBackgroundOption;
 import tech.codepalace.view.panels.TopPanelFitnessAbo;
 import tech.codepalace.view.panels.TopPanelFundSachen;
 import tech.codepalace.view.panels.TopPanelParking;
+import tech.codepalace.view.panels.TopPanelTelefonbuch;
 import tech.codepalace.view.panels.TopPanelUebergabe;
 import tech.codepalace.view.tables.FitnessAboTable;
 import tech.codepalace.view.tables.FundsachenTable;
@@ -62,6 +63,8 @@ public class DataBaseGUI extends JFrame {
 	
 	private TopPanelUebergabe topPanelUebergabe;
 	
+	private TopPanelTelefonbuch topPanelTelefonbuch;
+	
 	
 	//Variable to get the Display Size
 	private Dimension screenSize;
@@ -69,7 +72,7 @@ public class DataBaseGUI extends JFrame {
 	private JPanel topPanel, centerPanel, southPanel;
 	
 	 //Menu JButtons
-	 public JButton btnHome, btnFundsachen, btnFitness, btnPhonebook, btnLogout, btnNewParking, btnParking,
+	 public JButton btnHome, btnFundsachen, btnFitness, btnUerbergabe, btnPhonebook, btnLogout, btnNewParking, btnParking,
 	 				btnNewFundsachen;
 
 	//Jpanel for the user logged
@@ -147,7 +150,7 @@ public class DataBaseGUI extends JFrame {
 	
 	//String Array for the JComboBox
 	private String[] choicesSearchFundsachen, choicesSearchParking, choicesSelectMonthToBeDisplayed, choicesSearchFitnessAbo, 
-					 choicesSearchUebergabe;
+					 choicesSearchUebergabe, choicesSearchTelefonbuch;
 	
 	
 	//JButton for reload DataBase
@@ -174,6 +177,7 @@ public class DataBaseGUI extends JFrame {
 		this.btnParking = new MyButton("/img/parking_btn2.png");
 		this.btnFundsachen = new MyButton("/img/btn_fundsachen2.png");
 		this.btnFitness = new MyButton("/img/btn_fitness_abo2.png");
+		this.btnUerbergabe = new MyButton("/img/btn_uebergabe2.png");
 		this.btnPhonebook = new MyButton("/img/btn_telefonbuch.png");
 		this.btnLogout = new MyButton("/img/btn_logout_125x70.png");
 		this.btnNewFundsachen = new MyButton("/img/btn_funsachenplus.png");
@@ -187,6 +191,7 @@ public class DataBaseGUI extends JFrame {
 		this.btnHome.setPreferredSize(new Dimension(125,70));
 		this.btnFundsachen.setPreferredSize(new Dimension(150,70));
 		this.btnFitness.setPreferredSize(new Dimension(150,70));
+		this.btnUerbergabe.setPreferredSize(new Dimension(150, 70));
 		this.btnPhonebook.setPreferredSize(new Dimension(150,70));
 		this.btnLogout.setPreferredSize(new Dimension(125,70));
 		this.btnNewParking.setPreferredSize(new Dimension(150, 70));
@@ -494,7 +499,20 @@ public class DataBaseGUI extends JFrame {
 				
 			case "TELEFONBUCH":
 				
-				JOptionPane.showMessageDialog(null, "Time to display Phone Book");
+				this.setTitle("Telefonbuch - Airport Hotel Basel");
+				
+				this.choicesSearchTelefonbuch = new String[] {"Suchen nach telefonbuch", "Suchen nach telefonbuch2", "Suchen nach telefonbuch3"};
+				
+				
+				//Initialize the JComboBox for the Search options.
+				this.searchJComboBox = new JComboBox<String>(choicesSearchTelefonbuch);
+				
+				//Initialize the topPanelTelefonbuch
+				this.topPanelTelefonbuch = new TopPanelTelefonbuch(btnHome, btnParking, btnFundsachen, btnFitness, btnUerbergabe, 
+																	btnLogout, searchText, searchJComboBox, reloadDdJButton);
+				
+				
+				this.topPanel.add(this.topPanelTelefonbuch, BorderLayout.NORTH);
 				
 				break;
 				
