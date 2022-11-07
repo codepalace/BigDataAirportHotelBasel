@@ -220,15 +220,9 @@ TableModelListener, ItemListener, FocusListener, MouseListener, PopupMenuListene
 			
 		} 
 		
-		else if(e.getSource()==this.dataBaseGUI.btnParking) {
-		
-			if(this.dataBaseGUI.fundsachenTable!=null) {
-				this.logicModelFundSachen.displayParking(bigDataAirportHotelBaselStartFrame);
-			}
-			else if(this.dataBaseGUI.fitnessAboTable!=null) {
-				this.logicModelFitnessAbo.displayParking(bigDataAirportHotelBaselStartFrame);
-			}
-			
+		else if(e.getSource()==this.dataBaseGUI.btnParking) {	
+		     this.logicModelParking.displayParking(bigDataAirportHotelBaselStartFrame);
+
 		}
 		
 		else if(e.getSource()==this.dataBaseGUI.btnLogout) {
@@ -288,37 +282,22 @@ TableModelListener, ItemListener, FocusListener, MouseListener, PopupMenuListene
 		
 		else if(e.getSource()==this.dataBaseGUI.btnFundsachen) {
 			
-			if(this.dataBaseGUI.parkingTable!=null) {
-				this.logicModelParking.displayFundSachen(bigDataAirportHotelBaselStartFrame);
-			}
 			
-			else if(this.dataBaseGUI.fitnessAboTable!=null) {
-				this.logicModelFitnessAbo.displayFundSachen(bigDataAirportHotelBaselStartFrame);
-			}
-			
+			this.logicModelParking.displayFundSachen(bigDataAirportHotelBaselStartFrame);
 			
 		}
 		
 		else if(e.getSource()==this.dataBaseGUI.btnFitness) {
 			
-			//We have to call to display fitness subscription
-			if(this.dataBaseGUI.parkingTable!=null) {
-				this.logicModelParking.displayFitnessAbo(bigDataAirportHotelBaselStartFrame);
-			}
-			
-			else if(this.dataBaseGUI.fundsachenTable!=null) {
-				this.logicModelFundSachen.displayFitnessAbo(bigDataAirportHotelBaselStartFrame);
-			}
-			
+			this.logicModelParking.displayFitnessAbo(bigDataAirportHotelBaselStartFrame);
 		}
 		
 		
 		
 		else if(e.getSource()==this.dataBaseGUI.btnUerbergabe) {
 			
-			if(this.dataBaseGUI.btnUerbergabe!=null) {
-				this.logicModelUebergabe.displayUebergabe(bigDataAirportHotelBaselStartFrame);
-			}
+			this.logicModelParking.displayUebergabe(bigDataAirportHotelBaselStartFrame);
+
 		}
 		
 		

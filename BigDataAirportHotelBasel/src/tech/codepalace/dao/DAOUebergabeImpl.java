@@ -105,7 +105,7 @@ public class DAOUebergabeImpl implements DAOUebergabe{
 		DAOUebergabeImpl.dataEncryption = new DataEncryption();
 		DAOUebergabeImpl.logicModelUebergabe = logicModelUebergabe;
 		
-		
+		DAOUebergabeImpl.tableChecked = false;
 		
 	}
 
