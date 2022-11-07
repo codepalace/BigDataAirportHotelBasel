@@ -297,7 +297,7 @@ public class DataBaseGUI extends JFrame {
 				//Initialize the JComboBox for the Search options.
 				this.searchJComboBox = new JComboBox<String>(choicesSearchParking);
 				
-				this.topPanelParking = new TopPanelParking(this.btnHome, this.btnFundsachen, this.btnFitness, this.btnPhonebook, this.btnLogout, 
+				this.topPanelParking = new TopPanelParking(this.btnHome, this.btnFundsachen, this.btnFitness, this.btnUerbergabe, this.btnPhonebook, this.btnLogout, 
 						this.btnNewParking, this.searchText, this.searchJComboBox, this.reloadDdJButton);
 				
 				this.topPanel.add(this.topPanelParking, BorderLayout.NORTH);

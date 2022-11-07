@@ -37,7 +37,7 @@ public class TopPanelParking extends JPanel {
 	
 	public JLabel parkingImage;
 	
-	private JButton btnHome,  btnFundsachen,  btnFitness,
+	private JButton btnHome,  btnFundsachen,  btnFitness, btnUerbergabe,
 	 btnPhonebook,  btnLogout,  btnNewParking, reloadDdJButton;
 	
 	//JTextField with rounded Border for the Search Entries
@@ -57,12 +57,13 @@ public class TopPanelParking extends JPanel {
 
 	
 	public TopPanelParking(JButton btnHome, JButton btnFundsachen, JButton btnFitness,
-			JButton btnPhonebook, JButton btnLogout, JButton btnNewParking, 
+			JButton btnUerbergabe, JButton btnPhonebook, JButton btnLogout, JButton btnNewParking, 
 			RoundJTextField searchText, JComboBox<String> searchJComboBox, JButton reloadDdJButton) {
 		
 		this.btnHome = btnHome;
 		this.btnFundsachen = btnFundsachen;
 		this.btnFitness = btnFitness;
+		this.btnUerbergabe = btnUerbergabe;
 		this.btnPhonebook = btnPhonebook;
 		this.btnLogout = btnLogout;
 		this.btnNewParking = btnNewParking;
@@ -98,6 +99,7 @@ public class TopPanelParking extends JPanel {
 		this.centerPanelButtons.add(this.btnHome);
 		this.centerPanelButtons.add(this.btnFundsachen);
 		this.centerPanelButtons.add(this.btnFitness);
+		this.centerPanelButtons.add(this.btnUerbergabe);
 		this.centerPanelButtons.add(this.btnPhonebook);
 		this.centerPanelButtons.add(this.btnLogout);
 		this.centerPanelButtons.add(this.btnNewParking);

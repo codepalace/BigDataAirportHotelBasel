@@ -141,6 +141,15 @@ TableModelListener, ItemListener, FocusListener, MouseListener, PopupMenuListene
 			this.dataBaseGUI.displayMothLostAndFoundJComboBox.addItemListener(this);
 		}
 		
+		else if(this.dataBaseGUI.fitnessAboTable !=null) {
+			
+			this.dataBaseGUI.fitnessAboTable.getModel().addTableModelListener(this);
+			this.dataBaseGUI.fitnessAboTable.addKeyListener(this);
+			this.dataBaseGUI.fitnessAboTable.addMouseListener(this);
+			this.dataBaseGUI.fitnessAboTable.addFocusListener(this);
+			
+		}
+		
 		
 		//Add KeyListener to the Search Box
 		this.dataBaseGUI.searchText.addKeyListener(this);
@@ -154,6 +163,7 @@ TableModelListener, ItemListener, FocusListener, MouseListener, PopupMenuListene
 		this.dataBaseGUI.btnHome.addFocusListener(this);
 		this.dataBaseGUI.btnParking.addFocusListener(this);
 		this.dataBaseGUI.btnFitness.addFocusListener(this);
+		this.dataBaseGUI.btnUerbergabe.addFocusListener(this);
 		this.dataBaseGUI.btnPhonebook.addFocusListener(this);
 		this.dataBaseGUI.btnLogout.addFocusListener(this);
 		this.dataBaseGUI.btnNewFundsachen.addFocusListener(this);
@@ -172,6 +182,12 @@ TableModelListener, ItemListener, FocusListener, MouseListener, PopupMenuListene
 		
 		this.dataBaseGUI.btnFitness.addActionListener(this);
 		this.dataBaseGUI.btnFitness.addKeyListener(this);
+		
+		this.dataBaseGUI.btnUerbergabe.addActionListener(this);
+		this.dataBaseGUI.btnUerbergabe.addKeyListener(this);
+		
+		this.dataBaseGUI.btnPhonebook.addActionListener(this);
+		this.dataBaseGUI.btnPhonebook.addKeyListener(this);
 		
 		//Add ActionListener to the MenutItem of the popupMenu
 		this.dataBaseGUI.deleteItem.addActionListener(this);
@@ -297,6 +313,15 @@ TableModelListener, ItemListener, FocusListener, MouseListener, PopupMenuListene
 		}
 		
 		
+		
+		else if(e.getSource()==this.dataBaseGUI.btnUerbergabe) {
+			
+			if(this.dataBaseGUI.btnUerbergabe!=null) {
+				this.logicModelUebergabe.displayUebergabe(bigDataAirportHotelBaselStartFrame);
+			}
+		}
+		
+		
 		else if(e.getSource()==this.dataBaseGUI.deleteItem) {
 
 			/*
@@ -389,6 +414,35 @@ TableModelListener, ItemListener, FocusListener, MouseListener, PopupMenuListene
 				
 				
 			}
+		
+		
+		
+			else if(e.getSource()==this.dataBaseGUI.btnHome && e.getKeyCode()== 117
+					||e.getSource()==this.dataBaseGUI.searchJComboBox && e.getKeyCode() == 117
+					||e.getSource()==this.dataBaseGUI.searchText && e.getKeyCode() == 117 
+					||e.getSource()==this.dataBaseGUI.fundsachenTable && e.getKeyCode() ==117
+					||e.getSource()==this.dataBaseGUI.parkingTable && e.getKeyCode() ==117)
+				
+			{
+				
+				if(this.dataBaseGUI.parkingTable!=null) {
+					this.logicModelParking.displayUebergabe(bigDataAirportHotelBaselStartFrame);
+				
+				}else if(this.dataBaseGUI.fundsachenTable!=null) {
+					this.logicModelFundSachen.displayUebergabe(bigDataAirportHotelBaselStartFrame);
+				}
+				
+				else if(this.dataBaseGUI.fitnessAboTable!=null) {
+					this.logicModelFitnessAbo.displayUebergabe(bigDataAirportHotelBaselStartFrame);
+				}
+				
+				
+			}
+		
+		
+		
+		
+			
 		
 		
 			else
@@ -505,6 +559,7 @@ TableModelListener, ItemListener, FocusListener, MouseListener, PopupMenuListene
 				
 
 			}
+		
 
 		
 	}
