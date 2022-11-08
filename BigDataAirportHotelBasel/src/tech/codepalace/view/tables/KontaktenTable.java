@@ -177,14 +177,6 @@ private Object[][] getDataArray(ArrayList<String> tableHeadersList) {
 		//After we have the model created above, that model is assigned to the kontaktJTable.
 		this.kontaktJTable.setModel(kontaktenTableModel);
 		
-		/*
-		 * information[x][TableKontaktenUtilities.ID] = listKontakten.get(x).getId()+ "";
-			information[x][TableKontaktenUtilities.NAME] = listKontakten.get(x).getName()+ "";
-			information[x][TableKontaktenUtilities.PHONE] = listKontakten.get(x).getPhone()+ "";
-			information[x][TableKontaktenUtilities.BEMERKUNGEN] = listKontakten.get(x).getBemerkungen()+ "";
-			information[x][TableKontaktenUtilities.ABTEILUNG] = listKontakten.get(x).getAbteilung()+ "";
-		 * 
-		 */
 		
 		//the type of data that will have the cells of each column defined respectively is assigned to validate its customization
 		kontaktJTable.getColumnModel().getColumn(TableKontaktenUtilities.ID).setCellRenderer(new CellTableManager("number"));
