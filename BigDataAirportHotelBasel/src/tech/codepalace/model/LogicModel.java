@@ -34,6 +34,8 @@ import tech.codepalace.controller.DateChronologyCorrectionController;
 import tech.codepalace.dao.DAOFitnessAbo;
 import tech.codepalace.dao.DAOFitnessImpl;
 import tech.codepalace.dao.DAOFundsachen;
+import tech.codepalace.dao.DAOKontakten;
+import tech.codepalace.dao.DAOKontaktenImpl;
 import tech.codepalace.dao.DAOParking;
 import tech.codepalace.dao.DAOUebergabe;
 import tech.codepalace.dao.DAOUebergabeImpl;
@@ -1064,6 +1066,32 @@ public class LogicModel {
 							}
 						}
 					});
+					
+					break;
+					
+				
+				case "TELEFONBUCH": 
+					
+					//Time to display KONTAKTEN DAO Object should be called. 
+					
+					SwingUtilities.invokeLater(new Runnable() {
+						
+						@Override
+						public void run() {
+							
+		
+							DAOKontakten daoKontakten = new DAOKontaktenImpl(getUserAHB(), dataBaseGUI, loading, logicModelTelefonbuch);
+							
+							
+							try {
+								daoKontakten.checkTableKontanten();
+							} catch (DaoException e) {
+								e.printStackTrace();
+							}
+						}
+					});
+				
+					break;
 					
 					
 			}
