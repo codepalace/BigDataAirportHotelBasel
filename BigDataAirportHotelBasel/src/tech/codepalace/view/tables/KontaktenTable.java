@@ -85,7 +85,7 @@ public class KontaktenTable {
 		ArrayList<String> tableHeadersList = new ArrayList<>();
 		
 		tableHeadersList.add("ID");
-		tableHeadersList.add("NAME");
+		tableHeadersList.add("NAME / FIRMA");
 		tableHeadersList.add("TELEFON");
 		tableHeadersList.add("BEMERKUNGEN");
 		tableHeadersList.add("ABTEILUNG");
@@ -208,9 +208,9 @@ private Object[][] getDataArray(ArrayList<String> tableHeadersList) {
 		//Define the length size for each column and its contents
 		kontaktJTable.getColumnModel().getColumn(TableKontaktenUtilities.ID).setPreferredWidth(0);
 		kontaktJTable.getColumnModel().getColumn(TableKontaktenUtilities.NAME).setPreferredWidth(200);
-		kontaktJTable.getColumnModel().getColumn(TableKontaktenUtilities.PHONE).setPreferredWidth(200);
-		kontaktJTable.getColumnModel().getColumn(TableKontaktenUtilities.BEMERKUNGEN).setPreferredWidth(250);
-		kontaktJTable.getColumnModel().getColumn(TableKontaktenUtilities.ABTEILUNG).setPreferredWidth(150);
+		kontaktJTable.getColumnModel().getColumn(TableKontaktenUtilities.PHONE).setPreferredWidth(150);
+		kontaktJTable.getColumnModel().getColumn(TableKontaktenUtilities.BEMERKUNGEN).setPreferredWidth(550);
+		kontaktJTable.getColumnModel().getColumn(TableKontaktenUtilities.ABTEILUNG).setPreferredWidth(50);
 		
 		
 		//We set the ID Column width so it will be not visible but we can still having access to 
