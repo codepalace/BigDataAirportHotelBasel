@@ -18,4 +18,6 @@ public class TableKontaktenUtilities {
 	public static String BEMERKUNGEN;
 	public static String ABTEILUNG;
 	
+	public static int selectedrow;
+	
 }
