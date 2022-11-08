@@ -12,11 +12,11 @@ public class TableKontaktenUtilities {
 	   The value of each constant represents each of the columns in my table.
 	 */
 	
-	public static int ID;
-	public static String NAME;
-	public static String PHONE;
-	public static String BEMERKUNGEN;
-	public static String ABTEILUNG;
+	public static final int ID=0;
+	public static final int NAME=1;
+	public static final int PHONE=2;
+	public static final  int BEMERKUNGEN=3;
+	public static final int ABTEILUNG=4;
 	
 	public static int selectedrow;
 	
