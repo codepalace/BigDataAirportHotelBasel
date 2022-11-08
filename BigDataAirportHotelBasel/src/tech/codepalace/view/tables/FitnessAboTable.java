@@ -196,14 +196,14 @@ private Object[][] getDataArray(ArrayList<String> tableHeadersList) {
 private void buildTable(String[] tableHeaders, Object[][] data) {
 	
 	/*
-	 We assign the model the data and titles, which are sent to the constructor of the Model class(FundsachenTableModel).
+	 We assign the model the data and titles, which are sent to the constructor of the Model class(FitnessAboTableModel).
 	 */
 	fitnessAboTableModel=new FitnessAboTableModel(data, tableHeaders);
 
 
 	
 	/*
-	 After we have the model created above, that model is assigned to the fundsachenJTable.
+	 After we have the model created above, that model is assigned to the fitnessAboJTable.
 	 */
 	fitnessAboJTable.setModel(fitnessAboTableModel);
 	
@@ -226,7 +226,7 @@ private void buildTable(String[] tableHeaders, Object[][] data) {
 	fitnessAboJTable.setRowHeight(25);//cell size
 	fitnessAboJTable.setGridColor(new java.awt.Color(0, 0, 0)); 
 	//Define the length size for each column and its contents
-	fitnessAboJTable.getColumnModel().getColumn(TableFitnessAboUtilities.ID).setPreferredWidth(10); //Nos quedamos aqui
+	fitnessAboJTable.getColumnModel().getColumn(TableFitnessAboUtilities.ID).setPreferredWidth(10);
 	fitnessAboJTable.getColumnModel().getColumn(TableFitnessAboUtilities.FITNESSID).setPreferredWidth(70);
 	fitnessAboJTable.getColumnModel().getColumn(TableFitnessAboUtilities.NAME).setPreferredWidth(200);
 	fitnessAboJTable.getColumnModel().getColumn(TableFitnessAboUtilities.EINTRITTSDATUM).setPreferredWidth(120);
