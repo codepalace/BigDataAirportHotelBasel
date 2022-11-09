@@ -8,13 +8,19 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
+import javax.swing.table.DefaultTableModel;
 
+import tech.codepalace.model.Kontakte;
 import tech.codepalace.model.LogicModelTelefonbuch;
 import tech.codepalace.model.UserAHB;
+import tech.codepalace.utility.CellTableManager;
 import tech.codepalace.utility.DataEncryption;
+import tech.codepalace.utility.TableKontakteUtilities;
 import tech.codepalace.view.frames.DataBaseGUI;
 import tech.codepalace.view.frames.Loading;
 
@@ -186,8 +192,244 @@ public class DAOKontakteImpl implements DAOKontakte {
 	@Override
 	public void displayKontakte() throws DaoException {
 		
+		setURLToConnectCurrentDataBase();
+		
+		daoFactory.connect();
+		
+		String sqlString = "SELECT * From TELEFONBUCH ORDER BY name DESC";
+		
+try {
+			
+			//We create one statement
+			statement = connection.createStatement();
+			
+			//resultSet execute the instruction from sqlString value
+			resultSet = statement.executeQuery(sqlString);
+			
+			//If resultSet is empty we have to call for create new Kontakte.
+			if(resultSet.next()== false) {
+				
+				//Table is Empty. We only make visible the dataBaseGUI with empty JTable.
+
+				//No contacts stored in Database  we call to visible the DataBaseGUI so the user can enter at any time a new contact.
+			    this.dataBaseGUI.setVisible(true);
+				
+			}else {
+				
+			  if(loading !=null) {
+				  SwingUtilities.invokeLater(new Runnable() {
+		 				
+		 				@Override
+		 				public void run() {
+		 					
+		 					DAOKontakteImpl.loading.setVisible(true);
+		 				}
+		 			});
+			  }
+				
+				
+				
+				//resultSet receive the statement select to count all the rows in the TELEFONBUCH table
+				resultSet = statement.executeQuery("Select count(*) from TELEFONBUCH");
+				
+				//We move the cursor
+				resultSet.next();
+				
+				//numberOfRowsDatabase receive the counted rows
+				numberOfRowsDataBase = resultSet.getInt(1);
+				
+
+				//After that resultSet execute now the Query select * from TELEFONBUCH. Value of the sqlString variable
+				resultSet = statement.executeQuery(sqlString);
+				
+	
+				
+				if(loading !=null) {
+					loading.progressBar.setMaximum(numberOfRowsDataBase);
+				}
+				
+				
+				
+				
+				
+				//We create a SwingWorker instruction for the new Thread in background
+				 SwingWorker<Void, Kontakte> worker = new SwingWorker<Void, Kontakte>(){
+
+					
+
+					@Override
+					protected Void doInBackground() throws Exception {
+
+						/*
+						 * we create an ArrayList type Kontakte to add each Kontakt object  that we find inside the table TELEFONBUCH in our DataBase
+						 * 
+					 */
+						List<Kontakte> kontakte = new ArrayList<Kontakte>();
+						
+						int progress = 0;
+						
+						//as long as there are entries in the table
+						while (resultSet.next()) {
+							
+							/*We create the necessary variables of the type we need according to the data stored in the database
+							 * 
+							 * The values are retrieved from each result found in the table and of course from the corresponding column in the table TELEFONBUCH.
+							 * 
+							 * 
+							 * 
+							 */
+							int id = resultSet.getInt("ID");
+							String name = resultSet.getString("name");
+							String phone = resultSet.getString("phone");
+							String bemerkungen = resultSet.getString("bemerkungen");
+							String abteilung = resultSet.getString("abteilung");
+							
+							//New Instance Kontakte
+							Kontakte kontakt = new Kontakte();
+							
+							kontakt.setId(id);
+							kontakt.setName(name);
+							kontakt.setPhone(phone);
+							kontakt.setBemerkungen(bemerkungen);
+							kontakt.setAbteilung(abteilung);
+
+							//add the Object kontakt to the ArrayList kontakt
+							kontakte.add(kontakt);
+							
+							//publish our kontakt
+							publish(kontakt);
+							
+							
+							//We add 1 to the progress variable. 
+							progress +=1;
+							/*
+							 * you can execute a sleep statement to see the progress bar working.
+							 */
+//							Thread.sleep(500); 
+							
+							if(loading !=null) {
+								loading.progressBar.setValue(progress);
+							}
+						    
+
+						}
+						
+					
+				
+						return null;
+					}
+					
+					
+					
+					
+					@Override
+					protected void process(List<Kontakte> chunks) {
+	
+						
+						//forEach loop to loop through the list Tip Kontakte named chunks in the process Method as parameter.
+						for(Kontakte chunk: chunks) {
+
+						
+							/*
+							 * we create an Object array and pass the data contained in our TELEFONBUCH table in the Database.
+							 * 
+							 */
+							Object[] row = {chunk.getId(), 
+									
+									chunk.getName(),
+
+									chunk.getPhone(), 
+									
+									chunk.getBemerkungen(),
+									
+									chunk.getAbteilung()};
+							
+							/*
+							 * We create one instance DefaultTableModel and we give the value Casting (DefaultTableModel) and we get the defined TableModel for the kontaktenTable 
+							 * by the DataBaseGUI class.
+							 */
+							
+							DefaultTableModel model = (DefaultTableModel)dataBaseGUI.kontaktenTable.getModel();
+
+						
+							
+							/*
+							 * for the fitnessAboTable we retrieve the column where we want to write the data, using getColumnModel and getColumn for the Column and we also call the TableKontakteUtilities
+							 * to get the correct Column using the corresponding constant where is defined the column number where it belongs.
+							 * 
+							 * for each column we also call setCellRenderer Method and as argument we pass a new CellTableManager and we specify the type of value that the cell is going to have.
+							 * 
+							 * If the cell is type number then it will have a different font color. 
+
+							 */
+
+							dataBaseGUI.kontaktenTable.getColumnModel().getColumn(TableKontakteUtilities.ID).setCellRenderer(new CellTableManager("number"));
+							dataBaseGUI.kontaktenTable.getColumnModel().getColumn(TableKontakteUtilities.NAME).setCellRenderer(new CellTableManager("text"));
+							dataBaseGUI.kontaktenTable.getColumnModel().getColumn(TableKontakteUtilities.PHONE).setCellRenderer(new CellTableManager("number"));
+							dataBaseGUI.kontaktenTable.getColumnModel().getColumn(TableKontakteUtilities.BEMERKUNGEN).setCellRenderer(new CellTableManager("important"));
+							dataBaseGUI.kontaktenTable.getColumnModel().getColumn(TableKontakteUtilities.ABTEILUNG).setCellRenderer(new CellTableManager("text"));
+							
+
+							model.addRow(row);
+							
+							
+							
+						
+							
+							
+							
+						}
+						
+					
+					}
+					
+					
+					
+					
+					@Override
+					protected void done() {
+						
+						//All the Data are loaded then we setVisible the dataBaseGUI Object.
+
+						dataBaseGUI.setVisible(true);
+						
+						//If loading object exists we close it.
+						if(loading!=null) {
+							loading.dispose();
+						}
+						
+	
+						
+						try {
+//							daoFactory.backupDataBase();
+
+							statement.close();
+							resultSet.close();
+							daoFactory.closeConnection(getDerbyURL());
+							connection.close();
+							
+
+							
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
+						
+					}
+					
+					
+					
+				 };worker.execute();
+				
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 	}
+	
+	
+	
 	
 	
 	/**

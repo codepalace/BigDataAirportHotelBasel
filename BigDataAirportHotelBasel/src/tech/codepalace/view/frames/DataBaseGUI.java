@@ -524,8 +524,6 @@ public class DataBaseGUI extends JFrame {
 				
 				this.centerPanel.add(scrollPane);
 				
-				//Just for the moment.
-				this.setVisible(true);
 				
 				break;
 				
