@@ -34,8 +34,8 @@ import tech.codepalace.controller.DateChronologyCorrectionController;
 import tech.codepalace.dao.DAOFitnessAbo;
 import tech.codepalace.dao.DAOFitnessImpl;
 import tech.codepalace.dao.DAOFundsachen;
-import tech.codepalace.dao.DAOKontakten;
-import tech.codepalace.dao.DAOKontaktenImpl;
+import tech.codepalace.dao.DAOKontakte;
+import tech.codepalace.dao.DAOKontakteImpl;
 import tech.codepalace.dao.DAOParking;
 import tech.codepalace.dao.DAOUebergabe;
 import tech.codepalace.dao.DAOUebergabeImpl;
@@ -1080,11 +1080,11 @@ public class LogicModel {
 						public void run() {
 							
 		
-							DAOKontakten daoKontakten = new DAOKontaktenImpl(getUserAHB(), dataBaseGUI, loading, logicModelTelefonbuch);
+							DAOKontakte daoKontakte = new DAOKontakteImpl(getUserAHB(), dataBaseGUI, loading, logicModelTelefonbuch);
 							
 							
 							try {
-								daoKontakten.checkTableKontanten();
+								daoKontakte.checkTableKontante();
 							} catch (DaoException e) {
 								e.printStackTrace();
 							}

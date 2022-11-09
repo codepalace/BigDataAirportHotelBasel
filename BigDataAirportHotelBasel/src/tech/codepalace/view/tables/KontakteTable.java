@@ -9,10 +9,10 @@ import javax.swing.border.BevelBorder;
 import javax.swing.table.JTableHeader;
 
 import tech.codepalace.model.Kontakte;
-import tech.codepalace.model.KontaktenTableModel;
+import tech.codepalace.model.KontakteTableModel;
 import tech.codepalace.utility.CellTableManager;
 import tech.codepalace.utility.TableHeaderManager;
-import tech.codepalace.utility.TableKontaktenUtilities;
+import tech.codepalace.utility.TableKontakteUtilities;
 
 /**
  * 
@@ -20,7 +20,7 @@ import tech.codepalace.utility.TableKontaktenUtilities;
  * @description Class KontaktenTable to create contacts Table.
  *
  */
-public class KontaktenTable {
+public class KontakteTable {
 
 	//Instance JTable for our contacts. 
 	private JTable kontaktJTable;
@@ -30,12 +30,12 @@ public class KontaktenTable {
 	
 	
 	//Instance KontaktenTableModel
-	private KontaktenTableModel kontaktenTableModel;
+	private KontakteTableModel kontaktenTableModel;
 	
 	
 	
 	//Constructor for our Table
-	public KontaktenTable() {
+	public KontakteTable() {
 		
 		//Call the init Method.
 		init();
@@ -152,11 +152,11 @@ private Object[][] getDataArray(ArrayList<String> tableHeadersList) {
 
 			 */
 			
-			information[x][TableKontaktenUtilities.ID] = listKontakten.get(x).getId()+ "";
-			information[x][TableKontaktenUtilities.NAME] = listKontakten.get(x).getName()+ "";
-			information[x][TableKontaktenUtilities.PHONE] = listKontakten.get(x).getPhone()+ "";
-			information[x][TableKontaktenUtilities.BEMERKUNGEN] = listKontakten.get(x).getBemerkungen()+ "";
-			information[x][TableKontaktenUtilities.ABTEILUNG] = listKontakten.get(x).getAbteilung()+ "";
+			information[x][TableKontakteUtilities.ID] = listKontakten.get(x).getId()+ "";
+			information[x][TableKontakteUtilities.NAME] = listKontakten.get(x).getName()+ "";
+			information[x][TableKontakteUtilities.PHONE] = listKontakten.get(x).getPhone()+ "";
+			information[x][TableKontakteUtilities.BEMERKUNGEN] = listKontakten.get(x).getBemerkungen()+ "";
+			information[x][TableKontakteUtilities.ABTEILUNG] = listKontakten.get(x).getAbteilung()+ "";
 			
 			
 			
@@ -172,18 +172,18 @@ private Object[][] getDataArray(ArrayList<String> tableHeadersList) {
 		/*
 		 We assign the model the data and titles, which are sent to the constructor of the Model class(KontaktenTableModel).
 		 */
-		this.kontaktenTableModel = new KontaktenTableModel(data, tableHeaders);
+		this.kontaktenTableModel = new KontakteTableModel(data, tableHeaders);
 		
 		//After we have the model created above, that model is assigned to the kontaktJTable.
 		this.kontaktJTable.setModel(kontaktenTableModel);
 		
 		
 		//the type of data that will have the cells of each column defined respectively is assigned to validate its customization
-		kontaktJTable.getColumnModel().getColumn(TableKontaktenUtilities.ID).setCellRenderer(new CellTableManager("number"));
-		kontaktJTable.getColumnModel().getColumn(TableKontaktenUtilities.NAME).setCellRenderer(new CellTableManager("text"));
-		kontaktJTable.getColumnModel().getColumn(TableKontaktenUtilities.PHONE).setCellRenderer(new CellTableManager("number"));
-		kontaktJTable.getColumnModel().getColumn(TableKontaktenUtilities.BEMERKUNGEN).setCellRenderer(new CellTableManager("text"));
-		kontaktJTable.getColumnModel().getColumn(TableKontaktenUtilities.ABTEILUNG).setCellRenderer(new CellTableManager("text"));
+		kontaktJTable.getColumnModel().getColumn(TableKontakteUtilities.ID).setCellRenderer(new CellTableManager("number"));
+		kontaktJTable.getColumnModel().getColumn(TableKontakteUtilities.NAME).setCellRenderer(new CellTableManager("text"));
+		kontaktJTable.getColumnModel().getColumn(TableKontakteUtilities.PHONE).setCellRenderer(new CellTableManager("number"));
+		kontaktJTable.getColumnModel().getColumn(TableKontakteUtilities.BEMERKUNGEN).setCellRenderer(new CellTableManager("text"));
+		kontaktJTable.getColumnModel().getColumn(TableKontakteUtilities.ABTEILUNG).setCellRenderer(new CellTableManager("text"));
 		
 		/*
 		 * Sets whether the user can drag column headers to reorder columns.
@@ -198,11 +198,11 @@ private Object[][] getDataArray(ArrayList<String> tableHeadersList) {
 		kontaktJTable.setGridColor(new java.awt.Color(0, 0, 0)); 
 		
 		//Define the length size for each column and its contents
-		kontaktJTable.getColumnModel().getColumn(TableKontaktenUtilities.ID).setPreferredWidth(0);
-		kontaktJTable.getColumnModel().getColumn(TableKontaktenUtilities.NAME).setPreferredWidth(200);
-		kontaktJTable.getColumnModel().getColumn(TableKontaktenUtilities.PHONE).setPreferredWidth(150);
-		kontaktJTable.getColumnModel().getColumn(TableKontaktenUtilities.BEMERKUNGEN).setPreferredWidth(550);
-		kontaktJTable.getColumnModel().getColumn(TableKontaktenUtilities.ABTEILUNG).setPreferredWidth(50);
+		kontaktJTable.getColumnModel().getColumn(TableKontakteUtilities.ID).setPreferredWidth(0);
+		kontaktJTable.getColumnModel().getColumn(TableKontakteUtilities.NAME).setPreferredWidth(200);
+		kontaktJTable.getColumnModel().getColumn(TableKontakteUtilities.PHONE).setPreferredWidth(150);
+		kontaktJTable.getColumnModel().getColumn(TableKontakteUtilities.BEMERKUNGEN).setPreferredWidth(550);
+		kontaktJTable.getColumnModel().getColumn(TableKontakteUtilities.ABTEILUNG).setPreferredWidth(50);
 		
 		
 		//We set the ID Column width so it will be not visible but we can still having access to 

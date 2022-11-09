@@ -6,19 +6,19 @@ package tech.codepalace.dao;
  * @description DAO interface for the contacts
  *
  */
-public interface DAOKontakten {
+public interface DAOKontakte {
 
 	/**
 	 * @description Method to check the Table for the contacts.
 	 * @throws DaoException
 	 */
-	void checkTableKontanten() throws DaoException;
+	void checkTableKontante() throws DaoException;
 	
 	
 	/**
 	 * @description Method to display contacts.
 	 * @throws DaoException
 	 */
-	void displayKontakten() throws DaoException;
+	void displayKontakte() throws DaoException;
 	
 }

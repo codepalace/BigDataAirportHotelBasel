@@ -2,7 +2,7 @@ package tech.codepalace.model;
 
 import javax.swing.table.DefaultTableModel;
 
-import tech.codepalace.utility.TableKontaktenUtilities;
+import tech.codepalace.utility.TableKontakteUtilities;
 
 /**
  * 
@@ -11,7 +11,7 @@ import tech.codepalace.utility.TableKontaktenUtilities;
  *
  */
 @SuppressWarnings("serial")
-public class KontaktenTableModel extends DefaultTableModel {
+public class KontakteTableModel extends DefaultTableModel {
 	
 	//String Array for the table headers. 
 	String [] tableHeaders;
@@ -22,7 +22,7 @@ public class KontaktenTableModel extends DefaultTableModel {
 	
 	//Constructor with the parameter needed to build the TableModel(data and the table headers).
 	
-	public KontaktenTableModel(Object[][] data, String[] tableHeaders) {
+	public KontakteTableModel(Object[][] data, String[] tableHeaders) {
 		
 		//Call super Class
 		//Constructs a DefaultTableModel and initializes the table by passing data and columnNames to the setDataVector method.
@@ -42,8 +42,8 @@ public class KontaktenTableModel extends DefaultTableModel {
 	public boolean isCellEditable(int row, int column) {
 		
 		//Declare the Column could be editable. 
-		if(column!=TableKontaktenUtilities.NAME && column!= TableKontaktenUtilities.PHONE && 
-				column!= TableKontaktenUtilities.BEMERKUNGEN && column!=TableKontaktenUtilities.ABTEILUNG
+		if(column!=TableKontakteUtilities.NAME && column!= TableKontakteUtilities.PHONE && 
+				column!= TableKontakteUtilities.BEMERKUNGEN && column!=TableKontakteUtilities.ABTEILUNG
 				) {
 			
 			return false;

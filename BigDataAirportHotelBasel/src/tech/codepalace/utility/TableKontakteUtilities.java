@@ -6,7 +6,7 @@ package tech.codepalace.utility;
  * @description Class to create the value of columns in the KontaktenTable
  *
  */
-public class TableKontaktenUtilities {
+public class TableKontakteUtilities {
 
 	/*
 	   The value of each constant represents each of the columns in my table.

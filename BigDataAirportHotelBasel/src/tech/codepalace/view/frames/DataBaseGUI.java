@@ -38,7 +38,7 @@ import tech.codepalace.view.panels.TopPanelTelefonbuch;
 import tech.codepalace.view.panels.TopPanelUebergabe;
 import tech.codepalace.view.tables.FitnessAboTable;
 import tech.codepalace.view.tables.FundsachenTable;
-import tech.codepalace.view.tables.KontaktenTable;
+import tech.codepalace.view.tables.KontakteTable;
 import tech.codepalace.view.tables.ParkingTable;
 import tech.codepalace.view.tables.UebergabeTable;
 
@@ -518,7 +518,7 @@ public class DataBaseGUI extends JFrame {
 				this.topPanel.add(this.topPanelTelefonbuch, BorderLayout.NORTH);
 				
 				//Initialize our JTable
-				this.kontaktenTable = new KontaktenTable().getJTable();
+				this.kontaktenTable = new KontakteTable().getJTable();
 				
 				this.scrollPane = new JScrollPane(this.kontaktenTable);
 				

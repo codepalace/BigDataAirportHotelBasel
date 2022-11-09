@@ -24,7 +24,7 @@ import tech.codepalace.view.frames.Loading;
  * @description DAO impl Class for the Contact.
  *
  */
-public class DAOKontaktenImpl implements DAOKontakten {
+public class DAOKontakteImpl implements DAOKontakte {
 	
 	private UserAHB userAHB;
 	private DataBaseGUI dataBaseGUI;
@@ -75,16 +75,16 @@ public class DAOKontaktenImpl implements DAOKontakten {
 	
 	private static LogicModelTelefonbuch logicModelTelefonbuch;
 
-	public DAOKontaktenImpl(UserAHB userAHB, DataBaseGUI dataBaseGUI, Loading loading, LogicModelTelefonbuch logicModelTelefonbuch) {
+	public DAOKontakteImpl(UserAHB userAHB, DataBaseGUI dataBaseGUI, Loading loading, LogicModelTelefonbuch logicModelTelefonbuch) {
 		
 		this.userAHB = userAHB;
 		this.dataBaseGUI = dataBaseGUI;
-		DAOKontaktenImpl.loading = loading;
-		DAOKontaktenImpl.logicModelTelefonbuch = logicModelTelefonbuch;
-		DAOKontaktenImpl.dataEncryption = new DataEncryption();
+		DAOKontakteImpl.loading = loading;
+		DAOKontakteImpl.logicModelTelefonbuch = logicModelTelefonbuch;
+		DAOKontakteImpl.dataEncryption = new DataEncryption();
 		connection = null;
 		
-		DAOKontaktenImpl.tableChecked = false;
+		DAOKontakteImpl.tableChecked = false;
 	}
 	
 	
@@ -93,24 +93,24 @@ public class DAOKontaktenImpl implements DAOKontakten {
 	
 	
 	@Override
-	public void checkTableKontanten() throws DaoException {
+	public void checkTableKontante() throws DaoException {
 		
 		SwingWorker<Void, Void>worker = new SwingWorker<Void, Void>(){
 
 			@Override
 			protected Void doInBackground() throws Exception {
 				
-				while(!DAOKontaktenImpl.tableChecked) {
+				while(!DAOKontakteImpl.tableChecked) {
 					
-					DAOKontaktenImpl.loading.progressBar.setIndeterminate(true);
-					DAOKontaktenImpl.loading.progressBar.setForeground(Color.BLUE);
+					DAOKontakteImpl.loading.progressBar.setIndeterminate(true);
+					DAOKontakteImpl.loading.progressBar.setForeground(Color.BLUE);
 					
 					SwingUtilities.invokeLater(new Runnable() {
 						
 						@Override
 						public void run() {
 						
-							DAOKontaktenImpl.loading.setVisible(true);
+							DAOKontakteImpl.loading.setVisible(true);
 							
 						}
 					});
@@ -127,37 +127,37 @@ public class DAOKontaktenImpl implements DAOKontakten {
 			try {
 						
 						//Now we call for a Connection
-				DAOKontaktenImpl.connection = daoFactory.connect();
+				DAOKontakteImpl.connection = daoFactory.connect();
 						
 						//We get the Metadata from our database.
-				DAOKontaktenImpl.metadata = connection.getMetaData();
+				DAOKontakteImpl.metadata = connection.getMetaData();
 						
 						
 						//resultSet get the value of metadata.getTables(null catalog, null schemaPattern, our table name(FITNESSABO) as uppperCase and the Type is one Array of TABLE
-				DAOKontaktenImpl.resultSet = metadata.getTables(null, null, table_name.toUpperCase(), new String[] {"TABLE"});
+				DAOKontakteImpl.resultSet = metadata.getTables(null, null, table_name.toUpperCase(), new String[] {"TABLE"});
 						
 						//If resultSet has results if we have DATA. That means Table FITNESSABO exists.
-						if(DAOKontaktenImpl.resultSet.next()) {
+						if(DAOKontakteImpl.resultSet.next()) {
 							
-							DAOKontaktenImpl.tableChecked = true;
-							DAOKontaktenImpl.loading.setVisible(false);
-							DAOKontaktenImpl.loading.progressBar.setIndeterminate(false);
-							DAOKontaktenImpl.loading.progressBar.repaint();
+							DAOKontakteImpl.tableChecked = true;
+							DAOKontakteImpl.loading.setVisible(false);
+							DAOKontakteImpl.loading.progressBar.setIndeterminate(false);
+							DAOKontakteImpl.loading.progressBar.repaint();
 							
 							//Table FITNESSABO exists
 							//Then we call displayFitnessAbo() Method.
 							
 
-							displayKontakten();						
+							displayKontakte();						
 							
 						} 
 						else { //otherwise table FITNESSABO do not exists
 							
 							
 							//We call daoFactory to createTable FITNESSABO passing the table name(FITNESSABO)
-							DAOKontaktenImpl.daoFactory.createTable("TELEFONBUCH");
+							DAOKontakteImpl.daoFactory.createTable("TELEFONBUCH");
 							
-							DAOKontaktenImpl.tableChecked = true;
+							DAOKontakteImpl.tableChecked = true;
 							loading.dispose();
 							dataBaseGUI.setVisible(true);
 							
@@ -184,7 +184,7 @@ public class DAOKontaktenImpl implements DAOKontakten {
 	
 	
 	@Override
-	public void displayKontakten() throws DaoException {
+	public void displayKontakte() throws DaoException {
 		
 		
 	}
@@ -200,7 +200,7 @@ public class DAOKontaktenImpl implements DAOKontakten {
  			
  			
  			//We set the URL value for connecting to the Database
-			urlDB = DAOKontaktenImpl.dataEncryption.decryptData(userAHB.getUrlDataBase()) + File.separator + getDBName();
+			urlDB = DAOKontakteImpl.dataEncryption.decryptData(userAHB.getUrlDataBase()) + File.separator + getDBName();
 
 
 		} catch (Exception e1) {
@@ -237,7 +237,7 @@ public class DAOKontaktenImpl implements DAOKontakten {
  	 */
  	private static void setDerbyURL(String derbyURL) {
  		
- 		DAOKontaktenImpl.derbyUrl = derbyURL;
+ 		DAOKontakteImpl.derbyUrl = derbyURL;
  	}
  	
  	
@@ -246,7 +246,7 @@ public class DAOKontaktenImpl implements DAOKontakten {
  	 * @return
  	 */
  	private static String getDerbyURL() {
- 		return DAOKontaktenImpl.derbyUrl;
+ 		return DAOKontakteImpl.derbyUrl;
  	}
 
 
