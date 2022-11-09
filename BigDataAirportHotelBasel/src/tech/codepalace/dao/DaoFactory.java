@@ -429,6 +429,20 @@ public class DaoFactory {
 						
 				break;
 				
+			case "TELEFONBUCH":
+				
+				sql = "CREATE TABLE " + tableName +"( "
+				
+						+ "ID INT NOT NULL GENERATED ALWAYS AS IDENTITY,"
+						+ "name VARCHAR(62) NOT NULL,"
+						+ "telefon VARCHAR(25) NOT NULL,"
+						+ "bemerkungen VARCHAR(450) NOT NULL,"
+						+ "abteilung VARCHAR(30) NOT NULL,"
+						+ "PRIMARY KEY (ID)"
+						+ ")";
+					
+				break;
+				
 		}
 	  
 				
