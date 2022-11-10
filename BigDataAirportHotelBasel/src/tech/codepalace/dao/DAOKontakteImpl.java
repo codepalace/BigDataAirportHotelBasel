@@ -349,7 +349,7 @@ try {
 							 * by the DataBaseGUI class.
 							 */
 							
-							DefaultTableModel model = (DefaultTableModel)dataBaseGUI.kontaktenTable.getModel();
+							DefaultTableModel model = (DefaultTableModel)dataBaseGUI.kontakteTable.getModel();
 
 						
 							
@@ -363,11 +363,11 @@ try {
 
 							 */
 
-							dataBaseGUI.kontaktenTable.getColumnModel().getColumn(TableKontakteUtilities.ID).setCellRenderer(new CellTableManager("number"));
-							dataBaseGUI.kontaktenTable.getColumnModel().getColumn(TableKontakteUtilities.NAME).setCellRenderer(new CellTableManager("text"));
-							dataBaseGUI.kontaktenTable.getColumnModel().getColumn(TableKontakteUtilities.PHONE).setCellRenderer(new CellTableManager("number"));
-							dataBaseGUI.kontaktenTable.getColumnModel().getColumn(TableKontakteUtilities.BEMERKUNGEN).setCellRenderer(new CellTableManager("important"));
-							dataBaseGUI.kontaktenTable.getColumnModel().getColumn(TableKontakteUtilities.ABTEILUNG).setCellRenderer(new CellTableManager("text"));
+							dataBaseGUI.kontakteTable.getColumnModel().getColumn(TableKontakteUtilities.ID).setCellRenderer(new CellTableManager("number"));
+							dataBaseGUI.kontakteTable.getColumnModel().getColumn(TableKontakteUtilities.NAME).setCellRenderer(new CellTableManager("text"));
+							dataBaseGUI.kontakteTable.getColumnModel().getColumn(TableKontakteUtilities.PHONE).setCellRenderer(new CellTableManager("number"));
+							dataBaseGUI.kontakteTable.getColumnModel().getColumn(TableKontakteUtilities.BEMERKUNGEN).setCellRenderer(new CellTableManager("important"));
+							dataBaseGUI.kontakteTable.getColumnModel().getColumn(TableKontakteUtilities.ABTEILUNG).setCellRenderer(new CellTableManager("text"));
 							
 
 							model.addRow(row);

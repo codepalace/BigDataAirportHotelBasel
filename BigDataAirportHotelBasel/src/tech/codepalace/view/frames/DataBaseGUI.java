@@ -94,7 +94,7 @@ public class DataBaseGUI extends JFrame {
 	
 	public JTable uebergabeTable;
 	
-	public JTable kontaktenTable;
+	public JTable kontakteTable;
 		
 	private JScrollPane scrollPane;
 		
@@ -388,7 +388,7 @@ public class DataBaseGUI extends JFrame {
 				
 				this.containerMonthSelect.add(this.displayMothLostAndFoundJComboBox);
 				
-				this.topPanelFundSachen = new TopPanelFundSachen(this.btnHome, this.btnParking, this.btnFitness, this.btnPhonebook, this.btnLogout, this.btnNewFundsachen,
+				this.topPanelFundSachen = new TopPanelFundSachen(this.btnHome, this.btnParking, this.btnFitness, this.btnUerbergabe, this.btnPhonebook, this.btnLogout, this.btnNewFundsachen,
 						this.searchText, this.searchJComboBox, this.reloadDdJButton);
 				
 				this.topPanel.add(this.topPanelFundSachen, BorderLayout.NORTH);
@@ -444,7 +444,7 @@ public class DataBaseGUI extends JFrame {
 				//Initialize the JComboBox for the Search options.
 				this.searchJComboBox = new JComboBox<String>(choicesSearchFitnessAbo);
 				
-				this.topPanelFitnessAbo = new TopPanelFitnessAbo(this.btnHome, this.btnFundsachen, this.btnParking, this.btnPhonebook, this.btnLogout, 
+				this.topPanelFitnessAbo = new TopPanelFitnessAbo(this.btnHome, this.btnFundsachen, this.btnParking, this.btnUerbergabe, this.btnPhonebook, this.btnLogout, 
 						this.searchText, this.searchJComboBox, this.reloadDdJButton);
 				
 				
@@ -518,9 +518,9 @@ public class DataBaseGUI extends JFrame {
 				this.topPanel.add(this.topPanelTelefonbuch, BorderLayout.NORTH);
 				
 				//Initialize our JTable
-				this.kontaktenTable = new KontakteTable().getJTable();
+				this.kontakteTable = new KontakteTable().getJTable();
 				
-				this.scrollPane = new JScrollPane(this.kontaktenTable);
+				this.scrollPane = new JScrollPane(this.kontakteTable);
 				
 				this.centerPanel.add(scrollPane);
 				

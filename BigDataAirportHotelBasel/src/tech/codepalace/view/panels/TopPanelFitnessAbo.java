@@ -38,7 +38,7 @@ public class TopPanelFitnessAbo extends JPanel {
 	
 	public JLabel fitnessImage;
 	
-	private JButton btnHome,  btnFundsachen,  btnParking,
+	private JButton btnHome,  btnFundsachen,  btnParking, btnUerbergabe,
 	 btnPhonebook,  btnLogout, reloadDdJButton;
 	
 	//JTextField with rounded Border for the Search Entries
@@ -52,12 +52,13 @@ public class TopPanelFitnessAbo extends JPanel {
 	
 	
 	public TopPanelFitnessAbo(JButton btnHome, JButton btnFundsachen, JButton btnParking,
-			JButton btnPhonebook, JButton btnLogout, 
+			JButton btnUerbergabe, JButton btnPhonebook, JButton btnLogout, 
 			RoundJTextField searchText, JComboBox<String> searchJComboBox, JButton reloadDdJButton) {
 		
 		this.btnHome = btnHome;
 		this.btnFundsachen = btnFundsachen;
 		this.btnParking = btnParking;
+		this.btnUerbergabe = btnUerbergabe;
 		this.btnPhonebook = btnPhonebook;
 		this.btnLogout = btnLogout;
 		
@@ -91,6 +92,7 @@ private void init() {
 		this.centerPanelButtons.add(this.btnHome);
 		this.centerPanelButtons.add(this.btnParking);
 		this.centerPanelButtons.add(this.btnFundsachen);
+		this.centerPanelButtons.add(this.btnUerbergabe);
 		this.centerPanelButtons.add(this.btnPhonebook);
 		this.centerPanelButtons.add(this.btnLogout);
 
