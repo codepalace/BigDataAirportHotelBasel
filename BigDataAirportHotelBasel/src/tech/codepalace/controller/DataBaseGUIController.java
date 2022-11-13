@@ -110,8 +110,6 @@ TableModelListener, ItemListener, FocusListener, MouseListener, PopupMenuListene
 		
 		this.dataBaseGUI.btnNewFundsachen.addActionListener(this);
 		
-		this.dataBaseGUI.btnNewFitnessAbo.addActionListener(this);
-		
 		this.dataBaseGUI.btnLogout.addActionListener(this);
 		
 		this.dataBaseGUI.btnFundsachen.addActionListener(this);
@@ -125,6 +123,8 @@ TableModelListener, ItemListener, FocusListener, MouseListener, PopupMenuListene
 		//Add ActionListener to the MenutItem of the popupMenu
 		this.dataBaseGUI.deleteItem.addActionListener(this);
 		
+		this.dataBaseGUI.btnNewFitnessAbo.addActionListener(this);
+		
 		
 		
 		
@@ -137,8 +137,6 @@ TableModelListener, ItemListener, FocusListener, MouseListener, PopupMenuListene
 		this.dataBaseGUI.btnNewParking.addKeyListener(this);
 		
 		this.dataBaseGUI.btnNewFundsachen.addKeyListener(this);
-		
-		this.dataBaseGUI.btnNewFitnessAbo.addKeyListener(this);
 
 		this.dataBaseGUI.searchText.addKeyListener(this);
 		
@@ -152,6 +150,7 @@ TableModelListener, ItemListener, FocusListener, MouseListener, PopupMenuListene
 		
 		this.dataBaseGUI.btnPhonebook.addKeyListener(this);
 		
+		this.dataBaseGUI.btnNewFitnessAbo.addKeyListener(this);	
 		
 		
 		
@@ -177,6 +176,8 @@ TableModelListener, ItemListener, FocusListener, MouseListener, PopupMenuListene
 		this.dataBaseGUI.searchText.addFocusListener(this);
 				
 		this.dataBaseGUI.searchJComboBox.addFocusListener(this);
+		
+		this.dataBaseGUI.btnNewFitnessAbo.addFocusListener(this);
 		
 		
 		
@@ -391,6 +392,13 @@ TableModelListener, ItemListener, FocusListener, MouseListener, PopupMenuListene
 	         
 		
 		}
+		
+		
+		
+		else if(e.getSource()== this.dataBaseGUI.btnNewFitnessAbo) {
+			
+			JOptionPane.showMessageDialog(null, "Time to create new Fitness subscription actionPerformed click");
+		}
 
 		 
 		
@@ -555,7 +563,10 @@ TableModelListener, ItemListener, FocusListener, MouseListener, PopupMenuListene
 						||e.getSource()==this.dataBaseGUI.searchJComboBox && e.getKeyCode() == 120
 						||e.getSource()==this.dataBaseGUI.searchText && e.getKeyCode() == 120 
 						||e.getSource()==this.dataBaseGUI.fundsachenTable && e.getKeyCode() ==120
-						||e.getSource()==this.dataBaseGUI.parkingTable && e.getKeyCode() ==120) 
+						||e.getSource()==this.dataBaseGUI.parkingTable && e.getKeyCode() ==120
+						||e.getSource()==this.dataBaseGUI.fitnessAboTable && e.getKeyCode() ==120
+						
+						) 
 				
 				{
 					
@@ -564,7 +575,13 @@ TableModelListener, ItemListener, FocusListener, MouseListener, PopupMenuListene
 					
 					} else if(this.dataBaseGUI.parkingTable!=null) {
 						this.logicModelParking.createNewParkingReservation(dataBaseGUI);
+					
+					} else if(this.dataBaseGUI.fitnessAboTable !=null) {
+						
+						JOptionPane.showMessageDialog(null, "Time to create new Fitness Subscription keyPressed F9");
 					}
+					
+					
 					
 					
 				}
@@ -867,10 +884,19 @@ TableModelListener, ItemListener, FocusListener, MouseListener, PopupMenuListene
 		
 		else if(e.getSource()==this.dataBaseGUI.searchText) {
 			
-			if(this.dataBaseGUI.fundsachenTable!=null) {
+			if(this.dataBaseGUI.parkingTable!=null) {
+				this.dataBaseGUI.parkingTable.getSelectionModel().clearSelection();
+			}
+			
+			else if(this.dataBaseGUI.fundsachenTable!=null) {
 
 				this.dataBaseGUI.fundsachenTable.getSelectionModel().clearSelection();
 			}
+		}
+		
+		else if(e.getSource()==this.dataBaseGUI.btnNewFitnessAbo) {
+			
+			this.dataBaseGUI.btnHome.requestFocus();
 		}
 
 	}
