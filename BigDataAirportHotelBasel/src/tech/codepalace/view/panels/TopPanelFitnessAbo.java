@@ -39,7 +39,7 @@ public class TopPanelFitnessAbo extends JPanel {
 	public JLabel fitnessImage;
 	
 	private JButton btnHome,  btnFundsachen,  btnParking, btnUerbergabe,
-	 btnPhonebook,  btnLogout, reloadDdJButton;
+	 btnPhonebook,  btnLogout, btnNewFitnessAbo, reloadDdJButton;
 	
 	//JTextField with rounded Border for the Search Entries
 	private RoundJTextField searchText;
@@ -52,7 +52,7 @@ public class TopPanelFitnessAbo extends JPanel {
 	
 	
 	public TopPanelFitnessAbo(JButton btnHome, JButton btnFundsachen, JButton btnParking,
-			JButton btnUerbergabe, JButton btnPhonebook, JButton btnLogout, 
+			JButton btnUerbergabe, JButton btnPhonebook, JButton btnLogout, JButton btnNewFitnessAbo, 
 			RoundJTextField searchText, JComboBox<String> searchJComboBox, JButton reloadDdJButton) {
 		
 		this.btnHome = btnHome;
@@ -61,6 +61,7 @@ public class TopPanelFitnessAbo extends JPanel {
 		this.btnUerbergabe = btnUerbergabe;
 		this.btnPhonebook = btnPhonebook;
 		this.btnLogout = btnLogout;
+		this.btnNewFitnessAbo = btnNewFitnessAbo;
 		
 		this.searchText = searchText;
 		this.searchJComboBox = searchJComboBox;
@@ -95,6 +96,7 @@ private void init() {
 		this.centerPanelButtons.add(this.btnUerbergabe);
 		this.centerPanelButtons.add(this.btnPhonebook);
 		this.centerPanelButtons.add(this.btnLogout);
+		this.centerPanelButtons.add(this.btnNewFitnessAbo);
 
 		
 		this.fitnessImage = new JLabel(new ImageIcon(getClass().getResource("/img/fitness_guy.png")));

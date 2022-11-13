@@ -73,8 +73,8 @@ public class DataBaseGUI extends JFrame {
 	private JPanel topPanel, centerPanel, southPanel;
 	
 	 //Menu JButtons
-	 public JButton btnHome, btnFundsachen, btnFitness, btnUerbergabe, btnPhonebook, btnLogout, btnNewParking, btnParking,
-	 				btnNewFundsachen;
+	 public JButton btnHome, btnFundsachen, btnFitness, btnUerbergabe, btnPhonebook, btnLogout, 
+	 btnNewParking, btnParking, btnNewFundsachen, btnNewFitnessAbo;
 
 	//Jpanel for the user logged
 	private JPanel loginPanel;
@@ -184,6 +184,8 @@ public class DataBaseGUI extends JFrame {
 		this.btnPhonebook = new MyButton("/img/btn_telefonbuch2.png");
 		this.btnLogout = new MyButton("/img/btn_logout_125x70.png");
 		this.btnNewFundsachen = new MyButton("/img/btn_funsachenplus.png");
+		this.btnNewFitnessAbo = new MyButton("/img/btn_new_fitness_abo.png");
+		
 		
 		
 		this.btnNewParking = new MyButton("/img/btn_new_parking.png");
@@ -199,6 +201,7 @@ public class DataBaseGUI extends JFrame {
 		this.btnLogout.setPreferredSize(new Dimension(125,70));
 		this.btnNewParking.setPreferredSize(new Dimension(150, 70));
 		this.btnNewFundsachen.setPreferredSize(new Dimension(150, 70));
+		this.btnNewFitnessAbo.setPreferredSize(new Dimension(150, 70));
 		
 		this.reloadDdJButton.setPreferredSize(new Dimension(51, 39));
 		
@@ -444,8 +447,8 @@ public class DataBaseGUI extends JFrame {
 				//Initialize the JComboBox for the Search options.
 				this.searchJComboBox = new JComboBox<String>(choicesSearchFitnessAbo);
 				
-				this.topPanelFitnessAbo = new TopPanelFitnessAbo(this.btnHome, this.btnFundsachen, this.btnParking, this.btnUerbergabe, this.btnPhonebook, this.btnLogout, 
-						this.searchText, this.searchJComboBox, this.reloadDdJButton);
+				this.topPanelFitnessAbo = new TopPanelFitnessAbo(this.btnHome, this.btnFundsachen, this.btnParking, this.btnUerbergabe, 
+						this.btnPhonebook, this.btnLogout, this.btnNewFitnessAbo, this.searchText, this.searchJComboBox, this.reloadDdJButton);
 				
 				
 				this.topPanel.add(this.topPanelFitnessAbo, BorderLayout.NORTH);
