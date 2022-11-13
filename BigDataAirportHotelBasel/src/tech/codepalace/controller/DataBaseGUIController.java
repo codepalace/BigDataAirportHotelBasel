@@ -92,26 +92,100 @@ TableModelListener, ItemListener, FocusListener, MouseListener, PopupMenuListene
 
 		
 		
-		//Add Listener
+		
+		//Add WindowListener Listener
 		this.dataBaseGUI.addWindowListener(this);
 		
-		this.dataBaseGUI.addKeyListener(this);
-		this.dataBaseGUI.btnHome.addKeyListener(this);
-	
 		
+		//Add the ActionListener to our elements
 		this.dataBaseGUI.btnHome.addActionListener(this);
 		
-		
-		
 		this.dataBaseGUI.btnExitDBGUI.addActionListener(this);
+		
 		this.dataBaseGUI.btnNoExitDBGUI.addActionListener(this);
 		
+		this.dataBaseGUI.btnParking.addActionListener(this);
+		
 		this.dataBaseGUI.btnNewParking.addActionListener(this);
-		this.dataBaseGUI.btnNewParking.addKeyListener(this);
 		
 		this.dataBaseGUI.btnNewFundsachen.addActionListener(this);
+		
+		this.dataBaseGUI.btnNewFitnessAbo.addActionListener(this);
+		
+		this.dataBaseGUI.btnLogout.addActionListener(this);
+		
+		this.dataBaseGUI.btnFundsachen.addActionListener(this);
+		
+		this.dataBaseGUI.btnFitness.addActionListener(this);
+		
+		this.dataBaseGUI.btnUerbergabe.addActionListener(this);
+		
+		this.dataBaseGUI.btnPhonebook.addActionListener(this);
+		
+		//Add ActionListener to the MenutItem of the popupMenu
+		this.dataBaseGUI.deleteItem.addActionListener(this);
+		
+		
+		
+		
+		
+		
+		
+		//Add the KeyListener to the elements
+		this.dataBaseGUI.btnHome.addKeyListener(this);
+		
+		this.dataBaseGUI.btnNewParking.addKeyListener(this);
+		
 		this.dataBaseGUI.btnNewFundsachen.addKeyListener(this);
 		
+		this.dataBaseGUI.btnNewFitnessAbo.addKeyListener(this);
+
+		this.dataBaseGUI.searchText.addKeyListener(this);
+		
+		this.dataBaseGUI.reloadDdJButton.addActionListener(this);
+		
+		this.dataBaseGUI.btnFundsachen.addKeyListener(this);
+		
+		this.dataBaseGUI.btnFitness.addKeyListener(this);
+		
+		this.dataBaseGUI.btnUerbergabe.addKeyListener(this);
+		
+		this.dataBaseGUI.btnPhonebook.addKeyListener(this);
+		
+		
+		
+		
+		
+		
+		//Add FocusListener to the elements
+		this.dataBaseGUI.btnHome.addFocusListener(this);
+				
+		this.dataBaseGUI.btnParking.addFocusListener(this);
+		
+		this.dataBaseGUI.btnFundsachen.addFocusListener(this);
+				
+		this.dataBaseGUI.btnFitness.addFocusListener(this);
+				
+		this.dataBaseGUI.btnUerbergabe.addFocusListener(this);
+				
+		this.dataBaseGUI.btnPhonebook.addFocusListener(this);
+				
+		this.dataBaseGUI.btnLogout.addFocusListener(this);
+				
+		this.dataBaseGUI.btnNewFundsachen.addFocusListener(this);
+				
+		this.dataBaseGUI.searchText.addFocusListener(this);
+				
+		this.dataBaseGUI.searchJComboBox.addFocusListener(this);
+		
+		
+		
+		
+		//Add ItemListener
+		this.dataBaseGUI.searchJComboBox.addItemListener(this);
+		
+		
+
 		
 		/*
 		 * depending on the table that is visible it will be add TableModelListener. 
@@ -130,6 +204,7 @@ TableModelListener, ItemListener, FocusListener, MouseListener, PopupMenuListene
 			this.dataBaseGUI.schluesselInHausJComboBox.addItemListener(this);
 			this.dataBaseGUI.buchungskanalJComboBox.addItemListener(this);
 		}
+		
 		else if(this.dataBaseGUI.fundsachenTable != null) {
 			this.dataBaseGUI.fundsachenTable.getModel().addTableModelListener(this);
 			this.dataBaseGUI.fundsachenTable.addKeyListener(this);
@@ -158,6 +233,7 @@ TableModelListener, ItemListener, FocusListener, MouseListener, PopupMenuListene
 			this.dataBaseGUI.uebergabeTable.addFocusListener(this);
 		}
 		
+		
 		else if(this.dataBaseGUI.kontakteTable !=null) {
 			
 			this.dataBaseGUI.kontakteTable.getModel().addTableModelListener(this);
@@ -167,55 +243,14 @@ TableModelListener, ItemListener, FocusListener, MouseListener, PopupMenuListene
 			
 		}
 		
-		
-		//Add KeyListener to the Search Box
-		this.dataBaseGUI.searchText.addKeyListener(this);
-	    
-		this.dataBaseGUI.reloadDdJButton.addActionListener(this);
-		
-		this.dataBaseGUI.searchJComboBox.addItemListener(this);
-		
-		
-		//Add FocusListener to the elements Fundsachen
-		this.dataBaseGUI.btnHome.addFocusListener(this);
-		this.dataBaseGUI.btnParking.addFocusListener(this);
-		this.dataBaseGUI.btnFitness.addFocusListener(this);
-		this.dataBaseGUI.btnUerbergabe.addFocusListener(this);
-		this.dataBaseGUI.btnPhonebook.addFocusListener(this);
-		this.dataBaseGUI.btnLogout.addFocusListener(this);
-		this.dataBaseGUI.btnNewFundsachen.addFocusListener(this);
-		this.dataBaseGUI.searchText.addFocusListener(this);
-		this.dataBaseGUI.searchJComboBox.addFocusListener(this);
-		
+
+		/*  btnHome request the Focus so we call the KeyCode keys better when the focus is always by btnHome */
 		this.dataBaseGUI.btnHome.requestFocus();
 
-		this.dataBaseGUI.btnParking.addActionListener(this);
-		
-		this.dataBaseGUI.btnLogout.addActionListener(this);
-		
-		this.dataBaseGUI.btnFundsachen.addKeyListener(this);
-		this.dataBaseGUI.btnFundsachen.addActionListener(this);
-		this.dataBaseGUI.btnFundsachen.addFocusListener(this);
-		
-		this.dataBaseGUI.btnFitness.addActionListener(this);
-		this.dataBaseGUI.btnFitness.addKeyListener(this);
-		
-		this.dataBaseGUI.btnUerbergabe.addActionListener(this);
-		this.dataBaseGUI.btnUerbergabe.addKeyListener(this);
-		
-		this.dataBaseGUI.btnPhonebook.addActionListener(this);
-		this.dataBaseGUI.btnPhonebook.addKeyListener(this);
-		
-		//Add ActionListener to the MenutItem of the popupMenu
-		this.dataBaseGUI.deleteItem.addActionListener(this);
 
-		
-
-		
-
-		
-		
 	}
+	
+	
 	
 	
 	
@@ -374,7 +409,7 @@ TableModelListener, ItemListener, FocusListener, MouseListener, PopupMenuListene
 	public void keyPressed(KeyEvent e) {
 		
 
-		
+		//KeyPressed F1
 		if(e.getSource()==this.dataBaseGUI.btnHome && e.getKeyCode() == 112
 				||e.getSource()==this.dataBaseGUI.searchJComboBox && e.getKeyCode() == 112
 				||e.getSource()==this.dataBaseGUI.searchText && e.getKeyCode() == 112 
@@ -395,7 +430,7 @@ TableModelListener, ItemListener, FocusListener, MouseListener, PopupMenuListene
 		
 		
 		
-		else
+		else //KeyPressed F2
 			if(e.getSource()==this.dataBaseGUI.btnHome && e.getKeyCode()== 113
 					||e.getSource()==this.dataBaseGUI.searchJComboBox && e.getKeyCode() == 113
 					||e.getSource()==this.dataBaseGUI.searchText && e.getKeyCode() == 113 
@@ -414,7 +449,7 @@ TableModelListener, ItemListener, FocusListener, MouseListener, PopupMenuListene
 		
 		
 		
-			else 
+			else //KeyPressed F3
 				
 				if(e.getSource()==this.dataBaseGUI.btnHome && e.getKeyCode()== 114
 				||e.getSource()==this.dataBaseGUI.searchJComboBox && e.getKeyCode() == 114
@@ -432,7 +467,7 @@ TableModelListener, ItemListener, FocusListener, MouseListener, PopupMenuListene
 		
 		
 		
-		
+			//KeyPressed F4
 			else if(e.getSource()==this.dataBaseGUI.btnHome && e.getKeyCode()== 115
 					||e.getSource()==this.dataBaseGUI.searchJComboBox && e.getKeyCode() == 115
 					||e.getSource()==this.dataBaseGUI.searchText && e.getKeyCode() == 115 
@@ -453,7 +488,7 @@ TableModelListener, ItemListener, FocusListener, MouseListener, PopupMenuListene
 			}
 		
 		
-		
+			//KeyPressed F6
 			else if(e.getSource()==this.dataBaseGUI.btnHome && e.getKeyCode()== 117
 					||e.getSource()==this.dataBaseGUI.searchJComboBox && e.getKeyCode() == 117
 					||e.getSource()==this.dataBaseGUI.searchText && e.getKeyCode() == 117 
@@ -472,7 +507,7 @@ TableModelListener, ItemListener, FocusListener, MouseListener, PopupMenuListene
 				
 			}
 		
-		
+			//KeyPressed F7
 			else if(e.getSource()==this.dataBaseGUI.btnHome && e.getKeyCode()== 118
 					||e.getSource()==this.dataBaseGUI.searchJComboBox && e.getKeyCode() == 118
 					||e.getSource()==this.dataBaseGUI.searchText && e.getKeyCode() == 118 
@@ -492,7 +527,7 @@ TableModelListener, ItemListener, FocusListener, MouseListener, PopupMenuListene
 			
 		
 		
-			else
+			else	//KeyPressed F8
 				
 			if(e.getSource()==this.dataBaseGUI.btnHome && e.getKeyCode()== 119
 					||e.getSource()==this.dataBaseGUI.searchJComboBox && e.getKeyCode() == 119
@@ -514,7 +549,7 @@ TableModelListener, ItemListener, FocusListener, MouseListener, PopupMenuListene
 			}
 	
 		
-			else
+			else //KeyPressed F9
 				
 				if(e.getSource()==this.dataBaseGUI.btnHome && e.getKeyCode()== 120
 						||e.getSource()==this.dataBaseGUI.searchJComboBox && e.getKeyCode() == 120
@@ -585,15 +620,14 @@ TableModelListener, ItemListener, FocusListener, MouseListener, PopupMenuListene
 				if(this.dataBaseGUI.parkingTable.getSelectedColumn()==4) {
 
 					TableModel model = this.dataBaseGUI.parkingTable.getModel();
-//					this.logicModelParking.setDateAsStringToBeModified((String)model.getValueAt(selectedRow, 4).toString());
-//				
-//				
+
+			
 					dates = new String[] {model.getValueAt(selectedRow, 4).toString(), model.getValueAt(selectedRow, 5).toString()};
 					
 					
 					/*
-					 * gurdamos en un array las fechas de llegada y salida para poder acceder a ellas en caso de 
-					 * error y devolverlas a la tabla como estaban.
+					 we save the arrival and departure dates in an array so that we can access the old value in case of an error 
+					 and return old value to the table as they were.
 					 */
 					this.logicModelParking.setDateAsStringToBeModified(dates);
 				}
@@ -870,17 +904,13 @@ TableModelListener, ItemListener, FocusListener, MouseListener, PopupMenuListene
 					int selectedColumn = this.dataBaseGUI.parkingTable.getSelectedColumn();
 					
 					if(selectedColumn == 4) {
-						
-						
-						//aqui vamos a guardar de forma provicional el valor de esta coloumn en caso de que halla que volver a devolverlo.
-//						this.logicModelParking.setDateAsStringToBeModified(model.getValueAt(selectedRow, selectedColumn).toString());
-//						
+											
 						dates = new String[] {model.getValueAt(selectedRow, 4).toString(), model.getValueAt(selectedRow, 5).toString()};
 						
 						
 						/*
-						 * gurdamos en un array las fechas de llegada y salida para poder acceder a ellas en caso de 
-						 * error y devolverlas a la tabla como estaban.
+						 we save the arrival and departure dates in an array so that we can access the old value in case of an error 
+						 and return old value to the table as they were.
 						 */
 						this.logicModelParking.setDateAsStringToBeModified(dates);
 						
