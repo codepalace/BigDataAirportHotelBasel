@@ -13,8 +13,26 @@ import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
+import tech.codepalace.model.LogicModelNewFitnessAbo;
+import tech.codepalace.view.frames.NewFitnessAbo;
+
+/**
+ * 
+ * @author Antonio Estevez Gonzalez
+ * @description Controller Class for the NewFitnessAbo
+ *
+ */
 public class NewFitnessAboController implements ActionListener, WindowListener, FocusListener, MouseListener, KeyListener, ItemListener  {
 
+	private NewFitnessAbo newFitnessAbo;
+	private LogicModelNewFitnessAbo logicModelNewFitnessAbo;
+	
+	public NewFitnessAboController(NewFitnessAbo newFitnessAbo, LogicModelNewFitnessAbo logicModelNewFitnessAbo) {
+		
+		this.newFitnessAbo = newFitnessAbo;
+		this.logicModelNewFitnessAbo = logicModelNewFitnessAbo;
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
