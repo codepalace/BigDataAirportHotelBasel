@@ -397,7 +397,9 @@ TableModelListener, ItemListener, FocusListener, MouseListener, PopupMenuListene
 		
 		else if(e.getSource()== this.dataBaseGUI.btnNewFitnessAbo) {
 			
-			JOptionPane.showMessageDialog(null, "Time to create new Fitness subscription actionPerformed click");
+			//We call the method createNewFitnessSubscription
+			this.logicModelFitnessAbo.createNewFitnessSubscription(dataBaseGUI);
+			
 		}
 
 		 
@@ -578,7 +580,8 @@ TableModelListener, ItemListener, FocusListener, MouseListener, PopupMenuListene
 					
 					} else if(this.dataBaseGUI.fitnessAboTable !=null) {
 						
-						JOptionPane.showMessageDialog(null, "Time to create new Fitness Subscription keyPressed F9");
+						//We call the method createNewFitnessSubscription
+						this.logicModelFitnessAbo.createNewFitnessSubscription(dataBaseGUI);
 					}
 					
 					
