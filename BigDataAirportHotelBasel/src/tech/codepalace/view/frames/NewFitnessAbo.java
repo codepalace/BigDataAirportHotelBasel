@@ -58,7 +58,7 @@ public class NewFitnessAbo extends JDialog {
 	private JPanel infoJPanel;
 	private JLabel infoJLabel;
 	
-	private MyButton saveNewFitnessAbo, cancelNewFitnessAbo;
+	public MyButton saveNewFitnessAbo, cancelNewFitnessAbo;
 	
 	private String fitnessID = "AHF";
 	

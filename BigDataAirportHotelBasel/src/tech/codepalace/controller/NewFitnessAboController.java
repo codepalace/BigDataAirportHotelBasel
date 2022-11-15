@@ -31,11 +31,21 @@ public class NewFitnessAboController implements ActionListener, WindowListener, 
 		
 		this.newFitnessAbo = newFitnessAbo;
 		this.logicModelNewFitnessAbo = logicModelNewFitnessAbo;
+		
+		this.newFitnessAbo.addWindowListener(this);
+		
+		//Add actionsListeners
+		this.newFitnessAbo.cancelNewFitnessAbo.addActionListener(this);
 	}
+	
+	
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
+		if(e.getSource()==this.newFitnessAbo.cancelNewFitnessAbo) {
+			this.logicModelNewFitnessAbo.closeNeueFitnessAbo();
+		}
 	}
 
 	@Override
@@ -45,7 +55,7 @@ public class NewFitnessAboController implements ActionListener, WindowListener, 
 
 	@Override
 	public void windowClosing(WindowEvent e) {
-		
+			
 	}
 
 	@Override
