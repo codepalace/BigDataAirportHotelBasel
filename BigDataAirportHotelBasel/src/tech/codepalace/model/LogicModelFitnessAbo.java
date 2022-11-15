@@ -55,7 +55,7 @@ public class LogicModelFitnessAbo extends LogicModel {
 			public void run() {
 	 
 				//New NewFitnessAbo Instance declared and initialized here by the Thread
-				NewFitnessAbo newFitnessAbo = new NewFitnessAbo(LogicModelFitnessAbo.dataBaseGUI, true, abkuerzungMA);
+				NewFitnessAbo newFitnessAbo = new NewFitnessAbo(LogicModelFitnessAbo.dataBaseGUI, true, abkuerzungMA, dataBaseGUI.fitnessAboTable.getRowCount());
 	 
 				//New LogicModelNewFitnessAbo declared and initialized here by the Thread
 				LogicModelNewFitnessAbo logicModelNewFitnessAbo = new LogicModelNewFitnessAbo(dataBaseGUI, newFitnessAbo, getUserAHB(), new Loading(dataBaseGUI, true));

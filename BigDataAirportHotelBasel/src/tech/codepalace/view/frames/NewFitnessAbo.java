@@ -60,13 +60,25 @@ public class NewFitnessAbo extends JDialog {
 	
 	private MyButton saveNewFitnessAbo, cancelNewFitnessAbo;
 	
+	private String fitnessID = "AHF";
+	
+	private int tableCounter;
+	
 
-	public NewFitnessAbo(DataBaseGUI dataBaseGUI, boolean modal, String abkuerzungMA) {
+	public NewFitnessAbo(DataBaseGUI dataBaseGUI, boolean modal, String abkuerzungMA, int tableCounter) {
 		
 		//We call super and the DataBaseGUI as argument so we specify that dataBaseGUI is the Object that we send that will be blocked 
  		super(dataBaseGUI, modal);
  		
  		NewFitnessAbo.abkuerzungMA = abkuerzungMA;
+ 		
+ 		//We set the value of tableCounter(The total rows in the JTable(fitnessAboTable) + 1
+ 	    //This will be used to set the fitnessID
+ 		this.tableCounter = tableCounter + 1;
+ 		
+ 		//We set the fitnessID applying also the value of tableCounter to generate a new fitnessID
+ 		this.fitnessID += this.tableCounter;
+ 		
  		
  		setSize(730, 370);
  		
