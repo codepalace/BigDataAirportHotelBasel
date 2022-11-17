@@ -17,8 +17,8 @@ import java.util.regex.Pattern;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -204,7 +204,6 @@ public class LogicModel {
 	private JTextField dateTextFieldRequestLaterDateCorrection;
 	
 	private JPanel panelRequestBox;
-	
 	
 	
 
@@ -1748,6 +1747,44 @@ public class LogicModel {
 		
 		return this.dateCorrection;
 	}
+	
+
+/**
+ * @description <h1>Method to display different error messages.</h1>
+ * <ul>
+ * 	<li>String title(Title of the message dialog).</li>
+ * 	<li>String errorMessage(Message text we want to display).</li>
+ * 	<li>JComponent(This parameter will be used to return the focus to the jComponent calling the Method requestFocus).</li>
+ * </ul>
+ * @param title
+ * @param errorMessage
+ * @param jComponent
+ */
+public void  displayErrorMessage(String title, String errorMessage, JComponent jComponent) {
+
+			
+			SwingUtilities.invokeLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					JOptionPane.showMessageDialog(null, errorMessage
+							   , title, JOptionPane.ERROR_MESSAGE, errorImg);
+					
+				jComponent.requestFocus();	
+					
+				}
+			});
+	
+	
+	
+		
+		
+	}
+
+
+
+
+
 
 	
 	

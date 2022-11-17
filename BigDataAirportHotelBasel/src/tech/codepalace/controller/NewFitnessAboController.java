@@ -36,6 +36,17 @@ public class NewFitnessAboController implements ActionListener, WindowListener, 
 		
 		//Add actionsListeners
 		this.newFitnessAbo.cancelNewFitnessAbo.addActionListener(this);
+		
+		//Add FocusListenrs
+		this.newFitnessAbo.saveNewFitnessAbo.addFocusListener(this);
+		this.newFitnessAbo.cancelNewFitnessAbo.addFocusListener(this);
+		this.newFitnessAbo.nameJTextfield.addFocusListener(this);
+		
+		
+		//Add MouseListeners
+		this.newFitnessAbo.cancelNewFitnessAbo.addMouseListener(this);
+		
+
 	}
 	
 	
@@ -44,6 +55,7 @@ public class NewFitnessAboController implements ActionListener, WindowListener, 
 	public void actionPerformed(ActionEvent e) {
 		
 		if(e.getSource()==this.newFitnessAbo.cancelNewFitnessAbo) {
+			
 			this.logicModelNewFitnessAbo.closeNeueFitnessAbo();
 		}
 	}
@@ -51,6 +63,7 @@ public class NewFitnessAboController implements ActionListener, WindowListener, 
 	@Override
 	public void windowOpened(WindowEvent e) {
 		
+		this.logicModelNewFitnessAbo.setTryingToCancel(false);
 	}
 
 	@Override
@@ -90,6 +103,9 @@ public class NewFitnessAboController implements ActionListener, WindowListener, 
 	@Override
 	public void mousePressed(MouseEvent e) {
 		
+		if(e.getSource()==this.newFitnessAbo.cancelNewFitnessAbo) {
+			this.logicModelNewFitnessAbo.setTryingToCancel(true);
+		}
 	}
 
 	@Override
@@ -106,13 +122,45 @@ public class NewFitnessAboController implements ActionListener, WindowListener, 
 	@Override
 	public void focusGained(FocusEvent e) {
 		
+		if(e.getSource()==this.newFitnessAbo.saveNewFitnessAbo) {
+			this.newFitnessAbo.saveNewFitnessAbo.setOpacity(1);
+		}
+		
+		else if(e.getSource()==this.newFitnessAbo.cancelNewFitnessAbo) {
+			this.newFitnessAbo.cancelNewFitnessAbo.setOpacity(1);
+
+		}
 	}
 
 	@Override
 	public void focusLost(FocusEvent e) {
 		
+		if(e.getSource()==this.newFitnessAbo.saveNewFitnessAbo) {
+			this.newFitnessAbo.saveNewFitnessAbo.setOpacity(0.5f);
+		}
+		
+		else if(e.getSource()==this.newFitnessAbo.cancelNewFitnessAbo) {
+			this.newFitnessAbo.cancelNewFitnessAbo.setOpacity(0.5f);
+		}
+		
+		else if(e.getSource()==this.newFitnessAbo.nameJTextfield && !this.logicModelNewFitnessAbo.isTryingToCancel()) {
+			
+			if(this.newFitnessAbo.nameJTextfield.getText().isEmpty()) {
+				this.logicModelNewFitnessAbo.displayErrorMessage("Es wurden keine Daten eingegeben", "Sie müssen einen Namen eingeben",
+						this.newFitnessAbo.nameJTextfield);
+
+
+			}
+
+
+			
+		}
+		
+	
 	}
 
+	
+	
 	
 	
 	@Override

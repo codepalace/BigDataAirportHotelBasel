@@ -14,7 +14,11 @@ public class LogicModelNewFitnessAbo extends LogicModel{
 	private UserAHB userAHB;
 	private Loading loading;
 	
+	private boolean tryingToCancel = false;
+	
 	private ImageIcon preventionImage = new ImageIcon(getClass().getResource("/img/prevention.png"));
+	
+	
 	
 	//dataBaseGUI, newFundsachen, getUserAHB(), loading
 	public LogicModelNewFitnessAbo(DataBaseGUI dataBaseGUI, NewFitnessAbo newFitnessAbo, UserAHB userAHB, Loading loading) {
@@ -38,7 +42,31 @@ public class LogicModelNewFitnessAbo extends LogicModel{
 					
 					this.newFitnessAbo.dispose();
 						
+		}else {
+			this.setTryingToCancel(false);
 		}
 	}
+
+
+	/**
+	 * @return the tryingToCancel
+	 */
+	public boolean isTryingToCancel() {
+		return tryingToCancel;
+	}
+
+
+	/**
+	 * @param tryingToCancel the tryingToCancel to set
+	 */
+	public void setTryingToCancel(boolean tryingToCancel) {
+		this.tryingToCancel = tryingToCancel;
+	}
+	
+	
+	
+	
+	
+	
 
 }
