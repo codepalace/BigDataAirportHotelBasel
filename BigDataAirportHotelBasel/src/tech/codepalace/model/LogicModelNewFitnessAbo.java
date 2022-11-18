@@ -18,6 +18,8 @@ public class LogicModelNewFitnessAbo extends LogicModel{
 	
 	private ImageIcon preventionImage = new ImageIcon(getClass().getResource("/img/prevention.png"));
 	
+	private boolean nameLostFocusWithError = false, startDateLostFocusWithError = false;
+	
 	
 	
 	//dataBaseGUI, newFundsachen, getUserAHB(), loading
@@ -61,6 +63,38 @@ public class LogicModelNewFitnessAbo extends LogicModel{
 	 */
 	public void setTryingToCancel(boolean tryingToCancel) {
 		this.tryingToCancel = tryingToCancel;
+	}
+
+
+	/**
+	 * @return the nameLostFocusWithError
+	 */
+	public boolean isNameLostFocusWithError() {
+		return nameLostFocusWithError;
+	}
+
+
+	/**
+	 * @param nameLostFocusWithError the nameLostFocusWithError to set
+	 */
+	public void setNameLostFocusWithError(boolean nameLostFocusWithError) {
+		this.nameLostFocusWithError = nameLostFocusWithError;
+	}
+
+
+	/**
+	 * @return the startDateLostFocusWithError
+	 */
+	public boolean isStartDateLostFocusWithError() {
+		return startDateLostFocusWithError;
+	}
+
+
+	/**
+	 * @param startDateLostFocusWithError the startDateLostFocusWithError to set
+	 */
+	public void setStartDateLostFocusWithError(boolean startDateLostFocusWithError) {
+		this.startDateLostFocusWithError = startDateLostFocusWithError;
 	}
 	
 	

@@ -41,6 +41,7 @@ public class NewFitnessAboController implements ActionListener, WindowListener, 
 		this.newFitnessAbo.saveNewFitnessAbo.addFocusListener(this);
 		this.newFitnessAbo.cancelNewFitnessAbo.addFocusListener(this);
 		this.newFitnessAbo.nameJTextfield.addFocusListener(this);
+		this.newFitnessAbo.eintrittsdatumPlaceHolderTextField.addFocusListener(this);
 		
 		
 		//Add MouseListeners
@@ -143,18 +144,47 @@ public class NewFitnessAboController implements ActionListener, WindowListener, 
 			this.newFitnessAbo.cancelNewFitnessAbo.setOpacity(0.5f);
 		}
 		
+		
+		
 		else if(e.getSource()==this.newFitnessAbo.nameJTextfield && !this.logicModelNewFitnessAbo.isTryingToCancel()) {
 			
 			if(this.newFitnessAbo.nameJTextfield.getText().isEmpty()) {
 				this.logicModelNewFitnessAbo.displayErrorMessage("Es wurden keine Daten eingegeben", "Sie müssen einen Namen eingeben",
 						this.newFitnessAbo.nameJTextfield);
+					
+				this.logicModelNewFitnessAbo.setNameLostFocusWithError(true);
 
-
+			} else
+			
+			if(this.newFitnessAbo.nameJTextfield.getText().length()<3) {
+				
+			
+				this.logicModelNewFitnessAbo.displayErrorMessage("Name zu kurz", 
+						"Der eingegebene Name muss aus mindestens drei Buchstaben bestehen",
+						this.newFitnessAbo.nameJTextfield);
+				
+				this.logicModelNewFitnessAbo.setNameLostFocusWithError(true);
+			
+			}else {
+				
+				this.logicModelNewFitnessAbo.setNameLostFocusWithError(false);
 			}
 
 
 			
 		}
+		
+		else if(e.getSource()==this.newFitnessAbo.eintrittsdatumPlaceHolderTextField && 
+				!this.logicModelNewFitnessAbo.isTryingToCancel() && !this.logicModelNewFitnessAbo.isNameLostFocusWithError()) {
+			
+			if(!this.logicModelNewFitnessAbo.checkDateFormat(this.newFitnessAbo.eintrittsdatumPlaceHolderTextField.getText(), 
+															 this.newFitnessAbo.eintrittsdatumPlaceHolderTextField, 
+															 "geben Sie ein korrektes Format für das Datum ein(jj.MM.JJJ)"));
+			
+		}
+		
+		
+		
 		
 	
 	}

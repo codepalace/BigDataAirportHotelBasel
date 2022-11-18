@@ -1782,6 +1782,44 @@ public void  displayErrorMessage(String title, String errorMessage, JComponent j
 	}
 
 
+/**
+ * @description <h1>Method to evaluate the date-format entered by the user</h1>
+ * <p>Method to evaluate if the Date-format entered by the user is a good date format(dd.mm.yyyy) as required.</p>
+ * <h2>method parameters</h2>
+ * <dl>
+ * 		<dt>String dateEnteredByUser</dt>
+ * 		<dd>- Date entered by the user.</dd>
+ * 
+ * 		<dt>jComponent</dt>
+ * 		<dd>- Will be used to know which jComponent lost the focus. So we could return the focus in case wrong date format.</dd>
+ * 
+ * 		<dt>String possibleErrorMessage</dt>
+ * 		<dd>- In case error this will be the message text we display to the user, to indicate where is the problem.</dd>
+ * 
+ * </dl>
+ * @param dateEnteredByUser
+ * @param jComponent
+ * @param possibleErrorMessage
+ * @return
+ */
+public boolean checkDateFormat(String dateEnteredByUser, JComponent jComponent, String possibleErrorMessage) {
+	
+	this.dateEnteredByUser = dateEnteredByUser;
+	
+	if(!Pattern.matches(formatDateRegex, this.dateEnteredByUser)) {
+		
+		displayErrorMessage("Fehler beim Datumsformat", possibleErrorMessage, jComponent);
+		
+		return false;
+		
+	}else {
+		return true;
+	}
+	
+	
+}
+
+
 
 
 
