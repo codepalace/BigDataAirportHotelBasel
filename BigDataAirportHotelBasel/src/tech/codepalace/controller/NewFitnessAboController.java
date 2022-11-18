@@ -48,6 +48,9 @@ public class NewFitnessAboController implements ActionListener, WindowListener, 
 		//Add MouseListeners
 		this.newFitnessAbo.cancelNewFitnessAbo.addMouseListener(this);
 		
+		//Add ItemListener
+		this.newFitnessAbo.anzahlDerMonat.addItemListener(this);
+		
 
 	}
 	
@@ -180,7 +183,7 @@ public class NewFitnessAboController implements ActionListener, WindowListener, 
 			
 			if(!this.logicModelNewFitnessAbo.checkDateFormat(this.newFitnessAbo.eintrittsdatumPlaceHolderTextField.getText(), 
 															 this.newFitnessAbo.eintrittsdatumPlaceHolderTextField, 
-															 "geben Sie ein korrektes Format für das Datum ein(jj.MM.JJJ)")) {
+															 "geben Sie ein korrektes Format für das Datum ein(dd.MM.JJJ)")) {
 				
 				
 				this.logicModelNewFitnessAbo.setStartDateLostFocusWithError(true);
@@ -194,9 +197,11 @@ public class NewFitnessAboController implements ActionListener, WindowListener, 
 		
 		    //if anzahlDerMonat-Vertragslaufzeit(Contract period)
 		else if(e.getSource()==this.newFitnessAbo.anzahlDerMonat &&
-				!this.logicModelNewFitnessAbo.isTryingToCancel() && !this.logicModelNewFitnessAbo.isStartDateLostFocusWithError()) {
+				!this.logicModelNewFitnessAbo.isTryingToCancel() && !this.logicModelNewFitnessAbo.isNameLostFocusWithError()
+				&& !this.logicModelNewFitnessAbo.isStartDateLostFocusWithError() 
+				) {
 			
-			
+		
 			//if not any options was selected(stay the predefined index(wählen Sie die Vertragslaufzeit) we display error
 			if(this.newFitnessAbo.anzahlDerMonat.getSelectedItem().toString().equalsIgnoreCase("wählen Sie die Vertragslaufzeit")) {
 				
@@ -220,7 +225,42 @@ public class NewFitnessAboController implements ActionListener, WindowListener, 
 	
 	@Override
 	public void itemStateChanged(ItemEvent e) {
-		
-	}
+
+		 //If the user selected one item
+		 if(e.getStateChange() == ItemEvent.SELECTED) {
+			 
+			 //First it will be evaluated the start Date of the fitness subscription contract. We check if eintrittsdatumPlaceHolderTextField isEmpty
+			 if(this.newFitnessAbo.eintrittsdatumPlaceHolderTextField.getText().isEmpty()) {
+
+				 
+				 //Is Empty then we check Date format to display the error message
+				 this.logicModelNewFitnessAbo.checkDateFormat(this.newFitnessAbo.eintrittsdatumPlaceHolderTextField.getText(), 
+						 this.newFitnessAbo.eintrittsdatumPlaceHolderTextField, 
+						 "geben Sie ein korrektes Format für das Datum ein(dd.MM.JJJ) item changed");
+				 
+				 this.logicModelNewFitnessAbo.setStartDateLostFocusWithError(true);
+				 
+				
+				 
+			 }
+			 
+			 
+			 }
+			 
+			 
+			 
+
+			 
+		 }
+
+	
+
+
 
 }
+	
+	
+	
+	
+
+
