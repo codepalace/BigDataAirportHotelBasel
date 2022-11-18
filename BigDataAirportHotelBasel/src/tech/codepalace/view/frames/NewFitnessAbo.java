@@ -187,7 +187,7 @@ public class NewFitnessAbo extends JDialog {
 		this.anzahlDerMonatJLabel.setFont(new Font("Verdana", Font.BOLD, 16));
 		this.anzahlDerMonatJLabel.setForeground(Color.white);
 		
-		this.choices = new String[] {"1 Monat", "3 Monate", "6 Monate", "12 Monate"};
+		this.choices = new String[] {"wählen Sie die Vertragslaufzeit", "1 Monat", "3 Monate", "6 Monate", "12 Monate"};
 		
 		this.anzahlDerMonat = new JComboBox<String>(choices);
 		this.anzahlDerMonat.setFont(new Font("Verdana", Font.BOLD, 14));
