@@ -42,6 +42,7 @@ public class NewFitnessAboController implements ActionListener, WindowListener, 
 		this.newFitnessAbo.cancelNewFitnessAbo.addFocusListener(this);
 		this.newFitnessAbo.nameJTextfield.addFocusListener(this);
 		this.newFitnessAbo.eintrittsdatumPlaceHolderTextField.addFocusListener(this);
+		this.newFitnessAbo.anzahlDerMonat.addFocusListener(this);
 		
 		
 		//Add MouseListeners
@@ -179,7 +180,31 @@ public class NewFitnessAboController implements ActionListener, WindowListener, 
 			
 			if(!this.logicModelNewFitnessAbo.checkDateFormat(this.newFitnessAbo.eintrittsdatumPlaceHolderTextField.getText(), 
 															 this.newFitnessAbo.eintrittsdatumPlaceHolderTextField, 
-															 "geben Sie ein korrektes Format für das Datum ein(jj.MM.JJJ)"));
+															 "geben Sie ein korrektes Format für das Datum ein(jj.MM.JJJ)")) {
+				
+				
+				this.logicModelNewFitnessAbo.setStartDateLostFocusWithError(true);
+				
+			}else {
+				
+				this.logicModelNewFitnessAbo.setStartDateLostFocusWithError(false);
+			}
+			
+		}
+		
+		    //if anzahlDerMonat-Vertragslaufzeit(Contract period)
+		else if(e.getSource()==this.newFitnessAbo.anzahlDerMonat &&
+				!this.logicModelNewFitnessAbo.isTryingToCancel() && !this.logicModelNewFitnessAbo.isStartDateLostFocusWithError()) {
+			
+			
+			//if not any options was selected(stay the predefined index(wählen Sie die Vertragslaufzeit) we display error
+			if(this.newFitnessAbo.anzahlDerMonat.getSelectedItem().toString().equalsIgnoreCase("wählen Sie die Vertragslaufzeit")) {
+				
+				this.logicModelNewFitnessAbo.displayErrorMessage("Die Vertragslaufzeit wurde nicht ausgewählt", 
+						"Sie müssen eine Vertragslaufzeit wählen",
+						this.newFitnessAbo.anzahlDerMonat);
+				
+			}
 			
 		}
 		
