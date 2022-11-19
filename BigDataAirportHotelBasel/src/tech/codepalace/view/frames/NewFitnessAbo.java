@@ -301,6 +301,30 @@ public class NewFitnessAbo extends JDialog {
 		gbl.setConstraints(this.betragGeneratedJLabel, gbc);
 		this.entriesPanel.add(this.betragGeneratedJLabel);
 		
+		gbc.gridx = 0;
+		gbc.gridy = 4;
+		gbc.insets = new Insets(10, 0, 0, 0);
+		gbl.setConstraints(this.firmaJLabel, gbc);
+		this.entriesPanel.add(this.firmaJLabel);
+		
+		gbc.gridx = 1;
+		gbc.gridy = 4;
+		gbc.insets = new Insets(10,5, 0, 0);
+		gbl.setConstraints(this.firmaJTextField, gbc);
+		this.entriesPanel.add(this.firmaJTextField);
+		
+		gbc.gridx = 0;
+		gbc.gridy = 5;
+		gbc.insets = new Insets(10, 0, 0, 0);
+		gbl.setConstraints(this.bemerkungenJLabel, gbc);
+		this.entriesPanel.add(this.bemerkungenJLabel);
+		
+		gbc.gridx = 1;
+		gbc.gridy = 5;
+		gbc.insets = new Insets(10,5, 0, 0);
+		gbl.setConstraints(this.bemerkungenJTextField, gbc);
+		this.entriesPanel.add(this.bemerkungenJTextField);
+		
 		
 		this.saveNewFitnessAbo = new MyButton("/img/btn_speichern.png");
 	
