@@ -34,7 +34,9 @@ public class NewFitnessAbo extends JDialog {
 	private JPanel entriesPanel, buttonPanel, mainJPanel;
 	
 	private JLabel fitnessGirl, nameJLabel, eintrittsdatumJLabel, 
-					anzahlDerMonatJLabel,  betragJLabel, betragGeneratedJLabel, firmaJLabel, bemerkungenJLabel;
+					anzahlDerMonatJLabel,  betragJLabel, firmaJLabel, bemerkungenJLabel;
+	
+	public JLabel betragGeneratedJLabel;
 	
 	
 	public JTextField nameJTextfield, firmaJTextField, bemerkungenJTextField;

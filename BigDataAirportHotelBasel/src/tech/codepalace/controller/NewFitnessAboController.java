@@ -152,14 +152,18 @@ public class NewFitnessAboController implements ActionListener, WindowListener, 
 		
 		else if(e.getSource()==this.newFitnessAbo.nameJTextfield && !this.logicModelNewFitnessAbo.isTryingToCancel()) {
 			
+			//if nameJTextField isEmpty we display the corresponding error message.
 			if(this.newFitnessAbo.nameJTextfield.getText().isEmpty()) {
 				this.logicModelNewFitnessAbo.displayErrorMessage("Es wurden keine Daten eingegeben", "Sie müssen einen Namen eingeben",
 						this.newFitnessAbo.nameJTextfield);
 					
+				//Set the value nameLostFocusWithError as true
 				this.logicModelNewFitnessAbo.setNameLostFocusWithError(true);
 
-			} else
+			} else //Otherwise if is not empty 
 			
+			//Will be evaluated if the name entered by the user is minor than 3.
+			//if minor than 3, the corresponding error message will be displayed
 			if(this.newFitnessAbo.nameJTextfield.getText().length()<3) {
 				
 			
@@ -167,17 +171,18 @@ public class NewFitnessAboController implements ActionListener, WindowListener, 
 						"Der eingegebene Name muss aus mindestens drei Buchstaben bestehen",
 						this.newFitnessAbo.nameJTextfield);
 				
+			    //set the value of nameLostFocusWithError as true. This helps us to play with the loss of focus of the other elements
 				this.logicModelNewFitnessAbo.setNameLostFocusWithError(true);
 			
 			}else {
-				
+				//Otherwise we set the value as false.
 				this.logicModelNewFitnessAbo.setNameLostFocusWithError(false);
 			}
 
 
 			
 		}
-		
+		//if eintrittsdatumPlaceHolderTextField lost focus and the other conditions....
 		else if(e.getSource()==this.newFitnessAbo.eintrittsdatumPlaceHolderTextField && 
 				!this.logicModelNewFitnessAbo.isTryingToCancel() && !this.logicModelNewFitnessAbo.isNameLostFocusWithError()) {
 			
@@ -186,11 +191,22 @@ public class NewFitnessAboController implements ActionListener, WindowListener, 
 															 "geben Sie ein korrektes Format für das Datum ein(dd.MM.JJJ)")) {
 				
 				
+				//Set the value that it was true error by loosing the focus
 				this.logicModelNewFitnessAbo.setStartDateLostFocusWithError(true);
+				
+				//We indicate the value of startDateAndNumberOfMonthAreValid as false. So we can not calculate the Fitness Cost.
+				this.logicModelNewFitnessAbo.setStartDateAndNumberOfMonthAreValid(false);
 				
 			}else {
 				
+				/*
+				 * Otherwise: - We set the value lost focus with error as false(every data was correct in this element).
+				 * 			  - Set the startDateAndNumberOfMonthAreValid as true.
+				 * 			  - We call to calculateFinessCost
+				 */
 				this.logicModelNewFitnessAbo.setStartDateLostFocusWithError(false);
+				this.logicModelNewFitnessAbo.setStartDateAndNumberOfMonthAreValid(true);
+				this.logicModelNewFitnessAbo.calculateFitnessCost();
 			}
 			
 		}
@@ -209,6 +225,15 @@ public class NewFitnessAboController implements ActionListener, WindowListener, 
 						"Sie müssen eine Vertragslaufzeit wählen",
 						this.newFitnessAbo.anzahlDerMonat);
 				
+				this.logicModelNewFitnessAbo.setStartDateAndNumberOfMonthAreValid(false);
+				
+			}else {
+				
+				if(this.logicModelNewFitnessAbo.isStartDateAndNumberOfMonthAreValid()) {
+					
+					//Time to calculate the cost of the Fitness contract depending how many month was selected by the User.
+					this.logicModelNewFitnessAbo.calculateFitnessCost();
+				}
 			}
 			
 		}
@@ -239,9 +264,18 @@ public class NewFitnessAboController implements ActionListener, WindowListener, 
 						 "geben Sie ein korrektes Format für das Datum ein(dd.MM.JJJ) item changed");
 				 
 				 this.logicModelNewFitnessAbo.setStartDateLostFocusWithError(true);
-				 
+				 this.logicModelNewFitnessAbo.setStartDateAndNumberOfMonthAreValid(false);
 				
 				 
+			 }else {
+				 
+				 if(this.newFitnessAbo.anzahlDerMonat.getSelectedIndex()==0) {
+					 this.logicModelNewFitnessAbo.setStartDateAndNumberOfMonthAreValid(false);
+				 }else {
+					 this.logicModelNewFitnessAbo.setStartDateAndNumberOfMonthAreValid(true);
+					 this.logicModelNewFitnessAbo.calculateFitnessCost();
+				 }
+				
 			 }
 			 
 			 
