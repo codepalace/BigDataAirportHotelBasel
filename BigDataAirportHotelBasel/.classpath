@@ -8,6 +8,7 @@
 	<classpathentry kind="lib" path="libs/derbytools.jar"/>
 	<classpathentry kind="lib" path="libs/applejavaextensions-1.4.jar"/>
 	<classpathentry kind="lib" path="libs/derbynet.jar"/>
+	<classpathentry kind="lib" path="libs/h2-2.1.214.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.launching.macosx.MacOSXType/Java SE 8 [1.8.0_201]"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
